@@ -101,6 +101,33 @@ export default function Drone() {
           border-top: 2px solid rgba(255, 255, 255, 0.78);
         }
 
+        .drone-center-line {
+          background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.28)),
+            linear-gradient(180deg, transparent 0%, rgba(255, 255, 210, 0.08) 18%, rgba(255, 255, 180, 0.24) 38%, rgba(255, 255, 255, 0.9) 50%, rgba(255, 255, 150, 0.24) 62%, rgba(255, 255, 120, 0.08) 82%, transparent 100%);
+          background-repeat: no-repeat;
+          background-size: 100% 100%, 100% 48%;
+          background-position: 0 0, 0 -54%;
+          filter: drop-shadow(0 0 4px rgba(255, 255, 160, 0.18));
+          will-change: background-position;
+          animation: droneLineRunY 4s linear infinite;
+        }
+
+        @keyframes droneLineRunY {
+          0% {
+            background-position: 0 0, 0 -54%;
+          }
+          100% {
+            background-position: 0 0, 0 154%;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .drone-center-line {
+            animation: none;
+          }
+        }
+
         @media (max-width: 1024px) {
           .drone-root {
             --drone-section-h: clamp(720px, 90vh, 900px);
@@ -214,7 +241,7 @@ export default function Drone() {
 
             <div
               aria-hidden="true"
-              className="absolute z-30 w-px bg-white/40"
+              className="absolute z-30 w-px drone-center-line"
               style={{
                 left: "var(--drone-line-left)",
                 top: "var(--drone-line-top)",

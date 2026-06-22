@@ -158,14 +158,37 @@ export default function DroneSubSection() {
           position: absolute;
           left: 49.35%;
           width: 1px;
-          background: linear-gradient(180deg, transparent, rgba(255,255,255,0.62) 12%, rgba(255,255,255,0.44) 88%, transparent);
+          background:
+            linear-gradient(180deg, transparent, rgba(255,255,255,0.62) 12%, rgba(255,255,255,0.44) 88%, transparent),
+            linear-gradient(180deg, transparent 0%, rgba(255,255,210,0.08) 18%, rgba(255,255,180,0.24) 38%, rgba(255,255,255,0.9) 50%, rgba(255,255,150,0.24) 62%, rgba(255,255,120,0.08) 82%, transparent 100%);
+          background-repeat: no-repeat;
+          background-size: 100% 100%, 100% 48%;
+          background-position: 0 0, 0 -54%;
+          filter: drop-shadow(0 0 4px rgba(255,255,160,0.18));
+          will-change: background-position;
+          animation: droneSubLineRunY 4s linear infinite;
           z-index: 16;
         }
 
         .drone-sub-rule-1 { top: 19.2%; height: 7.3%; }
-        .drone-sub-rule-2 { top: 33.5%; height: 9.5%; }
-        .drone-sub-rule-3 { top: 52%; height: 10%; }
-        .drone-sub-rule-4 { top: 72%; height: 11%; }
+        .drone-sub-rule-2 { top: 33.5%; height: 9.5%; animation-delay: 0.38s; }
+        .drone-sub-rule-3 { top: 52%; height: 10%; animation-delay: 0.76s; }
+        .drone-sub-rule-4 { top: 72%; height: 11%; animation-delay: 1.14s; }
+
+        @keyframes droneSubLineRunY {
+          0% {
+            background-position: 0 0, 0 -54%;
+          }
+          100% {
+            background-position: 0 0, 0 154%;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .drone-sub-rule {
+            animation: none;
+          }
+        }
 
         .drone-sub-feature {
           position: absolute;

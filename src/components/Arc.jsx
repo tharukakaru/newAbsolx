@@ -143,7 +143,15 @@ export default function Arc() {
           right: var(--arc-line-right);
           top: 230px;
           height: 1px;
-          background: linear-gradient(90deg, transparent, var(--arc-line) 9%, var(--arc-line) 91%, transparent);
+          background:
+            linear-gradient(90deg, transparent, var(--arc-line) 9%, var(--arc-line) 91%, transparent),
+            linear-gradient(90deg, transparent 0%, rgba(255, 255, 210, 0.08) 18%, rgba(255, 255, 180, 0.26) 38%, rgba(255, 255, 255, 0.88) 50%, rgba(255, 255, 150, 0.26) 62%, rgba(255, 255, 120, 0.08) 82%, transparent 100%);
+          background-repeat: no-repeat;
+          background-size: 100% 100%, 34% 100%;
+          background-position: 0 0, -38% 0;
+          filter: drop-shadow(0 0 4px rgba(255, 255, 160, 0.16));
+          will-change: background-position;
+          animation: arcLineRunX 4.15s linear infinite;
         }
 
         .arc-os-spine {
@@ -152,8 +160,16 @@ export default function Arc() {
           top: var(--arc-upper-spine-top);
           width: 1px;
           height: calc(var(--arc-upper-spine-end) - var(--arc-upper-spine-top));
-          background: linear-gradient(180deg, var(--arc-line), rgba(255, 255, 255, 0.18));
+          background:
+            linear-gradient(180deg, var(--arc-line), rgba(255, 255, 255, 0.18)),
+            linear-gradient(180deg, transparent 0%, rgba(255, 255, 210, 0.08) 18%, rgba(255, 255, 180, 0.24) 38%, rgba(255, 255, 255, 0.86) 50%, rgba(255, 255, 150, 0.24) 62%, rgba(255, 255, 120, 0.08) 82%, transparent 100%);
+          background-repeat: no-repeat;
+          background-size: 100% 100%, 100% 48%;
+          background-position: 0 0, 0 -54%;
+          filter: drop-shadow(0 0 4px rgba(255, 255, 160, 0.18));
+          will-change: background-position;
           transform: translateX(-50%);
+          animation: arcLineRunY 3.85s linear infinite;
         }
 
         .arc-os-products {
@@ -172,7 +188,15 @@ export default function Arc() {
           position: absolute;
           top: var(--arc-product-line-top);
           height: 1px;
-          background: linear-gradient(90deg, transparent, var(--arc-line) 10%, var(--arc-line) 90%, transparent);
+          background:
+            linear-gradient(90deg, transparent, var(--arc-line) 10%, var(--arc-line) 90%, transparent),
+            linear-gradient(90deg, transparent 0%, rgba(255, 255, 210, 0.08) 18%, rgba(255, 255, 180, 0.26) 38%, rgba(255, 255, 255, 0.88) 50%, rgba(255, 255, 150, 0.26) 62%, rgba(255, 255, 120, 0.08) 82%, transparent 100%);
+          background-repeat: no-repeat;
+          background-size: 100% 100%, 34% 100%;
+          background-position: 0 0, -38% 0;
+          filter: drop-shadow(0 0 4px rgba(255, 255, 160, 0.16));
+          will-change: background-position;
+          animation: arcLineRunX 3.9s linear infinite;
         }
 
         .arc-os-products::before {
@@ -225,7 +249,15 @@ export default function Arc() {
           bottom: 0;
           display: none;
           height: 1px;
-          background: linear-gradient(90deg, transparent, var(--arc-line) 10%, var(--arc-line) 90%, transparent);
+          background:
+            linear-gradient(90deg, transparent, var(--arc-line) 10%, var(--arc-line) 90%, transparent),
+            linear-gradient(90deg, transparent 0%, rgba(255, 255, 210, 0.08) 18%, rgba(255, 255, 180, 0.26) 38%, rgba(255, 255, 255, 0.88) 50%, rgba(255, 255, 150, 0.26) 62%, rgba(255, 255, 120, 0.08) 82%, transparent 100%);
+          background-repeat: no-repeat;
+          background-size: 100% 100%, 34% 100%;
+          background-position: 0 0, -38% 0;
+          filter: drop-shadow(0 0 4px rgba(255, 255, 160, 0.16));
+          will-change: background-position;
+          animation: arcLineRunX 3.9s linear infinite;
         }
 
         .arc-os-product:first-child .arc-os-product-rule {
@@ -245,8 +277,54 @@ export default function Arc() {
           top: var(--arc-lower-spine-top);
           width: 1px;
           height: calc(var(--arc-panel-top) - var(--arc-products-top) - var(--arc-lower-spine-top));
-          background: linear-gradient(180deg, var(--arc-line), rgba(255, 255, 255, 0.2));
+          background:
+            linear-gradient(180deg, var(--arc-line), rgba(255, 255, 255, 0.2)),
+            linear-gradient(180deg, transparent 0%, rgba(255, 255, 210, 0.08) 18%, rgba(255, 255, 180, 0.24) 38%, rgba(255, 255, 255, 0.86) 50%, rgba(255, 255, 150, 0.24) 62%, rgba(255, 255, 120, 0.08) 82%, transparent 100%);
+          background-repeat: no-repeat;
+          background-size: 100% 100%, 100% 48%;
+          background-position: 0 0, 0 -54%;
+          filter: drop-shadow(0 0 4px rgba(255, 255, 160, 0.18));
+          will-change: background-position;
           transform: translateX(-50%);
+          animation: arcLineRunY 4s linear infinite;
+        }
+
+        .arc-os-products::after,
+        .arc-os-product-rule {
+          animation-delay: 0.42s;
+        }
+
+        .arc-os-product:nth-child(2)::after {
+          animation-delay: 0.18s;
+        }
+
+        @keyframes arcLineRunX {
+          0% {
+            background-position: 0 0, -38% 0;
+          }
+          100% {
+            background-position: 0 0, 138% 0;
+          }
+        }
+
+        @keyframes arcLineRunY {
+          0% {
+            background-position: 0 0, 0 -54%;
+          }
+          100% {
+            background-position: 0 0, 0 154%;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .arc-os-divider-top,
+          .arc-os-spine,
+          .arc-os-products::before,
+          .arc-os-products::after,
+          .arc-os-product-rule,
+          .arc-os-product:nth-child(2)::after {
+            animation: none;
+          }
         }
 
         .arc-os-panel {

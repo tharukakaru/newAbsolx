@@ -176,6 +176,35 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
           : "",
       ].join(" ")}
     >
+      <style>{`
+        .footer-animated-line {
+          background:
+            linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.82) 5%, rgba(255,255,255,0.82) 95%, transparent 100%),
+            linear-gradient(90deg, transparent 0%, rgba(255,255,210,0.08) 18%, rgba(255,255,180,0.24) 38%, rgba(255,255,255,0.92) 50%, rgba(255,255,150,0.24) 62%, rgba(255,255,120,0.08) 82%, transparent 100%);
+          background-repeat: no-repeat;
+          background-size: 100% 100%, 30% 100%;
+          background-position: 0 0, -34% 0;
+          filter: drop-shadow(0 0 4px rgba(255,255,160,0.18));
+          will-change: background-position;
+          animation: footerLineRunX 4.4s linear infinite;
+        }
+
+        @keyframes footerLineRunX {
+          0% {
+            background-position: 0 0, -34% 0;
+          }
+          100% {
+            background-position: 0 0, 134% 0;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .footer-animated-line {
+            animation: none;
+          }
+        }
+      `}</style>
+
       {isResearchFooter ? (
         <>
           <div
@@ -478,8 +507,8 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
               aria-hidden="true"
               className={
                 isResearchFooter
-                  ? "mx-auto h-px w-[82%] max-w-[1180px] bg-white/80 shadow-[0_0_1px_rgba(255,255,255,0.45)] sm:w-[80%] md:w-[78%]"
-                  : "h-px -mx-6 sm:-mx-10 md:-mx-16 lg:-mx-20 xl:-mx-24 bg-white/80 shadow-[0_0_1px_rgba(255,255,255,0.45)]"
+                  ? "footer-animated-line mx-auto h-px w-[82%] max-w-[1180px] shadow-[0_0_1px_rgba(255,255,255,0.45)] sm:w-[80%] md:w-[78%]"
+                  : "footer-animated-line h-px -mx-6 sm:-mx-10 md:-mx-16 lg:-mx-20 xl:-mx-24 shadow-[0_0_1px_rgba(255,255,255,0.45)]"
               }
             />
 

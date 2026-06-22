@@ -120,6 +120,15 @@ export default function SoulGrid() {
           z-index: 6;
           width: 1px;
           height: 89%;
+          overflow: hidden;
+          background: transparent;
+          -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+        }
+
+        .soul-right-spine .base {
+          position: absolute;
+          inset: 0;
           background: linear-gradient(
             180deg,
             rgba(255, 255, 255, 0.84) 0%,
@@ -136,12 +145,99 @@ export default function SoulGrid() {
           z-index: 6;
           width: var(--soul-top-line-width);
           height: 1px;
+          overflow: hidden;
+          background: transparent;
+          -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 100%);
+        }
+
+        .soul-top-hline .base {
+          position: absolute;
+          inset: 0;
           background: linear-gradient(
             90deg,
             rgba(255, 255, 255, 0) 0%,
             rgba(255, 255, 255, 0.54) 12%,
             rgba(255, 255, 255, 0.74) 100%
           );
+        }
+
+        .soul-line-current {
+          position: absolute;
+          inset: 0;
+          opacity: 0;
+          will-change: transform;
+        }
+
+        .soul-top-hline .soul-line-current {
+          animation: soulLineRunX 2.4s linear infinite;
+        }
+
+        .soul-right-spine .soul-line-current {
+          animation: soulLineRunY 2.8s linear infinite;
+        }
+
+        .soul-line-current::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+        }
+
+        .soul-top-hline .soul-line-current::before {
+          background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(255, 255, 210, 0.2) 30%,
+            rgba(255, 255, 255, 0.96) 50%,
+            rgba(255, 255, 120, 0.34) 70%,
+            transparent 100%
+          );
+          filter: drop-shadow(0 0 7px rgba(255, 255, 130, 0.9));
+        }
+
+        .soul-right-spine .soul-line-current::before {
+          background: linear-gradient(
+            180deg,
+            transparent 0%,
+            rgba(255, 255, 210, 0.2) 28%,
+            rgba(255, 255, 255, 0.96) 50%,
+            rgba(255, 255, 120, 0.34) 72%,
+            transparent 100%
+          );
+          filter: drop-shadow(0 0 7px rgba(255, 255, 130, 0.85));
+        }
+
+        .soul-line-current.c2 {
+          animation-delay: 0.72s;
+          animation-duration: 3.15s;
+        }
+
+        @keyframes soulLineRunX {
+          0% {
+            transform: translateX(-108%);
+            opacity: 0;
+          }
+          14%, 86% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateX(108%);
+            opacity: 0;
+          }
+        }
+
+        @keyframes soulLineRunY {
+          0% {
+            transform: translateY(-108%);
+            opacity: 0;
+          }
+          14%, 86% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(108%);
+            opacity: 0;
+          }
         }
 
         .soul-defense-badge::before,
@@ -231,6 +327,10 @@ export default function SoulGrid() {
 
         @media (prefers-reduced-motion: reduce) {
           .soul-face-canvas {
+            animation: none;
+          }
+
+          .soul-line-current {
             animation: none;
           }
         }
@@ -332,8 +432,16 @@ export default function SoulGrid() {
         }}
       >
         <div className="soul-face-glow" />
-        <div className="soul-right-spine" aria-hidden="true" />
-        <div className="soul-top-hline" aria-hidden="true" />
+        <div className="soul-right-spine" aria-hidden="true">
+          <div className="base" />
+          <div className="soul-line-current c1" />
+          <div className="soul-line-current c2" />
+        </div>
+        <div className="soul-top-hline" aria-hidden="true">
+          <div className="base" />
+          <div className="soul-line-current c1" />
+          <div className="soul-line-current c2" />
+        </div>
         <div className="soul-title-cluster">
           <div className="soul-fight-text">
             <span>Fight</span>
