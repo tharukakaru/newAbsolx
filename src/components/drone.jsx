@@ -22,28 +22,29 @@ export default function Drone() {
         }
 
         .drone-root {
-          --drone-section-h: clamp(760px, 92vh, 960px);
+          --drone-section-h: clamp(820px, 98vh, 1020px);
           --drone-shift: 0px;
-          --drone-bg-left: 72%;
-          --drone-bg-top: 56%;
-          --drone-bg-width: clamp(620px, 58vw, 1120px);
+          --drone-bg-left: 87%;
+          --drone-bg-top: 50%;
+          --drone-bg-width: clamp(720px, 56vw, 1120px);
           --drone-line-left: 49.5%;
-          --drone-line-top: 31%;
-          --drone-line-height: 36%;
-          --drone-copy-left: clamp(24px, 5vw, 112px);
-          --drone-copy-top: 42%;
-          --drone-copy-width: clamp(310px, 34vw, 570px);
-          --drone-copy-size: clamp(26px, 2.55vw, 52px);
-          --drone-label-left: var(--drone-copy-left);
-          --drone-label-top: 70%;
-          --drone-domain-top: 80%;
+          --drone-line-top: 27%;
+          --drone-line-height: 45%;
+          --drone-copy-left: clamp(185px, 15.5vw, 360px);
+          --drone-copy-top: 62%;
+          --drone-copy-width: min(48vw, 860px);
+          --drone-copy-size: clamp(20px, 1.55vw, 34px);
+          --drone-label-width: clamp(230px, 19vw, 360px);
+          --drone-label-left: calc(var(--drone-line-left) - var(--drone-label-width));
+          --drone-label-top: 43%;
+          --drone-domain-top: 79%;
           --drone-domain-size: clamp(42px, 5vw, 96px);
-          --drone-caption-top: 90%;
-          --drone-command-top: 22px;
-          --drone-command-size: clamp(11px, 1vw, 17px);
+          --drone-caption-top: 92%;
+          --drone-read-top: 17%;
+          --drone-read-left: 42%;
+          --drone-read-size: clamp(12px, 1.05vw, 18px);
         }
 
-        .drone-copy-title,
         .drone-domain-title {
           font-family: "Yapari Trial", "Azonix", sans-serif;
           font-weight: 700;
@@ -51,8 +52,21 @@ export default function Drone() {
         }
 
         .drone-copy-title {
+          font-family: "Yapari Trial Regular", "Yapari Trial", "Azonix", sans-serif;
+          font-weight: 400;
+          letter-spacing: 0.055em;
+        }
+
+        .drone-copy-title {
           font-size: var(--drone-copy-size);
           line-height: 0.92;
+        }
+
+        .drone-copy-title > div {
+          display: block;
+          width: max-content;
+          max-width: none;
+          white-space: nowrap;
         }
 
         .drone-domain-title {
@@ -67,7 +81,7 @@ export default function Drone() {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          min-width: clamp(190px, 18vw, 280px);
+          width: var(--drone-label-width);
           height: 30px;
           border: 1px solid rgba(255, 255, 255, 0.55);
           padding: 0 12px;
@@ -76,29 +90,95 @@ export default function Drone() {
           text-transform: uppercase;
           color: rgba(255, 255, 255, 0.72);
           background: rgba(8, 10, 18, 0.26);
+          --drone-corner-color: rgba(255, 255, 255, 0.78);
         }
 
-        .drone-hud-label::before,
-        .drone-hud-label::after {
-          content: "";
+        .drone-read-more {
           position: absolute;
+          left: var(--drone-read-left);
+          top: var(--drone-read-top);
+          z-index: 42;
+          display: inline-flex;
+          align-items: center;
+          gap: clamp(12px, 1.4vw, 22px);
+          font-family: "Yapari Trial Regular", "Yapari Trial", "Azonix", sans-serif;
+          font-size: var(--drone-read-size);
+          font-weight: 400;
+          letter-spacing: 0.08em;
+          line-height: 1;
+          text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.9);
+          transform: translateX(-50%);
+        }
+
+        .drone-read-more-label {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-width: clamp(126px, 10.8vw, 182px);
+          height: clamp(25px, 2vw, 34px);
+          padding: 0 clamp(14px, 1.2vw, 22px);
+          border: 1px solid rgba(255, 255, 255, 0.78);
+          background: rgba(7, 9, 18, 0.2);
+          --drone-corner-color: rgba(255, 255, 255, 0.92);
+        }
+
+        .drone-box-corner {
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          pointer-events: none;
+          border-color: var(--drone-corner-color);
+        }
+
+        .drone-box-corner-tl {
+          left: -3px;
+          top: -3px;
+          border-left: 2px solid rgba(255, 255, 255, 0.9);
+          border-top: 2px solid rgba(255, 255, 255, 0.9);
+          border-color: var(--drone-corner-color);
+        }
+
+        .drone-box-corner-tr {
+          right: -3px;
+          top: -3px;
+          border-right: 2px solid rgba(255, 255, 255, 0.9);
+          border-top: 2px solid rgba(255, 255, 255, 0.9);
+          border-color: var(--drone-corner-color);
+        }
+
+        .drone-box-corner-bl {
+          left: -3px;
+          bottom: -3px;
+          border-left: 2px solid rgba(255, 255, 255, 0.9);
+          border-bottom: 2px solid rgba(255, 255, 255, 0.9);
+          border-color: var(--drone-corner-color);
+        }
+
+        .drone-box-corner-br {
+          right: -3px;
+          bottom: -3px;
+          border-right: 2px solid rgba(255, 255, 255, 0.9);
+          border-bottom: 2px solid rgba(255, 255, 255, 0.9);
+          border-color: var(--drone-corner-color);
+        }
+
+        .drone-read-more-chevrons {
+          font-size: 1.55em;
+          line-height: 0.72;
+          letter-spacing: -0.18em;
+          color: #fff;
+        }
+
+        .drone-hud-label .drone-box-corner {
           width: 9px;
           height: 9px;
-          pointer-events: none;
         }
 
-        .drone-hud-label::before {
-          left: -2px;
-          bottom: -2px;
-          border-left: 2px solid rgba(255, 255, 255, 0.78);
-          border-bottom: 2px solid rgba(255, 255, 255, 0.78);
-        }
-
-        .drone-hud-label::after {
-          right: -2px;
-          top: -2px;
-          border-right: 2px solid rgba(255, 255, 255, 0.78);
-          border-top: 2px solid rgba(255, 255, 255, 0.78);
+        .drone-hud-label-text {
+          position: relative;
+          z-index: 1;
         }
 
         .drone-center-line {
@@ -130,40 +210,42 @@ export default function Drone() {
 
         @media (max-width: 1024px) {
           .drone-root {
-            --drone-section-h: clamp(720px, 90vh, 900px);
+            --drone-section-h: clamp(790px, 96vh, 940px);
             --drone-shift: 0px;
-            --drone-bg-left: 74%;
-            --drone-bg-top: 56%;
-            --drone-bg-width: clamp(520px, 62vw, 840px);
-            --drone-copy-left: 4vw;
-            --drone-copy-top: 43%;
-            --drone-copy-width: clamp(280px, 38vw, 430px);
-            --drone-copy-size: clamp(22px, 3vw, 38px);
-            --drone-label-top: 70%;
+            --drone-bg-left: 86%;
+            --drone-bg-top: 50%;
+            --drone-bg-width: clamp(560px, 62vw, 880px);
+            --drone-copy-left: 14vw;
+            --drone-copy-top: 62%;
+            --drone-copy-width: min(52vw, 620px);
+            --drone-copy-size: clamp(17px, 2.35vw, 25px);
+            --drone-label-top: 43%;
             --drone-domain-size: clamp(36px, 5.6vw, 70px);
-            --drone-command-top: 18px;
+            --drone-read-top: 16%;
           }
         }
 
         @media (max-width: 768px) {
           .drone-root {
-            --drone-section-h: clamp(760px, 96vh, 920px);
+            --drone-section-h: clamp(780px, 98vh, 940px);
             --drone-shift: 0px;
-            --drone-bg-left: 66%;
-            --drone-bg-top: 55%;
-            --drone-bg-width: clamp(460px, 88vw, 680px);
+            --drone-bg-left: 84%;
+            --drone-bg-top: 50%;
+            --drone-bg-width: clamp(430px, 80vw, 620px);
             --drone-line-left: 50%;
-            --drone-line-top: 34%;
-            --drone-line-height: 30%;
-            --drone-copy-left: 5vw;
-            --drone-copy-top: 35%;
-            --drone-copy-width: min(52vw, 360px);
-            --drone-copy-size: clamp(20px, 4.5vw, 34px);
-            --drone-label-top: 66%;
-            --drone-domain-top: 79%;
+            --drone-line-top: 30%;
+            --drone-line-height: 38%;
+            --drone-copy-left: 11vw;
+            --drone-copy-top: 61%;
+            --drone-copy-width: min(86vw, 440px);
+            --drone-copy-size: clamp(14px, 2.95vw, 20px);
+            --drone-label-width: min(44vw, 260px);
+            --drone-label-top: 46%;
+            --drone-domain-top: 80%;
             --drone-domain-size: clamp(28px, 7vw, 52px);
-            --drone-caption-top: 88%;
-            --drone-command-top: 16px;
+            --drone-caption-top: 91%;
+            --drone-read-left: 46%;
+            --drone-read-top: 15%;
           }
 
           .drone-domain-title {
@@ -173,27 +255,29 @@ export default function Drone() {
 
         @media (max-width: 480px) {
           .drone-root {
-            --drone-section-h: 700px;
+            --drone-section-h: 740px;
             --drone-shift: 0px;
-            --drone-bg-left: 64%;
-            --drone-bg-top: 53%;
-            --drone-bg-width: clamp(390px, 112vw, 520px);
+            --drone-bg-left: 83%;
+            --drone-bg-top: 50%;
+            --drone-bg-width: clamp(340px, 94vw, 470px);
             --drone-line-left: 50%;
-            --drone-line-top: 37%;
-            --drone-line-height: 24%;
-            --drone-copy-left: 5vw;
-            --drone-copy-top: 34%;
-            --drone-copy-width: 58vw;
-            --drone-copy-size: clamp(18px, 5.4vw, 26px);
-            --drone-label-top: 64%;
-            --drone-domain-top: 78%;
+            --drone-line-top: 31%;
+            --drone-line-height: 30%;
+            --drone-copy-left: 11vw;
+            --drone-copy-top: 60%;
+            --drone-copy-width: 90vw;
+            --drone-copy-size: clamp(12px, 3.75vw, 17px);
+            --drone-label-width: min(58vw, 220px);
+            --drone-label-left: 5vw;
+            --drone-label-top: 48%;
+            --drone-domain-top: 80%;
             --drone-domain-size: clamp(22px, 7.4vw, 36px);
-            --drone-caption-top: 87%;
-            --drone-command-top: 14px;
+            --drone-caption-top: 91%;
+            --drone-read-left: 50%;
+            --drone-read-top: 12%;
           }
 
           .drone-hud-label {
-            min-width: 165px;
             height: 28px;
             font-size: 5.5px;
           }
@@ -239,6 +323,19 @@ export default function Drone() {
 
             <div className="absolute inset-0 bg-black/5 z-10" />
 
+            <div className="drone-read-more" aria-label="Read more">
+              <span className="drone-read-more-label">
+                <span className="drone-box-corner drone-box-corner-tl" aria-hidden="true" />
+                <span className="drone-box-corner drone-box-corner-tr" aria-hidden="true" />
+                <span className="drone-box-corner drone-box-corner-bl" aria-hidden="true" />
+                <span className="drone-box-corner drone-box-corner-br" aria-hidden="true" />
+                READ MORE
+              </span>
+              <span className="drone-read-more-chevrons" aria-hidden="true">
+                &gt;&gt;
+              </span>
+            </div>
+
             <div
               aria-hidden="true"
               className="absolute z-30 w-px drone-center-line"
@@ -257,7 +354,7 @@ export default function Drone() {
                 width: "var(--drone-copy-width)",
               }}
             >
-              <div>Simplified Development</div>
+              <div>Simplified&nbsp;Development</div>
               <div>For AI-enabled</div>
               <div>Autonomy</div>
             </div>
@@ -270,7 +367,13 @@ export default function Drone() {
                 top: "var(--drone-label-top)",
               }}
             >
-              Agentic solutions for defense and intelligence
+              <span className="drone-box-corner drone-box-corner-tl" aria-hidden="true" />
+              <span className="drone-box-corner drone-box-corner-tr" aria-hidden="true" />
+              <span className="drone-box-corner drone-box-corner-bl" aria-hidden="true" />
+              <span className="drone-box-corner drone-box-corner-br" aria-hidden="true" />
+              <span className="drone-hud-label-text">
+                Agentic solutions for defense and intelligence
+              </span>
             </div>
 
             <div
@@ -295,22 +398,6 @@ export default function Drone() {
               A 3D-printed intelligent UAV. Stealth design, long endurance, rapid
               deployment. Welcome to agentic warfare
             </p>
-
-            {/* TOP TEXT */}
-            <div
-              className="absolute left-1/2 z-50 w-full -translate-x-1/2 px-6"
-              style={{ ...sourceCodePro, top: "var(--drone-command-top)" }}
-            >
-              <div className="mx-auto" style={{ maxWidth: "min(1224px, 92vw)" }}>
-                <p
-                  className="text-center uppercase font-normal leading-[1.15] whitespace-normal sm:whitespace-nowrap"
-                  style={{ fontSize: "var(--drone-command-size)" }}
-                >
-                  Command &amp; Control (C2) is an AI-powered battle management &amp;
-                  command control platform
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
