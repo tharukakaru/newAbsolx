@@ -217,6 +217,7 @@ export function Navbar({ currentPath = "/", onNavigate }) {
   const [openMobile, setOpenMobile] = useState(false);
 
   const [activeMenu, setActiveMenu] = useState("HOME");
+  const isResearchPage = currentPath === "/research";
 
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -291,23 +292,25 @@ export function Navbar({ currentPath = "/", onNavigate }) {
         </div>
 
         {/* CTA BUTTON — Updated to neon style */}
-        <button
-          className="
-            hidden lg:block 
-            px-4 py-[3px]
-            rounded-full
-            text-[10px]
-            tracking-[2px]
-            font-azonix
-            text-[#C7D65A]
-            border border-[#C7D65A]/70
-            shadow-[0_0_8px_rgba(234,255,0,0.35)]
-            hover:bg-[#C7D65A] hover:text-black
-            transition-all duration-200
-          "
-        >
-          TRY NOW
-        </button>
+        {!isResearchPage && (
+          <button
+            className="
+              hidden lg:block
+              px-4 py-[3px]
+              rounded-full
+              text-[10px]
+              tracking-[2px]
+              font-azonix
+              text-[#C7D65A]
+              border border-[#C7D65A]/70
+              shadow-[0_0_8px_rgba(234,255,0,0.35)]
+              hover:bg-[#C7D65A] hover:text-black
+              transition-all duration-200
+            "
+          >
+            TRY NOW
+          </button>
+        )}
 
         {/* MOBILE BURGER */}
         <button
@@ -342,12 +345,14 @@ export function Navbar({ currentPath = "/", onNavigate }) {
               </button>
             ))}
 
-            <button className="
-              mt-3 px-4 py-2 rounded-full border border-[#C7D65A]/60
-              text-[#C7D65A] tracking-[2px]
-            ">
-              TRY NOW
-            </button>
+            {!isResearchPage && (
+              <button className="
+                mt-3 px-4 py-2 rounded-full border border-[#C7D65A]/60
+                text-[#C7D65A] tracking-[2px]
+              ">
+                TRY NOW
+              </button>
+            )}
           </div>
         </div>
       )}
