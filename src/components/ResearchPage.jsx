@@ -6,6 +6,7 @@ import plusJakartaSans from "../assets/fonts/PlusJakartaSans[wght].ttf";
 import uavBlueprintVideo from "../assets/uav-blueprint-4k-alpha.mp4";
 import shahedDroneImage from "../assets/US-Shahed-136-drone 1.png";
 import launchDroneImage from "../assets/8611730 1 (1).png";
+import footerGradient from "../assets/footer-gradient 1.png";
 
 const problemCards = [
   {
@@ -88,6 +89,46 @@ const problemCards = [
   },
 ];
 
+const costTableRows = [
+  {
+    system: "Attack drone (Shahed-class)",
+    cost: "$20K – $50K",
+    meaning: "The cheap, expendable asset — designed to be lost",
+    highlight: false,
+  },
+  {
+    system: "MEGHA UAVs",
+    cost: "$10K – $50K",
+    meaning: "Cheap to lose, fast to build, autonomous — built to be on the winning side of the math",
+    highlight: true,
+  },
+  {
+    system: "Patriot PAC-3 interceptor",
+    cost: "≈ $4,000,000",
+    meaning: "~200× the cost of the threat it stops",
+    highlight: false,
+  },
+  {
+    system: "THAAD interceptor",
+    cost: "$12M – $15M",
+    meaning: "~300–700× the cost of the threat",
+    highlight: false,
+  },
+  {
+    system: "Fighter jet + AA missile",
+    cost: "$20M + $400K",
+    meaning: "A million-dollar engagement against a $20K target",
+    highlight: false,
+  },
+];
+
+const costStats = [
+  { value: "$20K", label: "Cost to attack" },
+  { value: "200×", label: "Defender cost ratio" },
+  { value: "7M–10M", label: "Ukraine drone output, 2026 est" },
+  { value: "$0", label: "Human casualties per loss" },
+];
+
 export default function ResearchPage() {
   return (
     <main className="research-page relative min-h-screen overflow-hidden text-white">
@@ -153,6 +194,30 @@ export default function ResearchPage() {
           font-size: clamp(11px, 0.92vw, 17px);
           line-height: 1.18;
           letter-spacing: 0.24em;
+        }
+
+        .research-signal-line {
+          position: relative;
+          display: block;
+          background:
+            linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 6%, rgba(255,255,255,0.38) 48%, rgba(255,255,255,0.18) 94%, transparent 100%),
+            linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.02) 12%, rgba(255,255,255,0.52) 36%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.52) 64%, rgba(255,255,255,0.02) 88%, transparent 100%);
+          background-repeat: no-repeat;
+          background-size: 100% 100%, 22% 100%;
+          background-position: 0 0, -26% 0;
+          box-shadow: 0 0 5px rgba(255,255,255,0.22);
+          will-change: background-position;
+          animation: researchSignalSweep 5s linear infinite;
+        }
+
+        .research-signal-line::before,
+        .research-signal-line::after {
+          content: none;
+        }
+
+        @keyframes researchSignalSweep {
+          0%   { background-position: 0 0, -26% 0; }
+          100% { background-position: 0 0, 126% 0; }
         }
 
         .research-panel {
@@ -395,10 +460,10 @@ export default function ResearchPage() {
         .research-cost-title {
           margin-top: 10px;
           max-width: 1180px;
-          font-family: "Research Yapari Regular", "Yapari Trial", "Azonix", sans-serif;
+          font-family: "Research Yapari", "Yapari Trial", "Azonix", sans-serif;
           font-size: clamp(28px, 3.8vw, 62px);
           line-height: 0.94;
-          font-weight: 400;
+          font-weight: 700;
           letter-spacing: 0;
           text-transform: uppercase;
           text-wrap: balance;
@@ -600,6 +665,192 @@ export default function ResearchPage() {
             border-radius: 28px;
           }
         }
+
+        @media (prefers-reduced-motion: reduce) {
+          .research-signal-line {
+            animation: none;
+            background-size: 100% 100%, 0;
+          }
+        }
+
+        /* ── Cost argument expanded content ───────────────────── */
+
+        .cost-body-text {
+          font-family: "Research Plus Jakarta", "Plus Jakarta Sans", Arial, sans-serif;
+          margin-top: 22px;
+          max-width: 780px;
+          font-size: clamp(13px, 0.9vw, 16px);
+          line-height: 1.6;
+          font-weight: 400;
+          color: rgba(255,255,255,0.68);
+        }
+
+        .cost-table-wrap {
+          margin-top: 32px;
+          width: 100%;
+          overflow-x: auto;
+          border: 1px solid rgba(255,255,255,0.14);
+          border-radius: 12px;
+        }
+
+        .cost-table {
+          width: 100%;
+          min-width: 580px;
+          border-collapse: collapse;
+        }
+
+        .cost-table-head {
+          background: rgba(255,255,255,0.04);
+          border-bottom: 1px solid rgba(255,255,255,0.14);
+        }
+
+        .cost-th {
+          padding: 13px 18px;
+          font-family: "Research Plus Jakarta", "Plus Jakarta Sans", Arial, sans-serif;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.46);
+          text-align: left;
+          white-space: nowrap;
+        }
+
+        .cost-th + .cost-th {
+          border-left: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .cost-tr {
+          border-bottom: 1px solid rgba(255,255,255,0.08);
+          transition: background 0.2s;
+        }
+
+        .cost-tr:last-child {
+          border-bottom: none;
+        }
+
+        .cost-tr-megha {
+          background: rgba(93,110,243,0.1);
+          border-left: 2px solid #5D6EF3;
+        }
+
+        .cost-td {
+          padding: 15px 18px;
+          font-family: "Research Plus Jakarta", "Plus Jakarta Sans", Arial, sans-serif;
+          font-size: clamp(12px, 0.88vw, 14px);
+          line-height: 1.45;
+          color: rgba(255,255,255,0.72);
+          vertical-align: top;
+        }
+
+        .cost-td + .cost-td {
+          border-left: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .cost-td-system { width: 34%; }
+        .cost-td-cost   { width: 20%; font-weight: 600; white-space: nowrap; }
+        .cost-td-meaning{ width: 46%; }
+
+        .cost-tr-megha .cost-td-system  { color: #E3E41B; font-weight: 600; }
+        .cost-tr-megha .cost-td-cost    { color: #E3E41B; }
+        .cost-tr-megha .cost-td-meaning { color: #E3E41B; font-style: italic; }
+
+        .cost-bottom-para {
+          margin: 38px auto 0;
+          max-width: 820px;
+          font-family: "Research Plus Jakarta", "Plus Jakarta Sans", Arial, sans-serif;
+          font-size: clamp(13px, 0.9vw, 16px);
+          line-height: 1.6;
+          color: rgba(255,255,255,0.64);
+          text-align: center;
+        }
+
+        .cost-bottom-para strong {
+          color: #fff;
+          font-weight: 700;
+        }
+
+        .cost-stats-section {
+          position: relative;
+          margin-top: 36px;
+          border-radius: 14px;
+          overflow: hidden;
+        }
+
+        .cost-stats-bg-img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          opacity: 0.52;
+          pointer-events: none;
+        }
+
+        .cost-stats-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.28) 100%);
+          pointer-events: none;
+        }
+
+        .cost-stats-grid {
+          position: relative;
+          z-index: 1;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          border: 1px solid rgba(255,255,255,0.16);
+          border-radius: 14px;
+          overflow: hidden;
+        }
+
+        .cost-stat-box {
+          padding: 26px 22px 28px;
+          border-right: 1px solid rgba(255,255,255,0.14);
+        }
+
+        .cost-stat-box:last-child {
+          border-right: none;
+        }
+
+        .cost-stat-value {
+          display: block;
+          font-family: "Research Yapari", "Yapari Trial", "Azonix", sans-serif;
+          font-size: clamp(24px, 3.1vw, 54px);
+          font-weight: 700;
+          line-height: 0.95;
+          color: #fff;
+          letter-spacing: -0.01em;
+        }
+
+        .cost-stat-label {
+          display: block;
+          margin-top: 10px;
+          font-family: "Research Plus Jakarta", "Plus Jakarta Sans", Arial, sans-serif;
+          font-size: clamp(10px, 0.78vw, 13px);
+          line-height: 1.35;
+          color: rgba(255,255,255,0.54);
+        }
+
+        @media (max-width: 767px) {
+          .cost-stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+
+          .cost-stat-box {
+            border-right: 1px solid rgba(255,255,255,0.14);
+            border-bottom: 1px solid rgba(255,255,255,0.14);
+          }
+
+          .cost-stat-box:nth-child(even) {
+            border-right: none;
+          }
+
+          .cost-stat-box:nth-last-child(-n+2) {
+            border-bottom: none;
+          }
+        }
       `}</style>
 
       <section className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1500px] flex-col px-7 pt-28 pb-16 sm:px-14 lg:px-24">
@@ -621,7 +872,7 @@ export default function ResearchPage() {
 
           <div
             aria-hidden="true"
-            className="mt-12 h-px w-full max-w-[1180px] bg-white/42"
+            className="research-signal-line mt-12 h-px w-full max-w-[1180px]"
           />
         </div>
 
@@ -731,11 +982,71 @@ export default function ResearchPage() {
         <div className="research-cost-panel">
           <div className="research-cost-inner">
             <p className="research-cost-kicker uppercase">
-              // 03 - The Cost Argument
+              // 03 — The Cost Argument
             </p>
+
             <h2 className="research-cost-title">
-              You Cannot Win a War of Mass With a Strategy of Scarcity
+              You{" "}
+              <span style={{ color: "#E3E41B" }}>Cannot Win</span>
+              {" "}a War of Mass With a Strategy of Scarcity
             </h2>
+
+            <p className="cost-body-text">
+              The reason the old model collapses is arithmetic, not technology.
+              The defender wins almost every individual engagement — and still
+              loses the war of attrition, because each &ldquo;win&rdquo; costs
+              hundreds of times more than it costs the attacker.
+            </p>
+
+            <div className="cost-table-wrap">
+              <table className="cost-table">
+                <thead className="cost-table-head">
+                  <tr>
+                    <th className="cost-th cost-td-system">System / Engagement</th>
+                    <th className="cost-th cost-td-cost">Approx. Cost</th>
+                    <th className="cost-th cost-td-meaning">What It Means</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {costTableRows.map((row) => (
+                    <tr
+                      key={row.system}
+                      className={`cost-tr${row.highlight ? " cost-tr-megha" : ""}`}
+                    >
+                      <td className="cost-td cost-td-system">{row.system}</td>
+                      <td className="cost-td cost-td-cost">{row.cost}</td>
+                      <td className="cost-td cost-td-meaning">{row.meaning}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <p className="cost-bottom-para">
+              This is the equation MEGHA is engineered to win. Instead of
+              spending millions to stop a cheap threat, MEGHA{" "}
+              <strong>becomes the mass</strong> — fielding attritable,
+              autonomous aircraft in numbers no exquisite platform can match,
+              while keeping the human cost at zero.
+            </p>
+
+            <div className="cost-stats-section">
+              <img
+                className="cost-stats-bg-img"
+                src={footerGradient}
+                alt=""
+                aria-hidden="true"
+              />
+              <div className="cost-stats-overlay" aria-hidden="true" />
+              <div className="cost-stats-grid">
+                {costStats.map((stat) => (
+                  <div key={stat.label} className="cost-stat-box">
+                    <span className="cost-stat-value">{stat.value}</span>
+                    <span className="cost-stat-label">{stat.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 

@@ -112,7 +112,7 @@ vec3 render(vec3 ro, vec3 rd){
   bool captured = false;
   bool escaped = false;
 
-  for(int i = 0; i < 220; i++){
+  for(int i = 0; i < 190; i++){
     float r = length(p);
     minr = min(minr, r);
     if(r < 1.0){ captured = true; break; }
@@ -313,7 +313,7 @@ export default function BlackHoleCanvas() {
 
     let disposed = false;
     let rafId = 0;
-    let scale = 0.78;
+    let scale = 0.68;
     let frameAcc = 0;
     let frameN = 0;
     let lastT = performance.now();
@@ -347,7 +347,7 @@ export default function BlackHoleCanvas() {
       const resize = () => {
         if (disposed) return;
 
-        const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
         const canvasWidth = Math.max(2, Math.floor(canvas.clientWidth * dpr));
         const canvasHeight = Math.max(2, Math.floor(canvas.clientHeight * dpr));
         const sceneWidth = Math.max(2, Math.floor(canvasWidth * scale));
@@ -439,11 +439,11 @@ export default function BlackHoleCanvas() {
           const avg = frameAcc / frameN;
           frameAcc = 0;
           frameN = 0;
-          if (avg > 24 && scale > 0.45) {
-            scale = Math.max(0.45, scale - 0.1);
+          if (avg > 20 && scale > 0.42) {
+            scale = Math.max(0.42, scale - 0.08);
             resize();
-          } else if (avg < 11 && scale < 0.85) {
-            scale = Math.min(0.85, scale + 0.05);
+          } else if (avg < 13 && scale < 0.76) {
+            scale = Math.min(0.76, scale + 0.04);
             resize();
           }
         }

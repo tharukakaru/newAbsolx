@@ -606,29 +606,28 @@ export default function Arc() {
         }
 
         .arc-os-trace-core {
-          stroke: rgba(255, 255, 255, 0.88);
-          stroke-width: 1.4;
+          stroke: rgba(255, 255, 255, 0.96);
+          stroke-width: 1.6;
           stroke-dasharray: 0.08 0.92;
           stroke-dashoffset: 0;
           animation: arcTraceCurrent 3.8s linear 0.08s infinite;
         }
 
         .arc-os-trace-glow {
-          stroke: rgba(255, 255, 255, 0.18);
-          stroke-width: 4.5;
+          stroke: rgba(255, 255, 255, 0.14);
+          stroke-width: 4;
           stroke-dasharray: 0.11 0.89;
           stroke-dashoffset: 0;
-          opacity: 0.55;
+          opacity: 0.48;
           animation: arcTraceCurrent 3.8s linear 0.08s infinite;
         }
 
         .arc-os-arrow-origin {
-          fill: rgba(255, 255, 255, 0.9);
+          fill: rgba(255, 255, 255, 0.92);
           transform-box: fill-box;
           transform-origin: center;
           filter:
-            drop-shadow(0 0 10px rgba(255, 255, 255, 0.8))
-            drop-shadow(0 0 18px rgba(244, 237, 21, 0.06));
+            drop-shadow(0 0 10px rgba(255, 255, 255, 0.82));
           opacity: 0;
           animation: arcOriginPop 0.28s ease-out 0.02s forwards;
         }
@@ -639,8 +638,7 @@ export default function Arc() {
           transform-origin: center;
           opacity: 0;
           filter:
-            drop-shadow(0 0 8px rgba(255, 255, 255, 0.78))
-            drop-shadow(0 0 22px rgba(244, 237, 21, 0.12));
+            drop-shadow(0 0 8px rgba(255, 255, 255, 0.82));
           animation: arcArrivalLock 0.52s ease-out 1.86s forwards;
         }
 
@@ -654,18 +652,16 @@ export default function Arc() {
         .arc-os-signal-head-core {
           fill: rgba(255, 255, 255, 0.98);
           filter:
-            drop-shadow(0 0 8px rgba(255, 255, 255, 0.96))
-            drop-shadow(0 0 17px rgba(244, 237, 21, 0.12));
+            drop-shadow(0 0 8px rgba(255, 255, 255, 0.96));
         }
 
         .arc-os-signal-head-tail {
           fill: none;
-          stroke: rgba(255, 255, 255, 0.68);
+          stroke: rgba(255, 255, 255, 0.72);
           stroke-width: 2;
           stroke-linecap: round;
           filter:
-            drop-shadow(0 0 6px rgba(255, 255, 255, 0.72))
-            drop-shadow(0 0 14px rgba(244, 237, 21, 0.06));
+            drop-shadow(0 0 6px rgba(255, 255, 255, 0.74));
           animation:
             arcSignalTailBreath 0.92s ease-in-out 0.18s infinite;
         }
