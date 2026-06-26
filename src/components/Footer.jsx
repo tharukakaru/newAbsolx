@@ -1,9 +1,9 @@
 import React from "react";
+import plusJakartaSans from "../assets/fonts/PlusJakartaSans[wght].ttf";
 
 // App badges
 import appStore from "../assets/footer/app_store.svg";
 import googlePlay from "../assets/footer/google_play.svg";
-import soldierEyesVideo from "../assets/Soldier-Eyes (1).webm";
 import Subpart from "./subpart";
 
 // Social icons
@@ -172,11 +172,58 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
       className={[
         "relative overflow-hidden bg-black text-white font-elios z-50",
         isResearchFooter
-          ? "min-h-[590px] sm:min-h-[680px] md:min-h-[740px] lg:min-h-[760px]"
+          ? "research-footer min-h-[400px] sm:min-h-[460px] md:min-h-[500px]"
           : "",
       ].join(" ")}
     >
       <style>{`
+        @font-face {
+          font-family: "Plus Jakarta Sans";
+          src: url(${plusJakartaSans}) format("truetype");
+          font-weight: 200 800;
+          font-style: normal;
+          font-display: swap;
+        }
+
+        .research-footer {
+          background: #000;
+        }
+
+        .research-footer-glow {
+          position: absolute;
+          width: 2423px;
+          height: 665px;
+          border-radius: 2423px;
+          filter: blur(340.5px);
+          pointer-events: none;
+        }
+
+        .research-footer-glow--gold {
+          left: -1370px;
+          top: 24%;
+          background: #F3D05D;
+          opacity: 0.54;
+        }
+
+        .research-footer-glow--blue {
+          right: -1280px;
+          top: 24%;
+          background: #5D6EF3;
+          opacity: 0.64;
+        }
+
+        .research-footer-hashtag {
+          margin: clamp(18px, 2.4vw, 32px) 0 clamp(58px, 6vw, 88px);
+          font-family: "Plus Jakarta Sans", Arial, sans-serif;
+          font-size: clamp(12px, 0.9vw, 16px);
+          line-height: 1;
+          font-weight: 300;
+          letter-spacing: 0.02em;
+          text-align: center;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.88);
+        }
+
         .footer-animated-line {
           background:
             linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.82) 5%, rgba(255,255,255,0.82) 95%, transparent 100%),
@@ -209,33 +256,23 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
         <>
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,_#000_0%,_#000_11%,_rgba(2,3,8,0.94)_28%,_rgba(9,10,18,0.88)_58%,_rgba(20,31,86,0.98)_100%)]"
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,_#000_0%,_#000_22%,_rgba(0,0,0,0.98)_40%,_rgba(3,4,10,0.94)_64%,_rgba(24,39,106,0.86)_100%)]"
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -left-[24%] top-[12%] h-[76%] w-[70%] bg-[radial-gradient(ellipse_at_center,_rgba(243,208,93,0.64)_0%,_rgba(243,208,93,0.3)_34%,_rgba(243,208,93,0)_72%)] blur-[18px]"
+            className="research-footer-glow research-footer-glow--gold"
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -right-[24%] top-[12%] h-[78%] w-[72%] bg-[radial-gradient(ellipse_at_center,_rgba(93,110,243,0.68)_0%,_rgba(93,110,243,0.32)_36%,_rgba(93,110,243,0)_74%)] blur-[18px]"
+            className="research-footer-glow research-footer-glow--blue"
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_52%,_rgba(255,255,255,0.08)_0%,_rgba(255,255,255,0)_28%),radial-gradient(ellipse_at_center,_rgba(0,0,0,0)_40%,_rgba(0,0,0,0.86)_100%)]"
-          />
-          <video
-            aria-hidden="true"
-            className="pointer-events-none absolute left-1/2 bottom-[-18px] z-[4] w-[min(112vw,700px)] max-w-none -translate-x-1/2 object-contain opacity-[0.96] saturate-[1.08] contrast-[1.04] sm:bottom-[-34px] sm:w-[min(74vw,640px)] md:bottom-[-46px] md:w-[min(52vw,620px)]"
-            src={soldierEyesVideo}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_16%,_rgba(0,0,0,0.94)_0%,_rgba(0,0,0,0.82)_34%,_rgba(0,0,0,0)_68%),radial-gradient(ellipse_at_center,_rgba(0,0,0,0)_46%,_rgba(0,0,0,0.68)_100%)]"
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-[44%] bg-[linear-gradient(180deg,_rgba(0,0,0,0)_0%,_rgba(27,42,116,0.34)_48%,_rgba(37,65,171,0.52)_100%)]"
+            className="pointer-events-none absolute inset-0 z-[5] bg-[radial-gradient(ellipse_at_0%_86%,_rgba(243,208,93,0.2)_0%,_rgba(243,208,93,0.08)_26%,_rgba(243,208,93,0)_58%),radial-gradient(ellipse_at_100%_88%,_rgba(93,110,243,0.34)_0%,_rgba(93,110,243,0.14)_30%,_rgba(93,110,243,0)_62%)]"
           />
           <div
             aria-hidden="true"
@@ -285,10 +322,14 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
       <div
         className={
           isResearchFooter
-            ? "relative z-10 mx-auto max-w-[1500px] px-7 pt-[clamp(300px,39vw,410px)] pb-8 sm:px-12 md:px-20 md:pt-[360px] lg:px-24 lg:pt-[365px]"
+            ? "relative z-10 mx-auto max-w-[1500px] px-7 pt-8 pb-8 sm:px-12 sm:pt-10 md:px-20 md:pt-12 lg:px-24"
             : "relative z-10 mx-auto max-w-7xl px-6 pt-12 pb-10 sm:px-10"
         }
       >
+        {isResearchFooter ? (
+          <p className="research-footer-hashtag">#AGENTIC WARFARE</p>
+        ) : null}
+
         <section className="w-full">
           <div
             className={

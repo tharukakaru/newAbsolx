@@ -8,8 +8,8 @@ import shahedDroneImage from "../assets/US-Shahed-136-drone 1.png";
 import launchDroneImage from "../assets/8611730 1 (1).png";
 import abstractShapeRender from "../assets/Abstract Shape Render 1 (1).png";
 import rightShapeRender from "../assets/Image (1).png";
-import glassFragmentsImage from "../assets/jeannotmagcd_96363_small_fragments_of_shattered_glass_floatin_34d0418d-4457-49b6-8ddb-52a988f9ec66_2 1.png";
 import AnimatedLine from "../Utils/AnimatedLine";
+import ResearchPage2 from "./ResearchPage2";
 
 const problemCards = [
   {
@@ -132,39 +132,6 @@ const costStats = [
   { value: "$0", label: "Human casualties per loss" },
 ];
 
-const isrCapabilities = [
-  {
-    id: "01",
-    title: "Man-Portable Launch",
-    body: "Hand-launched in seconds. No runway, no launch rig, no exposed ground crew.",
-  },
-  {
-    id: "02",
-    title: "Persistent Loiter",
-    body: "Long endurance holds watch over an area for hours, feeding a continuous live picture.",
-  },
-  {
-    id: "03",
-    title: "Day & Night ISR",
-    body: "Electro-optical and thermal sensors see through smoke and darkness — surveillance never stops.",
-  },
-  {
-    id: "04",
-    title: "Real-Time AI Detection",
-    body: "Onboard AI detects, classifies and tracks targets the instant they appear — not minutes later.",
-  },
-  {
-    id: "05",
-    title: "Silent & GPS-Denied",
-    body: "Navigates by vision when GPS is jammed, and observes without transmitting its position.",
-  },
-  {
-    id: "06",
-    title: "Feeds the Swarm",
-    body: "Streams geo-tagged intelligence into ARC OS, cueing the wider MEGHA force onto confirmed targets.",
-  },
-];
-
 export default function ResearchPage() {
   return (
     <main className="research-page relative min-h-screen overflow-hidden text-white">
@@ -246,22 +213,127 @@ export default function ResearchPage() {
         }
 
         .research-title {
+          display: flex;
+          flex-wrap: nowrap;
+          align-items: baseline;
+          gap: clamp(18px, 3vw, 58px);
           font-family: "Research Yapari", "Yapari Trial", "Azonix", sans-serif;
-          font-size: clamp(46px, 5.8vw, 112px);
-          line-height: 0.82;
-          letter-spacing: 0;
+          font-size: clamp(58px, 8.3vw, 146px);
+          line-height: 0.76;
+          letter-spacing: 0.105em;
+          word-spacing: 0.12em;
+        }
+
+        .research-title-word {
+          position: relative;
+          display: inline-flex;
+          align-items: baseline;
+          white-space: nowrap;
+        }
+
+        .research-title-megha::before {
+          content: "";
+          position: absolute;
+          left: -0.16em;
+          top: 50%;
+          width: 1.46em;
+          height: 0.96em;
+          z-index: -1;
+          border-radius: 999px;
+          background: radial-gradient(closest-side, rgba(0,0,0,0.52), rgba(0,0,0,0.24) 50%, rgba(0,0,0,0) 78%);
+          filter: blur(8px);
+          transform: translateY(-50%);
+          pointer-events: none;
+        }
+
+        .research-title-m {
+          position: relative;
+          display: inline-block;
+          background:
+            radial-gradient(ellipse at 0% 54%, rgba(0,0,0,0.48), rgba(0,0,0,0.28) 36%, rgba(0,0,0,0) 70%),
+            linear-gradient(90deg, #161616 0%, #242424 34%, #4A4A4A 70%, #858585 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          -webkit-text-fill-color: transparent;
+          filter: drop-shadow(0 0 7px rgba(0, 0, 0, 0.42));
+        }
+
+        .research-title-g {
+          color: #E3E41B;
+          text-shadow:
+            0 0 14px rgba(227, 228, 27, 0.24),
+            0 9px 22px rgba(0, 0, 0, 0.36);
         }
 
         .research-copy {
-          font-family: "Archivo Condensed", "Arial Narrow", sans-serif;
-          font-size: clamp(11px, 0.92vw, 17px);
-          line-height: 1.18;
-          letter-spacing: 0.24em;
+          margin-left: clamp(14px, 1.4vw, 22px);
+          max-width: 1100px;
+          font-family: "Research Plus Jakarta", "Plus Jakarta Sans", Arial, sans-serif;
+          font-size: clamp(12px, 1vw, 18px);
+          line-height: 1.46;
+          font-weight: 400;
+          letter-spacing: 0.18em;
+          text-transform: capitalize;
+          color: rgba(255,255,255,0.86);
+          text-wrap: normal;
+        }
+
+        .research-copy-line {
+          display: block;
+          white-space: nowrap;
+        }
+
+        .research-copy-highlight {
+          color: #E3E41B;
+          font-weight: 800;
+          letter-spacing: 0.17em;
+        }
+
+        .research-copy-strong {
+          color: #FFFFFF;
+          font-weight: 800;
+          letter-spacing: 0.14em;
+        }
+
+        @media (max-width: 767px) {
+          .research-title {
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: clamp(42px, 16vw, 76px);
+            letter-spacing: 0.08em;
+          }
+
+          .research-title-megha::before {
+            left: -0.14em;
+            width: 1.55em;
+            filter: blur(10px);
+          }
+
+          .research-copy {
+            margin-left: 0;
+            font-size: clamp(14px, 4.2vw, 18px);
+            line-height: 1.45;
+            letter-spacing: 0.12em;
+          }
+
+          .research-copy-line {
+            white-space: normal;
+          }
+
+          .research-copy-highlight {
+            letter-spacing: 0.1em;
+          }
+
+          .research-copy-strong {
+            letter-spacing: 0.1em;
+          }
         }
 
         .research-signal-line {
           position: relative;
           display: block;
+          overflow: visible;
           background:
             linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 6%, rgba(255,255,255,0.38) 48%, rgba(255,255,255,0.18) 94%, transparent 100%),
             linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.02) 12%, rgba(255,255,255,0.52) 36%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.52) 64%, rgba(255,255,255,0.02) 88%, transparent 100%);
@@ -273,7 +345,24 @@ export default function ResearchPage() {
           animation: researchSignalSweep 5s linear infinite;
         }
 
-        .research-signal-line::before,
+        .research-signal-line::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: -16px;
+          width: 1px;
+          height: 5200px;
+          background: linear-gradient(
+            180deg,
+            rgba(255,255,255,0.62),
+            rgba(255,255,255,0.76) 6%,
+            rgba(255,255,255,0.52) 58%,
+            rgba(255,255,255,0.24) 100%
+          );
+          box-shadow: 0 0 8px rgba(255,255,255,0.22);
+          pointer-events: none;
+        }
+
         .research-signal-line::after {
           content: none;
         }
@@ -359,13 +448,37 @@ export default function ResearchPage() {
 
         .research-right-shape {
           position: absolute;
-          right: clamp(-170px, -8.8vw, -88px);
-          top: clamp(155px, 17vw, 265px);
-          width: clamp(260px, 25vw, 405px);
-          opacity: 0.96;
-          filter: saturate(1.08) contrast(1.05) brightness(0.94);
+          right: clamp(-500px, -24vw, -235px);
+          top: clamp(292px, 33vw, 515px);
+          width: clamp(570px, 49.4vw, 947px);
+          height: clamp(1080px, 94vw, 1803px);
+          object-fit: contain;
+          object-position: center top;
+          opacity: 0.92;
+          filter: saturate(1.08) contrast(1.06) brightness(0.96);
           pointer-events: none;
-          z-index: 5;
+          z-index: 4;
+        }
+
+        .research-autonomy-label {
+          position: absolute;
+          right: clamp(-10px, 0.2vw, 6px);
+          top: clamp(122px, 12vw, 220px);
+          z-index: 6;
+          writing-mode: vertical-rl;
+          text-orientation: mixed;
+          white-space: nowrap;
+          color: #FFF;
+          font-family: "Research Yapari Regular", "Yapari Trial", "Azonix", sans-serif;
+          font-size: clamp(38px, 4.25vw, 78px);
+          font-style: normal;
+          font-weight: 400;
+          line-height: 1;
+          letter-spacing: 0.045em;
+          text-transform: uppercase;
+          opacity: 0.43;
+          pointer-events: none;
+          user-select: none;
         }
 
         .research-problems-content {
@@ -402,30 +515,30 @@ export default function ResearchPage() {
 
         .research-followup-section {
           position: relative;
+          isolation: isolate;
         }
 
         .research-followup-section::before {
           content: "";
           position: absolute;
-          left: -12%;
-          top: 4%;
-          width: min(34vw, 420px);
-          height: min(56vw, 640px);
-          background: radial-gradient(circle, rgba(186, 154, 47, 0.42), rgba(186, 154, 47, 0) 72%);
-          filter: blur(42px);
+          left: -16%;
+          right: -16%;
+          top: 16%;
+          height: 68%;
+          z-index: 0;
+          background:
+            radial-gradient(ellipse at 4% 34%, rgba(243, 208, 93, 0.36), rgba(243, 208, 93, 0.12) 26%, rgba(243, 208, 93, 0) 58%),
+            radial-gradient(ellipse at 96% 48%, rgba(93, 110, 243, 0.38), rgba(93, 110, 243, 0.14) 28%, rgba(93, 110, 243, 0) 60%),
+            linear-gradient(106deg, rgba(243, 208, 93, 0.08), rgba(2, 4, 9, 0) 48%, rgba(93, 110, 243, 0.1));
+          filter: blur(18px);
+          opacity: 0.7;
+          -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 76%, transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 76%, transparent 100%);
           pointer-events: none;
         }
 
         .research-followup-section::after {
-          content: "";
-          position: absolute;
-          right: -10%;
-          top: 10%;
-          width: min(28vw, 360px);
-          height: min(44vw, 520px);
-          background: radial-gradient(circle, rgba(72, 83, 192, 0.22), rgba(72, 83, 192, 0) 72%);
-          filter: blur(30px);
-          pointer-events: none;
+          content: none;
         }
 
         .research-shahed-stage {
@@ -495,17 +608,19 @@ export default function ResearchPage() {
         .research-cost-panel::before {
           content: "";
           position: absolute;
-          left: -10%;
+          left: -8%;
           right: -8%;
-          top: 52%;
-          height: 42%;
+          top: 62%;
+          height: 34%;
           z-index: 0;
           background:
-            radial-gradient(circle at 8% 82%, rgba(243, 208, 93, 0.46), rgba(243, 208, 93, 0.18) 30%, rgba(243, 208, 93, 0) 62%),
-            radial-gradient(circle at 88% 78%, rgba(93, 110, 243, 0.48), rgba(93, 110, 243, 0.18) 32%, rgba(93, 110, 243, 0) 64%),
-            linear-gradient(105deg, rgba(243, 208, 93, 0.18) 0%, rgba(6, 7, 12, 0.02) 48%, rgba(93, 110, 243, 0.2) 100%);
-          filter: blur(26px);
-          opacity: 0.62;
+            radial-gradient(ellipse at 6% 82%, rgba(243, 208, 93, 0.34), rgba(243, 208, 93, 0.1) 30%, rgba(243, 208, 93, 0) 64%),
+            radial-gradient(ellipse at 92% 78%, rgba(93, 110, 243, 0.36), rgba(93, 110, 243, 0.1) 32%, rgba(93, 110, 243, 0) 66%),
+            linear-gradient(105deg, rgba(243, 208, 93, 0.12) 0%, rgba(6, 7, 12, 0) 50%, rgba(93, 110, 243, 0.14) 100%);
+          filter: blur(30px);
+          opacity: 0.52;
+          -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 26%, #000 72%, transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0%, #000 26%, #000 72%, transparent 100%);
           pointer-events: none;
         }
 
@@ -553,9 +668,10 @@ export default function ResearchPage() {
           position: absolute;
           inset: -20%;
           background:
-            radial-gradient(circle at 18% 58%, rgba(186, 154, 47, 0.28), rgba(186, 154, 47, 0) 45%),
-            radial-gradient(circle at 90% 28%, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 36%);
-          filter: blur(24px);
+            radial-gradient(circle at 18% 58%, rgba(243, 208, 93, 0.16), rgba(243, 208, 93, 0) 45%),
+            radial-gradient(circle at 88% 30%, rgba(93, 110, 243, 0.16), rgba(93, 110, 243, 0) 42%);
+          filter: blur(28px);
+          opacity: 0.76;
           pointer-events: none;
           z-index: -1;
         }
@@ -728,9 +844,17 @@ export default function ResearchPage() {
           }
 
           .research-right-shape {
-            right: clamp(-145px, -34vw, -88px);
-            top: clamp(230px, 70vw, 360px);
-            width: clamp(220px, 62vw, 330px);
+            right: clamp(-270px, -56vw, -138px);
+            top: clamp(304px, 70vw, 470px);
+            width: clamp(480px, 98vw, 650px);
+            height: clamp(900px, 178vw, 1180px);
+          }
+
+          .research-autonomy-label {
+            right: clamp(-10px, 0.2vw, 4px);
+            top: clamp(128px, 34vw, 220px);
+            font-size: clamp(30px, 8.5vw, 50px);
+            opacity: 0.3;
           }
 
           .research-shahed-stage {
@@ -784,7 +908,7 @@ export default function ResearchPage() {
 
         .cost-table {
           width: 100%;
-          min-width: 680px;
+          min-width: 600px;
           border-collapse: collapse;
         }
 
@@ -794,9 +918,9 @@ export default function ResearchPage() {
         }
 
         .cost-th {
-          padding: 0 24px 16px;
+          padding: 0 18px 14px;
           font-family: "Research Plus Jakarta", "Plus Jakarta Sans", Arial, sans-serif;
-          font-size: clamp(13px, 1vw, 18px);
+          font-size: clamp(12px, 0.95vw, 16px);
           font-weight: 700;
           letter-spacing: 0;
           text-transform: uppercase;
@@ -824,7 +948,7 @@ export default function ResearchPage() {
         }
 
         .cost-td {
-          padding: 11px 24px;
+          padding: 10px 18px;
           font-family: "Research Plus Jakarta", "Plus Jakarta Sans", Arial, sans-serif;
           font-size: clamp(12px, 0.88vw, 15px);
           line-height: 1.35;
@@ -836,9 +960,9 @@ export default function ResearchPage() {
           border-left: 1px solid rgba(255,255,255,0.28);
         }
 
-        .cost-td-system { width: 34%; }
-        .cost-td-cost   { width: 22%; font-weight: 500; white-space: nowrap; text-align: center; }
-        .cost-td-meaning{ width: 46%; }
+        .cost-td-system { width: 33%; }
+        .cost-td-cost   { width: 20%; font-weight: 500; white-space: nowrap; text-align: center; }
+        .cost-td-meaning{ width: 47%; }
 
         .cost-tr-megha .cost-td-system  { color: #E3E41B; font-weight: 600; }
         .cost-tr-megha .cost-td-cost    { color: #E3E41B; }
@@ -923,7 +1047,7 @@ export default function ResearchPage() {
           color: rgba(255,255,255,0.54);
         }
 
-        @media (max-width: 767px) {
+        @media (max-width: 639px) {
           .cost-stats-grid {
             grid-template-columns: repeat(2, 1fr);
           }
@@ -942,182 +1066,6 @@ export default function ResearchPage() {
           }
         }
 
-        /* ── // 04 — Capabilities & ISR ───────────────────────── */
-
-        .isr-section {
-          position: relative;
-          z-index: 1;
-          overflow: hidden;
-        }
-
-        .isr-glass {
-          position: absolute;
-          top: 0;
-          right: 0;
-          height: 100%;
-          width: clamp(300px, 48vw, 820px);
-          object-fit: cover;
-          object-position: right center;
-          opacity: 0.3;
-          mix-blend-mode: screen;
-          pointer-events: none;
-          user-select: none;
-          z-index: 0;
-        }
-
-        /* blue (#5D6EF3) + gold (#F3D05D) colour grade, layered OVER the glass so the
-           texture reads tinted instead of washing the section out to grey */
-        .isr-bg-glow {
-          position: absolute;
-          inset: 0;
-          z-index: 1;
-          pointer-events: none;
-          background:
-            radial-gradient(circle at 4% 6%, rgba(93, 110, 243, 0.38), rgba(93, 110, 243, 0) 38%),
-            radial-gradient(circle at 98% 16%, rgba(243, 208, 93, 0.20), rgba(243, 208, 93, 0) 36%),
-            radial-gradient(circle at 2% 98%, rgba(243, 208, 93, 0.36), rgba(243, 208, 93, 0) 44%),
-            radial-gradient(circle at 100% 94%, rgba(93, 110, 243, 0.40), rgba(93, 110, 243, 0) 46%),
-            linear-gradient(118deg, rgba(243, 208, 93, 0.12) 0%, rgba(8, 8, 14, 0) 48%, rgba(93, 110, 243, 0.16) 100%);
-        }
-
-        .isr-inner {
-          position: relative;
-          z-index: 2;
-        }
-
-        .isr-kicker {
-          margin-top: 0;
-          font-family: "Research Plus Jakarta", "Plus Jakarta Sans", Arial, sans-serif;
-          font-size: 14px;
-          font-weight: 400;
-          letter-spacing: 0.04em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.72);
-        }
-
-        .isr-title {
-          margin-top: 16px;
-          max-width: 1180px;
-          font-family: "Research Yapari", "Yapari Trial", "Azonix", sans-serif;
-          font-size: clamp(30px, 4vw, 64px);
-          line-height: 0.96;
-          font-weight: 700;
-          letter-spacing: 0;
-          text-transform: uppercase;
-          text-wrap: balance;
-          color: #FFFFFF;
-        }
-
-        .isr-title .isr-accent {
-          color: #E3E41B;
-        }
-
-        .isr-intro {
-          margin-top: 24px;
-          max-width: 760px;
-          font-family: "Research Plus Jakarta", "Plus Jakarta Sans", Arial, sans-serif;
-          font-size: clamp(13px, 0.95vw, 16px);
-          line-height: 1.6;
-          font-weight: 400;
-          color: rgba(255,255,255,0.74);
-        }
-
-        .isr-grid {
-          display: grid;
-          grid-template-columns: minmax(0, 1fr);
-          gap: 16px;
-          margin-top: 44px;
-          max-width: 1180px;
-        }
-
-        .isr-card {
-          position: relative;
-          padding: 22px 22px 24px;
-          border-radius: 18px;
-          border: 1px solid rgba(255,255,255,0.14);
-          background:
-            linear-gradient(150deg, rgba(255,255,255,0.05), rgba(255,255,255,0.012)),
-            rgba(10, 12, 20, 0.42);
-          backdrop-filter: blur(6px);
-          transition: border-color 0.25s ease, transform 0.25s ease;
-        }
-
-        .isr-card:hover {
-          border-color: rgba(227, 228, 27, 0.5);
-          transform: translateY(-3px);
-        }
-
-        .isr-card-num {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: 30px;
-          height: 22px;
-          border-radius: 6px;
-          background: rgba(227, 228, 27, 0.16);
-          font-family: "Research Plus Jakarta", "Plus Jakarta Sans", Arial, sans-serif;
-          font-size: 12px;
-          font-weight: 700;
-          letter-spacing: 0.02em;
-          color: #E3E41B;
-        }
-
-        .isr-card-title {
-          margin-top: 16px;
-          font-family: "Research Plus Jakarta", "Plus Jakarta Sans", Arial, sans-serif;
-          font-size: clamp(16px, 1.25vw, 20px);
-          line-height: 1.12;
-          font-weight: 700;
-          color: #FFFFFF;
-        }
-
-        .isr-card-body {
-          margin-top: 12px;
-          font-family: "Research Plus Jakarta", "Plus Jakarta Sans", Arial, sans-serif;
-          font-size: clamp(12px, 0.9vw, 14px);
-          line-height: 1.5;
-          font-weight: 400;
-          color: rgba(255,255,255,0.7);
-        }
-
-        .isr-tagline {
-          margin: 60px 0 0;
-          font-family: "Research Yapari", "Yapari Trial", "Azonix", sans-serif;
-          font-size: clamp(24px, 3vw, 50px);
-          line-height: 1;
-          font-weight: 700;
-          letter-spacing: 0;
-          text-transform: uppercase;
-          color: #E3E41B;
-        }
-
-        .isr-outro {
-          margin-top: 22px;
-          max-width: 900px;
-          font-family: "Research Plus Jakarta", "Plus Jakarta Sans", Arial, sans-serif;
-          font-size: clamp(13px, 0.95vw, 16px);
-          line-height: 1.6;
-          font-weight: 400;
-          color: rgba(255,255,255,0.74);
-        }
-
-        .isr-outro strong {
-          color: #FFFFFF;
-          font-weight: 700;
-        }
-
-        @media (min-width: 700px) {
-          .isr-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-          }
-        }
-
-        @media (min-width: 1024px) {
-          .isr-grid {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 18px;
-          }
-        }
       `}</style>
 
       <section className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1500px] flex-col px-7 pt-44 pb-16 sm:px-14 sm:pt-48 lg:px-24 lg:pt-52">
@@ -1127,23 +1075,34 @@ export default function ResearchPage() {
 
         <div className="relative z-10 max-w-[1180px]">
           <h1 className="research-title uppercase text-white">
-            ME<span className="text-[#E3E41B]">G</span>HA UAS
+            <span className="research-title-word research-title-megha">
+              <span className="research-title-m">M</span>E
+              <span className="research-title-g">G</span>HA
+            </span>
+            <span className="research-title-word">UAS</span>
           </h1>
 
-          <p className="research-copy mt-6 max-w-[980px] uppercase text-white/78">
-            A new class of{" "}
-            <strong className="font-bold text-white">
-              low-cost, 3D-printed, edge-autonomous
-            </strong>{" "}
-            aerial systems built to win the wars of mass - commanded in their
-            thousands by a single operator through{" "}
-            <strong className="font-bold text-white">ARC OS</strong>, and built
-            to keep human warfighters out of the kill zone.
+          <p className="research-copy mt-12">
+            <span className="research-copy-line">
+              A New Class Of{" "}
+              <span className="research-copy-highlight">
+                Low-Cost, 3D-Printed, Edge-Autonomous
+              </span>{" "}
+              Aerial Systems Built
+            </span>
+            <span className="research-copy-line">
+              To Win The Wars Of Mass — Commanded In Their Thousands By A Single
+              Operator
+            </span>
+            <span className="research-copy-line">
+              Through <span className="research-copy-strong">ARC OS</span>, And
+              Built To Keep Human Warfighters Out Of The Kill Zone.
+            </span>
           </p>
 
           <div
             aria-hidden="true"
-            className="research-signal-line mt-12 h-px w-full max-w-[1180px]"
+            className="research-signal-line mt-2 h-px w-full max-w-[1100px]"
           />
         </div>
 
@@ -1234,6 +1193,9 @@ export default function ResearchPage() {
             alt=""
             draggable="false"
           />
+          <div className="research-autonomy-label" aria-hidden="true">
+            AUTONOMY
+          </div>
         </div>
       </section>
 
@@ -1340,56 +1302,7 @@ export default function ResearchPage() {
         </div>
       </section>
 
-      <section
-        id="capabilities-isr"
-        className="isr-section relative z-10 mx-auto w-full max-w-[1500px] px-7 pt-20 pb-32 sm:px-14 sm:pt-24 lg:px-24"
-      >
-        <div className="isr-bg-glow" aria-hidden="true" />
-        <img
-          className="isr-glass"
-          src={glassFragmentsImage}
-          alt=""
-          draggable="false"
-          aria-hidden="true"
-        />
-
-        <div className="isr-inner">
-          <p className="isr-kicker">// 04 — Capabilities &amp; ISR</p>
-
-          <h2 className="isr-title">
-            Man-Portable, Edge-
-            <span className="isr-accent">Intelligent</span>, Persistent Eyes
-            on the Battlefield
-          </h2>
-
-          <p className="isr-intro">
-            The MEGHA series includes dedicated ISR patrol drones — light,
-            man-portable aircraft built to see everything, persistently,
-            without putting a soldier in harm's way. Carried in a pack,
-            launched by hand, and commanded by one operator.
-          </p>
-
-          <div className="isr-grid">
-            {isrCapabilities.map((cap) => (
-              <article className="isr-card" key={cap.id}>
-                <span className="isr-card-num">{cap.id}</span>
-                <h3 className="isr-card-title">{cap.title}</h3>
-                <p className="isr-card-body">{cap.body}</p>
-              </article>
-            ))}
-          </div>
-
-          <p className="isr-tagline">See first. Decide first. Act first.</p>
-
-          <p className="isr-outro">
-            An ISR patrol that detects the threat before the enemy is aware of
-            you is worth more than any weapon fired blind — turning raw
-            airspace into{" "}
-            <strong>persistent, AI-enhanced awareness</strong> while soldiers
-            stay out of the kill zone.
-          </p>
-        </div>
-      </section>
+      <ResearchPage2 />
 
     </main>
   );
