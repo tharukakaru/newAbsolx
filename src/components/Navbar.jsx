@@ -213,11 +213,26 @@ import { useState, useEffect } from "react";
 import MenuItem from "../components/MenuItem";
 import logo from "../assets/images/new-logo.svg";
 
+// Menu labels shown in the navbar. Items with a `path` navigate; the rest
+// simply highlight on click until their page exists.
+const MENU_ITEMS = [
+  { label: "HOME", path: "/" },
+  { label: "AEC OS", path: "/aec-os" },
+  { label: "MEGHA UAS", path: "/research" },
+  { label: "ENTERPRISE" },
+  { label: "AUTONOMY" },
+  { label: "GROWFORCE" },
+  { label: "ABOUT" },
+];
+
 export function Navbar({ currentPath = "/", onNavigate }) {
   const [openMobile, setOpenMobile] = useState(false);
 
-  const [activeMenu, setActiveMenu] = useState("HOME");
-  const isResearchPage = currentPath === "/research";
+  const [selectedMenu, setSelectedMenu] = useState(null);
+  const routeActiveMenu =
+    MENU_ITEMS.find((item) => item.path === currentPath)?.label ?? "HOME";
+  const activeMenu =
+    selectedMenu?.path === currentPath ? selectedMenu.label : routeActiveMenu;
 
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -238,21 +253,15 @@ export function Navbar({ currentPath = "/", onNavigate }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-  useEffect(() => {
-    setActiveMenu(currentPath === "/research" ? "RESEARCH" : "HOME");
-  }, [currentPath]);
-
   /* ---------------- HANDLERS ---------------- */
-  const handleMenuClick = (menu) => {
-    setActiveMenu(menu);
-
-    if (menu === "HOME") {
-      onNavigate?.("/");
+  const handleMenuClick = (item) => {
+    if (item.path) {
+      setSelectedMenu(null);
+      onNavigate?.(item.path);
+      return;
     }
 
-    if (menu === "RESEARCH") {
-      onNavigate?.("/research");
-    }
+    setSelectedMenu({ label: item.label, path: currentPath });
   };
 
   /* ---------------- RENDER ---------------- */
@@ -278,39 +287,20 @@ export function Navbar({ currentPath = "/", onNavigate }) {
 
         {/* DESKTOP MENU */}
         <div className="hidden lg:flex flex-1 justify-center">
-          <div className="flex items-center gap-8 xl:gap-12 text-[10px] xl:text-[11px] font-azonix tracking-[2px]">
-            {["HOME","RESEARCH","GOVERNMENT","ENTERPRISE","SAFETY","COMPANY"].map((m)=>(
+          <div className="flex items-center gap-5 xl:gap-8 font-azonix">
+            {MENU_ITEMS.map((item) => (
               <MenuItem
-                key={m}
-                active={activeMenu === m}
-                onClick={() => handleMenuClick(m)}
+                key={item.label}
+                active={activeMenu === item.label}
+                onClick={() => handleMenuClick(item)}
               >
-                {m}
+                {item.label}
               </MenuItem>
             ))}
           </div>
         </div>
 
-        {/* CTA BUTTON — Updated to neon style */}
-        {!isResearchPage && (
-          <button
-            className="
-              hidden lg:block
-              px-4 py-[3px]
-              rounded-full
-              text-[10px]
-              tracking-[2px]
-              font-azonix
-              text-[#C7D65A]
-              border border-[#C7D65A]/70
-              shadow-[0_0_8px_rgba(234,255,0,0.35)]
-              hover:bg-[#C7D65A] hover:text-black
-              transition-all duration-200
-            "
-          >
-            TRY NOW
-          </button>
-        )}
+        <div className="hidden lg:block h-[50px] w-[50px]" aria-hidden="true" />
 
         {/* MOBILE BURGER */}
         <button
@@ -333,26 +323,18 @@ export function Navbar({ currentPath = "/", onNavigate }) {
           border-t border-[#C7D65A]/20
           p-6 animate-mobileMenu
         ">
-          <div className="flex flex-col gap-5 text-white font-azonix text-[11px] tracking-[3px]">
+          <div className="flex flex-col gap-5 text-white font-azonix text-[13px] tracking-[1.82px]">
 
-            {["HOME","RESEARCH","GOVERNMENT","ENTERPRISE","SAFETY","COMPANY"].map((m)=>(
+            {MENU_ITEMS.map((item) => (
               <button
-                key={m}
-                onClick={() => { handleMenuClick(m); setOpenMobile(false); }}
-                className={`${activeMenu === m ? "text-[#C7D65A]" : ""}`}
+                key={item.label}
+                onClick={() => { handleMenuClick(item); setOpenMobile(false); }}
+                className={`${activeMenu === item.label ? "text-[#C7D65A]" : "text-[#F1F1F1]"}`}
               >
-                {m}
+                {item.label}
               </button>
             ))}
 
-            {!isResearchPage && (
-              <button className="
-                mt-3 px-4 py-2 rounded-full border border-[#C7D65A]/60
-                text-[#C7D65A] tracking-[2px]
-              ">
-                TRY NOW
-              </button>
-            )}
           </div>
         </div>
       )}

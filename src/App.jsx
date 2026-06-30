@@ -12,6 +12,7 @@ import Footer from "./components/Footer";
 import Drone from "./components/drone";
 import DroneSubSection from "./components/dronesub-section";
 import ResearchPage from "./components/ResearchPage";
+import ArsOs from "./components/ArsOs";
 
 function HomePage() {
   return (
@@ -137,6 +138,7 @@ export default function App() {
   };
 
   const isResearchPage = path === "/research";
+  const isAecOsPage = path === "/aec-os";
 
   return (
     <div className="relative w-full min-h-screen bg-black overflow-x-hidden">
@@ -146,6 +148,8 @@ export default function App() {
           <ResearchPage />
           <Footer showReadmeBridge={false} variant="research" />
         </>
+      ) : isAecOsPage ? (
+        <ArsOs />
       ) : (
         <HomePage />
       )}
