@@ -30,7 +30,7 @@ export default function Drone() {
 
         .drone-root {
           --drone-yellow: #e5e51b;
-          --drone-stage-height: clamp(760px, 71vw, 1120px);
+          --drone-stage-height: clamp(650px, 62.5vw, 920px);
           min-height: var(--drone-stage-height);
           font-family: "Source Code Pro", ui-monospace, SFMono-Regular, Menlo, monospace;
         }
@@ -53,10 +53,12 @@ export default function Drone() {
           width: 104%;
           height: 108%;
           object-fit: cover;
-          object-position: 48% 50%;
+          object-position: 48% 100%;
           opacity: 0.83;
           pointer-events: none;
           user-select: none;
+          transform: scale(1.4);
+          transform-origin: 50% 100%;
         }
 
         .drone-ambient {
@@ -65,12 +67,13 @@ export default function Drone() {
           z-index: 2;
           pointer-events: none;
           background:
-            radial-gradient(44% 46% at 10% 57%, rgba(74, 92, 226, 0.66), rgba(28, 38, 116, 0.34) 42%, transparent 74%),
+            radial-gradient(48% 52% at 8% 30%, rgba(74, 92, 226, 0.66), rgba(28, 38, 116, 0.34) 42%, transparent 74%),
             radial-gradient(35% 44% at 96% 81%, rgba(116, 104, 22, 0.18), transparent 68%),
             linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, transparent 19%, transparent 79%, rgba(0, 0, 0, 0.48) 100%);
         }
 
         .drone-command-view {
+          display: none;
           position: absolute;
           z-index: 8;
           left: 4.4%;
@@ -131,16 +134,18 @@ export default function Drone() {
         .drone-command-meta {
           position: absolute;
           z-index: 12;
-          left: 13.4%;
-          top: 53.45%;
+          left: 50%;
+          top: 3.7%;
           margin: 0;
-          max-width: 66%;
+          width: 76%;
           color: rgba(255, 255, 255, 0.78);
-          font-size: clamp(6px, 0.54vw, 10px);
+          font-size: clamp(9px, 1.25vw, 16px);
           line-height: 1.15;
           letter-spacing: 0.055em;
+          text-align: center;
           text-transform: uppercase;
           white-space: nowrap;
+          transform: translateX(-50%);
         }
 
         .drone-command-meta span {
@@ -151,7 +156,7 @@ export default function Drone() {
           position: absolute;
           z-index: 15;
           left: 54%;
-          top: 58.2%;
+          top: 11.5%;
           display: inline-flex;
           align-items: center;
           gap: clamp(12px, 1.4vw, 24px);
@@ -241,10 +246,16 @@ export default function Drone() {
           position: absolute;
           z-index: 9;
           left: 50%;
-          top: 77.5%;
+          top: 50%;
+          bottom: 0;
           width: 1px;
-          height: 18.5%;
-          background: linear-gradient(180deg, transparent, rgba(255,255,255,0.7) 18%, rgba(255,255,255,0.45) 86%, transparent);
+          height: auto;
+          background: linear-gradient(
+            180deg,
+            rgba(255,255,255,0.68) 0%,
+            rgba(255,255,255,0.58) 48%,
+            rgba(255,255,255,0.46) 100%
+          );
         }
 
         .drone-guide::before,
@@ -263,23 +274,24 @@ export default function Drone() {
         .drone-intel-label {
           position: absolute;
           z-index: 14;
-          left: 40.5%;
-          top: 72.2%;
-          width: clamp(170px, 17vw, 285px);
+          left: 50%;
+          top: 45.5%;
+          width: clamp(180px, 19vw, 300px);
           height: clamp(18px, 1.8vw, 30px);
           padding: 0 10px;
           color: rgba(255, 255, 255, 0.66);
           font-size: clamp(4.8px, 0.45vw, 8px);
           letter-spacing: 0.035em;
           white-space: nowrap;
+          transform: translateX(-50%);
         }
 
         .drone-assembly {
           position: absolute;
           z-index: 11;
-          left: 79%;
-          top: 91%;
-          width: clamp(560px, 55vw, 1000px);
+          left: 86%;
+          top: 68%;
+          width: clamp(620px, 66vw, 1080px);
           height: auto;
           opacity: 0.74;
           mix-blend-mode: screen;
@@ -291,11 +303,11 @@ export default function Drone() {
         .drone-copy {
           position: absolute;
           z-index: 16;
-          left: 8%;
-          bottom: 9.5%;
+          left: 7.5%;
+          bottom: 14.5%;
           margin: 0;
           font-family: "Yapari Trial Regular", "Yapari Trial", "Azonix", sans-serif;
-          font-size: clamp(20px, 1.95vw, 34px);
+          font-size: clamp(19px, 1.8vw, 30px);
           font-weight: 400;
           line-height: 0.88;
           letter-spacing: 0.035em;
@@ -311,7 +323,7 @@ export default function Drone() {
           position: absolute;
           z-index: 16;
           right: 3%;
-          top: 8%;
+          top: 2.5%;
           color: rgba(255, 255, 255, 0.42);
           font-family: "Yapari Trial Regular", "Yapari Trial", "Azonix", sans-serif;
           font-size: clamp(18px, 2.15vw, 38px);
@@ -337,9 +349,11 @@ export default function Drone() {
             width: 104%;
             height: 104.5%;
             object-position: 48% 50%;
+            transform: none;
           }
 
           .drone-command-view {
+            display: block;
             left: 4.3%;
             top: 12.4%;
             width: 81.4%;
@@ -350,8 +364,11 @@ export default function Drone() {
           .drone-command-meta {
             left: 12%;
             top: 53.35%;
+            width: auto;
             max-width: 72%;
             font-size: clamp(4.8px, 1.12vw, 7.5px);
+            text-align: left;
+            transform: none;
           }
 
           .drone-read-more {
@@ -373,6 +390,7 @@ export default function Drone() {
           .drone-guide {
             left: 48.8%;
             top: 67.4%;
+            bottom: auto;
             height: 25%;
           }
 
@@ -382,6 +400,7 @@ export default function Drone() {
             width: clamp(112px, 25vw, 162px);
             height: clamp(14px, 2.8vw, 20px);
             font-size: clamp(3.8px, 0.72vw, 5.2px);
+            transform: none;
           }
 
           .drone-assembly {

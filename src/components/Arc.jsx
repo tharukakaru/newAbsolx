@@ -1298,7 +1298,7 @@ export default function Arc() {
             --arc-war-top: 136px;
             --arc-copy-top: 130px;
             --arc-copy-right: 14px;
-            --arc-copy-width: 324px;
+            --arc-copy-width: clamp(230px, calc(51vw - 100px), 324px);
             --arc-upper-spine-top: 154px;
             --arc-upper-spine-end: 268px;
           }
@@ -1343,7 +1343,29 @@ export default function Arc() {
           }
 
           .arc-os-product-title {
-            font-size: 38px;
+            font-size: clamp(26px, 3.72vw, 38px);
+          }
+
+          .arc-os-product:first-child .arc-os-product-lock {
+            transform: translateX(-1.2vw);
+          }
+
+          .arc-os-product:nth-child(2) .arc-os-product-lock {
+            font-size: clamp(23px, 3.32vw, 34px);
+            transform: translateX(-0.8vw);
+          }
+
+          .arc-os-product:nth-child(3) .arc-os-product-lock {
+            font-size: clamp(24px, 3.52vw, 36px);
+            transform: translateX(2.4vw);
+          }
+
+          .arc-os-product:first-child .arc-os-product-body {
+            transform: translateX(-1.9vw);
+          }
+
+          .arc-os-product:nth-child(2) .arc-os-product-body {
+            transform: translate(-0.85vw, 5px);
           }
 
           .arc-os-product-body {
@@ -1515,6 +1537,10 @@ export default function Arc() {
             display: block;
             left: 15%;
             right: 15%;
+          }
+
+          .arc-os-product:nth-child(3) .arc-os-product-rule {
+            display: none;
           }
 
           .arc-os-product:nth-child(2)::after {

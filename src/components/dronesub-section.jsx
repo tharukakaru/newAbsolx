@@ -162,7 +162,9 @@ export default function DroneSubSection() {
           inset: 0;
           background: linear-gradient(
             180deg,
-            rgba(0,0,0,0.1) 0%,
+            rgba(0,0,0,0.82) 0%,
+            rgba(0,0,0,0.42) 5%,
+            rgba(0,0,0,0.12) 14%,
             rgba(0,0,0,0.28) 58%,
             rgba(0,0,0,0.72) 86%,
             #000 100%
@@ -700,7 +702,7 @@ export default function DroneSubSection() {
           }
 
           .drone-sub-title {
-            font-size: clamp(42px, 12.2vw, 78px);
+            font-size: clamp(30px, 9.8vw, 78px);
             line-height: 0.94;
             letter-spacing: clamp(1px, 0.7vw, 3px);
           }
@@ -719,9 +721,17 @@ export default function DroneSubSection() {
             padding: 0 22px 80px;
           }
 
-          .drone-sub-rule,
-          .drone-sub-badge {
+          .drone-sub-rule {
             display: none;
+          }
+
+          .drone-sub-badge {
+            position: relative;
+            left: auto;
+            top: auto;
+            display: flex;
+            width: max-content;
+            margin: 4px auto 18px;
           }
 
           .drone-sub-feature,
@@ -760,7 +770,23 @@ export default function DroneSubSection() {
           }
 
           .drone-sub-copy h3 {
-            font-size: clamp(24px, 8vw, 42px);
+            font-size: clamp(22px, 7vw, 42px);
+            white-space: normal;
+          }
+
+          .drone-sub-copy ul {
+            font-size: clamp(9px, 2.6vw, 11px);
+            line-height: 1.5;
+          }
+
+          .drone-sub-feature-copy p {
+            font-size: clamp(9px, 2.6vw, 11px);
+            line-height: 1.5;
+          }
+
+          .drone-sub-feature-copy h3,
+          .drone-sub-subtitle {
+            font-size: clamp(10px, 3vw, 13px);
           }
 
           .drone-ops-root {
@@ -785,7 +811,7 @@ export default function DroneSubSection() {
             gap: 14px;
             width: 100%;
             transform: none;
-            font-size: clamp(35px, 9.6vw, 64px);
+            font-size: clamp(24px, 7.6vw, 64px);
             line-height: 0.96;
             text-align: center;
             white-space: normal;
