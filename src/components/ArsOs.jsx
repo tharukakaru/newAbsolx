@@ -407,6 +407,10 @@ export default function ArsOs() {
           mix-blend-mode: screen;
           user-select: none;
           pointer-events: none;
+          /* Fade the lower edge so the image's own dark tone doesn't print
+             a hard rectangle seam against the HYENA section below. */
+          -webkit-mask-image: linear-gradient(180deg, #000 84%, transparent 100%);
+          mask-image: linear-gradient(180deg, #000 84%, transparent 100%);
         }
 
         /* Description copy overlaid on the upper-left area. */
@@ -433,10 +437,11 @@ export default function ArsOs() {
           line-height: 1.16;
         }
 
-        /* White vertical guide line down the left edge. */
+        /* White vertical guide line down the left edge. Starts here and must
+           continue seamlessly into the sections below — no fade at the bottom. */
         .ars-os-vline {
           position: absolute;
-          left: clamp(22px, 4vw, 70px);
+          left: clamp(22px, 4.1vw, 70px);
           top: clamp(8px, 1.6vw, 24px);
           bottom: 0;
           width: 1px;
@@ -445,8 +450,7 @@ export default function ArsOs() {
             180deg,
             rgba(255, 255, 255, 0) 0%,
             rgba(255, 255, 255, 0.55) 7%,
-            rgba(255, 255, 255, 0.55) 84%,
-            rgba(255, 255, 255, 0) 100%
+            rgba(255, 255, 255, 0.5) 100%
           );
         }
 
@@ -466,10 +470,6 @@ export default function ArsOs() {
 
           .ars-os-hl {
             font-size: clamp(14px, 4vw, 20px);
-          }
-
-          .ars-os-vline {
-            left: 14px;
           }
         }
       `}</style>
@@ -512,6 +512,8 @@ export default function ArsOs() {
           font-family: "Plus Jakarta Sans", Arial, sans-serif;
         }
 
+        /* Continuation of the page-long guide line — solid so it joins the
+           intro above and SENTINEL below without a visible break. */
         .hyena-vline {
           position: absolute;
           left: clamp(22px, 4.1vw, 70px);
@@ -519,13 +521,7 @@ export default function ArsOs() {
           bottom: 0;
           width: 1px;
           z-index: 2;
-          background: linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(255, 255, 255, 0.5) 5%,
-            rgba(255, 255, 255, 0.5) 93%,
-            rgba(255, 255, 255, 0) 100%
-          );
+          background: rgba(255, 255, 255, 0.5);
         }
 
         .hyena-inner {
@@ -801,10 +797,13 @@ export default function ArsOs() {
           position: relative;
           width: 100%;
           /* Warm olive (#5e5124) ambient on the left, navy (#252c63) glow
-             down the right side — matching the reference. */
+             down the right side — matching the reference. The extra
+             bottom-right radial carries the navy into ARC C2's top-right
+             glow so the section seam has no hard edge. */
           background:
             radial-gradient(46% 70% at 0% 30%, rgba(94, 81, 36, 0.34), rgba(0, 0, 0, 0) 60%),
             radial-gradient(62% 96% at 100% 52%, rgba(37, 44, 99, 0.92), rgba(37, 44, 99, 0.34) 40%, rgba(0, 0, 0, 0) 80%),
+            radial-gradient(50% 40% at 100% 100%, rgba(37, 44, 99, 0.9), rgba(37, 44, 99, 0.28) 42%, rgba(0, 0, 0, 0) 76%),
             #000;
           overflow: hidden;
           isolation: isolate;
@@ -812,7 +811,8 @@ export default function ArsOs() {
           font-family: "Plus Jakarta Sans", Arial, sans-serif;
         }
 
-        /* White vertical guide line on the left, running the full height. */
+        /* White vertical guide line on the left — solid so the page-long
+           line runs unbroken from HYENA above into ARC C2 below. */
         .sentinel-vline {
           position: absolute;
           left: clamp(22px, 4.1vw, 70px);
@@ -820,13 +820,7 @@ export default function ArsOs() {
           bottom: 0;
           width: 1px;
           z-index: 2;
-          background: linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(255, 255, 255, 0.5) 3%,
-            rgba(255, 255, 255, 0.5) 97%,
-            rgba(255, 255, 255, 0) 100%
-          );
+          background: rgba(255, 255, 255, 0.5);
         }
 
         .sentinel-first-label {
@@ -1651,6 +1645,10 @@ export default function ArsOs() {
           background-blend-mode: screen;
           mix-blend-mode: screen;
           pointer-events: none;
+          /* Fully dissolve the image before the section edge. Keeping even a
+             little opacity at 100% exposes the rectangular image boundary. */
+          -webkit-mask-image: linear-gradient(180deg, #000 48%, rgba(0, 0, 0, 0.68) 64%, rgba(0, 0, 0, 0.2) 76%, transparent 90%);
+          mask-image: linear-gradient(180deg, #000 48%, rgba(0, 0, 0, 0.68) 64%, rgba(0, 0, 0, 0.2) 76%, transparent 90%);
         }
 
         .c2-terrain-line {

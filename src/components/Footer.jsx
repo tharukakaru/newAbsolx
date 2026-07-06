@@ -197,24 +197,34 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
         }
 
         .arc-os-footer {
-          margin-top: clamp(-70px, -4vw, -36px);
-          padding-top: clamp(72px, 7vw, 112px);
-          background: #000;
+          margin-top: clamp(-140px, -8vw, -96px);
+          padding-top: clamp(176px, 14vw, 230px);
+          background: transparent;
         }
 
-        .arc-os-footer-grid {
+        .arc-os-footer-shader {
           position: absolute;
-          inset: 0 0 auto;
-          height: 30%;
-          opacity: 0.16;
-          background-image:
-            repeating-linear-gradient(27deg, rgba(255,255,255,0.34) 0 1px, transparent 1px 24px),
-            repeating-linear-gradient(153deg, rgba(255,255,255,0.28) 0 1px, transparent 1px 24px);
-          background-position: center top;
-          transform: perspective(360px) rotateX(48deg) scaleX(1.2);
-          transform-origin: center top;
-          -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.72) 38%, transparent 82%);
-          mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.72) 38%, transparent 82%);
+          inset: 0;
+          background:
+            radial-gradient(52% 34% at 100% 0%, rgba(43, 37, 16, 0.78), rgba(43, 37, 16, 0.28) 48%, transparent 78%),
+            radial-gradient(58% 36% at 0% 0%, rgba(33, 40, 92, 0.64), rgba(33, 40, 92, 0.2) 48%, transparent 76%),
+            linear-gradient(180deg, #000 0%, #090b1b 22%, #1f275d 67%, #3b459a 100%);
+          -webkit-mask-image: linear-gradient(
+            to bottom,
+            transparent 0%,
+            rgba(0,0,0,0.18) 6%,
+            rgba(0,0,0,0.45) 11%,
+            rgba(0,0,0,0.72) 15%,
+            #000 19%
+          );
+          mask-image: linear-gradient(
+            to bottom,
+            transparent 0%,
+            rgba(0,0,0,0.18) 6%,
+            rgba(0,0,0,0.45) 11%,
+            rgba(0,0,0,0.72) 15%,
+            #000 19%
+          );
           pointer-events: none;
         }
 
@@ -358,19 +368,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
         </>
       ) : isArcOsFooter ? (
         <>
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,_#000_0%,_rgba(0,0,0,0.96)_12%,_rgba(11,14,37,0.94)_36%,_rgba(31,37,94,0.94)_68%,_#3b459a_100%)]"
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_100%,_rgba(112,128,255,0.42)_0%,_rgba(59,69,154,0.22)_40%,_rgba(0,0,0,0)_76%)]"
-          />
-          <div aria-hidden="true" className="arc-os-footer-grid" />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,0,0,0)_48%,_rgba(0,0,0,0.62)_100%)]"
-          />
+          <div aria-hidden="true" className="arc-os-footer-shader" />
         </>
       ) : (
         <>
