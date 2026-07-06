@@ -1,7 +1,13 @@
+import { useRef } from "react";
 import AnimatedLine from "../Utils/AnimatedLine";
+import useTextShuffle from "../Utils/useTextShuffle";
 import plusJakartaSans from "../assets/fonts/PlusJakartaSans[wght].ttf";
 import handsImage from "../assets/yertg 2.png";
 import swarmFigure from "../assets/gfjhjhjhjlhugh 1.png";
+import sentryFigure from "../assets/Gemini_Generated_Image_ghrd4sghrd4sghrd 1.png";
+import droneFigure from "../assets/Group 1000002154.png";
+import terrainMesh from "../assets/09f8626770d522bace35bbcf8ca7d0ff4eb5528d.png";
+import terrainDots from "../assets/2072e0a6f65bd90c64aec41f97bcfecf866d0c47.gif";
 
 const hyenaCards = [
   {
@@ -87,7 +93,66 @@ const sentinelTiers = [
   },
 ];
 
+const c2Steps = [
+  {
+    num: "1",
+    title: "SENSE",
+    body: "Ingest every sensor across domains and external feeds",
+  },
+  {
+    num: "2",
+    title: "MAKE SENSE",
+    body: "Fuse detections into one picture; classify; surface what matters.",
+  },
+  {
+    num: "3",
+    title: "DECIDE",
+    body: "AI generates options; the operator selects and authorises.",
+  },
+  {
+    num: "4",
+    title: "ACT",
+    body: "Task the assets; execute the authorised plan; re-plan.",
+  },
+  {
+    num: "5",
+    title: "ASSESS",
+    body: "Confirm outcome, update the picture, log for review",
+  },
+];
+
+const c2Capabilities = [
+  {
+    num: "1",
+    title: "COMMON OPERATING PICTURE",
+    body: "A mesh of affordable radar One fused entity/track picture from every sensor across every domain — the single source of truth..",
+  },
+  {
+    num: "2",
+    title: "OPEN INTEGRATION",
+    body: '"Any sensor, best effector" — schema-driven onboarding brings new devices into the picture without bespoke work.',
+  },
+  {
+    num: "3",
+    title: "MESH & EDGE",
+    body: "Distributed, resilient C2 that keeps deciding when links are denied — assets retain autonomy if the core is lost.",
+  },
+  {
+    num: "4",
+    title: "LEVELS OF AUTONOMY",
+    body: "A mesh of affordable radar In-the-loop, on-the-loop, or supervised — selectable per action class, always bounded and overridable.",
+  },
+];
+
 export default function ArsOs() {
+  const arcTitleRef = useRef(null);
+  const oTitleRef = useRef(null);
+  const sTitleRef = useRef(null);
+
+  useTextShuffle(arcTitleRef);
+  useTextShuffle(oTitleRef);
+  useTextShuffle(sTitleRef);
+
   return (
     <>
     <section className="ars-os-hero" aria-label="ARC OS">
@@ -175,6 +240,30 @@ export default function ArsOs() {
           filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.1));
         }
 
+        .ars-os-shuffle {
+          display: inline-block;
+          min-width: max-content;
+          text-align: center;
+          white-space: nowrap;
+        }
+
+        .ars-os-shuffle::before {
+          content: attr(data-target);
+          display: block;
+          height: 0;
+          overflow: hidden;
+          visibility: hidden;
+        }
+
+        .ars-os-shuffle .ltr {
+          display: inline-block;
+        }
+
+        .ars-os-shuffle.is-number-mode .ltr {
+          font-size: 0.5em;
+          letter-spacing: 0.02em;
+        }
+
         .ars-os-o {
           color: #f4ed15;
           text-shadow: 0 0 18px rgba(244, 237, 21, 0.12);
@@ -224,10 +313,31 @@ export default function ArsOs() {
       </div>
 
       <h1 className="ars-os-title">
-        <span className="ars-os-arc">ARC</span>
+        <span
+          ref={arcTitleRef}
+          className="ars-os-arc ars-os-shuffle"
+          data-initial="011803"
+          data-target="ARC"
+        >
+          ARC
+        </span>
         <span className="ars-os-os">
-          <span className="ars-os-o">O</span>
-          <span className="ars-os-s">S</span>
+          <span
+            ref={oTitleRef}
+            className="ars-os-o ars-os-shuffle"
+            data-initial="15"
+            data-target="O"
+          >
+            O
+          </span>
+          <span
+            ref={sTitleRef}
+            className="ars-os-s ars-os-shuffle"
+            data-initial="19"
+            data-target="S"
+          >
+            S
+          </span>
         </span>
       </h1>
     </section>
@@ -880,15 +990,141 @@ export default function ArsOs() {
           color: #ffffff;
         }
 
+        /* Lower scene: sentry on the left (in flow), drone + target-lock
+           annotation positioned against it on the right. */
+        .sentinel-scene {
+          position: relative;
+        }
+
+        /* Sentry-radar line-art anchored to the lower-left, just inside the
+           white guide line. Portrait 25/34, white background dropped via
+           screen blend against the black section. */
+        .sentinel-sentry {
+          display: block;
+          width: min(636px, 46vw);
+          max-width: 636px;
+          aspect-ratio: 25 / 34;
+          height: auto;
+          margin: clamp(40px, 6vw, 110px) 0 0;
+          object-fit: contain;
+          mix-blend-mode: screen;
+          user-select: none;
+          pointer-events: none;
+        }
+
+        /* FENRIR drone line-art on the right. The Group PNG is already the
+           final composite at its attack angle, so no extra rotation. */
+        .sentinel-drone {
+          position: absolute;
+          top: clamp(10px, 4vw, 80px);
+          right: clamp(0px, 2vw, 50px);
+          width: min(560px, 56vw);
+          height: auto;
+          object-fit: contain;
+          mix-blend-mode: screen;
+          user-select: none;
+          pointer-events: none;
+          z-index: 2;
+        }
+
+        /* TARGET LOCK readout, dropped below the drone on a thin leader line. */
+        .sentinel-target {
+          position: absolute;
+          top: clamp(300px, 38vw, 520px);
+          right: clamp(60px, 9vw, 200px);
+          z-index: 3;
+          font-family: "SourceCodePro", "Source Code Pro", ui-monospace, monospace;
+          pointer-events: none;
+        }
+
+        .sentinel-target::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: clamp(-96px, -11vw, -54px);
+          width: 1px;
+          height: clamp(54px, 11vw, 96px);
+          background: rgba(255, 255, 255, 0.5);
+        }
+
+        .sentinel-target-lock {
+          font-size: clamp(8px, 0.82vw, 13px);
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: #ff5a3c;
+        }
+
+        .sentinel-target-meta {
+          margin-top: 4px;
+          font-size: clamp(7px, 0.72vw, 11px);
+          font-weight: 400;
+          line-height: 1.55;
+          color: rgba(255, 255, 255, 0.82);
+        }
+
+        /* "SENTRY C— RADAR / NODE 01 UAS" callout in the gap between the
+           sentry and the drone, with a leader line on each side. */
+        .sentinel-radar-callout {
+          position: absolute;
+          top: clamp(110px, 22vw, 320px);
+          left: clamp(150px, 26vw, 470px);
+          right: clamp(120px, 20vw, 420px);
+          z-index: 3;
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+          text-align: center;
+          font-family: "Yapari Trial", "Yapari Trial Regular", "Azonix", sans-serif;
+          font-weight: 400;
+          letter-spacing: 1.6px;
+          text-transform: uppercase;
+          white-space: nowrap;
+          pointer-events: none;
+        }
+
+        .sentinel-radar-rule {
+          width: clamp(170px, 21vw, 320px);
+          height: 1px;
+          margin: clamp(3px, 0.5vw, 8px) auto;
+          background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.12),
+            rgba(255, 255, 255, 0.55) 40%,
+            rgba(255, 255, 255, 0.55) 60%,
+            rgba(255, 255, 255, 0.12)
+          );
+        }
+
+        .sentinel-radar-l1,
+        .sentinel-radar-l2 {
+          display: block;
+          color: #ffffff;
+          font-size: clamp(13px, 1.05vw, 20px);
+          font-weight: 400;
+        }
+
+        .sentinel-radar-l1 {
+          line-height: 100.05%;
+        }
+
+        .sentinel-radar-l2 {
+          line-height: 150%;
+        }
+
+        .sentinel-radar-y {
+          color: #e3e41b;
+        }
+
         /* Targeting reticle in the lower-right: yellow dashed crosshair
            framed by four white square brackets. */
         .sentinel-reticle {
           position: absolute;
-          right: clamp(20px, 4vw, 80px);
-          bottom: clamp(22px, 3.4vw, 64px);
+          right: clamp(0px, 1.5vw, 36px);
+          top: clamp(-44px, -2.4vw, -4px);
           width: clamp(52px, 6vw, 104px);
           height: clamp(52px, 6vw, 104px);
-          z-index: 3;
+          z-index: 4;
           opacity: 0.92;
           pointer-events: none;
         }
@@ -930,6 +1166,73 @@ export default function ArsOs() {
 
           .sentinel-first-label {
             display: none;
+          }
+
+          .sentinel-scene {
+            min-height: clamp(350px, 104vw, 560px);
+          }
+
+          .sentinel-sentry {
+            width: min(58vw, 360px);
+            margin-top: clamp(36px, 10vw, 64px);
+          }
+
+          .sentinel-drone {
+            top: clamp(66px, 20vw, 130px);
+            right: -3vw;
+            width: min(50vw, 340px);
+          }
+
+          .sentinel-radar-callout {
+            top: clamp(112px, 34vw, 210px);
+            left: 38%;
+            right: 18%;
+            letter-spacing: 0.6px;
+          }
+
+          .sentinel-radar-l1,
+          .sentinel-radar-l2 {
+            font-size: clamp(7px, 2vw, 10px);
+          }
+
+          .sentinel-target {
+            top: clamp(250px, 70vw, 420px);
+            right: clamp(3px, 1vw, 8px);
+            width: clamp(96px, 28vw, 126px);
+          }
+
+          .sentinel-target::before {
+            top: clamp(-74px, -14vw, -46px);
+            height: clamp(46px, 14vw, 74px);
+          }
+        }
+
+        @media (max-width: 560px) {
+          .sentinel-inner {
+            margin-left: 34px;
+            margin-right: 18px;
+          }
+
+          .sentinel-rule {
+            width: 28px;
+            margin-left: 0;
+          }
+
+          .sentinel-word {
+            font-size: clamp(31px, 11vw, 46px);
+            letter-spacing: 1px;
+          }
+
+          .sentinel-statement-text {
+            overflow-wrap: anywhere;
+          }
+
+          .sentinel-target {
+            right: 0;
+          }
+
+          .sentinel-target-meta {
+            overflow-wrap: anywhere;
           }
         }
       `}</style>
@@ -987,9 +1290,42 @@ export default function ArsOs() {
             // Escalation of force · monitor → warn → deter → intercept
           </div>
         </div>
-      </div>
 
-      <span className="sentinel-reticle" aria-hidden="true">
+        <div className="sentinel-scene">
+          <img
+            className="sentinel-sentry"
+            src={sentryFigure}
+            alt=""
+            aria-hidden="true"
+          />
+
+          <img
+            className="sentinel-drone"
+            src={droneFigure}
+            alt=""
+            aria-hidden="true"
+          />
+
+          <div className="sentinel-radar-callout" aria-hidden="true">
+            <span className="sentinel-radar-l1">
+              SE<span className="sentinel-radar-y">N</span>TRY C&mdash; RADAR
+            </span>
+            <span className="sentinel-radar-rule" />
+            <span className="sentinel-radar-l2">
+              <span className="sentinel-radar-y">N</span>ODE 01 UAS
+            </span>
+          </div>
+
+          <div className="sentinel-target" aria-hidden="true">
+            <div className="sentinel-target-lock">TARGET LOCK</div>
+            <div className="sentinel-target-meta">
+              Lock at 14:24, 10/10/2025
+              <br />
+              assess loop · ARC OS
+            </div>
+          </div>
+
+          <span className="sentinel-reticle" aria-hidden="true">
         <svg viewBox="0 0 200 200" fill="none">
           {/* Yellow dashed crosshair arms */}
           <g
@@ -1023,7 +1359,439 @@ export default function ArsOs() {
             <path d="M140 150 H154 V118 H140" />
           </g>
         </svg>
-      </span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section id="arc-c2" className="c2" aria-label="ARC C2 — Subsystem 03">
+      <style>{`
+        @font-face {
+          font-family: "Ysabeau";
+          src: local("Ysabeau"), local("Ysabeau SC");
+          font-weight: 400;
+          font-style: normal;
+          font-display: swap;
+        }
+
+        .c2 {
+          position: relative;
+          width: 100%;
+          /* Navy ambient: a glow at the top-right and a broad wash sweeping
+             up from the lower-left, on black. */
+          background:
+            radial-gradient(48% 52% at 86% 99%, rgba(43, 37, 16, 0.98), rgba(43, 37, 16, 0.42) 46%, rgba(43, 37, 16, 0) 76%),
+            radial-gradient(50% 60% at 100% 0%, rgba(37, 44, 99, 0.9), rgba(37, 44, 99, 0.28) 42%, rgba(0, 0, 0, 0) 76%),
+            radial-gradient(60% 70% at 8% 100%, rgba(33, 40, 92, 0.62), rgba(0, 0, 0, 0) 70%),
+            #000;
+          overflow: hidden;
+          isolation: isolate;
+          padding: clamp(26px, 3.4vw, 64px) 0 0;
+          font-family: "Plus Jakarta Sans", Arial, sans-serif;
+        }
+
+        .c2-vline {
+          position: absolute;
+          left: clamp(22px, 4.1vw, 70px);
+          top: 0;
+          bottom: 0;
+          width: 1px;
+          z-index: 2;
+          background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.5) 0%,
+            rgba(255, 255, 255, 0.5) 94%,
+            rgba(255, 255, 255, 0) 100%
+          );
+        }
+
+        .c2-inner {
+          position: relative;
+          z-index: 3;
+          margin-left: clamp(48px, 7.1vw, 150px);
+          margin-right: clamp(34px, 5vw, 96px);
+        }
+
+        .c2-head {
+          display: flex;
+          align-items: baseline;
+          gap: clamp(12px, 1.8vw, 30px);
+          white-space: nowrap;
+        }
+
+        .c2-rule {
+          flex: 0 0 auto;
+          align-self: center;
+          width: clamp(40px, 9vw, 150px);
+          height: 1px;
+          margin-left: clamp(-26px, -3vw, -10px);
+          background: linear-gradient(90deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.6));
+        }
+
+        .c2-title {
+          margin: 0;
+          display: inline-flex;
+          align-items: baseline;
+          font-family: "Yapari Trial Regular", "Yapari Trial", "Azonix", sans-serif;
+          font-size: clamp(44px, 6.6vw, 90px);
+          font-weight: 400;
+          line-height: normal;
+          letter-spacing: clamp(3px, 0.52vw, 7.2px);
+          color: #ffffff;
+          text-transform: uppercase;
+        }
+
+        .c2-title-c {
+          color: #eaff00;
+        }
+
+        .c2-title-sub {
+          font-family: "Ysabeau", "Plus Jakarta Sans", serif;
+          font-size: 0.56em;
+          line-height: 1;
+          align-self: flex-end;
+          transform: translateY(0.08em);
+          margin-left: 0.04em;
+        }
+
+        .c2-sub {
+          flex: 0 1 auto;
+          align-self: flex-end;
+          margin-bottom: clamp(6px, 1vw, 16px);
+          font-family: "Source Code Pro", "SourceCodePro", ui-monospace, monospace;
+          font-size: clamp(11px, 1.15vw, 18px);
+          font-weight: 400;
+          line-height: normal;
+          text-transform: uppercase;
+          color: #ffffff;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .c2-sub-id {
+          color: #0a7cff;
+        }
+
+        .c2-desc {
+          max-width: min(1456px, 96%);
+          margin: clamp(20px, 2.6vw, 40px) 0 clamp(34px, 4.6vw, 78px);
+          font-weight: 300;
+          font-size: clamp(15px, 1.46vw, 26px);
+          line-height: 1.24;
+          color: rgba(255, 255, 255, 0.92);
+        }
+
+        .c2-grid {
+          display: grid;
+          grid-template-columns: repeat(5, minmax(0, 1fr));
+          column-gap: 0;
+          max-width: min(1456px, 100%);
+        }
+
+        .c2-step {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          min-height: clamp(220px, 24vw, 354px);
+          padding-right: clamp(14px, 1.7vw, 32px);
+        }
+
+        .c2-step:not(:first-child) {
+          padding-left: clamp(14px, 1.7vw, 32px);
+        }
+
+        /* Short vertical divider beside the title + body, not full height.
+           Anchored to a fixed top + fixed height so every column's divider is
+           identical, regardless of body length. */
+        .c2-step:not(:last-child)::after {
+          content: "";
+          position: absolute;
+          right: 0;
+          top: clamp(56px, 7vw, 104px);
+          width: 1px;
+          height: clamp(104px, 12vw, 168px);
+          background: rgba(255, 255, 255, 0.28);
+        }
+
+        .c2-step:last-child {
+          padding-right: 0;
+        }
+
+        .c2-step-num {
+          margin-top: clamp(10px, 2vw, 32px);
+          font-family: "Plus Jakarta Sans", Arial, sans-serif;
+          font-size: clamp(15px, 1.35vw, 24px);
+          font-weight: 600;
+          line-height: 1;
+          color: #e3e41b;
+        }
+
+        .c2-step-title {
+          margin-top: clamp(40px, 5vw, 80px);
+          margin-bottom: clamp(10px, 1.2vw, 20px);
+          font-family: "Plus Jakarta Sans", Arial, sans-serif;
+          font-size: clamp(20px, 2.1vw, 32px);
+          font-weight: 600;
+          line-height: 1;
+          text-transform: uppercase;
+          color: #e3e41b;
+        }
+
+        .c2-step-body {
+          margin: 0;
+          font-family: "Plus Jakarta Sans", Arial, sans-serif;
+          font-size: clamp(15px, 1.55vw, 24px);
+          font-weight: 300;
+          line-height: 1.33;
+          color: #ffffff;
+        }
+
+        /* Open-ended HUD guides rather than borders around four boxes. */
+        .c2-cards {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          position: relative;
+          margin: clamp(40px, 5.5vw, 96px) 0 0;
+          margin-left: clamp(20px, 6vw, 120px);
+        }
+
+        .c2-card {
+          position: relative;
+          padding: clamp(22px, 2.8vw, 50px) clamp(20px, 2.4vw, 46px);
+        }
+
+        .c2-card:nth-child(odd) {
+          padding-left: 0;
+          border-right: 1px solid rgba(255, 255, 255, 0.36);
+        }
+
+        .c2-card:nth-child(-n + 2) {
+          border-bottom: 1px solid rgba(255, 255, 255, 0.42);
+        }
+
+        /* Extend the row divider back to the section's outer guide. */
+        .c2-card:first-child::after {
+          content: "";
+          position: absolute;
+          right: 0;
+          bottom: -1px;
+          left: calc(
+            clamp(22px, 4.1vw, 70px) -
+            clamp(48px, 7.1vw, 150px) -
+            clamp(20px, 6vw, 120px)
+          );
+          height: 1px;
+          background: rgba(255, 255, 255, 0.42);
+        }
+
+        /* Lower-left rail: no matching bottom/right edge, so no box. */
+        .c2-card:nth-child(3)::before {
+          content: "";
+          position: absolute;
+          left: clamp(-48px, -2.3vw, -24px);
+          top: 0;
+          bottom: clamp(-360px, -27vw, -170px);
+          width: 1px;
+          background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.46) 0%,
+            rgba(255, 255, 255, 0.34) 72%,
+            rgba(255, 255, 255, 0) 100%
+          );
+          pointer-events: none;
+        }
+
+        .c2-card-num {
+          font-family: "Google Sans Code", "Source Code Pro", "SourceCodePro", ui-monospace, monospace;
+          font-size: clamp(17px, 1.55vw, 26px);
+          font-weight: 600;
+          line-height: 1.23;
+          text-transform: uppercase;
+          color: #0a7cff;
+        }
+
+        .c2-card-title {
+          margin: clamp(14px, 1.9vw, 30px) 0 clamp(12px, 1.4vw, 22px);
+          font-family: "Plus Jakarta Sans", Arial, sans-serif;
+          font-size: clamp(19px, 2.05vw, 32px);
+          font-weight: 600;
+          line-height: 1.04;
+          text-transform: uppercase;
+          color: #e3e41b;
+        }
+
+        .c2-card-body {
+          margin: 0;
+          max-width: 34ch;
+          font-family: "Plus Jakarta Sans", Arial, sans-serif;
+          font-size: clamp(15px, 1.5vw, 23px);
+          font-weight: 300;
+          line-height: 1.3;
+          color: #ffffff;
+        }
+
+        /* Full-bleed wireframe terrain at the foot of the section, with the
+           animated dot cluster and a connector line dropping from the cards. */
+        .c2-terrain {
+          position: relative;
+          z-index: 1;
+          width: 100%;
+          margin-top: clamp(-20px, -2vw, 12px);
+          aspect-ratio: 365 / 158;
+          background-image:
+            url(${terrainDots}),
+            url(${terrainMesh});
+          background-position:
+            calc(54% + clamp(14px, 1.25vw, 26px)) 48%,
+            50% 100%;
+          background-repeat: no-repeat;
+          background-size:
+            clamp(220px, 30vw, 420px) auto,
+            cover;
+          background-blend-mode: screen;
+          mix-blend-mode: screen;
+          pointer-events: none;
+        }
+
+        .c2-terrain-line {
+          position: absolute;
+          left: 54%;
+          top: clamp(-220px, -21vw, -90px);
+          bottom: 66%;
+          width: 1px;
+          z-index: 2;
+          background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.46) 24%,
+            rgba(255, 255, 255, 0.72) 100%
+          );
+        }
+
+        @media (max-width: 900px) {
+          .c2-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            row-gap: clamp(20px, 4vw, 40px);
+          }
+
+          .c2-step {
+            min-height: auto;
+          }
+
+          .c2-step:nth-child(2n) {
+            padding-right: 0;
+          }
+
+          .c2-step:nth-child(2n)::after {
+            display: none;
+          }
+
+          .c2-step-title {
+            margin-top: clamp(16px, 4vw, 28px);
+          }
+        }
+
+        @media (max-width: 760px) {
+          .c2-head {
+            flex-wrap: wrap;
+            white-space: normal;
+          }
+
+          .c2-sub {
+            flex-basis: 100%;
+            align-self: flex-start;
+            margin-bottom: 0;
+            white-space: normal;
+          }
+
+          .c2-cards {
+            grid-template-columns: 1fr;
+            margin-left: 0;
+          }
+
+          .c2-card,
+          .c2-card:nth-child(odd) {
+            padding: clamp(20px, 5vw, 30px) 0;
+            border-right: 0;
+          }
+
+          .c2-card:first-child::after,
+          .c2-card:nth-child(3)::before {
+            display: none;
+          }
+
+          .c2-card:not(:last-child) {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+          }
+
+          .c2-card:last-child {
+            border-bottom: 0;
+          }
+        }
+
+        @media (max-width: 520px) {
+          .c2-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .c2-step,
+          .c2-step:nth-child(2n) {
+            padding-left: 0;
+            padding-right: 0;
+          }
+
+          .c2-step::after {
+            display: none;
+          }
+        }
+      `}</style>
+
+      <span className="c2-vline" aria-hidden="true" />
+
+      <div className="c2-inner">
+        <div className="c2-head">
+          <span className="c2-rule" aria-hidden="true" />
+          <h2 className="c2-title">
+            ARC&nbsp;<span className="c2-title-c">C</span>
+            <span className="c2-title-sub">2</span>
+          </h2>
+          <span className="c2-sub">
+            <span className="c2-sub-id">SUBSYSTEM 03</span> &nbsp;·&nbsp;
+            BATTLE MANAGEMENT &amp; C2 — THE HUMAN ↔ AI BRIDGE
+          </span>
+        </div>
+
+        <p className="c2-desc">
+          The AI-powered C2 that integrates both subsystems and thousands of
+          sensors and effectors into one operating picture and one chain of
+          command — and the bridge between human command and the ARC OS
+          intelligence. It runs the decision cycle continuously and at scale.
+        </p>
+
+        <div className="c2-grid">
+          {c2Steps.map((step) => (
+            <div className="c2-step" key={step.num}>
+              <div className="c2-step-num">{step.num}</div>
+              <div className="c2-step-title">{step.title}</div>
+              <p className="c2-step-body">{step.body}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="c2-cards">
+          {c2Capabilities.map((card) => (
+            <div className="c2-card" key={card.num}>
+              <div className="c2-card-num">{card.num}</div>
+              <div className="c2-card-title">{card.title}</div>
+              <p className="c2-card-body">{card.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="c2-terrain" aria-hidden="true">
+        <span className="c2-terrain-line" />
+      </div>
     </section>
     </>
   );

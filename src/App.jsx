@@ -78,7 +78,7 @@ function HomePage() {
       {/* BlackHole Section */}
       <div className="relative z-0 mt-12 w-full">
         <BlackHoleCanvas />
-        <div className="absolute inset-x-0 top-[78vh] z-30 pointer-events-none flex justify-start pl-[6vw]">
+        <div className="absolute inset-x-0 top-[78vh] z-30 pointer-events-none flex justify-start pl-[4vw]">
           <Stable />
         </div>
       </div>
@@ -149,7 +149,10 @@ export default function App() {
           <Footer showReadmeBridge={false} variant="research" />
         </>
       ) : isAecOsPage ? (
-        <ArsOs />
+        <>
+          <ArsOs />
+          <Footer showReadmeBridge={false} variant="arc-os" />
+        </>
       ) : (
         <HomePage />
       )}

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
-import handImage from "../assets/hand_1.png";
+import handImage from "../assets/yertg 1.png";
 import SoulGrid from "./SoulGrid";
+import useTextShuffle from "../Utils/useTextShuffle";
 
 function removeNearBlackPixels(imageData, threshold = 25) {
   const data = imageData.data;
@@ -18,118 +19,6 @@ function removeNearBlackPixels(imageData, threshold = 25) {
   return imageData;
 }
 
-function SoulSparkHudOverlay() {
-  const topLineLeftInset = "clamp(52px, 14vw, 260px)";
-  const topLineRightInset = "clamp(58px, 11vw, 290px)";
-  const topLineY = "clamp(10px, 3.2vh, 38px)";
-
-  const leftVX = "calc(var(--img-x, 0px) + (var(--img-w, 0px) * 0.15))";
-  const leftVTop = "calc(var(--img-y, 0px) + (var(--img-h, 0px) * 0.3))";
-  const leftVH = "calc(var(--img-h, 0px) * 0.3)";
-
-  const rightVX = "calc(var(--img-x, 0px) + (var(--img-w, 0px) * 0.77))";
-  const rightVTop = "calc(var(--img-y, 0px) + (var(--img-h, 0px) * 0.33))";
-  const rightVH = "calc(var(--img-h, 0px) * 0.2)";
-
-  return (
-    <div className="absolute inset-0 z-20 pointer-events-none">
-      <style>{`
-        @keyframes runX {
-          0% { transform: translateX(-100%); opacity: 0; }
-          10%, 90% { opacity: 1; }
-          100% { transform: translateX(100%); opacity: 0; }
-        }
-
-        @keyframes runY {
-          0% { transform: translateY(-100%); opacity: 0; }
-          10%, 90% { opacity: 1; }
-          100% { transform: translateY(100%); opacity: 0; }
-        }
-
-        .hud-line {
-          position: absolute;
-          pointer-events: none;
-          --speed: 2s;
-          --edge: clamp(40px, 6vw, 120px);
-          overflow: hidden;
-          opacity: calc(var(--img-ready, 0) * 0.92);
-        }
-
-        .hud-line.h {
-          height: 1px;
-          -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--edge), #000 calc(100% - var(--edge)), transparent 100%);
-          mask-image: linear-gradient(90deg, transparent 0, #000 var(--edge), #000 calc(100% - var(--edge)), transparent 100%);
-        }
-
-        .hud-line.v {
-          width: 1px;
-          -webkit-mask-image: linear-gradient(0deg, transparent 0, #000 var(--edge), #000 calc(100% - var(--edge)), transparent 100%);
-          mask-image: linear-gradient(0deg, transparent 0, #000 var(--edge), #000 calc(100% - var(--edge)), transparent 100%);
-        }
-
-        .hud-line .base,
-        .hud-line .current {
-          position: absolute;
-          inset: 0;
-        }
-
-        .hud-line .base {
-          background: rgba(255, 255, 255, 0.62);
-        }
-
-        .hud-line .current {
-          opacity: 0;
-          will-change: transform;
-        }
-
-        .hud-line.h .current {
-          animation: runX var(--speed) linear infinite;
-        }
-
-        .hud-line.v .current {
-          animation: runY var(--speed) linear infinite;
-        }
-
-        .hud-line.h .current::before {
-          content: "";
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.32) 32%, #fff 50%, rgba(255,255,255,0.32) 68%, transparent 100%);
-        }
-
-        .hud-line.v .current::before {
-          content: "";
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(0deg, transparent 0%, rgba(255,255,255,0.32) 24%, #fff 50%, rgba(255,255,255,0.32) 76%, transparent 100%);
-        }
-
-        .hud-line .current.c2 {
-          animation-delay: calc(var(--speed) * 0.55);
-          animation-duration: calc(var(--speed) * 1.12);
-        }
-      `}</style>
-
-      <div className="hud-line h" style={{ top: topLineY, left: topLineLeftInset, right: topLineRightInset }}>
-        <div className="base" />
-        <div className="current c1" />
-      </div>
-
-      <div className="hud-line v" style={{ left: leftVX, top: leftVTop, height: leftVH }}>
-        <div className="base" />
-        <div className="current c1" />
-        <div className="current c2" />
-      </div>
-
-      <div className="hud-line v" style={{ left: rightVX, top: rightVTop, height: rightVH }}>
-        <div className="base" />
-        <div className="current c1" />
-        <div className="current c2" />
-      </div>
-    </div>
-  );
-}
-
 export default function ImageGlitch() {
   const canvasRef = useRef(null);
   const sceneRef = useRef(null);
@@ -137,6 +26,35 @@ export default function ImageGlitch() {
   const processedRef = useRef(null);
   const animationRef = useRef(null);
   const lastRectRef = useRef({ x: -1, y: -1, w: -1, h: -1 });
+  const stableRef = useRef(null);
+  const omniRef = useRef(null);
+  const universalRef = useRef(null);
+  const learnerRef = useRef(null);
+
+  useTextShuffle(stableRef, {
+    viewportOnly: true,
+    triggerSelector: ".soul-lockup",
+    animateOnLoad: false,
+    triggerPoint: 0.3,
+  });
+  useTextShuffle(omniRef, {
+    viewportOnly: true,
+    triggerSelector: ".soul-lockup",
+    animateOnLoad: false,
+    triggerPoint: 0.3,
+  });
+  useTextShuffle(universalRef, {
+    viewportOnly: true,
+    triggerSelector: ".soul-lockup",
+    animateOnLoad: false,
+    triggerPoint: 0.3,
+  });
+  useTextShuffle(learnerRef, {
+    viewportOnly: true,
+    triggerSelector: ".soul-lockup",
+    animateOnLoad: false,
+    triggerPoint: 0.3,
+  });
 
   const setImageVars = (x, y, w, h) => {
     const el = sceneRef.current;
@@ -272,12 +190,147 @@ export default function ImageGlitch() {
         .glitch-root {
           --glitch-text-scale: 1;
           --glitch-text-line: 1.2;
-          --glitch-left-x: 0.105;
-          --glitch-left-y: 0.18;
+          --glitch-left-x: 0.065;
+          --glitch-left-y: 0.34;
           --glitch-left-w: 0.34;
-          --glitch-right-x: 0.72;
-          --glitch-right-y: 0.53;
+          --glitch-right-x: 0.8;
+          --glitch-right-y: 0.5;
           --glitch-right-w: 0.22;
+        }
+
+        .glitch-text-connector {
+          position: absolute;
+          z-index: 24;
+          width: 1px;
+          overflow: hidden;
+          opacity: calc(var(--img-ready, 0) * 0.82);
+          background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.08) 0%,
+            rgba(255, 255, 255, 0.76) 12%,
+            rgba(255, 255, 255, 0.72) 86%,
+            rgba(255, 255, 255, 0.06) 100%
+          );
+          pointer-events: none;
+        }
+
+        .glitch-text-connector::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            180deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.28) 30%,
+            #ffffff 50%,
+            rgba(227, 228, 27, 0.35) 70%,
+            transparent 100%
+          );
+          transform: translateY(-110%);
+          animation: glitchConnectorRun 2.8s linear infinite;
+        }
+
+        .glitch-text-connector-left {
+          left: calc(var(--img-x, 0px) + var(--img-w, 0px) * 0.084);
+          top: calc(var(--img-y, 0px) + var(--img-h, 0px) * 0.492);
+          height: calc(var(--img-h, 0px) * 0.138);
+        }
+
+        .glitch-text-connector-right {
+          left: calc(var(--img-x, 0px) + var(--img-w, 0px) * 0.848);
+          top: calc(var(--img-y, 0px) + var(--img-h, 0px) * 0.337);
+          height: calc(var(--img-h, 0px) * 0.143);
+        }
+
+        .glitch-text-connector-right::after {
+          animation-delay: 0.72s;
+        }
+
+        .soul-lockup {
+          position: absolute;
+          z-index: 30;
+          left: calc(var(--img-x, 0px) + var(--img-w, 0px) * 0.26);
+          top: calc(var(--img-y, 0px) + var(--img-h, 0px) * 0.6);
+          display: inline-flex;
+          width: max-content;
+          flex-direction: column;
+          align-items: center;
+          opacity: var(--img-ready, 0);
+        }
+
+        .soul-lockup-subtitle {
+          display: flex;
+          align-items: baseline;
+          justify-content: center;
+          gap: 0.72em;
+          width: 100%;
+          margin-top: clamp(6px, calc(var(--img-w, 0px) * 0.009), 16px);
+          font-family: "Azonix", sans-serif;
+          font-size: clamp(10px, calc(var(--img-w, 0px) * 0.0185), 32px);
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+          letter-spacing: 0.13em;
+          text-align: center;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+
+        .soul-subtitle-pair {
+          display: inline-flex;
+          align-items: baseline;
+          gap: 0.34em;
+        }
+
+        .soul-shuffle-token {
+          display: inline-block;
+        }
+
+        .soul-shuffle-token.is-number-mode {
+          font-size: 0.32em;
+          line-height: 1;
+          letter-spacing: 0.015em;
+        }
+
+        .soul-stable-omni {
+          background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.42) 0%,
+            rgba(255, 255, 255, 0.68) 24.04%,
+            #fff 50.48%
+          );
+          background-clip: text;
+          -webkit-background-clip: text;
+          color: transparent;
+          -webkit-text-fill-color: transparent;
+        }
+
+        .soul-universal-learner {
+          background: linear-gradient(
+            90deg,
+            #858900 0%,
+            #b7c400 14.42%,
+            #eaff00 27.88%,
+            #fff 100%
+          );
+          background-clip: text;
+          -webkit-background-clip: text;
+          color: transparent;
+          -webkit-text-fill-color: transparent;
+        }
+
+        @keyframes glitchConnectorRun {
+          0% {
+            transform: translateY(-110%);
+            opacity: 0;
+          }
+          16%, 84% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(110%);
+            opacity: 0;
+          }
         }
 
         @media (max-width: 1200px) {
@@ -319,7 +372,9 @@ export default function ImageGlitch() {
         }}
       />
 
-      <SoulSparkHudOverlay />
+      <span className="glitch-text-connector glitch-text-connector-left" aria-hidden="true" />
+      <span className="glitch-text-connector glitch-text-connector-right" aria-hidden="true" />
+
       <SoulGrid />
 
       <div
@@ -362,15 +417,7 @@ export default function ImageGlitch() {
         <div style={metaStyle}>Join at 14:24, 10/10/2025</div>
       </div>
 
-      <div
-        className="absolute z-30"
-        style={{
-          left: "calc(var(--img-x, 0px) + var(--img-w, 0px) * 0.28)",
-          width: "calc(var(--img-w, 0px) * 0.82)",
-          top: "calc(var(--img-y, 0px) + var(--img-h, 0px) * 0.64)",
-          opacity: "var(--img-ready, 0)",
-        }}
-      >
+      <div className="soul-lockup">
         <h1
           className="font-yapari font-bold text-white uppercase"
           style={{
@@ -378,36 +425,53 @@ export default function ImageGlitch() {
             letterSpacing: "calc(var(--img-w, 0px) * 0.01)",
             lineHeight: 0.9,
             margin: 0,
-            textAlign: "left",
+            textAlign: "center",
             whiteSpace: "nowrap",
           }}
         >
           <span>S</span>
-          <span style={{ position: "relative", display: "inline-block" }}>
-            <span style={{ color: "#E3E41B" }}>O</span>
-            <span>U</span>
-            <span
-              className="font-code"
-              style={{
-                position: "absolute",
-                top: "100%",
-                left: "50%",
-                transform: "translateX(-50%)",
-                marginTop: "clamp(2px, calc(var(--img-w, 0px) * 0.004), 8px)",
-                fontSize: "clamp(10px, calc(var(--img-w, 0px) * 0.022), 24px)",
-                fontWeight: 400,
-                letterSpacing: "0.04em",
-                lineHeight: 1,
-                textTransform: "none",
-                color: "#FFFFFF",
-                whiteSpace: "nowrap",
-              }}
-            >
-              AGENTIC WARFARE
-            </span>
-          </span>
+          <span style={{ color: "#E3E41B" }}>O</span>
+          <span>U</span>
           <span>L</span>
         </h1>
+        <div className="soul-lockup-subtitle">
+          <span className="soul-subtitle-pair soul-stable-omni">
+            <span
+              ref={stableRef}
+              data-initial="19200102125"
+              data-target="STABLE"
+              className="soul-shuffle-token"
+            >
+              STABLE
+            </span>
+            <span
+              ref={omniRef}
+              data-initial="15131409"
+              data-target="OMNI"
+              className="soul-shuffle-token"
+            >
+              OMNI
+            </span>
+          </span>
+          <span className="soul-subtitle-pair soul-universal-learner">
+            <span
+              ref={universalRef}
+              data-initial="211409221518191012"
+              data-target="UNIVERSAL"
+              className="soul-shuffle-token"
+            >
+              UNIVERSAL
+            </span>
+            <span
+              ref={learnerRef}
+              data-initial="12050118140518"
+              data-target="LEARNER"
+              className="soul-shuffle-token"
+            >
+              LEARNER
+            </span>
+          </span>
+        </div>
       </div>
     </div>
   );

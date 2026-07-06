@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import yapariBold from "../assets/fonts/YapariTrial-Bold.ttf";
 import yapariRegular from "../assets/fonts/YapariTrial-Regular.ttf";
 import archivoRegular from "../assets/fonts/archivo.regular.ttf";
@@ -9,6 +9,7 @@ import launchDroneImage from "../assets/8611730 1 (1).png";
 import abstractShapeRender from "../assets/Abstract Shape Render 1 (1).png";
 import rightShapeRender from "../assets/Image (1).png";
 import AnimatedLine from "../Utils/AnimatedLine";
+import useTextShuffle from "../Utils/useTextShuffle";
 import ResearchPage2 from "./ResearchPage2";
 
 const problemCards = [
@@ -133,6 +134,22 @@ const costStats = [
 ];
 
 export default function ResearchPage() {
+  const meghaTitleRef = useRef(null);
+  const uasTitleRef = useRef(null);
+
+  useTextShuffle(meghaTitleRef, {
+    animateOnLoad: false,
+    viewportOnly: true,
+    triggerSelector: ".research-copy",
+    triggerPoint: 0,
+  });
+  useTextShuffle(uasTitleRef, {
+    animateOnLoad: false,
+    viewportOnly: true,
+    triggerSelector: ".research-copy",
+    triggerPoint: 0,
+  });
+
   return (
     <main className="research-page relative min-h-screen overflow-hidden text-white">
       <style>{`
@@ -231,6 +248,60 @@ export default function ResearchPage() {
           white-space: nowrap;
         }
 
+        .research-title-shuffle {
+          display: inline-block;
+          min-width: max-content;
+          text-align: center;
+          white-space: nowrap;
+        }
+
+        .research-title-shuffle::before {
+          content: attr(data-target);
+          display: block;
+          height: 0;
+          overflow: hidden;
+          visibility: hidden;
+        }
+
+        .research-title-shuffle .ltr {
+          display: inline-block;
+        }
+
+        .research-title-shuffle.is-number-mode {
+          font-family: "Azonix", sans-serif;
+          font-size: 0.32em;
+          font-weight: 400;
+          line-height: 1;
+          letter-spacing: 0.015em;
+        }
+
+        .research-title-shuffle--megha.is-number-mode {
+          background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.42) 0%,
+            rgba(255, 255, 255, 0.68) 24.04%,
+            #fff 50.48%
+          );
+          background-clip: text;
+          -webkit-background-clip: text;
+          color: transparent;
+          -webkit-text-fill-color: transparent;
+        }
+
+        .research-title-shuffle--uas.is-number-mode {
+          background: linear-gradient(
+            90deg,
+            #858900 0%,
+            #b7c400 14.42%,
+            #eaff00 27.88%,
+            #fff 100%
+          );
+          background-clip: text;
+          -webkit-background-clip: text;
+          color: transparent;
+          -webkit-text-fill-color: transparent;
+        }
+
         .research-title-megha::before {
           content: "";
           position: absolute;
@@ -264,6 +335,29 @@ export default function ResearchPage() {
           text-shadow:
             0 0 14px rgba(227, 228, 27, 0.24),
             0 9px 22px rgba(0, 0, 0, 0.36);
+        }
+
+        .research-title-megha
+          .research-title-shuffle:not(.is-number-mode)
+          .ltr:nth-child(1) {
+          background:
+            radial-gradient(ellipse at 0% 54%, rgba(0,0,0,0.48), rgba(0,0,0,0.28) 36%, rgba(0,0,0,0) 70%),
+            linear-gradient(90deg, #161616 0%, #242424 34%, #4A4A4A 70%, #858585 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          -webkit-text-fill-color: transparent;
+          filter: drop-shadow(0 0 7px rgba(0, 0, 0, 0.42));
+        }
+
+        .research-title-megha
+          .research-title-shuffle:not(.is-number-mode)
+          .ltr:nth-child(3) {
+          color: #E3E41B;
+          text-shadow:
+            0 0 14px rgba(227, 228, 27, 0.24),
+            0 9px 22px rgba(0, 0, 0, 0.36);
+          -webkit-text-fill-color: currentColor;
         }
 
         .research-copy {
@@ -1076,10 +1170,26 @@ export default function ResearchPage() {
         <div className="relative z-10 max-w-[1180px]">
           <h1 className="research-title uppercase text-white">
             <span className="research-title-word research-title-megha">
-              <span className="research-title-m">M</span>E
-              <span className="research-title-g">G</span>HA
+              <span
+                ref={meghaTitleRef}
+                className="research-title-shuffle research-title-shuffle--megha"
+                data-initial="1305070801"
+                data-target="MEGHA"
+              >
+                <span className="research-title-m">M</span>E
+                <span className="research-title-g">G</span>HA
+              </span>
             </span>
-            <span className="research-title-word">UAS</span>
+            <span className="research-title-word">
+              <span
+                ref={uasTitleRef}
+                className="research-title-shuffle research-title-shuffle--uas"
+                data-initial="2119"
+                data-target="UAS"
+              >
+                UAS
+              </span>
+            </span>
           </h1>
 
           <p className="research-copy mt-12">

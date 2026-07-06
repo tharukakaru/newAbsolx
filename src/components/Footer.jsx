@@ -1,5 +1,6 @@
 import React from "react";
 import plusJakartaSans from "../assets/fonts/PlusJakartaSans[wght].ttf";
+import footerSentinel from "../assets/065b4a00de40127609484cfbd9569fa6 1.png";
 
 // App badges
 import appStore from "../assets/footer/app_store.svg";
@@ -160,6 +161,8 @@ function BracketButton({
 
 export default function Footer({ showReadmeBridge = true, variant = "default" }) {
   const isResearchFooter = variant === "research";
+  const isArcOsFooter = variant === "arc-os";
+  const isCompactFooter = isResearchFooter || isArcOsFooter;
 
   /**
    * Title tone: white + light-blue mix (NOT pure white)
@@ -170,10 +173,14 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
   return (
     <footer
       className={[
-        "relative overflow-hidden bg-black text-white font-elios z-50",
+        "relative overflow-hidden text-white font-elios z-50",
+        isArcOsFooter ? "arc-os-footer bg-transparent" : "bg-black",
+        !isResearchFooter && !isArcOsFooter ? "home-footer" : "",
         isResearchFooter
           ? "research-footer min-h-[400px] sm:min-h-[460px] md:min-h-[500px]"
-          : "",
+          : isArcOsFooter
+            ? "min-h-[330px] sm:min-h-[390px] md:min-h-[430px]"
+            : "",
       ].join(" ")}
     >
       <style>{`
@@ -187,6 +194,56 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
 
         .research-footer {
           background: #000;
+        }
+
+        .arc-os-footer {
+          margin-top: clamp(-70px, -4vw, -36px);
+          padding-top: clamp(72px, 7vw, 112px);
+          background: #000;
+        }
+
+        .arc-os-footer-grid {
+          position: absolute;
+          inset: 0 0 auto;
+          height: 30%;
+          opacity: 0.16;
+          background-image:
+            repeating-linear-gradient(27deg, rgba(255,255,255,0.34) 0 1px, transparent 1px 24px),
+            repeating-linear-gradient(153deg, rgba(255,255,255,0.28) 0 1px, transparent 1px 24px);
+          background-position: center top;
+          transform: perspective(360px) rotateX(48deg) scaleX(1.2);
+          transform-origin: center top;
+          -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.72) 38%, transparent 82%);
+          mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.72) 38%, transparent 82%);
+          pointer-events: none;
+        }
+
+        .home-footer {
+          min-height: clamp(1180px, 96vw, 1845px);
+        }
+
+        .home-footer-figure {
+          position: absolute;
+          z-index: 8;
+          left: 50%;
+          bottom: 0;
+          width: min(82.4vw, 1582px);
+          height: min(96vw, 1845px);
+          aspect-ratio: 391 / 456;
+          object-fit: fill;
+          pointer-events: none;
+          user-select: none;
+          transform: translateX(-50%);
+          filter:
+            drop-shadow(-28px 24px 50px rgba(89, 76, 34, 0.18))
+            drop-shadow(28px 24px 54px rgba(45, 52, 116, 0.24));
+        }
+
+        .home-footer-content {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: clamp(24px, 2.6vw, 50px);
         }
 
         .research-footer-glow {
@@ -250,6 +307,26 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
             animation: none;
           }
         }
+
+        @media (max-width: 900px) {
+          .home-footer {
+            min-height: 0;
+          }
+
+          .home-footer-figure {
+            width: min(76vw, 640px);
+            height: auto;
+            aspect-ratio: auto;
+            object-fit: contain;
+          }
+
+          .home-footer-content {
+            position: relative;
+            left: auto;
+            right: auto;
+            bottom: auto;
+          }
+        }
       `}</style>
 
       {isResearchFooter ? (
@@ -279,6 +356,22 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
             className="pointer-events-none absolute inset-x-0 top-0 z-[6] h-36 bg-gradient-to-b from-black via-black/85 to-transparent sm:h-44"
           />
         </>
+      ) : isArcOsFooter ? (
+        <>
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,_#000_0%,_rgba(0,0,0,0.96)_12%,_rgba(11,14,37,0.94)_36%,_rgba(31,37,94,0.94)_68%,_#3b459a_100%)]"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_100%,_rgba(112,128,255,0.42)_0%,_rgba(59,69,154,0.22)_40%,_rgba(0,0,0,0)_76%)]"
+          />
+          <div aria-hidden="true" className="arc-os-footer-grid" />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,0,0,0)_48%,_rgba(0,0,0,0.62)_100%)]"
+          />
+        </>
       ) : (
         <>
           {/* ======================================================
@@ -291,7 +384,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
           {/* Base gradient: black stays at top, then fades into navy/blue */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,_rgba(0,0,0,1)_0%,_rgba(0,0,0,1)_22%,_rgba(7,11,24,1)_55%,_rgba(30,59,150,1)_100%)]"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_12%_68%,_rgba(89,76,34,0.6)_0%,_rgba(89,76,34,0.2)_34%,_rgba(89,76,34,0)_66%),radial-gradient(ellipse_at_86%_70%,_rgba(45,52,116,0.7)_0%,_rgba(45,52,116,0.24)_38%,_rgba(45,52,116,0)_70%),linear-gradient(180deg,_#000_0%,_#000_18%,_#08080d_52%,_#171c43_100%)]"
           />
 
           {/* Lower glow (kept low so it doesn't create top band) */}
@@ -314,6 +407,16 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
         </>
       )}
 
+      {!isResearchFooter && !isArcOsFooter ? (
+        <img
+          src={footerSentinel}
+          alt=""
+          aria-hidden="true"
+          className="home-footer-figure"
+          loading="lazy"
+        />
+      ) : null}
+
       {showReadmeBridge ? <Subpart /> : null}
 
       {/* ======================================================
@@ -321,9 +424,9 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
       ======================================================= */}
       <div
         className={
-          isResearchFooter
+          isCompactFooter
             ? "relative z-10 mx-auto max-w-[1500px] px-7 pt-8 pb-8 sm:px-12 sm:pt-10 md:px-20 md:pt-12 lg:px-24"
-            : "relative z-10 mx-auto max-w-7xl px-6 pt-12 pb-10 sm:px-10"
+            : "home-footer-content relative z-10 mx-auto max-w-7xl px-6 pt-12 pb-10 sm:px-10"
         }
       >
         {isResearchFooter ? (
@@ -333,7 +436,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
         <section className="w-full">
           <div
             className={
-              isResearchFooter
+              isCompactFooter
                 ? "mx-auto max-w-[1500px] [--gap:20px] sm:[--gap:34px] md:[--gap:48px]"
                 : "mx-auto max-w-[1500px] px-6 sm:px-10 [--gap:48px]"
             }
@@ -341,14 +444,14 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
             {/* Top row: Left | Center | Right */}
             <div
               className={
-                isResearchFooter
+                isCompactFooter
                   ? "pt-7 pb-[var(--gap)] md:pt-9"
                   : "pb-[var(--gap)]"
               }
             >
               <div
                 className={
-                  isResearchFooter
+                  isCompactFooter
                     ? "grid grid-cols-[0.75fr_1.15fr_0.78fr] items-start gap-2 sm:gap-6 md:gap-10"
                     : "grid gap-10 md:grid-cols-3 md:items-start"
                 }
@@ -356,7 +459,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                 {/* Left columns */}
                 <div
                   className={
-                    isResearchFooter
+                    isCompactFooter
                       ? "grid grid-cols-2 gap-3 sm:gap-8 md:gap-14"
                       : "grid grid-cols-2 gap-10 sm:gap-14"
                   }
@@ -364,26 +467,26 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                   <FooterLinkGroup
                     title="ABOUT"
                     links={ABOUT_LINKS}
-                    compact={isResearchFooter}
+                    compact={isCompactFooter}
                   />
                   <FooterLinkGroup
                     title="INFO"
                     links={INFO_LINKS}
-                    compact={isResearchFooter}
+                    compact={isCompactFooter}
                   />
                 </div>
 
                 {/* Center: buttons + tagline + flag */}
                 <div
                   className={
-                    isResearchFooter
+                    isCompactFooter
                       ? "flex flex-col items-center"
                       : "flex flex-col items-center md:pt-1"
                   }
                 >
                   <div
                     className={
-                      isResearchFooter
+                      isCompactFooter
                         ? "flex w-full items-center justify-center gap-0 font-elios"
                         : "flex w-full flex-col items-center gap-3 sm:flex-row sm:gap-0 font-elios"
                     }
@@ -391,9 +494,9 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                     <BracketButton
                       href="#"
                       variant="maroon"
-                      compact={isResearchFooter}
+                      compact={isCompactFooter}
                       className={
-                        isResearchFooter
+                        isCompactFooter
                           ? "w-[64px] sm:w-[120px] md:w-[158px]"
                           : "w-full max-w-[260px] sm:w-[190px] sm:max-w-none "
                       }
@@ -405,7 +508,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                     <div
                       aria-hidden="true"
                       className={
-                        isResearchFooter
+                        isCompactFooter
                           ? "h-px w-3 bg-white/45 sm:w-7 md:w-10"
                           : "hidden h-px w-12 bg-white/45 sm:block"
                       }
@@ -414,9 +517,9 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                     <BracketButton
                       href="#"
                       variant="slate"
-                      compact={isResearchFooter}
+                      compact={isCompactFooter}
                       className={
-                        isResearchFooter
+                        isCompactFooter
                           ? "w-[68px] sm:w-[134px] md:w-[184px]"
                           : "w-full max-w-[260px] sm:w-[220px] sm:max-w-none"
                       }
@@ -427,7 +530,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
 
                   <p
                     className={
-                      isResearchFooter
+                      isCompactFooter
                         ? "mt-4 text-center font-elios text-[4.5px] tracking-[0.16em] text-white/55 whitespace-nowrap sm:mt-6 sm:text-[7px] sm:tracking-[0.22em] md:mt-8 md:text-[8px] md:tracking-[0.28em]"
                         : "mt-10 text-center font-elios text-[9px] tracking-[0.32em] text-white/55 whitespace-nowrap sm:text-[10px]"
                     }
@@ -438,7 +541,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                   {/* Flag: object-contain prevents cropping for PNG */}
                   <div
                     className={
-                      isResearchFooter
+                      isCompactFooter
                         ? "mt-2 inline-flex items-center justify-center rounded-md px-1 py-0.5 sm:mt-3 sm:px-2 sm:py-1 md:mt-4"
                         : "mt-6 inline-flex items-center justify-center rounded-md px-2 py-1 "
                     }
@@ -447,7 +550,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                       src={sriLankaFlagSrc}
                       alt="Sri Lanka"
                       className={
-                        isResearchFooter
+                        isCompactFooter
                           ? "h-3 w-5 object-contain sm:h-4 sm:w-7 md:h-5 md:w-8"
                           : "h-6 w-10 object-contain"
                       }
@@ -457,10 +560,10 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                 </div>
 
                 {/* Right: App + Social */}
-                <div className={isResearchFooter ? "justify-self-end" : "md:justify-self-end"}>
+                <div className={isCompactFooter ? "justify-self-end" : "md:justify-self-end"}>
                   <h3
                     className={
-                      isResearchFooter
+                      isCompactFooter
                         ? "font-elios text-[6px] font-bold tracking-[0.18em] text-white/90 sm:text-[9px] sm:tracking-[0.22em] md:text-[11px] md:tracking-[0.25em]"
                         : "font-elios text-sm font-bold tracking-[0.28em] text-white/90"
                     }
@@ -470,7 +573,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
 
                   <div
                     className={
-                      isResearchFooter
+                      isCompactFooter
                         ? "mt-2 flex items-center gap-1 sm:mt-3 sm:gap-2 md:mt-3 md:gap-3"
                         : "mt-4 flex items-center gap-3"
                     }
@@ -482,7 +585,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                       <img
                         src={googlePlay}
                         alt="Get it on Google Play"
-                        className={isResearchFooter ? "h-3 sm:h-5 md:h-7" : "h-9"}
+                        className={isCompactFooter ? "h-3 sm:h-5 md:h-7" : "h-9"}
                         loading="lazy"
                       />
                     </a>
@@ -493,7 +596,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                       <img
                         src={appStore}
                         alt="Download on the App Store"
-                        className={isResearchFooter ? "h-3 sm:h-5 md:h-7" : "h-9"}
+                        className={isCompactFooter ? "h-3 sm:h-5 md:h-7" : "h-9"}
                         loading="lazy"
                       />
                     </a>
@@ -501,7 +604,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
 
                   <h3
                     className={
-                      isResearchFooter
+                      isCompactFooter
                         ? "mt-3 font-elios text-[6px] font-bold tracking-[0.18em] text-white/90 sm:mt-5 sm:text-[9px] sm:tracking-[0.22em] md:mt-6 md:text-[11px] md:tracking-[0.25em]"
                         : "mt-7 font-elios text-sm font-bold tracking-[0.28em] text-white/90"
                     }
@@ -511,7 +614,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
 
                   <div
                     className={
-                      isResearchFooter
+                      isCompactFooter
                         ? "mt-2 flex items-center gap-1.5 sm:mt-3 sm:gap-3 md:mt-3 md:gap-4"
                         : "mt-4 flex items-center gap-4"
                     }
@@ -527,7 +630,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                           src={s.icon}
                           alt=""
                           className={
-                            isResearchFooter
+                            isCompactFooter
                               ? "h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4"
                               : "h-5 w-5"
                           }
@@ -547,7 +650,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
             <div
               aria-hidden="true"
               className={
-                isResearchFooter
+                isCompactFooter
                   ? "footer-animated-line mx-auto h-px w-[82%] max-w-[1180px] shadow-[0_0_1px_rgba(255,255,255,0.45)] sm:w-[80%] md:w-[78%]"
                   : "footer-animated-line h-px -mx-6 sm:-mx-10 md:-mx-16 lg:-mx-20 xl:-mx-24 shadow-[0_0_1px_rgba(255,255,255,0.45)]"
               }
@@ -556,13 +659,13 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
             {/* Big title: equal gap around the divider */}
             <div
               className={
-                isResearchFooter
+                isCompactFooter
                   ? "pt-[calc(var(--gap)+18px)] text-center"
                   : "pt-[var(--gap)] text-center"
               }
             >
               <div className="mx-auto max-w-6xl px-4">
-                {isResearchFooter ? (
+                {isCompactFooter ? (
                   <div className="flex items-center justify-center gap-[clamp(8px,2.5vw,52px)] whitespace-nowrap">
                     {["ABSOL", "X", "CORE", "AI"].map((word) => (
                       <span
@@ -630,12 +733,12 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
 
               <p
                 className={
-                  isResearchFooter
+                  isCompactFooter
                     ? "mt-3 font-elios text-[5px] tracking-[0.16em] text-white/45 sm:text-[8px] sm:tracking-[0.24em] md:mt-4 md:text-[10px] md:tracking-[0.28em]"
                     : "mt-4 font-elios text-[10px] tracking-[0.28em] text-white/45"
                 }
               >
-                Ac 2026 ABSOL X CORE AI. ALL RIGHTS RESERVED.
+                © 2026 ABSOL X CORE AI. ALL RIGHTS RESERVED.
               </p>
             </div>
           </div>

@@ -288,6 +288,19 @@
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.85);
 }
 
+.stable-imagination-gradient {
+  background: linear-gradient(90deg, #000 33.12%, #fff 52.4%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.stable-knows {
+  color: #858900;
+  -webkit-text-fill-color: currentColor;
+}
+
 
 .absolx-gradient {
   background: linear-gradient(90deg,

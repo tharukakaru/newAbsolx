@@ -5,19 +5,26 @@ export default function useTextShuffle(ref, options) {
     const el = ref.current;
     if (!el) return;
 
-    const loadTimer = 30;
-    const scrollTimer = 10;
-    const loadChangeCap = 30;
-    const scrollChangeCap = 5;
+    const loadTimer = 50;
+    const textTimer = 28;
+    const numberTimer = 65;
+    const loadChangeCap = 36;
+    const textChangeCap = 14;
+    const numberChangeCap = 32;
     let intervalId = null;
+    let settleTimeoutId = null;
+    let initialFrameId = null;
+    let currentMode = null;
+    let lastScrollY = window.scrollY;
 
     const randomDigit = () => Math.floor(Math.random() * 10);
     const selectIndex = max => Math.floor(Math.random() * max);
 
-    const setupSpans = (mode) => {
+    const setupSpans = (mode, changeCap) => {
       const numbers = el.dataset.initial || "";
       const text = el.dataset.target || "";
-      const changeCap = mode === "text" ? loadChangeCap : scrollChangeCap;
+
+      el.classList.toggle("is-number-mode", mode === "numbers");
 
       const targetString = mode === "text" ? text : numbers;
       const initialString = mode === "text" ? numbers : text;
@@ -77,27 +84,112 @@ export default function useTextShuffle(ref, options) {
       selected.textContent = randomDigit();
     };
 
-    const startShuffle = (mode, speed) => {
-      if (intervalId) clearInterval(intervalId);
+    const startShuffle = (mode, speed, changeCap) => {
+      if (mode === currentMode) return;
 
-      setupSpans(mode);
+      if (intervalId) clearInterval(intervalId);
+      if (settleTimeoutId) clearTimeout(settleTimeoutId);
+
+      currentMode = mode;
+      setupSpans(mode, changeCap);
       intervalId = setInterval(() => tick(speed), speed);
+      settleTimeoutId = setTimeout(() => {
+        el.querySelectorAll(".nbr").forEach((span) => {
+          span.textContent = span.dataset.target || "";
+          span.classList.remove("nbr");
+        });
+
+        if (intervalId) {
+          clearInterval(intervalId);
+          intervalId = null;
+        }
+
+        settleTimeoutId = null;
+      }, speed * (changeCap + 2));
     };
 
-    // run on load
-    startShuffle("text", loadTimer);
+    const getViewportScrollMode = () => {
+      const triggerElement =
+        (options?.triggerSelector &&
+          el.closest(options.triggerSelector)) ||
+        el.closest(".stable-lockup") ||
+        el;
+      const rect = triggerElement.getBoundingClientRect();
+      const triggerLine =
+        window.innerHeight * (options?.triggerPoint ?? 0.55);
+
+      return rect.top <= triggerLine ? "numbers" : "text";
+    };
+
+    // Run the reveal on load unless this element should wait for its scroll trigger.
+    if (options?.animateOnLoad === false) {
+      currentMode = "text";
+      el.classList.remove("is-number-mode");
+      const targetText = el.dataset.target || "";
+
+      if (el.textContent !== targetText) {
+        el.textContent = targetText;
+      }
+
+      if (options?.viewportOnly) {
+        initialFrameId = requestAnimationFrame(() => {
+          if (getViewportScrollMode() === "numbers") {
+            startShuffle("numbers", numberTimer, numberChangeCap);
+          }
+        });
+      }
+    } else {
+      startShuffle("text", loadTimer, loadChangeCap);
+    }
 
     // scroll listener
     const onWheel = (e) => {
-      if (e.deltaY < 0) startShuffle("text", scrollTimer);
-      else if (e.deltaY > 0) startShuffle("numbers", scrollTimer);
+      if (options?.viewportOnly) return;
+
+      if (e.deltaY < 0) startShuffle("text", textTimer, textChangeCap);
+      else if (e.deltaY > 0) {
+        startShuffle("numbers", numberTimer, numberChangeCap);
+      }
+    };
+
+    const onScroll = () => {
+      const nextScrollY = window.scrollY;
+      const delta = nextScrollY - lastScrollY;
+
+      if (Math.abs(delta) > 1) {
+        if (options?.viewportOnly) {
+          const mode = getViewportScrollMode();
+
+          if (mode === "numbers") {
+            startShuffle("numbers", numberTimer, numberChangeCap);
+          } else {
+            startShuffle("text", textTimer, textChangeCap);
+          }
+        } else if (delta > 0) {
+          startShuffle("numbers", numberTimer, numberChangeCap);
+        } else {
+          startShuffle("text", textTimer, textChangeCap);
+        }
+
+        lastScrollY = nextScrollY;
+      }
     };
 
     window.addEventListener("wheel", onWheel, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
       window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("scroll", onScroll);
       if (intervalId) clearInterval(intervalId);
+      if (settleTimeoutId) clearTimeout(settleTimeoutId);
+      if (initialFrameId) cancelAnimationFrame(initialFrameId);
     };
-  }, [ref, options]);
+  }, [
+    ref,
+    options?.viewportOnly,
+    options?.triggerSelector,
+    options?.triggerPoint,
+    options?.animateOnLoad,
+  ]);
 }

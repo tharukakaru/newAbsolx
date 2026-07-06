@@ -4,118 +4,198 @@ import React, { useRef } from "react";
 import useTextShuffle from "../Utils/useTextShuffle";
 
 export default function Title({ className = "" }) {
-  const stableRef = useRef(null);
-  const omniRef = useRef(null);
-  const universalRef = useRef(null);
-  const learnerRef = useRef(null);
+  const whereRef = useRef(null);
+  const imaginationRef = useRef(null);
+  const knowsRef = useRef(null);
+  const noRef = useRef(null);
+  const boundsRef = useRef(null);
 
-  useTextShuffle(stableRef);
-  useTextShuffle(omniRef);
-  useTextShuffle(universalRef);
-  useTextShuffle(learnerRef);
+  useTextShuffle(whereRef, {
+    viewportOnly: true,
+    animateOnLoad: false,
+    triggerPoint: 0.3,
+  });
+  useTextShuffle(imaginationRef, {
+    viewportOnly: true,
+    animateOnLoad: false,
+    triggerPoint: 0.3,
+  });
+  useTextShuffle(knowsRef, {
+    viewportOnly: true,
+    animateOnLoad: false,
+    triggerPoint: 0.3,
+  });
+  useTextShuffle(noRef, {
+    viewportOnly: true,
+    animateOnLoad: false,
+    triggerPoint: 0.3,
+  });
+  useTextShuffle(boundsRef, {
+    viewportOnly: true,
+    animateOnLoad: false,
+    triggerPoint: 0.3,
+  });
 
   return (
     <div
-      style={{
-        "--fs": "clamp(16px, 5vw, 64px)",
-        "--gap": "clamp(6px, 2.4vw, 44px)",
-        "--ml": "clamp(26px, 7vw, 82px)",
-        "--track": "clamp(0.03em, 0.12vw, 0.10em)",
-        "--scale": "clamp(0.72, calc(100vw / 620), 1)",
-
-        // ✅ Row2 offset = font-size එකට proportional (stable look)
-        "--row2shift": "clamp(-6px, calc(var(--fs) * -0.08), -2px)",
-        transform: "scale(var(--scale))",
-        transformOrigin: "top left",
-      }}
-      className={`
-        relative isolate z-[60] w-max
-        mt-6
-        overflow-visible
-        pointer-events-none
-        ${className}
-      `}
+      className={`stable-lockup relative isolate z-[60] pointer-events-none ${className}`}
+      aria-label="Where imagination knows no bounds"
     >
-      <div
-        className="
-          grid items-start
-          ml-[var(--ml)]
-          grid-cols-[max-content_var(--gap)_max-content]
-          grid-rows-2
-        "
-      >
-        <h1
-          ref={stableRef}
-          data-initial="29733"
-          data-target="STABLE"
-          className="
-            col-start-1 row-start-1
-            font-azonix tracking-[var(--track)]
-            whitespace-nowrap leading-none
-            text-gradient
-            text-[length:var(--fs)]
-            pointer-events-none
-          "
-        >
-          STABLE
-        </h1>
+      <style>{`
+        .stable-lockup {
+          width: min(92vw, 980px);
+          font-family: "Yapari Trial Regular", "Yapari Trial", "Azonix", sans-serif;
+          font-size: clamp(18px, 3.45vw, 36px);
+          font-weight: 600;
+          line-height: 0.92;
+          letter-spacing: 0.075em;
+          text-transform: uppercase;
+        }
 
-        <h1
-          ref={omniRef}
-          data-initial="99977"
-          data-target="OMNI"
-          className="
-            col-start-3 row-start-1
-            font-azonix tracking-[var(--track)]
-            whitespace-nowrap leading-none
-            text-white
-            text-[length:var(--fs)]
-            pointer-events-none
-          "
-        >
-          OMNI
-        </h1>
+        .stable-row {
+          display: flex;
+          align-items: baseline;
+          white-space: nowrap;
+        }
 
-        {/* ✅ mt ඉවත් කරලා translateY */}
-        <div
-          className="
-            col-start-3 row-start-2
-            flex flex-row items-baseline whitespace-nowrap
-            translate-y-[var(--row2shift)]
-            gap-x-[var(--gap)]
-          "
-        >
-          <h1
-            ref={universalRef}
-            data-initial="17413"
-            data-target="UNIVERSAL"
-            className="
-              font-azonix tracking-[var(--track)]
-              whitespace-nowrap leading-none
-              text-universal
-              text-[length:var(--fs)]
-              pointer-events-none
-            "
-          >
-            UNIVERSAL
-          </h1>
+        .stable-row-top {
+          justify-content: flex-start;
+          gap: clamp(10px, 1.8vw, 22px);
+        }
 
-          <h1
-            ref={learnerRef}
-            data-initial="83345"
-            data-target="LEARNER"
-            className="
-              font-azonix tracking-[var(--track)]
-              whitespace-nowrap leading-none
-              text-white
-              text-[length:var(--fs)]
-              pointer-events-none
-            "
-          >
-            LEARNER
-          </h1>
-        </div>
+        .stable-row-bottom {
+          justify-content: flex-end;
+          gap: clamp(18px, 3.7vw, 42px);
+          margin-top: clamp(14px, 1.7vw, 20px);
+        }
+
+        .stable-token {
+          display: inline-block;
+          transform-origin: left center;
+          transition:
+            font-size 180ms ease,
+            letter-spacing 180ms ease;
+        }
+
+        .stable-token.is-number-mode {
+          font-size: 0.46em;
+          letter-spacing: 0.04em;
+        }
+
+        .stable-where {
+          background: linear-gradient(90deg, #343943 0%, #777b86 100%);
+          background-clip: text;
+          -webkit-background-clip: text;
+          color: transparent;
+          -webkit-text-fill-color: transparent;
+        }
+
+        .stable-imagination {
+          color: rgba(255, 255, 255, 0.96);
+        }
+
+        .stable-knows {
+          color: #858900;
+          -webkit-text-fill-color: currentColor;
+        }
+
+        .stable-no,
+        .stable-bounds {
+          color: rgba(255, 255, 255, 0.9);
+        }
+
+        .stable-bounds-group {
+          display: inline-flex;
+          align-items: baseline;
+          gap: 0.34em;
+        }
+
+        .stable-divider {
+          width: 82%;
+          height: 1px;
+          margin: clamp(24px, 2.8vw, 30px) auto 0;
+          background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.18) 0%,
+            rgba(255, 255, 255, 0.52) 12%,
+            rgba(255, 255, 255, 0.52) 88%,
+            rgba(255, 255, 255, 0.18) 100%
+          );
+        }
+
+        @media (max-width: 560px) {
+          .stable-lockup {
+            width: 90vw;
+            font-size: clamp(13px, 4.1vw, 22px);
+            letter-spacing: 0.045em;
+          }
+
+          .stable-row-top {
+            gap: 7px;
+          }
+
+          .stable-row-bottom {
+            gap: 12px;
+            margin-top: 12px;
+          }
+
+          .stable-divider {
+            width: 84%;
+            margin-top: 18px;
+          }
+        }
+      `}</style>
+
+      <div className="stable-row stable-row-top">
+        <span
+          ref={whereRef}
+          data-initial="2308051805"
+          data-target="WHERE"
+          className="stable-token stable-where"
+        >
+          WHERE
+        </span>
+        <span
+          ref={imaginationRef}
+          data-initial="091301070914012009150114"
+          data-target="IMAGINATION"
+          className="stable-token stable-imagination"
+        >
+          IMAGINATION
+        </span>
       </div>
+
+      <div className="stable-row stable-row-bottom">
+        <span
+          ref={knowsRef}
+          data-initial="1114152319"
+          data-target="KNOWS"
+          className="stable-token stable-knows"
+        >
+          KNOWS
+        </span>
+        <span className="stable-bounds-group">
+          <span
+            ref={noRef}
+            data-initial="1415"
+            data-target="NO"
+            className="stable-token stable-no"
+          >
+            NO
+          </span>
+          <span
+            ref={boundsRef}
+            data-initial="021521140419"
+            data-target="BOUNDS"
+            className="stable-token stable-bounds"
+          >
+            BOUNDS
+          </span>
+          <span aria-hidden="true">.</span>
+        </span>
+      </div>
+
+      <div className="stable-divider" aria-hidden="true" />
     </div>
   );
 }

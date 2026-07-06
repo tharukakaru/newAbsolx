@@ -10,6 +10,8 @@ export default function SoulGrid() {
     "calc(var(--img-x, 0px) + (var(--img-w, 0px) * var(--soul-face-left, 0.555)))";
   const sectionTop =
     "calc(var(--img-y, 0px) + (var(--img-h, 0px) * var(--soul-face-top, 0.92)))";
+  const verticalTitleTop =
+    "calc(var(--img-y, 0px) + (var(--img-h, 0px) * var(--soul-face-top, 0.92)) + (var(--soul-face-height) * 0.5))";
 
   return (
     <div className="absolute inset-0 pointer-events-none z-10 soul-face-root">
@@ -25,6 +27,7 @@ export default function SoulGrid() {
           --soul-right-spine-right: clamp(112px, 17.4%, 208px);
           --soul-top-line-width: clamp(116px, calc(var(--soul-face-width) * 0.17), 206px);
           --soul-top-line-top: 8.4%;
+          --soul-defense-offset: clamp(59px, calc(var(--img-w, 0px) * 0.077), 118px);
         }
 
         .soul-face-section {
@@ -58,6 +61,43 @@ export default function SoulGrid() {
           will-change: transform;
         }
 
+        .soul-agentic-title-rail {
+          position: absolute;
+          left: clamp(26px, 2.4vw, 48px);
+          z-index: 8;
+          width: 0;
+          height: 0;
+          color: #5a5a5a;
+          pointer-events: none;
+        }
+
+        .soul-agentic-title {
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: block;
+          white-space: nowrap;
+          transform: translate(-50%, -50%) rotate(-90deg);
+          transform-origin: center;
+          color: #5a5a5a;
+          text-align: center;
+          font-family: "Yapari Trial", sans-serif;
+          font-size: clamp(
+            18px,
+            min(calc(var(--img-w, 0px) * 0.026), 3.6vh),
+            40px
+          );
+          font-style: normal;
+          font-weight: 700;
+          line-height: normal;
+          letter-spacing: clamp(
+            2px,
+            min(calc(var(--img-w, 0px) * 0.004), 0.5vh),
+            6px
+          );
+          text-transform: uppercase;
+        }
+
         .soul-title-cluster {
           position: absolute;
           top: clamp(-28px, 1.5%, 16px);
@@ -65,24 +105,8 @@ export default function SoulGrid() {
           display: flex;
           flex-direction: column;
           align-items: flex-start;
+          padding-top: var(--soul-defense-offset);
           color: #fff;
-        }
-
-        .soul-fight-text {
-          position: relative;
-          z-index: 5;
-          font-family: "Yapari Trial", "Yapari Trial Regular", "Azonix", sans-serif;
-          font-size: clamp(36px, calc(var(--img-w, 0px) * 0.047), 72px);
-          font-weight: 700;
-          line-height: 0.82;
-          letter-spacing: 0.045em;
-          text-transform: uppercase;
-          text-shadow: 0 0 22px rgba(255, 255, 255, 0.16);
-        }
-
-        .soul-fight-text .unfair {
-          display: block;
-          margin-left: 1.16em;
         }
 
         .soul-defense-badge {
@@ -347,14 +371,11 @@ export default function SoulGrid() {
             --soul-right-spine-right: clamp(54px, 14.5%, 98px);
             --soul-top-line-width: clamp(76px, calc(var(--soul-face-width) * 0.15), 128px);
             --soul-top-line-top: 8.8%;
+            --soul-defense-offset: clamp(46px, calc(var(--img-w, 0px) * 0.0886), 75px);
           }
 
           .soul-title-cluster {
             right: clamp(22px, 8%, 54px);
-          }
-
-          .soul-fight-text {
-            font-size: clamp(28px, calc(var(--img-w, 0px) * 0.054), 46px);
           }
 
           .soul-defense-badge {
@@ -386,6 +407,7 @@ export default function SoulGrid() {
             --soul-right-spine-right: 12%;
             --soul-top-line-width: 68px;
             --soul-top-line-top: 9.2%;
+            --soul-defense-offset: clamp(41px, calc(var(--img-w, 0px) * 0.1148), 62px);
           }
 
           .soul-title-cluster {
@@ -393,8 +415,13 @@ export default function SoulGrid() {
             right: clamp(12px, 5%, 24px);
           }
 
-          .soul-fight-text {
-            font-size: clamp(25px, calc(var(--img-w, 0px) * 0.07), 38px);
+          .soul-agentic-title-rail {
+            left: 16px;
+          }
+
+          .soul-agentic-title {
+            font-size: clamp(14px, min(4.8vw, 3.4vh), 20px);
+            letter-spacing: clamp(1.5px, min(0.9vw, 0.45vh), 3px);
           }
 
           .soul-defense-badge {
@@ -425,6 +452,13 @@ export default function SoulGrid() {
       `}</style>
 
       <div
+        className="soul-agentic-title-rail"
+        style={{ top: verticalTitleTop }}
+      >
+        <span className="soul-agentic-title">Agentic Warfare</span>
+      </div>
+
+      <div
         className="soul-face-section"
         style={{
           left: sectionLeft,
@@ -443,10 +477,6 @@ export default function SoulGrid() {
           <div className="soul-line-current c2" />
         </div>
         <div className="soul-title-cluster">
-          <div className="soul-fight-text">
-            <span>Fight</span>
-            <span className="unfair">Unfair</span>
-          </div>
           <div className="soul-defense-badge">
             <span className="corner-a" />
             <span className="corner-b" />

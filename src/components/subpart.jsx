@@ -1,38 +1,23 @@
 import React from "react";
-import footerSoldier from "../assets/kevinfrose_3D_RENDER_ULTRA_HD_8K._unreal_engine_shadows_chromat_324cf786-b6cf-4c23-86ee-03b4fc43e4ad 1.png";
 
 export default function Subpart() {
   return (
     <section className="footer-readme-bridge relative z-10 overflow-visible">
       <style>{`
         .footer-readme-bridge {
-          --readme-left: #473d1c;
-          --readme-right: #2c3475;
+          --readme-left: #594c22;
+          --readme-right: #2d3474;
           min-height: clamp(540px, 58vw, 820px);
           padding: 68px 24px 0;
-          background:
-            radial-gradient(ellipse at 16% 62%, rgba(71, 61, 28, 0.9) 0%, rgba(71, 61, 28, 0.42) 26%, rgba(71, 61, 28, 0) 58%),
-            radial-gradient(ellipse at 82% 66%, rgba(44, 52, 117, 0.95) 0%, rgba(44, 52, 117, 0.52) 36%, rgba(44, 52, 117, 0) 66%),
-            linear-gradient(180deg, #000 0%, #030306 16%, #08080d 52%, #171c43 100%);
+          background: transparent;
         }
 
         .footer-readme-bridge::before {
-          content: "";
-          position: absolute;
-          inset: 0;
-          background:
-            linear-gradient(90deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.18) 38%, rgba(0,0,0,0.08) 64%, rgba(0,0,0,0.18) 100%),
-            radial-gradient(ellipse at center, rgba(0,0,0,0) 34%, rgba(0,0,0,0.72) 100%);
-          pointer-events: none;
+          display: none;
         }
 
         .footer-readme-bridge::after {
-          content: "";
-          position: absolute;
-          inset: auto 0 0;
-          height: 34%;
-          background: linear-gradient(180deg, rgba(4,5,12,0), rgba(10,13,32,0.92));
-          pointer-events: none;
+          display: none;
         }
 
         .footer-readme-panel {
@@ -44,12 +29,13 @@ export default function Subpart() {
           border: 1px solid rgba(147, 149, 19, 0.76);
           border-radius: clamp(42px, 6vw, 86px);
           background:
-            linear-gradient(90deg, rgba(71, 61, 28, 0.52) 0%, rgba(8, 8, 13, 0.6) 48%, rgba(44, 52, 117, 0.56) 100%),
-            radial-gradient(ellipse at 18% 72%, rgba(112, 96, 34, 0.34), rgba(112, 96, 34, 0) 54%),
-            radial-gradient(ellipse at 88% 74%, rgba(68, 82, 180, 0.24), rgba(68, 82, 180, 0) 58%);
+            linear-gradient(90deg, rgba(89, 76, 34, 0.52) 0%, rgba(8, 8, 13, 0.6) 48%, rgba(45, 52, 116, 0.56) 100%),
+            radial-gradient(ellipse at 18% 72%, rgba(89, 76, 34, 0.34), rgba(89, 76, 34, 0) 54%),
+            radial-gradient(ellipse at 88% 74%, rgba(45, 52, 116, 0.3), rgba(45, 52, 116, 0) 58%);
           box-shadow:
             inset 0 0 36px rgba(0, 0, 0, 0.46),
             0 0 30px rgba(44, 52, 117, 0.16);
+          backdrop-filter: blur(5px);
         }
 
         .footer-readme-actions {
@@ -59,7 +45,7 @@ export default function Subpart() {
           align-items: center;
           justify-content: center;
           gap: 16px;
-          margin-top: 70px;
+          margin-top: 30px;
         }
 
         .footer-readme-button {
@@ -135,57 +121,38 @@ export default function Subpart() {
           transform: translateY(-1px);
         }
 
-        .footer-readme-soldier {
-          position: absolute;
-          z-index: 12;
-          right: clamp(-125px, -9vw, -72px);
-          bottom: -535px;
-          width: min(48vw, 560px);
-          min-width: 420px;
-          pointer-events: none;
-          user-select: none;
-          filter: drop-shadow(0 0 36px rgba(94, 125, 255, 0.18));
-        }
-
         @media (max-width: 900px) {
           .footer-readme-bridge {
-            min-height: 560px;
-            padding-top: 48px;
+            min-height: 520px;
+            padding-top: 32px;
           }
 
           .footer-readme-panel {
-            width: min(86vw, 680px);
-            height: 230px;
-            border-radius: 46px;
+            width: min(84vw, 680px);
+            height: clamp(230px, 48.8vw, 310px);
+            border-radius: clamp(38px, 8.5vw, 60px);
           }
 
           .footer-readme-actions {
-            margin-top: 48px;
+            margin-top: 30px;
           }
 
-          .footer-readme-soldier {
-            right: -120px;
-            bottom: -420px;
-            width: 430px;
-            min-width: 0;
-            opacity: 0.95;
-          }
         }
 
         @media (max-width: 560px) {
           .footer-readme-bridge {
             min-height: 500px;
-            padding: 38px 16px 0;
+            padding: 30px 16px 0;
           }
 
           .footer-readme-panel {
-            width: 88vw;
-            height: 178px;
-            border-radius: 34px;
+            width: 84vw;
+            height: clamp(200px, 48.8vw, 274px);
+            border-radius: clamp(34px, 8.5vw, 48px);
           }
 
           .footer-readme-actions {
-            margin-top: 40px;
+            margin-top: 28px;
             gap: 12px;
           }
 
@@ -199,11 +166,6 @@ export default function Subpart() {
             font-size: 20px;
           }
 
-          .footer-readme-soldier {
-            right: -150px;
-            bottom: -340px;
-            width: 380px;
-          }
         }
       `}</style>
 
@@ -221,14 +183,6 @@ export default function Subpart() {
           &gt;&gt;
         </span>
       </div>
-
-      <img
-        src={footerSoldier}
-        alt=""
-        aria-hidden="true"
-        className="footer-readme-soldier"
-        loading="lazy"
-      />
     </section>
   );
 }
