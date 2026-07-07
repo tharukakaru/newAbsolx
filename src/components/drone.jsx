@@ -1,7 +1,7 @@
 import React from "react";
 import SourceCodeProRegular from "../assets/fonts/SourceCodePro-Regular.otf";
-import DroneAssembly from "../assets/vipoer assmbly 2.png";
-import TacticalTerrain from "../assets/gfjhjhjhjlhugh 1.png";
+import DroneAssembly from "../assets/vipoer assmbly 2.webp";
+import TacticalTerrain from "../assets/gfjhjhjhjlhugh 1.webp";
 
 const cornerMarks = (
   <>
@@ -31,12 +31,41 @@ export default function Drone() {
         .drone-root {
           --drone-yellow: #e5e51b;
           --drone-stage-height: clamp(650px, 62.5vw, 920px);
+          --drone-transition: clamp(72px, 7vw, 120px);
           min-height: var(--drone-stage-height);
+          overflow: visible;
+          background: transparent;
           font-family: "Source Code Pro", ui-monospace, SFMono-Regular, Menlo, monospace;
+        }
+
+        .drone-root::before,
+        .drone-root::after {
+          content: "";
+          position: absolute;
+          z-index: 0;
+          left: 0;
+          right: 0;
+          height: var(--drone-transition);
+          pointer-events: none;
+        }
+
+        /* ARC → autonomy: the higher-z autonomy wrapper now enters as a fade,
+           instead of cutting the ARC panel off with its rectangular edge. */
+        .drone-root::before {
+          top: calc(var(--drone-transition) * -1);
+          background: linear-gradient(180deg, transparent 0%, rgba(2,2,4,0.52) 56%, #020204 100%);
+        }
+
+        /* Autonomy → MEGHA: extend a black-to-transparent veil over the next
+           section so both backgrounds cross-fade across the DOM boundary. */
+        .drone-root::after {
+          bottom: calc(var(--drone-transition) * -1);
+          background: linear-gradient(180deg, #020204 0%, rgba(2,2,4,0.66) 44%, transparent 100%);
         }
 
         .drone-stage {
           position: relative;
+          z-index: 1;
           width: min(100%, 1780px);
           height: var(--drone-stage-height);
           margin: 0 auto;
@@ -67,9 +96,17 @@ export default function Drone() {
           z-index: 2;
           pointer-events: none;
           background:
+            linear-gradient(
+              180deg,
+              #000 0%,
+              rgba(0, 0, 0, 0.88) 7%,
+              rgba(0, 0, 0, 0.38) 18%,
+              transparent 28%,
+              transparent 68%,
+              rgba(0, 0, 0, 0.96) 100%
+            ),
             radial-gradient(48% 52% at 8% 30%, rgba(74, 92, 226, 0.66), rgba(28, 38, 116, 0.34) 42%, transparent 74%),
-            radial-gradient(35% 44% at 96% 81%, rgba(116, 104, 22, 0.18), transparent 68%),
-            linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, transparent 19%, transparent 79%, rgba(0, 0, 0, 0.48) 100%);
+            radial-gradient(35% 44% at 96% 81%, rgba(116, 104, 22, 0.18), transparent 68%);
         }
 
         .drone-command-view {
@@ -250,12 +287,29 @@ export default function Drone() {
           bottom: 0;
           width: 1px;
           height: auto;
-          background: linear-gradient(
-            180deg,
-            rgba(255,255,255,0.68) 0%,
-            rgba(255,255,255,0.58) 48%,
-            rgba(255,255,255,0.46) 100%
-          );
+          background:
+            linear-gradient(
+              180deg,
+              rgba(255,255,255,0.68) 0%,
+              rgba(255,255,255,0.58) 48%,
+              rgba(255,255,255,0.46) 100%
+            ),
+            linear-gradient(180deg, transparent 0%, rgba(255,255,210,0.08) 18%, rgba(255,255,180,0.24) 38%, rgba(255,255,255,0.9) 50%, rgba(255,255,150,0.24) 62%, rgba(255,255,120,0.08) 82%, transparent 100%);
+          background-repeat: no-repeat;
+          background-size: 100% 100%, 100% 48%;
+          background-position: 0 0, 0 -54%;
+          filter: drop-shadow(0 0 4px rgba(255,255,160,0.18));
+          will-change: background-position;
+          animation: droneGuideRunY 4s linear infinite;
+        }
+
+        @keyframes droneGuideRunY {
+          0% {
+            background-position: 0 0, 0 -54%;
+          }
+          100% {
+            background-position: 0 0, 0 154%;
+          }
         }
 
         .drone-guide::before,
@@ -441,6 +495,10 @@ export default function Drone() {
 
         @media (prefers-reduced-motion: reduce) {
           .drone-command-view::after {
+            animation: none;
+          }
+
+          .drone-guide {
             animation: none;
           }
 

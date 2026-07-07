@@ -5,7 +5,7 @@ import angleMeghaX0 from "../assets/angle 2 2.png";
 import angleRaven from "../assets/angle 2 3.png";
 import angleEvtol from "../assets/sadadadad 1.png";
 import angleFenrir from "../assets/Angle view 9.png";
-import operationalTerrain from "../assets/09f8626770d522bace35bbcf8ca7d0ff4eb5528d.png";
+import operationalTerrain from "../assets/09f8626770d522bace35bbcf8ca7d0ff4eb5528d.webp";
 import plusJakartaSans from "../assets/fonts/PlusJakartaSans[wght].ttf";
 
 const MEGHA_X_COPY =
@@ -162,9 +162,10 @@ export default function DroneSubSection() {
           inset: 0;
           background: linear-gradient(
             180deg,
-            rgba(0,0,0,0.82) 0%,
-            rgba(0,0,0,0.42) 5%,
-            rgba(0,0,0,0.12) 14%,
+            #000 0%,
+            rgba(0,0,0,0.82) 5%,
+            rgba(0,0,0,0.28) 14%,
+            rgba(0,0,0,0.12) 20%,
             rgba(0,0,0,0.28) 58%,
             rgba(0,0,0,0.72) 86%,
             #000 100%
@@ -240,33 +241,58 @@ export default function DroneSubSection() {
           height: var(--drone-sub-catalog-height);
         }
 
+        /* Segmented centre guide: the breaks separate each product block,
+           matching the reference composition while retaining the pulse. */
         .drone-sub-rule {
           position: absolute;
           left: 49.35%;
+          top: 0.4%;
+          height: 98.8%;
           width: 1px;
           background:
-            linear-gradient(180deg, transparent, rgba(255,255,255,0.62) 12%, rgba(255,255,255,0.44) 88%, transparent),
+            linear-gradient(180deg, transparent, rgba(255,255,255,0.62) 4%, rgba(255,255,255,0.44) 96%, transparent),
             linear-gradient(180deg, transparent 0%, rgba(255,255,210,0.08) 18%, rgba(255,255,180,0.24) 38%, rgba(255,255,255,0.9) 50%, rgba(255,255,150,0.24) 62%, rgba(255,255,120,0.08) 82%, transparent 100%);
           background-repeat: no-repeat;
-          background-size: 100% 100%, 100% 48%;
-          background-position: 0 0, 0 -54%;
+          background-size: 100% 100%, 100% 26%;
+          background-position: 0 0, 0 -35%;
           filter: drop-shadow(0 0 4px rgba(255,255,160,0.18));
+          -webkit-mask-image: linear-gradient(
+            180deg,
+            transparent 0%,
+            transparent 19%,
+            #000 19%,
+            #000 56%,
+            transparent 56%,
+            transparent 67%,
+            #000 67%,
+            #000 82%,
+            transparent 82%,
+            transparent 100%
+          );
+          mask-image: linear-gradient(
+            180deg,
+            transparent 0%,
+            transparent 19%,
+            #000 19%,
+            #000 56%,
+            transparent 56%,
+            transparent 67%,
+            #000 67%,
+            #000 82%,
+            transparent 82%,
+            transparent 100%
+          );
           will-change: background-position;
-          animation: droneSubLineRunY 4s linear infinite;
+          animation: droneSubLineRunY 7s linear infinite;
           z-index: 16;
         }
 
-        .drone-sub-rule-1 { top: 19.2%; height: 7.3%; }
-        .drone-sub-rule-2 { top: 33.5%; height: 9.5%; animation-delay: 0.38s; }
-        .drone-sub-rule-3 { top: 52%; height: 10%; animation-delay: 0.76s; }
-        .drone-sub-rule-4 { top: 72%; height: 11%; animation-delay: 1.14s; }
-
         @keyframes droneSubLineRunY {
           0% {
-            background-position: 0 0, 0 -54%;
+            background-position: 0 0, 0 -35%;
           }
           100% {
-            background-position: 0 0, 0 154%;
+            background-position: 0 0, 0 135%;
           }
         }
 
@@ -483,6 +509,23 @@ export default function DroneSubSection() {
           background: #000;
           color: #fff;
           font-family: "Yapari Trial Regular", "Yapari Trial", "Azonix", sans-serif;
+          margin-top: -1px;
+        }
+
+        .drone-ops-root::before {
+          content: "";
+          position: absolute;
+          z-index: 3;
+          left: 49.35%;
+          top: clamp(18px, 1.5vw, 28px);
+          width: 1px;
+          height: clamp(72px, 6vw, 108px);
+          background: linear-gradient(
+            180deg,
+            rgba(255,255,255,0.58),
+            rgba(255,255,255,0.42)
+          );
+          pointer-events: none;
         }
 
         .drone-ops-terrain {
@@ -878,10 +921,7 @@ export default function DroneSubSection() {
         </header>
 
         <div className="drone-sub-catalog">
-          <span className="drone-sub-rule drone-sub-rule-1" aria-hidden="true" />
-          <span className="drone-sub-rule drone-sub-rule-2" aria-hidden="true" />
-          <span className="drone-sub-rule drone-sub-rule-3" aria-hidden="true" />
-          <span className="drone-sub-rule drone-sub-rule-4" aria-hidden="true" />
+          <span className="drone-sub-rule" aria-hidden="true" />
 
           <div className="drone-sub-feature" aria-hidden="true">
             <img src={angleJet} alt="" />

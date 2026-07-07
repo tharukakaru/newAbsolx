@@ -1,6 +1,6 @@
 import React from "react";
 import plusJakartaSans from "../assets/fonts/PlusJakartaSans[wght].ttf";
-import footerSentinel from "../assets/065b4a00de40127609484cfbd9569fa6 1.png";
+import footerSentinel from "../assets/065b4a00de40127609484cfbd9569fa6 1.webp";
 
 // App badges
 import appStore from "../assets/footer/app_store.svg";

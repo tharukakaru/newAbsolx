@@ -2,11 +2,11 @@ import { useRef } from "react";
 import AnimatedLine from "../Utils/AnimatedLine";
 import useTextShuffle from "../Utils/useTextShuffle";
 import plusJakartaSans from "../assets/fonts/PlusJakartaSans[wght].ttf";
-import handsImage from "../assets/yertg 2.png";
-import swarmFigure from "../assets/gfjhjhjhjlhugh 1.png";
+import handsImage from "../assets/yertg 2.webp";
+import swarmFigure from "../assets/gfjhjhjhjlhugh 1.webp";
 import sentryFigure from "../assets/Gemini_Generated_Image_ghrd4sghrd4sghrd 1.png";
 import droneFigure from "../assets/Group 1000002154.png";
-import terrainMesh from "../assets/09f8626770d522bace35bbcf8ca7d0ff4eb5528d.png";
+import terrainMesh from "../assets/09f8626770d522bace35bbcf8ca7d0ff4eb5528d.webp";
 import terrainDots from "../assets/2072e0a6f65bd90c64aec41f97bcfecf866d0c47.gif";
 
 const hyenaCards = [
@@ -1399,6 +1399,45 @@ export default function ArsOs() {
           );
         }
 
+        .ars-os-vline,
+        .hyena-vline,
+        .sentinel-vline,
+        .c2-vline {
+          background:
+            linear-gradient(
+              180deg,
+              rgba(255, 255, 255, 0.58) 0%,
+              rgba(255, 255, 255, 0.52) 54%,
+              rgba(255, 255, 255, 0.46) 100%
+            ),
+            linear-gradient(
+              180deg,
+              transparent 0%,
+              rgba(255, 255, 210, 0.08) 16%,
+              rgba(255, 255, 180, 0.26) 36%,
+              rgba(255, 255, 255, 0.92) 50%,
+              rgba(255, 255, 150, 0.26) 64%,
+              rgba(255, 255, 120, 0.08) 84%,
+              transparent 100%
+            );
+          background-repeat: no-repeat;
+          background-size: 100% 100%, 100% 44%;
+          background-position: 0 0, 0 -52%;
+          filter: drop-shadow(0 0 4px rgba(255, 255, 160, 0.18));
+          will-change: background-position;
+          animation: arsOsGuideRunY 4s linear infinite;
+        }
+
+        @keyframes arsOsGuideRunY {
+          0% {
+            background-position: 0 0, 0 -52%;
+          }
+
+          100% {
+            background-position: 0 0, 0 152%;
+          }
+        }
+
         .c2-inner {
           position: relative;
           z-index: 3;
@@ -1666,6 +1705,45 @@ export default function ArsOs() {
           );
         }
 
+        .hyena-rule,
+        .sentinel-rule,
+        .c2-rule {
+          background:
+            linear-gradient(
+              90deg,
+              rgba(255, 255, 255, 0.08) 0%,
+              rgba(255, 255, 255, 0.58) 28%,
+              rgba(255, 255, 255, 0.68) 72%,
+              rgba(255, 255, 255, 0.08) 100%
+            ),
+            linear-gradient(
+              90deg,
+              transparent 0%,
+              rgba(255, 255, 210, 0.08) 16%,
+              rgba(255, 255, 180, 0.28) 36%,
+              rgba(255, 255, 255, 0.96) 50%,
+              rgba(255, 255, 150, 0.28) 64%,
+              rgba(255, 255, 120, 0.08) 84%,
+              transparent 100%
+            );
+          background-repeat: no-repeat;
+          background-size: 100% 100%, 42% 100%;
+          background-position: 0 0, -44% 0;
+          filter: drop-shadow(0 0 4px rgba(255, 255, 180, 0.18));
+          will-change: background-position;
+          animation: arsOsGuideRunX 3.8s linear infinite;
+        }
+
+        @keyframes arsOsGuideRunX {
+          0% {
+            background-position: 0 0, -44% 0;
+          }
+
+          100% {
+            background-position: 0 0, 144% 0;
+          }
+        }
+
         @media (max-width: 900px) {
           .c2-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1740,6 +1818,18 @@ export default function ArsOs() {
 
           .c2-step::after {
             display: none;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .ars-os-vline,
+          .hyena-vline,
+          .sentinel-vline,
+          .c2-vline,
+          .hyena-rule,
+          .sentinel-rule,
+          .c2-rule {
+            animation: none;
           }
         }
       `}</style>

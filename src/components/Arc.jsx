@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import hyenaImage from "../assets/27c49652d13ae2603bf7615502d578291a89da32.png";
-import sentinelImage from "../assets/8efcae60e9c9755c92517c46124e7bd251b2d5e4.png";
-import arcImage from "../assets/a4b1ee2080059fbfd1126c74b0922adf29b3f9d8.png";
+import hyenaImage from "../assets/27c49652d13ae2603bf7615502d578291a89da32.webp";
+import sentinelImage from "../assets/8efcae60e9c9755c92517c46124e7bd251b2d5e4.webp";
+import arcImage from "../assets/a4b1ee2080059fbfd1126c74b0922adf29b3f9d8.webp";
 
 const connectedCopy =
   "Connected Warfare ensures U.S. and allied forces win at the edge, in fast-moving and contested environments where decisions must be made in seconds. We build AI-driven systems that connect sensors, shooters, and decision-makers for faster, smarter, and more resilient operations when every second counts.";

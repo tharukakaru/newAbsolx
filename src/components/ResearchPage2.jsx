@@ -1,5 +1,5 @@
 import React from "react";
-import glassFragmentsImage from "../assets/jeannotmagcd_96363_small_fragments_of_shattered_glass_floatin_34d0418d-4457-49b6-8ddb-52a988f9ec66_2 1.png";
+import glassFragmentsImage from "../assets/jeannotmagcd_96363_small_fragments_of_shattered_glass_floatin_34d0418d-4457-49b6-8ddb-52a988f9ec66_2 1.webp";
 import printerBlueprint from "../assets/3d-printer-blueprints_204926-846 2 [Vectorized].png";
 import cncIllustration from "../assets/cnc-milling-illustration_204926-3376 2.png";
 import plusJakartaSans from "../assets/fonts/PlusJakartaSans[wght].ttf";
@@ -111,22 +111,13 @@ export default function ResearchPage2() {
           bottom: -1px;
           width: 1px;
           z-index: 2;
-          background: linear-gradient(
-            180deg,
-            rgba(255,255,255,0.22),
-            rgba(255,255,255,0.58) 12%,
-            rgba(255,255,255,0.5) 72%,
-            rgba(255,255,255,0.24)
-          );
+          background: rgba(255,255,255,0.44);
           box-shadow: 0 0 7px rgba(255,255,255,0.16);
           pointer-events: none;
         }
 
         .capabilities-section {
-          background:
-            radial-gradient(ellipse at 12% 86%, rgba(161, 136, 36, 0.38), rgba(161, 136, 36, 0.12) 32%, rgba(0, 0, 0, 0) 64%),
-            radial-gradient(ellipse at 88% 92%, rgba(80, 91, 200, 0.46), rgba(80, 91, 200, 0.16) 34%, rgba(0, 0, 0, 0) 68%),
-            #03050A;
+          background: transparent;
         }
 
         .isr-glass {
@@ -446,9 +437,7 @@ export default function ResearchPage2() {
           --afr-navy: #242b5f;
           --afr-black: #000000;
           --afr-lime: #E3E41B;
-          background:
-            radial-gradient(ellipse at 12% 68%, rgba(36, 43, 95, 0.92), rgba(36, 43, 95, 0.5) 26%, rgba(36, 43, 95, 0) 58%),
-            linear-gradient(98deg, var(--afr-navy) 0%, rgba(23, 28, 64, 0.82) 18%, rgba(0, 0, 0, 0.96) 62%, var(--afr-black) 100%);
+          background: transparent;
         }
 
         .afr-section::after {
@@ -626,8 +615,7 @@ export default function ResearchPage2() {
 
         .swm-section {
           padding-bottom: clamp(34px, 4vw, 64px) !important;
-          background:
-            linear-gradient(180deg, rgba(20, 24, 52, 0.55) 0%, rgba(2, 4, 9, 0.96) 26%, rgba(0, 0, 0, 0.98) 68%, #000 100%);
+          background: transparent;
         }
 
         .swm-section::before {

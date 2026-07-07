@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import handImage from "../assets/yertg 1.png";
+import handImage from "../assets/yertg 1.webp";
 import SoulGrid from "./SoulGrid";
 import useTextShuffle from "../Utils/useTextShuffle";
 
