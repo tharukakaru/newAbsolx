@@ -153,7 +153,8 @@ vec3 render(vec3 ro, vec3 rd){
 }
 
 void main(){
-  vec2 uv = (gl_FragCoord.xy - 0.5 * uRes) / uRes.y * 2.0;
+  float uvScale = min(uRes.x, uRes.y);
+  vec2 uv = (gl_FragCoord.xy - 0.5 * uRes) / uvScale * 2.0;
   uv.y -= 0.08;
 
   float ph = uPhase * 2.0 * PI;

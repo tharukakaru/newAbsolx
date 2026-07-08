@@ -229,6 +229,11 @@ export default function ResearchPage() {
           height: auto;
         }
 
+        .research-hero-section {
+          overflow: visible;
+          z-index: 80;
+        }
+
         .research-title {
           display: flex;
           flex-wrap: nowrap;
@@ -428,15 +433,18 @@ export default function ResearchPage() {
           position: relative;
           display: block;
           overflow: visible;
+          z-index: 120;
+          --research-line-height: 5200px;
+          --research-line-current: 560px;
           background:
             linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 6%, rgba(255,255,255,0.38) 48%, rgba(255,255,255,0.18) 94%, transparent 100%),
             linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.02) 12%, rgba(255,255,255,0.52) 36%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.52) 64%, rgba(255,255,255,0.02) 88%, transparent 100%);
           background-repeat: no-repeat;
-          background-size: 100% 100%, 22% 100%;
-          background-position: 0 0, -26% 0;
+          background-size: 100% 100%, 28% 100%;
+          background-position: 0 0, -34% 0;
           box-shadow: 0 0 5px rgba(255,255,255,0.22);
           will-change: background-position;
-          animation: researchSignalSweep 5s linear infinite;
+          animation: researchSignalSweep 6.8s linear infinite;
         }
 
         .research-signal-line::before {
@@ -444,8 +452,9 @@ export default function ResearchPage() {
           position: absolute;
           left: 0;
           top: -16px;
+          z-index: 1;
           width: 1px;
-          height: 5200px;
+          height: var(--research-line-height);
           background: linear-gradient(
             180deg,
             rgba(255,255,255,0.62),
@@ -453,17 +462,45 @@ export default function ResearchPage() {
             rgba(255,255,255,0.52) 58%,
             rgba(255,255,255,0.24) 100%
           );
-          box-shadow: 0 0 8px rgba(255,255,255,0.22);
+          box-shadow: 0 0 10px rgba(255,255,255,0.28);
           pointer-events: none;
         }
 
         .research-signal-line::after {
-          content: none;
+          content: "";
+          position: absolute;
+          left: 0;
+          top: -16px;
+          z-index: 2;
+          width: 1px;
+          height: var(--research-line-current);
+          background: linear-gradient(
+            180deg,
+            transparent 0%,
+            rgba(255,255,210,0.08) 16%,
+            rgba(255,255,180,0.36) 34%,
+            rgba(255,255,255,1) 50%,
+            rgba(255,255,150,0.36) 66%,
+            rgba(255,255,120,0.08) 84%,
+            transparent 100%
+          );
+          filter:
+            drop-shadow(0 0 4px rgba(255,255,255,0.55))
+            drop-shadow(0 0 10px rgba(255,255,180,0.24));
+          pointer-events: none;
+          will-change: transform;
+          animation: researchSignalCurrentY 8.8s linear infinite;
         }
 
         @keyframes researchSignalSweep {
-          0%   { background-position: 0 0, -26% 0; }
-          100% { background-position: 0 0, 126% 0; }
+          0%   { background-position: 0 0, -34% 0; }
+          92%  { background-position: 0 0, 134% 0; }
+          100% { background-position: 0 0, 134% 0; }
+        }
+
+        @keyframes researchSignalCurrentY {
+          0%   { transform: translateY(calc(var(--research-line-current) * -1)); }
+          100% { transform: translateY(var(--research-line-height)); }
         }
 
         .research-panel-wrap {
@@ -974,8 +1011,13 @@ export default function ResearchPage() {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .research-signal-line {
+          .research-signal-line,
+          .research-signal-line::before,
+          .research-signal-line::after {
             animation: none;
+          }
+
+          .research-signal-line {
             background-size: 100% 100%, 0;
           }
         }
@@ -1162,7 +1204,7 @@ export default function ResearchPage() {
 
       `}</style>
 
-      <section className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1500px] flex-col px-7 pt-44 pb-16 sm:px-14 sm:pt-48 lg:px-24 lg:pt-52">
+      <section className="research-hero-section relative z-10 mx-auto flex min-h-screen w-full max-w-[1500px] flex-col px-7 pt-44 pb-16 sm:px-14 sm:pt-48 lg:px-24 lg:pt-52">
         <div className="research-network-lines" aria-hidden="true">
           <AnimatedLine />
         </div>

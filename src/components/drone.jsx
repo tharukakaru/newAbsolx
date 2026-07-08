@@ -388,6 +388,65 @@ export default function Drone() {
           transform: rotate(180deg);
         }
 
+        @media (max-width: 1100px) {
+          .drone-root {
+            --drone-stage-height: clamp(560px, 72vw, 760px);
+          }
+
+          .drone-terrain {
+            left: -10%;
+            top: -3%;
+            width: 118%;
+            height: 108%;
+            object-position: 54% 60%;
+            transform: scale(1.12);
+          }
+
+          .drone-command-meta {
+            top: 7%;
+            width: min(680px, 78vw);
+            font-size: clamp(6.5px, 0.95vw, 10px);
+            line-height: 1.2;
+            white-space: normal;
+          }
+
+          .drone-read-more {
+            left: 50%;
+            top: 15%;
+          }
+
+          .drone-guide {
+            top: 34%;
+            height: 45%;
+            bottom: auto;
+          }
+
+          .drone-intel-label {
+            top: 43.5%;
+            width: clamp(150px, 28vw, 240px);
+            font-size: clamp(3.8px, 0.58vw, 6px);
+          }
+
+          .drone-assembly {
+            left: 73%;
+            top: 71%;
+            width: clamp(460px, 70vw, 760px);
+          }
+
+          .drone-copy {
+            left: clamp(28px, 6vw, 72px);
+            bottom: 16%;
+            max-width: min(430px, 58vw);
+            font-size: clamp(16px, 2.25vw, 24px);
+          }
+
+          .drone-edge-label {
+            right: 2%;
+            top: 5%;
+            font-size: clamp(16px, 2.7vw, 30px);
+          }
+        }
+
         @media (max-width: 760px) {
           .drone-root {
             --drone-stage-height: clamp(620px, 126.5vw, 790px);

@@ -1595,26 +1595,77 @@ export default function ArsOs() {
 
         .c2-card:nth-child(odd) {
           padding-left: 0;
-          border-right: 1px solid rgba(255, 255, 255, 0.36);
+          border-right: 0;
+          background:
+            linear-gradient(
+              180deg,
+              rgba(255, 255, 255, 0.46) 0%,
+              rgba(255, 255, 255, 0.36) 74%,
+              rgba(255, 255, 255, 0.2) 100%
+            ),
+            linear-gradient(
+              180deg,
+              transparent 0%,
+              rgba(255, 255, 210, 0.08) 16%,
+              rgba(255, 255, 180, 0.26) 36%,
+              rgba(255, 255, 255, 0.94) 50%,
+              rgba(255, 255, 150, 0.26) 64%,
+              rgba(255, 255, 120, 0.08) 84%,
+              transparent 100%
+            );
+          background-repeat: no-repeat;
+          background-size: 1px 100%, 1px 48%;
+          background-position: 100% 0, 100% -54%;
+          filter: drop-shadow(0 0 4px rgba(255, 255, 180, 0.14));
+          will-change: background-position;
+          animation: arsOsCardRailRunY 4s linear infinite;
         }
 
         .c2-card:nth-child(-n + 2) {
-          border-bottom: 1px solid rgba(255, 255, 255, 0.42);
+          border-bottom: 0;
         }
 
         /* Extend the row divider back to the section's outer guide. */
-        .c2-card:first-child::after {
+        .c2-card:nth-child(-n + 2)::after {
           content: "";
           position: absolute;
           right: 0;
           bottom: -1px;
+          left: 0;
+          height: 1px;
+          background:
+            linear-gradient(
+              90deg,
+              rgba(255, 255, 255, 0.08) 0%,
+              rgba(255, 255, 255, 0.52) 20%,
+              rgba(255, 255, 255, 0.66) 78%,
+              rgba(255, 255, 255, 0.42) 100%
+            ),
+            linear-gradient(
+              90deg,
+              transparent 0%,
+              rgba(255, 255, 210, 0.08) 16%,
+              rgba(255, 255, 180, 0.28) 36%,
+              rgba(255, 255, 255, 0.96) 50%,
+              rgba(255, 255, 150, 0.28) 64%,
+              rgba(255, 255, 120, 0.08) 84%,
+              transparent 100%
+            );
+          background-repeat: no-repeat;
+          background-size: 100% 100%, 38% 100%;
+          background-position: 0 0, -42% 0;
+          filter: drop-shadow(0 0 4px rgba(255, 255, 180, 0.18));
+          will-change: background-position;
+          animation: arsOsGuideRunX 3.8s linear infinite;
+          pointer-events: none;
+        }
+
+        .c2-card:first-child::after {
           left: calc(
             clamp(22px, 4.1vw, 70px) -
             clamp(48px, 7.1vw, 150px) -
             clamp(20px, 6vw, 120px)
           );
-          height: 1px;
-          background: rgba(255, 255, 255, 0.42);
         }
 
         /* Lower-left rail: no matching bottom/right edge, so no box. */
@@ -1625,12 +1676,29 @@ export default function ArsOs() {
           top: 0;
           bottom: clamp(-360px, -27vw, -170px);
           width: 1px;
-          background: linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0.46) 0%,
-            rgba(255, 255, 255, 0.34) 72%,
-            rgba(255, 255, 255, 0) 100%
-          );
+          background:
+            linear-gradient(
+              180deg,
+              rgba(255, 255, 255, 0.46) 0%,
+              rgba(255, 255, 255, 0.34) 72%,
+              rgba(255, 255, 255, 0) 100%
+            ),
+            linear-gradient(
+              180deg,
+              transparent 0%,
+              rgba(255, 255, 210, 0.08) 16%,
+              rgba(255, 255, 180, 0.26) 36%,
+              rgba(255, 255, 255, 0.94) 50%,
+              rgba(255, 255, 150, 0.26) 64%,
+              rgba(255, 255, 120, 0.08) 84%,
+              transparent 100%
+            );
+          background-repeat: no-repeat;
+          background-size: 100% 100%, 100% 48%;
+          background-position: 0 0, 0 -54%;
+          filter: drop-shadow(0 0 4px rgba(255, 255, 180, 0.14));
+          will-change: background-position;
+          animation: arsOsGuideRunY 4s linear infinite;
           pointer-events: none;
         }
 
@@ -1697,12 +1765,29 @@ export default function ArsOs() {
           bottom: 66%;
           width: 1px;
           z-index: 2;
-          background: linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(255, 255, 255, 0.46) 24%,
-            rgba(255, 255, 255, 0.72) 100%
-          );
+          background:
+            linear-gradient(
+              180deg,
+              rgba(255, 255, 255, 0) 0%,
+              rgba(255, 255, 255, 0.46) 24%,
+              rgba(255, 255, 255, 0.72) 100%
+            ),
+            linear-gradient(
+              180deg,
+              transparent 0%,
+              rgba(255, 255, 210, 0.08) 16%,
+              rgba(255, 255, 180, 0.26) 36%,
+              rgba(255, 255, 255, 0.94) 50%,
+              rgba(255, 255, 150, 0.26) 64%,
+              rgba(255, 255, 120, 0.08) 84%,
+              transparent 100%
+            );
+          background-repeat: no-repeat;
+          background-size: 100% 100%, 100% 48%;
+          background-position: 0 0, 0 -54%;
+          filter: drop-shadow(0 0 4px rgba(255, 255, 180, 0.16));
+          will-change: background-position;
+          animation: arsOsGuideRunY 4s linear infinite;
         }
 
         .hyena-rule,
@@ -1741,6 +1826,16 @@ export default function ArsOs() {
 
           100% {
             background-position: 0 0, 144% 0;
+          }
+        }
+
+        @keyframes arsOsCardRailRunY {
+          0% {
+            background-position: 100% 0, 100% -54%;
+          }
+
+          100% {
+            background-position: 100% 0, 100% 154%;
           }
         }
 
@@ -1828,7 +1923,11 @@ export default function ArsOs() {
           .c2-vline,
           .hyena-rule,
           .sentinel-rule,
-          .c2-rule {
+          .c2-rule,
+          .c2-card:nth-child(odd),
+          .c2-card:first-child::after,
+          .c2-card:nth-child(3)::before,
+          .c2-terrain-line {
             animation: none;
           }
         }

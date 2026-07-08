@@ -173,6 +173,7 @@ export default function Arc() {
   const sectionRef = useRef(null);
   const [activeProductId, setActiveProductId] = useState(null);
   const [pinnedProductId, setPinnedProductId] = useState(null);
+  const [inView, setInView] = useState(false);
 
   const activeProduct = products.find((product) => product.id === activeProductId);
 
@@ -183,7 +184,9 @@ export default function Arc() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting || entry.intersectionRatio < 0.12) {
+        const visible = entry.isIntersecting && entry.intersectionRatio >= 0.12;
+        setInView(visible);
+        if (!visible) {
           setActiveProductId(null);
           setPinnedProductId(null);
         }
@@ -195,6 +198,35 @@ export default function Arc() {
 
     return () => observer.disconnect();
   }, []);
+
+  // On touch devices there is no hover to trigger the reveal, so the trace +
+  // panel animation would never play. When the section is in view on a
+  // no-hover device, auto-activate the products (cycling through them) so the
+  // animation shows the same way it does on desktop hover. A manual tap pins a
+  // product and pauses the cycle.
+  useEffect(() => {
+    if (!inView || pinnedProductId) return undefined;
+    if (window.matchMedia("(hover: hover)").matches) return undefined;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let index = 0;
+    // Activate the first product on the next tick (kept out of the effect body
+    // so it doesn't fire a synchronous setState during render).
+    const kickoff = setTimeout(() => setActiveProductId(products[0].id), 60);
+
+    const interval = reduceMotion
+      ? null
+      : setInterval(() => {
+          index = (index + 1) % products.length;
+          setActiveProductId(products[index].id);
+        }, 4500);
+
+    return () => {
+      clearTimeout(kickoff);
+      if (interval) clearInterval(interval);
+    };
+  }, [inView, pinnedProductId]);
 
   const handlePointerEnter = (productId) => {
     setActiveProductId(productId);
@@ -1398,17 +1430,17 @@ export default function Arc() {
             --arc-line-right: 7%;
             --arc-line-center-gap: 18px;
             --arc-war-top: 92px;
-            --arc-copy-top: 116px;
+            --arc-copy-top: 132px;
             --arc-copy-right: auto;
             --arc-copy-width: min(360px, 88vw);
             --arc-upper-spine-top: 115px;
-            --arc-upper-spine-end: 323px;
-            padding: 42px 0 76px;
+            --arc-upper-spine-end: 356px;
+            padding: 46px 0 86px;
           }
 
           .arc-os-shell {
             width: min(100% - 28px, 620px);
-            min-height: 1000px;
+            min-height: 1250px;
           }
 
           .arc-os-lockup,
@@ -1417,7 +1449,7 @@ export default function Arc() {
           }
 
           .arc-os-logo {
-            font-size: 72px;
+            font-size: clamp(58px, 15.5vw, 84px);
             transform: none;
           }
 
@@ -1434,7 +1466,7 @@ export default function Arc() {
           }
 
           .arc-os-war {
-            font-size: 11px;
+            font-size: clamp(10px, 2.8vw, 13px);
           }
 
           .arc-os-ca {
@@ -1444,16 +1476,21 @@ export default function Arc() {
           .arc-os-copy {
             left: 50%;
             right: auto;
+            width: min(440px, 84vw);
             transform: translateX(-50%);
             text-align: center;
-            font-size: 7px;
-            line-height: 1.18;
+            font-size: clamp(7px, 1.9vw, 8.5px);
+            line-height: 1.24;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 4;
           }
 
           .arc-os-divider-top {
             left: 7%;
             right: 7%;
-            top: 242px;
+            top: 292px;
           }
 
           .arc-os-spine {
@@ -1461,9 +1498,10 @@ export default function Arc() {
           }
 
           .arc-os-products {
-            top: 310px;
+            z-index: 3;
+            top: 366px;
             grid-template-columns: 1fr;
-            row-gap: 38px;
+            row-gap: 52px;
           }
 
           .arc-os-products::before,
@@ -1472,7 +1510,7 @@ export default function Arc() {
           }
 
           .arc-os-product {
-            min-height: 122px;
+            min-height: 142px;
           }
 
           .arc-os-product:first-child .arc-os-product-lock,
@@ -1485,27 +1523,32 @@ export default function Arc() {
           }
 
           .arc-os-product-title {
-            font-size: 42px;
+            font-size: clamp(36px, 11.2vw, 52px);
+            letter-spacing: clamp(2px, 1vw, 4px);
           }
 
           .arc-os-product:nth-child(2) .arc-os-product-title,
           .arc-os-product:nth-child(3) .arc-os-product-title {
-            font-size: 42px;
+            font-size: clamp(34px, 10.8vw, 50px);
           }
 
           .arc-os-product-body {
-            margin-top: 14px;
-            font-size: 14px;
+            width: min(380px, 86vw);
+            margin-top: 12px;
+            font-size: clamp(13px, 3.55vw, 16px);
+            line-height: 1.25;
           }
 
           .arc-os-product:nth-child(3) .arc-os-product-body {
-            font-size: 14px;
+            font-size: clamp(13px, 3.55vw, 16px);
           }
 
           .arc-os-active-arrow {
             left: 50%;
+            z-index: 1;
             width: min(500px, 92%);
             min-height: 0;
+            opacity: 0.72;
           }
 
           .arc-os-arrow-desktop {
@@ -1517,18 +1560,18 @@ export default function Arc() {
           }
 
           .arc-os-active-arrow--hyena {
-            top: 318px;
-            height: 420px;
+            top: 414px;
+            height: 518px;
           }
 
           .arc-os-active-arrow--sentinel {
-            top: 472px;
-            height: 260px;
+            top: 608px;
+            height: 320px;
           }
 
           .arc-os-active-arrow--arc-c2 {
-            top: 626px;
-            height: 102px;
+            top: 794px;
+            height: 136px;
           }
 
           .arc-os-product:first-child .arc-os-product-rule,
@@ -1548,7 +1591,8 @@ export default function Arc() {
           }
 
           .arc-os-panel {
-            top: 724px;
+            z-index: 2;
+            top: 930px;
             width: min(500px, 92%);
             height: 300px;
             border-radius: 58px;
@@ -1575,7 +1619,7 @@ export default function Arc() {
 
         @media (max-width: 420px) {
           .arc-os-shell {
-            min-height: 936px;
+            min-height: 1240px;
           }
 
           .arc-os-logo {
@@ -1589,31 +1633,32 @@ export default function Arc() {
           }
 
           .arc-os-copy {
-            top: 98px;
-            font-size: 6px;
+            top: 112px;
+            width: min(330px, 86vw);
+            font-size: 6.8px;
           }
 
           .arc-os-divider-top {
-            top: 218px;
+            top: 270px;
           }
 
           .arc-os-spine {
             top: 94px;
-            height: 186px;
+            height: 224px;
           }
 
           .arc-os-products {
-            top: 280px;
-            row-gap: 34px;
+            top: 338px;
+            row-gap: 46px;
           }
 
           .arc-os-product-title {
-            font-size: 34px;
+            font-size: clamp(30px, 9.6vw, 36px);
           }
 
           .arc-os-product:nth-child(2) .arc-os-product-title,
           .arc-os-product:nth-child(3) .arc-os-product-title {
-            font-size: 34px;
+            font-size: clamp(29px, 9.2vw, 34px);
           }
 
           .arc-os-product-body {
@@ -1625,22 +1670,22 @@ export default function Arc() {
           }
 
           .arc-os-active-arrow--hyena {
-            top: 288px;
-            height: 405px;
+            top: 384px;
+            height: 516px;
           }
 
           .arc-os-active-arrow--sentinel {
-            top: 430px;
-            height: 258px;
+            top: 562px;
+            height: 334px;
           }
 
           .arc-os-active-arrow--arc-c2 {
-            top: 574px;
-            height: 110px;
+            top: 732px;
+            height: 164px;
           }
 
           .arc-os-panel {
-            top: 680px;
+            top: 896px;
             height: 270px;
             border-radius: 42px;
           }
@@ -1666,7 +1711,6 @@ export default function Arc() {
       `}</style>
 
       <div className="arc-os-shell">
-        <span className="arc-os-tagline">Agentic Solutions for Defense and Intelligence</span>
         <span className="arc-os-top-guide" aria-hidden="true" />
         <div className="arc-os-lockup" aria-label="ARC OS">
           <div className="arc-os-logo">

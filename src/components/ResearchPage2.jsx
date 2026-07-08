@@ -110,10 +110,41 @@ export default function ResearchPage2() {
           top: -1px;
           bottom: -1px;
           width: 1px;
-          z-index: 2;
-          background: rgba(255,255,255,0.44);
-          box-shadow: 0 0 7px rgba(255,255,255,0.16);
+          z-index: 5;
+          background:
+            linear-gradient(
+              180deg,
+              rgba(255,255,255,0.54) 0%,
+              rgba(255,255,255,0.48) 54%,
+              rgba(255,255,255,0.4) 100%
+            ),
+            linear-gradient(
+              180deg,
+              transparent 0%,
+              rgba(255,255,210,0.08) 16%,
+              rgba(255,255,180,0.32) 34%,
+              rgba(255,255,255,1) 50%,
+              rgba(255,255,150,0.32) 66%,
+              rgba(255,255,120,0.08) 84%,
+              transparent 100%
+            );
+          background-repeat: no-repeat, repeat-y;
+          background-size: 100% 100%, 100% 520px;
+          background-position: 0 0, 0 -520px;
+          box-shadow: 0 0 9px rgba(255,255,255,0.22);
+          will-change: background-position;
+          animation: isrSectionLineRunY 6.8s linear infinite;
           pointer-events: none;
+        }
+
+        @keyframes isrSectionLineRunY {
+          0% {
+            background-position: 0 0, 0 -520px;
+          }
+
+          100% {
+            background-position: 0 0, 0 520px;
+          }
         }
 
         .capabilities-section {
@@ -809,8 +840,38 @@ export default function ResearchPage2() {
           height: 1px;
           margin-top: -2px;
           margin-left: calc(-1 * var(--isr-content-shift));
-          background: linear-gradient(90deg, rgba(255,255,255,0.58), rgba(255,255,255,0.34) 58%, rgba(255,255,255,0));
+          background:
+            linear-gradient(90deg, rgba(255,255,255,0.58), rgba(255,255,255,0.34) 58%, rgba(255,255,255,0)),
+            linear-gradient(
+              90deg,
+              transparent 0%,
+              rgba(255,255,210,0.08) 16%,
+              rgba(255,255,180,0.38) 34%,
+              rgba(255,255,255,1) 50%,
+              rgba(255,255,180,0.38) 66%,
+              rgba(255,255,210,0.08) 84%,
+              transparent 100%
+            );
+          background-repeat: no-repeat;
+          background-size: 100% 100%, 44% 100%;
+          background-position: 0 0, -48% 0;
           box-shadow: 0 0 4px rgba(255,255,255,0.16);
+          will-change: background-position;
+          animation: swmFutureRuleRunX 7.2s linear infinite;
+        }
+
+        @keyframes swmFutureRuleRunX {
+          0% {
+            background-position: 0 0, -48% 0;
+          }
+
+          92% {
+            background-position: 0 0, 148% 0;
+          }
+
+          100% {
+            background-position: 0 0, 148% 0;
+          }
         }
 
         .swm-closing {
