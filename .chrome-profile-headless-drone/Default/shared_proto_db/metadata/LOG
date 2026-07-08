@@ -1,2 +1,3 @@
-2026/07/08-16:17:14.297 81bc Creating DB D:\website4\part2\.chrome-profile-headless-drone\Default\shared_proto_db\metadata since it was missing.
-2026/07/08-16:17:14.304 81bc Reusing MANIFEST D:\website4\part2\.chrome-profile-headless-drone\Default\shared_proto_db\metadata/MANIFEST-000001
+2026/07/08-16:25:30.124 50d8 Reusing MANIFEST D:\website4\part2\.chrome-profile-headless-drone\Default\shared_proto_db\metadata/MANIFEST-000001
+2026/07/08-16:25:30.125 50d8 Recovering log #3
+2026/07/08-16:25:30.125 50d8 Reusing old log D:\website4\part2\.chrome-profile-headless-drone\Default\shared_proto_db\metadata/000003.log 
