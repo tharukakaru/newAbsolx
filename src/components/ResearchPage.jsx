@@ -396,11 +396,41 @@ export default function ResearchPage() {
         }
 
         @media (max-width: 767px) {
+          .research-hero-section {
+            padding-left: clamp(20px, 6vw, 28px) !important;
+            padding-right: clamp(20px, 6vw, 28px) !important;
+          }
+
+          .research-hero-section > .relative,
+          .research-panel-wrap,
+          .research-panel,
+          .research-panel > .relative {
+            width: calc(100vw - clamp(40px, 12vw, 56px));
+            max-width: calc(100vw - clamp(40px, 12vw, 56px));
+            min-width: 0;
+          }
+
+          .research-panel,
+          .research-panel > .relative {
+            width: 100%;
+            max-width: 100%;
+          }
+
           .research-title {
             flex-wrap: wrap;
-            gap: 12px;
-            font-size: clamp(42px, 16vw, 76px);
-            letter-spacing: 0.08em;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            gap: clamp(6px, 2vw, 12px);
+            font-size: clamp(38px, 12.8vw, 62px);
+            line-height: 0.82;
+            letter-spacing: 0.045em;
+            word-spacing: 0;
+          }
+
+          .research-title-word,
+          .research-title-shuffle {
+            max-width: 100%;
           }
 
           .research-title-megha::before {
@@ -411,9 +441,11 @@ export default function ResearchPage() {
 
           .research-copy {
             margin-left: 0;
-            font-size: clamp(14px, 4.2vw, 18px);
+            max-width: 100%;
+            font-size: clamp(12px, 3.35vw, 16px);
             line-height: 1.45;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.055em;
+            overflow-wrap: anywhere;
           }
 
           .research-copy-line {
@@ -421,11 +453,24 @@ export default function ResearchPage() {
           }
 
           .research-copy-highlight {
-            letter-spacing: 0.1em;
+            letter-spacing: 0.05em;
           }
 
           .research-copy-strong {
-            letter-spacing: 0.1em;
+            letter-spacing: 0.05em;
+          }
+
+          .research-panel-title {
+            font-size: clamp(26px, 7vw, 34px) !important;
+            line-height: 0.96 !important;
+          }
+
+          .research-kicker,
+          .research-panel-title,
+          .research-panel-body {
+            width: 100%;
+            max-width: 100%;
+            overflow-wrap: anywhere;
           }
         }
 
@@ -960,32 +1005,96 @@ export default function ResearchPage() {
             opacity: 0.78;
           }
 
+          .research-panel-wrap {
+            margin-top: clamp(34px, 10vw, 56px);
+          }
+
+          .research-panel > .relative {
+            padding: clamp(22px, 5.6vw, 32px) clamp(18px, 5vw, 28px) !important;
+          }
+
+          .research-panel-media {
+            top: clamp(420px, 114vw, 620px);
+            bottom: auto;
+            height: clamp(330px, 88vw, 500px);
+            overflow: hidden;
+            z-index: 0;
+          }
+
           .research-video {
             left: 50%;
-            top: 26%;
-            width: 88%;
-            height: 30%;
+            top: 0;
+            width: min(720px, 156vw);
+            height: 100%;
             opacity: 0.75;
+            object-fit: cover;
+            object-position: center;
           }
 
           .research-left-shape {
-            left: clamp(-82px, -20vw, -48px);
-            top: clamp(95px, 24vw, 150px);
-            width: clamp(185px, 50vw, 250px);
+            left: clamp(-118px, -30vw, -72px);
+            top: clamp(300px, 78vw, 430px);
+            width: clamp(170px, 48vw, 230px);
+            opacity: 0.32;
+            z-index: 1;
           }
 
           .research-right-shape {
-            right: clamp(-270px, -56vw, -138px);
-            top: clamp(304px, 70vw, 470px);
-            width: clamp(480px, 98vw, 650px);
-            height: clamp(900px, 178vw, 1180px);
+            right: clamp(-340px, -70vw, -170px);
+            top: clamp(430px, 104vw, 620px);
+            width: clamp(440px, 112vw, 650px);
+            height: clamp(760px, 172vw, 1080px);
+            opacity: 0.42;
+            z-index: 1;
           }
 
           .research-autonomy-label {
-            right: clamp(-10px, 0.2vw, 4px);
-            top: clamp(128px, 34vw, 220px);
-            font-size: clamp(30px, 8.5vw, 50px);
-            opacity: 0.3;
+            display: none;
+          }
+
+          .research-problems-content {
+            margin-top: clamp(300px, 78vw, 430px);
+            width: 100%;
+            max-width: 100%;
+          }
+
+          .research-problems-eyebrow {
+            font-size: clamp(12px, 3.4vw, 14px);
+          }
+
+          .research-problems-heading {
+            width: 100%;
+            max-width: 100%;
+            font-size: clamp(23px, 6.3vw, 31px);
+            line-height: 1.08;
+          }
+
+          .problems-grid {
+            width: 100%;
+            max-width: 100%;
+            margin-top: clamp(28px, 8vw, 44px);
+          }
+
+          .problem-card {
+            min-height: auto;
+            padding: clamp(22px, 6vw, 30px) 0;
+          }
+
+          .problem-title,
+          .problem-body {
+            width: 100%;
+            max-width: 100%;
+          }
+
+          .problem-title {
+            font-size: clamp(19px, 5.2vw, 23px);
+            line-height: 1.05;
+          }
+
+          .problem-body {
+            margin-top: clamp(16px, 4.5vw, 22px);
+            font-size: clamp(12.5px, 3.65vw, 15px);
+            line-height: 1.42;
           }
 
           .research-shahed-stage {
@@ -1007,6 +1116,40 @@ export default function ResearchPage() {
 
           .research-launch-card {
             border-radius: 28px;
+          }
+        }
+
+        @media (max-width: 420px) {
+          .research-title {
+            font-size: clamp(28px, 9vw, 34px);
+            letter-spacing: 0.025em;
+          }
+
+          .research-copy {
+            font-size: clamp(11.5px, 3.25vw, 13.5px);
+            letter-spacing: 0.035em;
+          }
+
+          .research-copy-highlight,
+          .research-copy-strong {
+            letter-spacing: 0.03em;
+          }
+
+          .research-panel-media {
+            top: clamp(390px, 118vw, 510px);
+            height: clamp(310px, 92vw, 420px);
+          }
+
+          .research-problems-content {
+            margin-top: clamp(285px, 86vw, 380px);
+          }
+
+          .research-problems-heading {
+            font-size: clamp(22px, 6.1vw, 26px);
+          }
+
+          .research-panel-title {
+            font-size: clamp(24px, 6.7vw, 28px) !important;
           }
         }
 

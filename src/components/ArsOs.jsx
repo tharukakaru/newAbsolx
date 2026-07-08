@@ -281,23 +281,31 @@ export default function ArsOs() {
 
         @media (max-width: 760px) {
           .ars-os-hero {
-            height: clamp(280px, 60vw, 400px);
-            min-height: 280px;
+            height: clamp(245px, 58vw, 360px);
+            min-height: 245px;
           }
 
           .ars-os-title {
-            bottom: clamp(28px, 6.8vh, 50px);
+            bottom: clamp(24px, 6vh, 42px);
             left: 50%;
-            gap: clamp(16px, 4.6vw, 36px);
-            font-size: clamp(42px, 14vw, 82px);
+            max-width: calc(100vw - 24px);
+            gap: clamp(12px, 4vw, 30px);
+            font-size: clamp(39px, 13.4vw, 76px);
             line-height: 0.88;
-            letter-spacing: 2px;
+            letter-spacing: clamp(0.8px, 0.45vw, 2px);
           }
 
           .ars-os-lines {
             top: clamp(-100px, -24vw, -72px);
             width: 250vw;
             opacity: 0.88;
+          }
+        }
+
+        @media (max-width: 420px) {
+          .ars-os-title {
+            gap: clamp(8px, 2.5vw, 12px);
+            font-size: clamp(34px, 10.7vw, 45px);
           }
         }
 
@@ -455,21 +463,77 @@ export default function ArsOs() {
         }
 
         @media (max-width: 760px) {
+          .ars-os-intro {
+            min-height: clamp(430px, 112vw, 560px);
+            padding: clamp(22px, 6vw, 34px) 0 clamp(190px, 52vw, 280px);
+          }
+
+          .ars-os-intro::before {
+            width: 100%;
+            background: linear-gradient(
+              90deg,
+              rgba(0, 0, 0, 0.98) 0%,
+              rgba(0, 0, 0, 0.92) 54%,
+              rgba(0, 0, 0, 0.62) 76%,
+              rgba(0, 0, 0, 0) 100%
+            );
+          }
+
+          .ars-os-intro::after {
+            width: 62%;
+            opacity: 0.7;
+          }
+
           .ars-os-intro-img {
-            width: 140%;
-            margin-left: -20%;
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: min(760px, 138vw);
+            max-width: none;
+            margin: 0;
+            transform: translateX(-50%);
+            object-fit: contain;
+            object-position: center bottom;
+            opacity: 0.82;
+            -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 76%, transparent 100%);
+            mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 76%, transparent 100%);
           }
 
           .ars-os-intro-copy {
-            top: 22px;
-            left: 30px;
-            right: 18px;
-            font-size: clamp(13px, 3.6vw, 18px);
-            line-height: 1.2;
+            position: relative;
+            top: auto;
+            left: auto;
+            right: auto;
+            width: min(38ch, calc(100% - clamp(70px, 20vw, 98px)));
+            max-width: none;
+            margin: 0 clamp(16px, 5vw, 28px) 0 clamp(42px, 11vw, 58px);
+            font-size: clamp(13.5px, 3.85vw, 18px);
+            line-height: 1.18;
+            text-shadow:
+              0 2px 16px rgba(0, 0, 0, 0.96),
+              0 0 30px rgba(0, 0, 0, 0.9);
           }
 
           .ars-os-hl {
-            font-size: clamp(14px, 4vw, 20px);
+            font-size: clamp(14px, 4.15vw, 19px);
+            line-height: 1.14;
+          }
+
+          .ars-os-vline {
+            left: clamp(24px, 7vw, 34px);
+          }
+        }
+
+        @media (max-width: 420px) {
+          .ars-os-intro-copy {
+            width: min(31ch, calc(100% - 92px));
+            font-size: clamp(13px, 3.65vw, 15.5px);
+            margin-left: clamp(42px, 12vw, 50px);
+            margin-right: 14px;
+          }
+
+          .ars-os-hl {
+            font-size: clamp(13.5px, 3.85vw, 16.5px);
           }
         }
       `}</style>
@@ -694,9 +758,35 @@ export default function ArsOs() {
         }
 
         @media (max-width: 760px) {
+          .hyena {
+            padding-top: clamp(22px, 6vw, 36px);
+          }
+
+          .hyena-inner {
+            max-width: none;
+            margin-left: clamp(44px, 11vw, 64px);
+            margin-right: clamp(18px, 5vw, 34px);
+          }
+
+          .hyena-head {
+            gap: clamp(8px, 2.5vw, 14px);
+          }
+
+          .hyena-rule {
+            width: clamp(58px, 18vw, 92px);
+            margin-left: 0;
+          }
+
+          .hyena-desc {
+            max-width: 100%;
+            margin-bottom: clamp(34px, 9vw, 58px);
+            line-height: 1.18;
+          }
+
           .hyena-grid {
             grid-template-columns: repeat(2, 1fr);
-            max-width: calc(100% - clamp(44px, 6.1vw, 78px));
+            margin-left: 0;
+            max-width: 100%;
           }
 
           .hyena-card:nth-child(3n) {
@@ -718,8 +808,17 @@ export default function ArsOs() {
 
         @media (max-width: 560px) {
           .hyena-inner {
-            margin-left: clamp(30px, 8vw, 56px);
-            margin-right: clamp(22px, 7vw, 44px);
+            margin-left: clamp(42px, 12vw, 58px);
+            margin-right: clamp(16px, 5vw, 28px);
+          }
+
+          .hyena-title {
+            font-size: clamp(34px, 12vw, 48px);
+            letter-spacing: clamp(1px, 0.9vw, 3px);
+          }
+
+          .hyena-rule {
+            width: clamp(42px, 15vw, 66px);
           }
 
           .hyena-grid {
@@ -745,6 +844,25 @@ export default function ArsOs() {
           .hyena-meta,
           .hyena-edge-label {
             display: none;
+          }
+
+          .hyena-vline {
+            left: clamp(24px, 7vw, 34px);
+          }
+        }
+
+        @media (max-width: 420px) {
+          .hyena-head {
+            gap: clamp(7px, 2vw, 10px);
+          }
+
+          .hyena-title {
+            font-size: clamp(31px, 10.5vw, 42px);
+            letter-spacing: clamp(0.5px, 0.55vw, 2px);
+          }
+
+          .hyena-rule {
+            width: clamp(28px, 11vw, 48px);
           }
         }
       `}</style>
@@ -1130,10 +1248,20 @@ export default function ArsOs() {
         }
 
         @media (max-width: 760px) {
+          .sentinel-inner {
+            margin-left: clamp(44px, 11vw, 64px);
+            margin-right: clamp(18px, 5vw, 34px);
+          }
+
           .sentinel-head {
             flex-wrap: wrap;
             white-space: normal;
             gap: clamp(8px, 2vw, 16px);
+          }
+
+          .sentinel-rule {
+            width: clamp(42px, 16vw, 84px);
+            margin-left: 0;
           }
 
           .sentinel-sub {
@@ -1203,8 +1331,8 @@ export default function ArsOs() {
 
         @media (max-width: 560px) {
           .sentinel-inner {
-            margin-left: 34px;
-            margin-right: 18px;
+            margin-left: clamp(42px, 12vw, 58px);
+            margin-right: clamp(16px, 5vw, 28px);
           }
 
           .sentinel-rule {
@@ -1227,6 +1355,10 @@ export default function ArsOs() {
 
           .sentinel-target-meta {
             overflow-wrap: anywhere;
+          }
+
+          .sentinel-vline {
+            left: clamp(24px, 7vw, 34px);
           }
         }
       `}</style>
@@ -1863,9 +1995,20 @@ export default function ArsOs() {
         }
 
         @media (max-width: 760px) {
+          .c2-inner {
+            margin-left: clamp(44px, 11vw, 64px);
+            margin-right: clamp(18px, 5vw, 34px);
+          }
+
           .c2-head {
             flex-wrap: wrap;
             white-space: normal;
+            gap: clamp(8px, 2.4vw, 16px);
+          }
+
+          .c2-rule {
+            width: clamp(38px, 15vw, 76px);
+            margin-left: 0;
           }
 
           .c2-sub {
@@ -1901,6 +2044,11 @@ export default function ArsOs() {
         }
 
         @media (max-width: 520px) {
+          .c2-inner {
+            margin-left: clamp(42px, 12vw, 58px);
+            margin-right: clamp(16px, 5vw, 28px);
+          }
+
           .c2-grid {
             grid-template-columns: 1fr;
           }
@@ -1913,6 +2061,10 @@ export default function ArsOs() {
 
           .c2-step::after {
             display: none;
+          }
+
+          .c2-vline {
+            left: clamp(24px, 7vw, 34px);
           }
         }
 
