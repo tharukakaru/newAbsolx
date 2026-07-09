@@ -3,7 +3,6 @@ import SubTitle from "./components/hero/SubTitle";
 import Title from "./components/hero/Title";
 import Navbar from "./components/Navbar";
 import AnimatedLine from "./Utils/AnimatedLine";
-import CoreAI from "./assets/core.svg";
 import BlackHoleCanvas from "./components/BlackholeCanvas";
 import Glitch from "./components/Glitch";
 import Arc from "./components/Arc";
@@ -47,28 +46,6 @@ function HomePage() {
       </div>
 
       <AnimatedLine />
-
-      <div
-        className="
-          absolute right-2 sm:right-6 md:right-8
-          top-[52vh]
-          sm:top-[45vh]
-          md:top-[40vh]
-          lg:top-[35vh]
-          xl:top-[40vh]
-          2xl:top-[38vh]
-          z-30 pointer-events-none
-        "
-      >
-        <img
-          src={CoreAI}
-          alt="Core AI"
-          className="
-            h-28 sm:h-[200px] md:h-[260px] lg:h-[340px] xl:h-[420px] 2xl:h-[480px]
-            w-auto opacity-60
-          "
-        />
-      </div>
 
       <div className="relative z-20 flex flex-col items-center">
         <Title />
