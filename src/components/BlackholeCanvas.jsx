@@ -511,7 +511,6 @@ export default function BlackHoleCanvas() {
       )}
 
       <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#050914] via-[#050914]/55 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-[14%] bg-gradient-to-t from-[#050914]/70 via-[#07111f]/25 to-transparent" />
     </div>
   );
 }

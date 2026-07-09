@@ -56,6 +56,11 @@ function HomePage() {
         </div>
 
         <BlackHoleCanvas />
+
+        {/* Sits above the canvas (z-0) and the glow orbs (z-10), which the section's
+            overflow-hidden would otherwise hard-clip at the bottom edge; fades everything
+            to the exact bg of the section below so the boundary is invisible. */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[20dvh] bg-gradient-to-t from-[#050914] from-[15%] via-[#050914]/45 to-transparent" />
       </section>
 
       <section className="relative z-[55] min-h-[38vh] bg-[#050914] pt-[10vh] pb-[12vh]">
