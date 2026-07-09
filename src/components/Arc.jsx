@@ -312,11 +312,12 @@ export default function Arc() {
           left: 50%;
           transform: translateX(-50%);
           font-family: "SourceCodePro", "Source Code Pro", ui-monospace, monospace;
-          font-size: 16px;
+          font-size: 17px;
           font-weight: 400;
-          letter-spacing: 0.02em;
+          letter-spacing: 0.04em;
           line-height: 1;
           text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.72);
           white-space: nowrap;
         }
 
@@ -1346,7 +1347,7 @@ export default function Arc() {
 
           .arc-os-tagline {
             top: -48px;
-            font-size: 12px;
+            font-size: 13px;
           }
 
           .arc-os-top-guide {
@@ -1457,7 +1458,7 @@ export default function Arc() {
             top: -34px;
             max-width: 88vw;
             overflow: hidden;
-            font-size: 9px;
+            font-size: 10px;
             text-overflow: ellipsis;
           }
 
@@ -1713,6 +1714,9 @@ export default function Arc() {
       <div className="arc-os-shell">
         <span className="arc-os-top-guide" aria-hidden="true" />
         <div className="arc-os-lockup" aria-label="ARC OS">
+          <span className="arc-os-tagline">
+            Agentic solutions for defense and intelligence
+          </span>
           <div className="arc-os-logo">
             <span className="arc-os-logo-part">
               ARC

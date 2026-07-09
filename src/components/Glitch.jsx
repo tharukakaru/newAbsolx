@@ -250,7 +250,7 @@ export default function ImageGlitch() {
           position: absolute;
           z-index: 30;
           left: calc(var(--img-x, 0px) + var(--img-w, 0px) * 0.26);
-          top: calc(var(--img-y, 0px) + var(--img-h, 0px) * 0.6);
+          top: calc(var(--img-y, 0px) + var(--img-h, 0px) * 0.635);
           display: inline-flex;
           width: max-content;
           flex-direction: column;

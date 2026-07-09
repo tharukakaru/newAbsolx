@@ -68,10 +68,10 @@ function HomePage() {
       <section
         className="relative w-full bg-black z-[60]"
         style={{
-          paddingBottom: "clamp(520px, 42vw, 980px)",
+          paddingBottom: "clamp(720px, 52vw, 1200px)",
         }}
       >
-        <div className="relative h-[120vh]">
+        <div className="relative min-h-[155vh]">
           <Glitch />
         </div>
       </section>
