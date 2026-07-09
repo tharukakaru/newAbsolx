@@ -58,7 +58,7 @@ function HomePage() {
         <BlackHoleCanvas />
       </section>
 
-      <section className="relative z-[55] mt-0 min-h-[42vh] bg-[#050914] pt-[8vh] pb-[10vh]">
+      <section className="relative z-[55] min-h-[38vh] bg-[#050914] pt-[10vh] pb-[12vh]">
         <div className="relative z-[70] pointer-events-none flex justify-start pl-[4vw]">
           <Stable />
         </div>
