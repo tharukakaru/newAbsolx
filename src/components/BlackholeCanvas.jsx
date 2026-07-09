@@ -155,15 +155,15 @@ vec3 render(vec3 ro, vec3 rd){
 void main(){
   float uvScale = min(uRes.x, uRes.y);
   vec2 uv = (gl_FragCoord.xy - 0.5 * uRes) / uvScale * 2.0;
-  uv.y -= 0.08;
+  uv.y -= 0.02;
 
   float ph = uPhase * 2.0 * PI;
-  vec3 ro = vec3(0.02 * sin(ph), 1.15 + 0.05 * sin(ph), 16.6);
+  vec3 ro = vec3(0.02 * sin(ph), 1.22 + 0.05 * sin(ph), 15.4);
   vec3 ta = vec3(0.0, 0.0, 0.0);
   vec3 fw = normalize(ta - ro);
   vec3 ri = normalize(cross(fw, vec3(0.0, 1.0, 0.0)));
   vec3 up = cross(ri, fw);
-  vec3 rd = normalize(fw + 0.62 * (uv.x * ri + uv.y * up));
+  vec3 rd = normalize(fw + 0.58 * (uv.x * ri + uv.y * up));
 
   vec3 col = render(ro, rd);
   O = vec4(col, 1.0);
@@ -479,15 +479,19 @@ export default function BlackHoleCanvas() {
     <div
       className="
         pointer-events-none
-        relative
+        absolute inset-x-0 bottom-[-8dvh]
         z-0
-        h-[100dvh]
-        min-h-[620px]
+        h-[58dvh]
+        min-h-[360px]
         w-full
         overflow-hidden
-        bg-black
+        bg-[#050914]
       "
-      style={{ WebkitTapHighlightColor: "transparent" }}
+      style={{
+        WebkitTapHighlightColor: "transparent",
+        background:
+          "radial-gradient(ellipse at 50% 58%, rgba(24, 54, 110, 0.24), rgba(5, 9, 20, 0.92) 52%, #050914 100%)",
+      }}
     >
       <canvas
         ref={canvasRef}
@@ -501,13 +505,13 @@ export default function BlackHoleCanvas() {
           aria-hidden="true"
           style={{
             background:
-              "radial-gradient(ellipse at 50% 42%, rgba(112,166,255,0.42), rgba(22,46,98,0.18) 22%, rgba(0,0,0,0) 48%), radial-gradient(circle at 50% 42%, #000 0 9%, rgba(4,8,18,0.94) 12%, transparent 24%), #000",
+              "radial-gradient(ellipse at 50% 42%, rgba(112,166,255,0.42), rgba(22,46,98,0.18) 22%, rgba(5,9,20,0) 48%), radial-gradient(circle at 50% 42%, #000 0 9%, rgba(4,8,18,0.94) 12%, transparent 24%), #050914",
           }}
         />
       )}
 
-      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black via-black/55 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-black via-black/60 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#050914] via-[#050914]/55 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-[14%] bg-gradient-to-t from-[#050914]/70 via-[#07111f]/25 to-transparent" />
     </div>
   );
 }

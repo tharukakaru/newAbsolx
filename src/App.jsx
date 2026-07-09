@@ -16,49 +16,53 @@ import ArsOs from "./components/ArsOs";
 function HomePage() {
   return (
     <>
-      {/* Glow Background Container */}
-      <div className="absolute inset-0 overflow-hidden z-10 pointer-events-none">
-        {/* Top-left glow */}
-        <div
-          className="
-            absolute rounded-full
-            bg-[radial-gradient(circle,rgba(77,121,234,0.24),transparent_80%)]
-            blur-[80px]
-            top-[-40vw] left-[-40vw] w-[120vw] h-[120vw]
-            sm:top-[-30vw] sm:left-[-30vw] sm:w-[110vw] sm:h-[110vw]
-            md:top-[-45vw] md:left-[-35vw] md:w-screen md:h-[100vw]
-            lg:top-[6.5vw] lg:left-[-50vw] lg:w-[90vw] lg:h-[90vw]
-          "
-        ></div>
+      <section className="relative z-0 min-h-[100dvh] overflow-hidden bg-[#050914]">
+        {/* Glow Background Container */}
+        <div className="absolute inset-0 overflow-hidden z-10 pointer-events-none">
+          {/* Top-left glow */}
+          <div
+            className="
+              absolute rounded-full
+              bg-[radial-gradient(circle,rgba(77,121,234,0.22),transparent_80%)]
+              blur-[80px]
+              top-[-40vw] left-[-40vw] w-[120vw] h-[120vw]
+              sm:top-[-30vw] sm:left-[-30vw] sm:w-[110vw] sm:h-[110vw]
+              md:top-[-45vw] md:left-[-35vw] md:w-screen md:h-[100vw]
+              lg:top-[6.5vw] lg:left-[-50vw] lg:w-[90vw] lg:h-[90vw]
+            "
+          ></div>
 
-        {/* Top-right glow */}
-        <div
-          className="
-            absolute rounded-full
-            bg-[radial-gradient(circle,rgba(77,121,234,0.25),transparent_80%)]
-            blur-[100px]
-            top-[-40vw] right-[-40vw] w-[120vw] h-[120vw]
-            sm:top-[-30vw] sm:right-[-30vw] sm:w-[110vw] sm:h-[110vw]
-            md:top-[-25vw] md:right-[-35vw] md:w-screen md:h-[100vw]
-            lg:top-[1vw] lg:right-[-60vw] lg:w-[90vw] lg:h-[90vw]
-          "
-        ></div>
-      </div>
+          {/* Top-right glow */}
+          <div
+            className="
+              absolute rounded-full
+              bg-[radial-gradient(circle,rgba(77,121,234,0.22),transparent_80%)]
+              blur-[100px]
+              top-[-40vw] right-[-40vw] w-[120vw] h-[120vw]
+              sm:top-[-30vw] sm:right-[-30vw] sm:w-[110vw] sm:h-[110vw]
+              md:top-[-25vw] md:right-[-35vw] md:w-screen md:h-[100vw]
+              lg:top-[1vw] lg:right-[-60vw] lg:w-[90vw] lg:h-[90vw]
+            "
+          ></div>
+        </div>
 
-      <AnimatedLine />
+        <div className="absolute inset-x-0 top-[3vh] z-50">
+          <AnimatedLine />
+        </div>
 
-      <div className="relative z-20 flex flex-col items-center">
-        <Title />
-        <SubTitle />
-      </div>
+        <div className="absolute inset-x-0 top-[38vh] z-40 flex flex-col items-center translate-x-[0.3vw]">
+          <Title />
+          <SubTitle />
+        </div>
 
-      {/* BlackHole Section */}
-      <div className="relative z-0 mt-12 w-full">
         <BlackHoleCanvas />
-        <div className="absolute inset-x-0 top-[78vh] z-30 pointer-events-none flex justify-start pl-[4vw]">
+      </section>
+
+      <section className="relative z-[55] mt-0 min-h-[42vh] bg-[#050914] pt-[8vh] pb-[10vh]">
+        <div className="relative z-[70] pointer-events-none flex justify-start pl-[4vw]">
           <Stable />
         </div>
-      </div>
+      </section>
 
       {/* Glitch + ARC Section */}
       <section

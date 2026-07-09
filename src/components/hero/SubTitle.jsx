@@ -24,7 +24,7 @@ export default function SubTitle() {
     <div
       className="
         relative z-20
-        mt-2 sm:mt-3 md:mt-6
+        mt-2 sm:mt-2 md:mt-3
         text-center
         px-4
         mx-auto
@@ -55,11 +55,11 @@ export default function SubTitle() {
         style={{
           color: "#FFF",
           fontFamily: '"Yapari Trial Regular"',
-          fontSize: "14px",
+          fontSize: "clamp(5.5px, 0.5vw, 7.5px)",
           fontStyle: "normal",
           fontWeight: 700,
           lineHeight: "normal",
-          letterSpacing: "8px",
+          letterSpacing: "clamp(2.4px, 0.34vw, 4.4px)",
           textTransform: "uppercase",
         }}
       >

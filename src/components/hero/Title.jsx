@@ -67,16 +67,11 @@ export default function Title() {
       className="
         relative z-20
         flex items-center justify-center
-        mt-[8vh]
-        sm:mt-[6vh]
-        md:mt-[2vh]
-        lg:mt-[-2vh]
-        xl:mt-[-4vh]
-        2xl:mt-[-10vh]
+        mt-0
         px-4
       "
     >
-      <div className="flex items-center gap-5 sm:gap-7 md:gap-9 lg:gap-8 xl:gap-10 2xl:gap-12 mt-2 ml-0 sm:ml-2 md:ml-4 lg:ml-2 xl:ml-4 2xl:ml-6">
+      <div className="flex items-center gap-[clamp(14px,2vw,34px)] ml-[clamp(0px,0.25vw,4px)]">
         <h1
           ref={absolRef}
           data-initial="48290"
@@ -85,7 +80,7 @@ export default function Title() {
             relative inline-block isolate z-0
             absolx-gradient font-yapari-regular tracking-[0.2em]
             whitespace-nowrap leading-none 
-            text-[36px] sm:text-[48px] md:text-[64px] lg:text-[100px] xl:text-[120px] 2xl:text-[145px]
+            text-[clamp(54px,6.9vw,100px)]
 
             before:content-['']
             before:absolute
@@ -94,37 +89,37 @@ export default function Title() {
             before:rounded-full
             before:pointer-events-none
             before:z-[-1]
-            before:bg-[radial-gradient(closest-side,rgba(0,0,0,0.98),rgba(0,0,0,0)_72%)]
+            before:bg-[radial-gradient(closest-side,rgba(0,0,0,0.72),rgba(0,0,0,0)_64%)]
 
             /* Mobile (default) */
-            before:left-[-0.35em]
-            before:w-[2.0em]
-            before:h-[1.4em]
-            before:blur-[10px]
+            before:left-[-0.18em]
+            before:w-[1.35em]
+            before:h-[1.08em]
+            before:blur-[8px]
 
             /* Small screens */
-            sm:before:left-[-0.40em]
-            sm:before:w-[2.3em]
-            sm:before:h-[1.6em]
-            sm:before:blur-[12px]
+            sm:before:left-[-0.22em]
+            sm:before:w-[1.52em]
+            sm:before:h-[1.18em]
+            sm:before:blur-[9px]
 
             /* Medium screens */
-            md:before:left-[-0.48em]
-            md:before:w-[2.6em]
-            md:before:h-[1.8em]
-            md:before:blur-[14px]
+            md:before:left-[-0.26em]
+            md:before:w-[1.72em]
+            md:before:h-[1.28em]
+            md:before:blur-[10px]
 
             /* Large screens */
-            lg:before:left-[-0.58em]
-            lg:before:w-[3.0em]
-            lg:before:h-[2.1em]
-            lg:before:blur-[16px]
+            lg:before:left-[-0.32em]
+            lg:before:w-[1.92em]
+            lg:before:h-[1.38em]
+            lg:before:blur-[11px]
 
             /* XL screens */
-            xl:before:left-[-0.65em]
-            xl:before:w-[3.2em]
-            xl:before:h-[2.2em]
-            xl:before:blur-[18px]
+            xl:before:left-[-0.36em]
+            xl:before:w-[2.04em]
+            xl:before:h-[1.46em]
+            xl:before:blur-[12px]
           "
         />
         <h1
@@ -134,7 +129,7 @@ export default function Title() {
           className="
             text-white font-yapari-regular tracking-[0.12em]
             whitespace-nowrap leading-none
-            text-[36px] sm:text-[48px] md:text-[64px] lg:text-[100px] xl:text-[120px] 2xl:text-[145px]
+            text-[clamp(54px,6.9vw,100px)]
           "
         />
       </div>
