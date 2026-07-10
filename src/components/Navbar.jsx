@@ -282,12 +282,12 @@ export function Navbar({ currentPath = "/", onNavigate }) {
         <img
           src={logo}
           alt="Logo"
-          className="h-[28px] sm:h-[30px] md:h-[32px] lg:h-[30px] w-auto cursor-pointer"
+          className="h-[40px] sm:h-[42px] md:h-[44px] lg:h-[48px] w-auto cursor-pointer"
         />
 
         {/* DESKTOP MENU */}
         <div className="hidden lg:flex flex-1 justify-center">
-          <div className="flex items-center gap-5 xl:gap-7 font-azonix">
+          <div className="flex items-center gap-7 xl:gap-9 font-azonix">
             {MENU_ITEMS.map((item) => (
               <MenuItem
                 key={item.label}
@@ -300,7 +300,7 @@ export function Navbar({ currentPath = "/", onNavigate }) {
           </div>
         </div>
 
-        <div className="hidden lg:block h-[30px] w-[30px]" aria-hidden="true" />
+        <div className="hidden lg:block h-[48px] w-[48px]" aria-hidden="true" />
 
         {/* MOBILE BURGER */}
         <button

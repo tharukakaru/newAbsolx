@@ -4,10 +4,10 @@ export default function MenuItem({ active, onClick, children }) {
       onClick={onClick}
       style={{
         fontFamily: "Azonix",
-        fontSize: "8px",
+        fontSize: "12px",
         fontWeight: 400,
-        lineHeight: "12px",
-        letterSpacing: "1.15px",
+        lineHeight: "16px",
+        letterSpacing: "1.45px",
         textShadow: "0 4px 4px rgba(0, 0, 0, 0.25)",
       }}
       className={`
