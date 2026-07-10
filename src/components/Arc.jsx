@@ -312,7 +312,7 @@ export default function Arc() {
           left: 50%;
           transform: translateX(-50%);
           font-family: "SourceCodePro", "Source Code Pro", ui-monospace, monospace;
-          font-size: 16px;
+          font-size: 24px;
           font-weight: 400;
           letter-spacing: 0.02em;
           line-height: 1;
@@ -345,7 +345,7 @@ export default function Arc() {
           top: var(--arc-war-top);
           transform: translateX(-50%);
           font-family: "SourceCodePro", "Source Code Pro", ui-monospace, monospace;
-          font-size: 16px;
+          font-size: 15px;
           font-weight: 400;
           line-height: 1;
           letter-spacing: 0.06em;
@@ -1354,7 +1354,7 @@ export default function Arc() {
           }
 
           .arc-os-war {
-            font-size: 14px;
+            font-size: 20px;
           }
 
           .arc-os-ca {

@@ -83,9 +83,9 @@ export default function SoulGrid() {
           text-align: center;
           font-family: "Yapari Trial", sans-serif;
           font-size: clamp(
-            18px,
-            min(calc(var(--img-w, 0px) * 0.026), 3.6vh),
-            40px
+            28px,
+            min(calc(var(--img-w, 0px) * 0.04), 5.6vh),
+            52px
           );
           font-style: normal;
           font-weight: 700;
@@ -93,7 +93,7 @@ export default function SoulGrid() {
           letter-spacing: clamp(
             2px,
             min(calc(var(--img-w, 0px) * 0.004), 0.5vh),
-            6px
+            7px
           );
           text-transform: uppercase;
         }
@@ -420,8 +420,8 @@ export default function SoulGrid() {
           }
 
           .soul-agentic-title {
-            font-size: clamp(14px, min(4.8vw, 3.4vh), 20px);
-            letter-spacing: clamp(1.5px, min(0.9vw, 0.45vh), 3px);
+            font-size: clamp(18px, min(6.2vw, 4.4vh), 28px);
+            letter-spacing: clamp(1.5px, min(1vw, 0.5vh), 3.5px);
           }
 
           .soul-defense-badge {
