@@ -63,10 +63,10 @@ function HomePage() {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[20dvh] bg-gradient-to-t from-[#050914] from-[15%] via-[#050914]/45 to-transparent" />
       </section>
 
-      {/* Starts at the hero's exact end color (#050914) and lands on pure black so the
-          bg-black Glitch section below joins without a visible edge. */}
-      <section className="relative z-[55] min-h-[38vh] bg-[linear-gradient(to_bottom,#050914_0%,#050914_35%,#000000_100%)] pt-[10vh] pb-[12vh]">
-        <div className="relative z-[70] pointer-events-none flex justify-start pl-[4vw]">
+      {/* Starts at the hero's exact end color (#050914) and dissolves to pure black with
+          eased stops so no band is visible — reads as one continuous backdrop, not two layers. */}
+      <section className="relative z-[55] min-h-[38vh] bg-[linear-gradient(to_bottom,#050914_0%,#040812_35%,#030710_60%,#02040a_80%,#010205_92%,#000000_100%)] pt-[10vh] pb-[12vh]">
+        <div className="relative z-[70] pointer-events-none flex justify-center">
           <Stable />
         </div>
       </section>

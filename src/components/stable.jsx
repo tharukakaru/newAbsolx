@@ -100,7 +100,8 @@ export default function Title({ className = "" }) {
         }
 
         .stable-no,
-        .stable-bounds {
+        .stable-bounds,
+        .stable-dot {
           color: rgba(255, 255, 255, 0.9);
         }
 
@@ -191,7 +192,7 @@ export default function Title({ className = "" }) {
           >
             BOUNDS
           </span>
-          <span aria-hidden="true">.</span>
+          <span aria-hidden="true" className="stable-dot">.</span>
         </span>
       </div>
 
