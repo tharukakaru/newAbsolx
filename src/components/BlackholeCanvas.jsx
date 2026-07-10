@@ -485,12 +485,12 @@ export default function BlackHoleCanvas() {
         min-h-[360px]
         w-full
         overflow-hidden
-        bg-[#050914]
+        bg-black
       "
       style={{
         WebkitTapHighlightColor: "transparent",
         background:
-          "radial-gradient(ellipse at 50% 58%, rgba(24, 54, 110, 0.24), rgba(5, 9, 20, 0.92) 52%, #050914 100%)",
+          "radial-gradient(ellipse at 50% 58%, rgba(24, 54, 110, 0.16), rgba(0, 0, 0, 0.96) 26%, #000000 100%)",
       }}
     >
       <canvas
@@ -505,13 +505,13 @@ export default function BlackHoleCanvas() {
           aria-hidden="true"
           style={{
             background:
-              "radial-gradient(ellipse at 50% 42%, rgba(112,166,255,0.42), rgba(22,46,98,0.18) 22%, rgba(5,9,20,0) 48%), radial-gradient(circle at 50% 42%, #000 0 9%, rgba(4,8,18,0.94) 12%, transparent 24%), #050914",
+              "radial-gradient(ellipse at 50% 42%, rgba(112,166,255,0.42), rgba(22,46,98,0.18) 22%, rgba(0,0,0,0) 48%), radial-gradient(circle at 50% 42%, #000 0 9%, rgba(0,0,0,0.94) 12%, transparent 24%), #000000",
           }}
         />
       )}
 
-      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#050914] via-[#050914]/55 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-[14%] bg-gradient-to-t from-[#050914]/70 via-[#07111f]/25 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black via-black/55 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-black via-black/85 to-transparent" />
     </div>
   );
 }

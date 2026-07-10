@@ -80,7 +80,7 @@ export default function Title() {
             relative inline-block isolate z-0
             absolx-gradient font-yapari-regular tracking-[0.2em]
             whitespace-nowrap leading-none 
-            text-[clamp(54px,6.9vw,100px)]
+            text-[clamp(44px,5.8vw,84px)]
 
             before:content-['']
             before:absolute
@@ -129,7 +129,7 @@ export default function Title() {
           className="
             text-white font-yapari-regular tracking-[0.12em]
             whitespace-nowrap leading-none
-            text-[clamp(54px,6.9vw,100px)]
+            text-[clamp(44px,5.8vw,84px)]
           "
         />
       </div>

@@ -24,7 +24,7 @@ export default function SubTitle() {
     <div
       className="
         relative z-20
-        mt-2 sm:mt-2 md:mt-3
+        -mt-2 sm:-mt-1 md:mt-0
         text-center
         px-4
         mx-auto

@@ -16,62 +16,68 @@ import ArsOs from "./components/ArsOs";
 function HomePage() {
   return (
     <>
-      <section className="relative z-0 min-h-[100dvh] overflow-hidden bg-[#050914]">
-        {/* Glow Background Container */}
-        <div className="absolute inset-0 overflow-hidden z-10 pointer-events-none">
-          {/* Top-left glow */}
+      <div className="relative bg-black overflow-hidden">
+        {/* Single continuous glow layer spanning BOTH sections below — this is what removes the seam, since it's one gradient, not two separately-clipped ones */}
+        <div className="absolute inset-0 z-10 pointer-events-none">
+          {/* Left side glow */}
           <div
             className="
               absolute rounded-full
-              bg-[radial-gradient(circle,rgba(77,121,234,0.22),transparent_80%)]
-              blur-[80px]
-              top-[-40vw] left-[-40vw] w-[120vw] h-[120vw]
-              sm:top-[-30vw] sm:left-[-30vw] sm:w-[110vw] sm:h-[110vw]
-              md:top-[-45vw] md:left-[-35vw] md:w-screen md:h-[100vw]
-              lg:top-[6.5vw] lg:left-[-50vw] lg:w-[90vw] lg:h-[90vw]
+              bg-[radial-gradient(circle,rgba(77,121,234,0.28),transparent_46%)]
+              blur-[120px]
+              top-[60%] left-0 -translate-x-1/2 -translate-y-1/2
+              w-[900px] h-[1900px]
             "
           ></div>
 
-          {/* Top-right glow */}
+          {/* Right side glow */}
           <div
             className="
               absolute rounded-full
-              bg-[radial-gradient(circle,rgba(77,121,234,0.22),transparent_80%)]
-              blur-[100px]
-              top-[-40vw] right-[-40vw] w-[120vw] h-[120vw]
-              sm:top-[-30vw] sm:right-[-30vw] sm:w-[110vw] sm:h-[110vw]
-              md:top-[-25vw] md:right-[-35vw] md:w-screen md:h-[100vw]
-              lg:top-[1vw] lg:right-[-60vw] lg:w-[90vw] lg:h-[90vw]
+              bg-[radial-gradient(circle,rgba(77,121,234,0.28),transparent_46%)]
+              blur-[120px]
+              top-[60%] right-0 translate-x-1/2 -translate-y-1/2
+              w-[900px] h-[1900px]
             "
           ></div>
         </div>
 
-        <div className="absolute inset-x-0 top-[3vh] z-50">
-          <AnimatedLine />
-        </div>
+        <section className="relative z-0 min-h-[100dvh]">
+          <div className="absolute inset-x-0 top-[3vh] z-50">
+            <AnimatedLine />
+          </div>
 
-        <div className="absolute inset-x-0 top-[38vh] z-40 flex flex-col items-center translate-x-[0.3vw]">
-          <Title />
-          <SubTitle />
-        </div>
+          <div className="absolute inset-x-0 top-[38vh] z-40 flex flex-col items-center translate-x-[0.3vw]">
+            <Title />
+            <SubTitle />
+          </div>
 
-        <BlackHoleCanvas />
-      </section>
+          <BlackHoleCanvas />
+        </section>
 
-      <section className="relative z-[55] mt-0 min-h-[42vh] bg-[#050914] pt-[8vh] pb-[10vh]">
-        <div className="relative z-[70] pointer-events-none flex justify-start pl-[4vw]">
-          <Stable />
-        </div>
-      </section>
+        <section className="relative z-[55] mt-0 min-h-[26vh] pt-[4vh] pb-[1vh]">
+          {/* Whole "WHERE IMAGINATION KNOWS NO BOUNDS." block + its divider line, centered as one group */}
+          <div className="relative z-[70] pointer-events-none flex justify-center">
+            <Stable />
+          </div>
+        </section>
+
+        {/* Guaranteed fade to pure black right at the bottom edge of this whole
+            block — sits ABOVE the glow (higher z-index), so no matter how big
+            or bright the glow above is, it always gets masked smoothly to
+            black before it reaches the boundary with the next section. This
+            is what actually prevents the seam, regardless of glow sizing. */}
+        <div className="absolute inset-x-0 bottom-0 h-[9vh] z-[30] pointer-events-none bg-gradient-to-t from-black via-black/90 to-transparent" />
+      </div>
 
       {/* Glitch + ARC Section */}
       <section
         className="relative w-full bg-black z-[60]"
         style={{
-          paddingBottom: "clamp(720px, 52vw, 1200px)",
+          paddingBottom: "clamp(520px, 42vw, 980px)",
         }}
       >
-        <div className="relative min-h-[155vh]">
+        <div className="relative h-[92vh]">
           <Glitch />
         </div>
       </section>

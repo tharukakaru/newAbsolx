@@ -80,24 +80,24 @@ export default function AnimatedLine() {
         relative pointer-events-none
         z-30
         left-1/2 -translate-x-1/2
-        [--hero-line-scale:0.74]
-        sm:[--hero-line-scale:0.78]
-        md:[--hero-line-scale:0.82]
-        lg:[--hero-line-scale:0.86]
-        xl:[--hero-line-scale:0.9]
-        2xl:[--hero-line-scale:0.92]
+        [--hero-line-scale:0.64]
+        sm:[--hero-line-scale:0.68]
+        md:[--hero-line-scale:0.72]
+        lg:[--hero-line-scale:0.76]
+        xl:[--hero-line-scale:0.8]
+        2xl:[--hero-line-scale:0.82]
 
         top-0
-        sm:top-2
-        md:top-4
-        lg:top-6
-        xl:top-8
+        sm:top-1
+        md:top-2
+        lg:top-3
+        xl:top-4
 
-        translate-y-[15px]
-        sm:translate-y-5
-        md:translate-y-[25px]
-        lg:translate-y-[76px]
-        xl:translate-y-[30px]
+        translate-y-[0px]
+        sm:translate-y-2
+        md:translate-y-[10px]
+        lg:translate-y-[40px]
+        xl:translate-y-[15px]
 
         -rotate-[0.5deg]
         scale-[var(--hero-line-scale)]

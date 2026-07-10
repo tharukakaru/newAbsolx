@@ -276,17 +276,17 @@ export function Navbar({ currentPath = "/", onNavigate }) {
       `}
     >
       {/* NAV WRAPPER */}
-      <div className="w-full max-w-[1500px] mx-auto flex items-center justify-between">
+      <div className="relative w-full max-w-[1500px] mx-auto flex items-center justify-between">
 
         {/* LOGO */}
         <img
           src={logo}
           alt="Logo"
-          className="h-[28px] sm:h-[30px] md:h-[32px] lg:h-[30px] w-auto cursor-pointer"
+          className="h-[20px] sm:h-[22px] md:h-[24px] lg:h-[22px] w-auto cursor-pointer ml-[14vw] lg:ml-[17vw]"
         />
 
-        {/* DESKTOP MENU */}
-        <div className="hidden lg:flex flex-1 justify-center">
+        {/* DESKTOP MENU — centered on the screen, independent of logo position */}
+        <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2">
           <div className="flex items-center gap-5 xl:gap-7 font-azonix">
             {MENU_ITEMS.map((item) => (
               <MenuItem
