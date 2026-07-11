@@ -1,4 +1,4 @@
-import NeuralFaceCanvas from "./NeuralFaceCanvas";
+import SoulSphereCanvas from "./SoulSphereCanvas";
 
 const ARC_DESCRIPTION =
   "ABSOLX ARC OS is a sovereign, AI-driven defense ecosystem engineered by Sri Lankan hands—the roaring lions building national power from the ground up. Designed for Asian operational environments, ARC OS delivers 99.99% decision-making accuracy, commanding dominance from sky to sea to mud through UAVs, UGVs, USVs, electronic warfare, and joint-force Command & Control. This is not just software—it is a unified ecosystem of AI models, computer vision, predictive intelligence, weather-aware analytics, hardened hardware, robotics, and autonomous systems. Built entirely in-house, our vision to 2030 is clear: a self-reliant, battle-ready defense industry transforming national security data into decisive first-action advantage.";
@@ -21,7 +21,7 @@ export default function SoulGrid() {
           --soul-face-top: 0.92;
           --soul-face-width: clamp(600px, calc(var(--img-w, 0px) * 0.94), 1160px);
           --soul-face-height: clamp(460px, calc(var(--img-h, 0px) * 0.86), 860px);
-          --soul-copy-top: 81%;
+          --soul-copy-top: 95%;
           --soul-copy-left: 43%;
           --soul-copy-width: min(86vw, calc(var(--img-w, 0px) * 1.2), 1380px);
           --soul-right-spine-right: clamp(112px, 17.4%, 208px);
@@ -54,11 +54,21 @@ export default function SoulGrid() {
           border-radius: 999px;
         }
 
-        .soul-face-canvas {
+        .soul-sphere-canvas {
           position: absolute;
           inset: 0;
+          width: 100%;
+          height: 100%;
+          display: block;
+          pointer-events: auto;
+          cursor: grab;
+          touch-action: none;
+          mix-blend-mode: screen;
           filter: drop-shadow(0 20px 42px rgba(80, 96, 180, 0.18));
-          will-change: transform;
+        }
+
+        .soul-sphere-canvas.is-dragging {
+          cursor: grabbing;
         }
 
         .soul-agentic-title-rail {
@@ -83,9 +93,9 @@ export default function SoulGrid() {
           text-align: center;
           font-family: "Yapari Trial", sans-serif;
           font-size: clamp(
-            28px,
-            min(calc(var(--img-w, 0px) * 0.04), 5.6vh),
-            52px
+            18px,
+            min(calc(var(--img-w, 0px) * 0.025), 3.6vh),
+            34px
           );
           font-style: normal;
           font-weight: 700;
@@ -340,20 +350,7 @@ export default function SoulGrid() {
           color: rgba(255, 255, 255, 0.72);
         }
 
-        @keyframes soulFaceFloat {
-          0%, 100% {
-            transform: translate(-50%, -50%) translateY(0);
-          }
-          50% {
-            transform: translate(-50%, -50%) translateY(-10px);
-          }
-        }
-
         @media (prefers-reduced-motion: reduce) {
-          .soul-face-canvas {
-            animation: none;
-          }
-
           .soul-line-current {
             animation: none;
           }
@@ -367,7 +364,7 @@ export default function SoulGrid() {
             --soul-face-height: clamp(430px, calc(var(--img-h, 0px) * 0.9), 680px);
             --soul-copy-left: 46%;
             --soul-copy-width: min(88vw, calc(var(--img-w, 0px) * 0.95));
-            --soul-copy-top: 82%;
+            --soul-copy-top: 96%;
             --soul-right-spine-right: clamp(54px, 14.5%, 98px);
             --soul-top-line-width: clamp(76px, calc(var(--soul-face-width) * 0.15), 128px);
             --soul-top-line-top: 8.8%;
@@ -403,7 +400,7 @@ export default function SoulGrid() {
             --soul-face-height: clamp(390px, calc(var(--img-h, 0px) * 0.95), 560px);
             --soul-copy-left: 50%;
             --soul-copy-width: 94vw;
-            --soul-copy-top: 83%;
+            --soul-copy-top: 97%;
             --soul-right-spine-right: 12%;
             --soul-top-line-width: 68px;
             --soul-top-line-top: 9.2%;
@@ -483,7 +480,7 @@ export default function SoulGrid() {
             <span className="soul-defense-label">Defense</span>
           </div>
         </div>
-        <NeuralFaceCanvas className="soul-face-canvas" />
+        <SoulSphereCanvas className="soul-sphere-canvas" />
         <div className="soul-face-copy">
           <p className="soul-face-description">
             <strong>ABSOLX ARC OS</strong>
