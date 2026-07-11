@@ -36,11 +36,15 @@ const products = [
   },
 ];
 
+/* x=186.7 / 560 / 933.3 are the three column centres of the products grid
+   (viewBox width 1120 / 6 * 1, 3, 5) — the svg is stretched to exactly the
+   grid's width (preserveAspectRatio="none") so these stay under the titles.
+   The small offsets (-15 / +31) follow the per-title transform nudges. */
 const arrowGeometry = {
   left: {
-    desktopPath: "M187 8 L187 138 Q187 158 207 158 L540 158 Q560 158 560 178 L560 294",
+    desktopPath: "M172 8 L172 138 Q172 158 192 158 L540 158 Q560 158 560 178 L560 294",
     mobilePath: "M560 8 L560 294",
-    startX: 187,
+    startX: 172,
     startY: 8,
     endX: 560,
   },
@@ -52,49 +56,15 @@ const arrowGeometry = {
     endX: 560,
   },
   right: {
-    desktopPath: "M933 8 L933 138 Q933 158 913 158 L580 158 Q560 158 560 178 L560 294",
+    desktopPath: "M964 8 L964 138 Q964 158 944 158 L580 158 Q560 158 560 178 L560 294",
     mobilePath: "M560 8 L560 294",
-    startX: 933,
+    startX: 964,
     startY: 8,
     endX: 560,
   },
 };
 
-function ProductTitle({ product }) {
-  if (product.title === "ARC C2") {
-    return (
-      <>
-        {"ARC".split("").map((letter, index) => (
-          <span
-            className={
-              index === product.highlightIndex
-                ? "arc-os-title-letter arc-os-title-letter-hot"
-                : "arc-os-title-letter"
-            }
-            key={`${product.id}-${letter}-${index}`}
-          >
-            {letter}
-          </span>
-        ))}
-        <span className="arc-os-product-c2">C2</span>
-      </>
-    );
-  }
-
-  return product.title.split("").map((letter, index) => (
-    <span
-      className={
-        index === product.highlightIndex
-          ? "arc-os-title-letter arc-os-title-letter-hot"
-          : "arc-os-title-letter"
-      }
-      key={`${product.id}-${letter}-${index}`}
-    >
-      {letter}
-    </span>
-  ));
-}
-
+/* The line is only drawn as a trail behind the moving signal head. */
 function ActiveArrow({ product }) {
   const geometry = arrowGeometry[product.arrowTone];
   const glowFilterId = `arc-arrow-glow-${product.id}`;
@@ -103,6 +73,7 @@ function ActiveArrow({ product }) {
     <svg
       className={`arc-os-active-arrow arc-os-active-arrow--${product.id}`}
       viewBox="0 0 1120 294"
+      preserveAspectRatio="none"
       aria-hidden="true"
       key={product.id}
     >
@@ -115,16 +86,6 @@ function ActiveArrow({ product }) {
           </feMerge>
         </filter>
       </defs>
-      <path
-        className="arc-os-wire-bg arc-os-arrow-desktop"
-        d={geometry.desktopPath}
-        fill="none"
-      />
-      <path
-        className="arc-os-wire-bg arc-os-arrow-mobile"
-        d={geometry.mobilePath}
-        fill="none"
-      />
       <path
         className="arc-os-active-arrow-path arc-os-trace-glow arc-os-arrow-desktop"
         d={geometry.desktopPath}
@@ -169,11 +130,44 @@ function ActiveArrow({ product }) {
   );
 }
 
+function ProductTitle({ product }) {
+  if (product.title === "ARC C2") {
+    return (
+      <>
+        {"ARC".split("").map((letter, index) => (
+          <span
+            className={
+              index === product.highlightIndex
+                ? "arc-os-title-letter arc-os-title-letter-hot"
+                : "arc-os-title-letter"
+            }
+            key={`${product.id}-${letter}-${index}`}
+          >
+            {letter}
+          </span>
+        ))}
+        <span className="arc-os-product-c2">C2</span>
+      </>
+    );
+  }
+
+  return product.title.split("").map((letter, index) => (
+    <span
+      className={
+        index === product.highlightIndex
+          ? "arc-os-title-letter arc-os-title-letter-hot"
+          : "arc-os-title-letter"
+      }
+      key={`${product.id}-${letter}-${index}`}
+    >
+      {letter}
+    </span>
+  ));
+}
+
 export default function Arc() {
   const sectionRef = useRef(null);
   const [activeProductId, setActiveProductId] = useState(null);
-  const [pinnedProductId, setPinnedProductId] = useState(null);
-  const [inView, setInView] = useState(false);
 
   const activeProduct = products.find((product) => product.id === activeProductId);
 
@@ -185,10 +179,8 @@ export default function Arc() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         const visible = entry.isIntersecting && entry.intersectionRatio >= 0.12;
-        setInView(visible);
         if (!visible) {
           setActiveProductId(null);
-          setPinnedProductId(null);
         }
       },
       { threshold: [0, 0.12] },
@@ -198,35 +190,6 @@ export default function Arc() {
 
     return () => observer.disconnect();
   }, []);
-
-  // On touch devices there is no hover to trigger the reveal, so the trace +
-  // panel animation would never play. When the section is in view on a
-  // no-hover device, auto-activate the products (cycling through them) so the
-  // animation shows the same way it does on desktop hover. A manual tap pins a
-  // product and pauses the cycle.
-  useEffect(() => {
-    if (!inView || pinnedProductId) return undefined;
-    if (window.matchMedia("(hover: hover)").matches) return undefined;
-
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    let index = 0;
-    // Activate the first product on the next tick (kept out of the effect body
-    // so it doesn't fire a synchronous setState during render).
-    const kickoff = setTimeout(() => setActiveProductId(products[0].id), 60);
-
-    const interval = reduceMotion
-      ? null
-      : setInterval(() => {
-          index = (index + 1) % products.length;
-          setActiveProductId(products[index].id);
-        }, 4500);
-
-    return () => {
-      clearTimeout(kickoff);
-      if (interval) clearInterval(interval);
-    };
-  }, [inView, pinnedProductId]);
 
   const handlePointerEnter = (productId) => {
     setActiveProductId(productId);
@@ -245,10 +208,11 @@ export default function Arc() {
   const handlePointerLeave = (event) => {
     event.currentTarget.style.removeProperty("--arc-target-x");
     event.currentTarget.style.removeProperty("--arc-target-y");
+    setActiveProductId(null);
   };
 
+  // Tap fallback for touch screens, where pointerenter never fires.
   const handleProductClick = (productId) => {
-    setPinnedProductId(productId);
     setActiveProductId(productId);
   };
 
@@ -264,8 +228,6 @@ export default function Arc() {
           --arc-line-right: 12.2%;
           --arc-line-center-gap: 26px;
           --arc-products-top: 364px;
-          --arc-product-line-top: 158px;
-          --arc-lower-spine-top: 112px;
           --arc-panel-top: 626px;
           --arc-war-top: 118px;
           --arc-copy-top: 114px;
@@ -486,33 +448,6 @@ export default function Arc() {
           transform: translateX(-50%);
         }
 
-        .arc-os-products::before,
-        .arc-os-products::after {
-          content: "";
-          position: absolute;
-          top: var(--arc-product-line-top);
-          height: 1px;
-          background:
-            linear-gradient(90deg, transparent, var(--arc-line) 10%, var(--arc-line) 90%, transparent),
-            linear-gradient(90deg, transparent 0%, rgba(255, 255, 210, 0.08) 18%, rgba(255, 255, 180, 0.26) 38%, rgba(255, 255, 255, 0.88) 50%, rgba(255, 255, 150, 0.26) 62%, rgba(255, 255, 120, 0.08) 82%, transparent 100%);
-          background-repeat: no-repeat;
-          background-size: 100% 100%, 34% 100%;
-          background-position: 0 0, -38% 0;
-          filter: drop-shadow(0 0 4px rgba(255, 255, 160, 0.16));
-          will-change: background-position;
-          animation: arcLineRunX 3.9s linear infinite;
-        }
-
-        .arc-os-products::before {
-          left: var(--arc-line-left);
-          right: calc(50% + var(--arc-line-center-gap));
-        }
-
-        .arc-os-products::after {
-          left: calc(50% + var(--arc-line-center-gap));
-          right: var(--arc-line-right);
-        }
-
         .arc-os-product {
           --arc-target-x: 0px;
           --arc-target-y: 0px;
@@ -716,60 +651,6 @@ export default function Arc() {
           transform: translateY(5px);
         }
 
-        .arc-os-product-rule {
-          position: absolute;
-          bottom: 0;
-          display: none;
-          height: 1px;
-          background:
-            linear-gradient(90deg, transparent, var(--arc-line) 10%, var(--arc-line) 90%, transparent),
-            linear-gradient(90deg, transparent 0%, rgba(255, 255, 210, 0.08) 18%, rgba(255, 255, 180, 0.26) 38%, rgba(255, 255, 255, 0.88) 50%, rgba(255, 255, 150, 0.26) 62%, rgba(255, 255, 120, 0.08) 82%, transparent 100%);
-          background-repeat: no-repeat;
-          background-size: 100% 100%, 34% 100%;
-          background-position: 0 0, -38% 0;
-          filter: drop-shadow(0 0 4px rgba(255, 255, 160, 0.16));
-          will-change: background-position;
-          animation: arcLineRunX 3.9s linear infinite;
-        }
-
-        .arc-os-product:first-child .arc-os-product-rule {
-          left: 18%;
-          right: 4%;
-        }
-
-        .arc-os-product:nth-child(3) .arc-os-product-rule {
-          left: 4%;
-          right: 18%;
-        }
-
-        .arc-os-product:nth-child(2)::after {
-          content: "";
-          position: absolute;
-          left: 50%;
-          top: var(--arc-lower-spine-top);
-          width: 1px;
-          height: calc(var(--arc-panel-top) - var(--arc-products-top) - var(--arc-lower-spine-top));
-          background:
-            linear-gradient(180deg, var(--arc-line), rgba(255, 255, 255, 0.2)),
-            linear-gradient(180deg, transparent 0%, rgba(255, 255, 210, 0.08) 18%, rgba(255, 255, 180, 0.24) 38%, rgba(255, 255, 255, 0.86) 50%, rgba(255, 255, 150, 0.24) 62%, rgba(255, 255, 120, 0.08) 82%, transparent 100%);
-          background-repeat: no-repeat;
-          background-size: 100% 100%, 100% 48%;
-          background-position: 0 0, 0 -54%;
-          filter: drop-shadow(0 0 4px rgba(255, 255, 160, 0.18));
-          will-change: background-position;
-          transform: translateX(-50%);
-          animation: arcLineRunY 4s linear infinite;
-        }
-
-        .arc-os-products::after,
-        .arc-os-product-rule {
-          animation-delay: 0.42s;
-        }
-
-        .arc-os-product:nth-child(2)::after {
-          animation-delay: 0.18s;
-        }
-
         @keyframes arcLineRunX {
           0% {
             background-position: 0 0, -38% 0;
@@ -790,11 +671,7 @@ export default function Arc() {
 
         @media (prefers-reduced-motion: reduce) {
           .arc-os-divider-top,
-          .arc-os-spine,
-          .arc-os-products::before,
-          .arc-os-products::after,
-          .arc-os-product-rule,
-          .arc-os-product:nth-child(2)::after {
+          .arc-os-spine {
             animation: none;
           }
         }
@@ -804,9 +681,10 @@ export default function Arc() {
           z-index: 4;
           left: 50%;
           top: var(--arc-products-top);
-          width: min(1120px, 100%);
+          /* Must track .arc-os-products width exactly — the svg is stretched
+             (preserveAspectRatio: none) so path x coords hit the column centres. */
+          width: min(1240px, 100vw);
           height: calc(var(--arc-panel-top) - var(--arc-products-top));
-          min-height: 294px;
           pointer-events: none;
           overflow: visible;
           opacity: 0;
@@ -820,21 +698,32 @@ export default function Arc() {
           stroke-linejoin: round;
         }
 
+        /* Trail drawn behind the moving signal head, in sync with its 3.8s
+           travel, so the line only exists where the arrow has already been. */
         .arc-os-trace-core {
-          stroke: rgba(255, 255, 255, 0.96);
+          stroke: rgba(255, 255, 255, 0.92);
           stroke-width: 1.6;
-          stroke-dasharray: 0.08 0.92;
-          stroke-dashoffset: 0;
-          animation: arcTraceCurrent 3.8s linear 0.08s infinite;
+          stroke-dasharray: 1 1;
+          stroke-dashoffset: 1;
+          animation: arcTraceDraw 3.8s linear 0.08s infinite;
         }
 
         .arc-os-trace-glow {
-          stroke: rgba(255, 255, 255, 0.14);
+          stroke: rgba(255, 255, 255, 0.3);
           stroke-width: 4;
-          stroke-dasharray: 0.11 0.89;
-          stroke-dashoffset: 0;
+          stroke-dasharray: 1 1;
+          stroke-dashoffset: 1;
           opacity: 0.48;
-          animation: arcTraceCurrent 3.8s linear 0.08s infinite;
+          animation: arcTraceDraw 3.8s linear 0.08s infinite;
+        }
+
+        @keyframes arcTraceDraw {
+          0% {
+            stroke-dashoffset: 1;
+          }
+          100% {
+            stroke-dashoffset: 0;
+          }
         }
 
         .arc-os-arrow-origin {
@@ -885,13 +774,6 @@ export default function Arc() {
           display: none;
         }
 
-        .arc-os-wire-bg {
-          stroke: rgba(255, 255, 255, 0.1);
-          stroke-width: 1.5;
-          stroke-linecap: round;
-          stroke-linejoin: round;
-        }
-
         @keyframes arcTraceWrap {
           0% {
             opacity: 0;
@@ -900,21 +782,6 @@ export default function Arc() {
           100% {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
-          }
-        }
-
-        @keyframes arcTraceFade {
-          to {
-            opacity: 0;
-          }
-        }
-
-        @keyframes arcTraceCurrent {
-          0% {
-            stroke-dashoffset: 0;
-          }
-          100% {
-            stroke-dashoffset: -1;
           }
         }
 
@@ -1015,7 +882,7 @@ export default function Arc() {
             inset 0 0 54px rgba(0, 0, 0, 0.84),
             0 0 42px rgba(244, 237, 21, 0.16),
             0 0 0 1px rgba(244, 237, 21, 0.14);
-          animation: arcPanelBorderLock 0.95s ease-out 1.86s both;
+          animation: arcPanelBorderLock 0.95s ease-out 0.5s both;
         }
 
         .arc-os-panel-target {
@@ -1033,7 +900,7 @@ export default function Arc() {
           box-shadow:
             0 0 24px rgba(255, 255, 255, 0.18),
             inset 0 0 34px rgba(244, 237, 21, 0.08);
-          animation: arcPanelTargetPop 0.86s cubic-bezier(0.12, 1.12, 0.24, 1) 1.86s forwards;
+          animation: arcPanelTargetPop 0.86s cubic-bezier(0.12, 1.12, 0.24, 1) 0.4s forwards;
         }
 
         .arc-os-panel-target::before,
@@ -1072,8 +939,8 @@ export default function Arc() {
             0 -18px 34px rgba(255, 255, 255, 0.1),
             0 24px 48px rgba(0, 0, 0, 0.42);
           animation:
-            arcPanelImagePop 1.12s cubic-bezier(0.12, 1.16, 0.24, 1) 1.92s forwards,
-            arcPanelImageSettle 4.4s ease-in-out 3.04s infinite;
+            arcPanelImagePop 1.12s cubic-bezier(0.12, 1.16, 0.24, 1) 0.45s forwards,
+            arcPanelImageSettle 4.4s ease-in-out 1.6s infinite;
           will-change: opacity, transform, filter, clip-path;
         }
 
@@ -1087,7 +954,7 @@ export default function Arc() {
           background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.94), transparent);
           opacity: 0;
           box-shadow: 0 0 18px rgba(255, 255, 255, 0.62);
-          animation: arcPanelScan 1.14s ease-out 1.88s forwards;
+          animation: arcPanelScan 1.14s ease-out 0.42s forwards;
         }
 
         .arc-os-panel-burst {
@@ -1102,7 +969,7 @@ export default function Arc() {
             radial-gradient(circle at 50% 48%, rgba(244, 237, 21, 0.18), transparent 58%);
           mix-blend-mode: screen;
           transform: translateX(-48%) skewX(-12deg);
-          animation: arcPanelBurst 0.78s cubic-bezier(0.16, 1, 0.3, 1) 2.02s forwards;
+          animation: arcPanelBurst 0.78s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
         }
 
         .arc-os-panel-caption {
@@ -1120,7 +987,7 @@ export default function Arc() {
           text-transform: uppercase;
           color: rgba(255, 255, 255, 0.72);
           opacity: 0;
-          animation: arcPanelTextPop 0.34s ease-out 2.48s forwards;
+          animation: arcPanelTextPop 0.34s ease-out 0.95s forwards;
         }
 
         @keyframes arcPanelImagePop {
@@ -1324,8 +1191,6 @@ export default function Arc() {
           .arc-os-section {
             --arc-line-center-gap: 22px;
             --arc-products-top: 298px;
-            --arc-product-line-top: 146px;
-            --arc-lower-spine-top: 102px;
             --arc-panel-top: 572px;
             --arc-war-top: 136px;
             --arc-copy-top: 130px;
@@ -1402,11 +1267,6 @@ export default function Arc() {
 
           .arc-os-product-body {
             font-size: 14px;
-          }
-
-          .arc-os-active-arrow {
-            width: min(860px, 88%);
-            min-height: 158px;
           }
 
           .arc-os-panel {
@@ -1504,11 +1364,6 @@ export default function Arc() {
             row-gap: 52px;
           }
 
-          .arc-os-products::before,
-          .arc-os-products::after {
-            display: none;
-          }
-
           .arc-os-product {
             min-height: 142px;
           }
@@ -1572,22 +1427,6 @@ export default function Arc() {
           .arc-os-active-arrow--arc-c2 {
             top: 794px;
             height: 136px;
-          }
-
-          .arc-os-product:first-child .arc-os-product-rule,
-          .arc-os-product:nth-child(3) .arc-os-product-rule,
-          .arc-os-product-rule {
-            display: block;
-            left: 15%;
-            right: 15%;
-          }
-
-          .arc-os-product:nth-child(3) .arc-os-product-rule {
-            display: none;
-          }
-
-          .arc-os-product:nth-child(2)::after {
-            display: none;
           }
 
           .arc-os-panel {
@@ -1741,7 +1580,7 @@ export default function Arc() {
               onPointerMove={handlePointerMove}
             >
               <button
-                aria-pressed={pinnedProductId === product.id}
+                aria-pressed={activeProductId === product.id}
                 className="arc-os-product-trigger"
                 onBlur={handlePointerLeave}
                 onClick={() => handleProductClick(product.id)}
@@ -1761,7 +1600,6 @@ export default function Arc() {
                 </div>
                 <p className="arc-os-product-body">{product.body}</p>
               </button>
-              <div className="arc-os-product-rule" aria-hidden="true" />
             </article>
           ))}
         </div>
