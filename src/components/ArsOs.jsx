@@ -691,7 +691,7 @@ export default function ArsOs() {
           margin-top: 0.22em;
           margin-bottom: 0;
           font-family: "Fira Code", "SourceCodePro", ui-monospace, monospace;
-          font-size: clamp(6px, 0.66vw, 10px);
+          font-size: clamp(8px, 0.72vw, 11px);
           font-weight: 400;
           letter-spacing: 0.08em;
           color: rgba(255, 255, 255, 0.55);
@@ -708,7 +708,7 @@ export default function ArsOs() {
           margin: clamp(24px, 2.8vw, 42px) 0 clamp(58px, 7vw, 96px);
           font-weight: 300;
           font-size: clamp(14px, 1.32vw, 22px);
-          line-height: 1.05;
+          line-height: 1.28;
           color: rgba(255, 255, 255, 0.92);
         }
 
@@ -768,10 +768,10 @@ export default function ArsOs() {
 
         .hyena-card-body {
           margin: 0;
-          max-width: 24ch;
+          max-width: 26ch;
           font-weight: 300;
           font-size: clamp(13px, 1.08vw, 18px);
-          line-height: 1.02;
+          line-height: 1.35;
           color: rgba(255, 255, 255, 0.82);
         }
 
@@ -806,15 +806,31 @@ export default function ArsOs() {
           pointer-events: none;
         }
 
-        /* Drone-swarm / radar graphic below the cards. */
+        /* Drone-swarm / radar graphic below the cards. Sized so the wedge
+           fan reads at the reference scale (~26% of page width) instead of
+           dominating the section. */
         .hyena-figure {
           position: relative;
           z-index: 1;
-          width: min(1347px, 92%);
+          width: min(1000px, 58vw);
           margin: clamp(18px, 2.6vw, 56px) auto 0;
           aspect-ratio: 25 / 24;
           background: url(${swarmFigure}) 50% 50% / cover no-repeat;
           pointer-events: none;
+        }
+
+        /* Between 760 and 920 the one-line head no longer fits — drop the
+           metadata onto its own row instead of ellipsizing it. */
+        @media (max-width: 920px) {
+          .hyena-head {
+            flex-wrap: wrap;
+            white-space: normal;
+          }
+
+          .hyena-meta {
+            flex-basis: 100%;
+            white-space: normal;
+          }
         }
 
         @media (max-width: 760px) {
@@ -863,6 +879,10 @@ export default function ArsOs() {
 
           .hyena-card:nth-child(n + 5) {
             border-bottom: 0;
+          }
+
+          .hyena-figure {
+            width: min(560px, 92%);
           }
         }
 
@@ -1032,7 +1052,7 @@ export default function ArsOs() {
         .sentinel-rule {
           flex: 0 0 auto;
           align-self: center;
-          width: clamp(40px, 9vw, 150px);
+          width: clamp(40px, 7.5vw, 130px);
           height: 1px;
           margin-left: clamp(-26px, -3vw, -10px);
           background: linear-gradient(90deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.6));
@@ -1041,7 +1061,9 @@ export default function ArsOs() {
         .sentinel-word {
           margin: 0;
           font-family: "Yapari Trial Regular", "Yapari Trial", "Azonix", sans-serif;
-          font-size: clamp(40px, 7.4vw, 96px);
+          /* 5.6vw (not 7.4) so the SUBSYSTEM 02 metadata fits untruncated on
+             the same line at the 1440 target, matching the reference. */
+          font-size: clamp(40px, 5.6vw, 96px);
           font-weight: 400;
           line-height: 1;
           letter-spacing: clamp(2px, 0.5vw, 8px);
@@ -1058,7 +1080,7 @@ export default function ArsOs() {
           align-self: flex-end;
           margin-bottom: clamp(4px, 0.7vw, 12px);
           font-family: "SourceCodePro", "Source Code Pro", ui-monospace, monospace;
-          font-size: clamp(9px, 0.95vw, 15px);
+          font-size: clamp(9px, 0.88vw, 15px);
           font-weight: 400;
           letter-spacing: 0.06em;
           text-transform: uppercase;
@@ -1127,7 +1149,7 @@ export default function ArsOs() {
           margin: 0;
           font-weight: 300;
           font-size: clamp(14px, 1.24vw, 21px);
-          line-height: 1.16;
+          line-height: 1.3;
           color: #ffffff;
         }
 
@@ -1141,9 +1163,10 @@ export default function ArsOs() {
           margin: 0;
           font-family: "Plus Jakarta Sans", Arial, sans-serif;
           font-weight: 400;
-          font-size: clamp(26px, 4.05vw, 58px);
-          line-height: 1.1;
-          letter-spacing: clamp(2px, 0.32vw, 4.64px);
+          /* Sized to break into the reference's three lines at 1440–1728. */
+          font-size: clamp(24px, 3.05vw, 53px);
+          line-height: 1.14;
+          letter-spacing: clamp(1px, 0.18vw, 3.2px);
           color: #ffffff;
         }
 
@@ -1341,6 +1364,22 @@ export default function ArsOs() {
           background:
             radial-gradient(70% 110% at 0% 62%, rgba(34, 40, 90, 0.95), rgba(34, 40, 90, 0.38) 44%, rgba(0, 0, 0, 0) 78%),
             radial-gradient(42% 54% at 0% 100%, rgba(34, 40, 90, 0.85), rgba(34, 40, 90, 0.28) 46%, rgba(0, 0, 0, 0) 74%);
+        }
+
+        /* Between 760 and 920 the one-line head no longer fits — drop the
+           metadata onto its own row instead of ellipsizing it. */
+        @media (max-width: 920px) {
+          .sentinel-head {
+            flex-wrap: wrap;
+            white-space: normal;
+          }
+
+          .sentinel-sub {
+            flex-basis: 100%;
+            align-self: flex-start;
+            margin-bottom: 0;
+            white-space: normal;
+          }
         }
 
         @media (max-width: 760px) {
@@ -1637,7 +1676,9 @@ export default function ArsOs() {
           display: inline-flex;
           align-items: baseline;
           font-family: "Yapari Trial Regular", "Yapari Trial", "Azonix", sans-serif;
-          font-size: clamp(44px, 6.6vw, 90px);
+          /* 5.55vw (not 6.6) so the BATTLE MANAGEMENT metadata fits
+             untruncated on the same line at the 1440 target. */
+          font-size: clamp(44px, 5.55vw, 90px);
           font-weight: 400;
           line-height: normal;
           letter-spacing: clamp(3px, 0.52vw, 7.2px);
@@ -1663,7 +1704,7 @@ export default function ArsOs() {
           align-self: flex-end;
           margin-bottom: clamp(6px, 1vw, 16px);
           font-family: "Source Code Pro", "SourceCodePro", ui-monospace, monospace;
-          font-size: clamp(11px, 1.15vw, 18px);
+          font-size: clamp(11px, 0.98vw, 17px);
           font-weight: 400;
           line-height: normal;
           text-transform: uppercase;
@@ -2030,6 +2071,22 @@ export default function ArsOs() {
 
           .c2-step-title {
             margin-top: clamp(16px, 4vw, 28px);
+          }
+        }
+
+        /* Between 760 and 920 the one-line head no longer fits — drop the
+           metadata onto its own row instead of ellipsizing it. */
+        @media (max-width: 920px) {
+          .c2-head {
+            flex-wrap: wrap;
+            white-space: normal;
+          }
+
+          .c2-sub {
+            flex-basis: 100%;
+            align-self: flex-start;
+            margin-bottom: 0;
+            white-space: normal;
           }
         }
 
