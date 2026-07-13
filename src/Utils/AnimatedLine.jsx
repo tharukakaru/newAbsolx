@@ -9,6 +9,24 @@ const PATH_2_D =
 const LINE_1_DURATION = "3.9s";
 const LINE_2_DURATION = "3.9s";
 
+export const HOME_LINE_YELLOW_STYLE = {
+  arcYellow: "#FBFD00",
+  arcYellowRgb: "251, 253, 0",
+  peakYellow: "#feff00",
+  peakYellowRgb: "254, 255, 0",
+  sparkYellow: "#fff000",
+  sparkYellowRgb: "255, 240, 0",
+  sparkPeak: "#fff900",
+  sparkPeakRgb: "255, 249, 0",
+  sparkCore: "#ffff66",
+  darkEdge: "#0b0b0b",
+  oliveEdge: "#6f6a00",
+  glowBlurSoft: 1.2,
+  glowBlurWide: 3.2,
+  lineShadowBlur: 4,
+  lineShadowOpacity: 0.3,
+};
+
 function LineSpark({ pathId, duration, begin = "0s" }) {
   return (
     <g className="mix-blend-screen">
@@ -44,7 +62,7 @@ function LineSpark({ pathId, duration, begin = "0s" }) {
       <ellipse
         rx="14"
         ry="0.42"
-        fill="#ffff66"
+        fill={HOME_LINE_YELLOW_STYLE.sparkCore}
         filter="url(#spark-glow)"
         opacity="0"
       >
@@ -117,26 +135,26 @@ export default function AnimatedLine() {
             <feDropShadow
               dx="0"
               dy="2"
-              stdDeviation="4"
+              stdDeviation={HOME_LINE_YELLOW_STYLE.lineShadowBlur}
               floodColor="#000000"
-              floodOpacity="0.3"
+              floodOpacity={HOME_LINE_YELLOW_STYLE.lineShadowOpacity}
             />
           </filter>
 
           <linearGradient id="line1-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#0b0b0b" stopOpacity="0.45" />
-            <stop offset="12%" stopColor="#6f6a00" stopOpacity="0.8" />
-            <stop offset="50%" stopColor="#feff00" stopOpacity="1" />
-            <stop offset="88%" stopColor="#6f6a00" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#0b0b0b" stopOpacity="0.45" />
+            <stop offset="0%" stopColor={HOME_LINE_YELLOW_STYLE.darkEdge} stopOpacity="0.45" />
+            <stop offset="12%" stopColor={HOME_LINE_YELLOW_STYLE.oliveEdge} stopOpacity="0.8" />
+            <stop offset="50%" stopColor={HOME_LINE_YELLOW_STYLE.peakYellow} stopOpacity="1" />
+            <stop offset="88%" stopColor={HOME_LINE_YELLOW_STYLE.oliveEdge} stopOpacity="0.8" />
+            <stop offset="100%" stopColor={HOME_LINE_YELLOW_STYLE.darkEdge} stopOpacity="0.45" />
           </linearGradient>
 
           <linearGradient id="spark-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#fff000" stopOpacity="0" />
-            <stop offset="35%" stopColor="#fff000" stopOpacity="0.45" />
-            <stop offset="50%" stopColor="#fff900" stopOpacity="1" />
-            <stop offset="65%" stopColor="#fff000" stopOpacity="0.45" />
-            <stop offset="100%" stopColor="#fff000" stopOpacity="0" />
+            <stop offset="0%" stopColor={HOME_LINE_YELLOW_STYLE.sparkYellow} stopOpacity="0" />
+            <stop offset="35%" stopColor={HOME_LINE_YELLOW_STYLE.sparkYellow} stopOpacity="0.45" />
+            <stop offset="50%" stopColor={HOME_LINE_YELLOW_STYLE.sparkPeak} stopOpacity="1" />
+            <stop offset="65%" stopColor={HOME_LINE_YELLOW_STYLE.sparkYellow} stopOpacity="0.45" />
+            <stop offset="100%" stopColor={HOME_LINE_YELLOW_STYLE.sparkYellow} stopOpacity="0" />
           </linearGradient>
 
           <linearGradient
@@ -171,8 +189,8 @@ export default function AnimatedLine() {
           </mask>
 
           <filter id="spark-glow" x="-200%" y="-200%" width="500%" height="500%">
-            <feGaussianBlur stdDeviation="1.2" result="blur1" />
-            <feGaussianBlur stdDeviation="3.2" result="blur2" />
+            <feGaussianBlur stdDeviation={HOME_LINE_YELLOW_STYLE.glowBlurSoft} result="blur1" />
+            <feGaussianBlur stdDeviation={HOME_LINE_YELLOW_STYLE.glowBlurWide} result="blur2" />
             <feMerge>
               <feMergeNode in="blur2" />
               <feMergeNode in="blur1" />
@@ -195,7 +213,7 @@ export default function AnimatedLine() {
           <path
             id="path2"
             d={PATH_2_D}
-            stroke="#FBFD00"
+            stroke={HOME_LINE_YELLOW_STYLE.arcYellow}
             strokeWidth="1.25"
             strokeLinecap="round"
             vectorEffect="non-scaling-stroke"

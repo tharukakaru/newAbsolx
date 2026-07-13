@@ -129,7 +129,7 @@ export default function App() {
   const isAecOsPage = path === "/aec-os";
 
   return (
-    <div className="relative w-full min-h-screen bg-black overflow-x-hidden">
+    <div className={`relative w-full min-h-screen bg-black overflow-x-hidden ${isAecOsPage ? "arc-os-page" : ""}`}>
       <Navbar currentPath={path} onNavigate={navigate} />
       {isResearchPage ? (
         <>

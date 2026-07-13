@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { HOME_LINE_YELLOW_STYLE } from "../Utils/AnimatedLine";
 import hyenaImage from "../assets/27c49652d13ae2603bf7615502d578291a89da32.webp";
 import sentinelImage from "../assets/8efcae60e9c9755c92517c46124e7bd251b2d5e4.webp";
 import arcImage from "../assets/a4b1ee2080059fbfd1126c74b0922adf29b3f9d8.webp";
@@ -64,10 +65,20 @@ const arrowGeometry = {
   },
 };
 
-/* The line is only drawn as a trail behind the moving signal head. */
+const ARC_ROUTE_BEGIN = "0.08s";
+const ARC_ROUTE_TRAVEL_DURATION = "2.65s";
+
+/* One-shot command signal: a glowing head + short trail travels the route
+   once (~2.4s), locks into the panel, then the whole route fades out. */
 function ActiveArrow({ product }) {
   const geometry = arrowGeometry[product.arrowTone];
-  const glowFilterId = `arc-arrow-glow-${product.id}`;
+  const routeId = `arc-command-route-${product.id}`;
+  const desktopPathId = `${routeId}-desktop`;
+  const mobilePathId = `${routeId}-mobile`;
+  const homeLineGradientId = `${routeId}-home-line`;
+  const homeSparkGradientId = `${routeId}-home-spark`;
+  const homeGlowFilterId = `${routeId}-home-glow`;
+  const commandGlowFilterId = `${routeId}-command-glow`;
 
   return (
     <svg
@@ -78,53 +89,108 @@ function ActiveArrow({ product }) {
       key={product.id}
     >
       <defs>
-        <filter id={glowFilterId} x="-80%" y="-80%" width="260%" height="260%">
-          <feGaussianBlur stdDeviation="2.8" result="blur" />
+        <path id={desktopPathId} d={geometry.desktopPath} />
+        <path id={mobilePathId} d={geometry.mobilePath} />
+
+        <linearGradient id={homeLineGradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor={HOME_LINE_YELLOW_STYLE.darkEdge} stopOpacity="0.45" />
+          <stop offset="12%" stopColor={HOME_LINE_YELLOW_STYLE.oliveEdge} stopOpacity="0.8" />
+          <stop offset="50%" stopColor={HOME_LINE_YELLOW_STYLE.peakYellow} stopOpacity="1" />
+          <stop offset="88%" stopColor={HOME_LINE_YELLOW_STYLE.oliveEdge} stopOpacity="0.8" />
+          <stop offset="100%" stopColor={HOME_LINE_YELLOW_STYLE.darkEdge} stopOpacity="0.45" />
+        </linearGradient>
+
+        <linearGradient id={homeSparkGradientId} x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor={HOME_LINE_YELLOW_STYLE.sparkYellow} stopOpacity="0" />
+          <stop offset="35%" stopColor={HOME_LINE_YELLOW_STYLE.sparkYellow} stopOpacity="0.45" />
+          <stop offset="50%" stopColor={HOME_LINE_YELLOW_STYLE.sparkPeak} stopOpacity="1" />
+          <stop offset="65%" stopColor={HOME_LINE_YELLOW_STYLE.sparkYellow} stopOpacity="0.45" />
+          <stop offset="100%" stopColor={HOME_LINE_YELLOW_STYLE.sparkYellow} stopOpacity="0" />
+        </linearGradient>
+
+        <filter id={homeGlowFilterId} x="-200%" y="-200%" width="500%" height="500%">
+          <feGaussianBlur stdDeviation={HOME_LINE_YELLOW_STYLE.glowBlurSoft} result="blur1" />
+          <feGaussianBlur stdDeviation={HOME_LINE_YELLOW_STYLE.glowBlurWide} result="blur2" />
           <feMerge>
-            <feMergeNode in="blur" />
+            <feMergeNode in="blur2" />
+            <feMergeNode in="blur1" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+
+        <filter id={commandGlowFilterId} x="-120%" y="-120%" width="340%" height="340%">
+          <feGaussianBlur stdDeviation="1.8" result="whiteBlur" />
+          <feMerge>
+            <feMergeNode in="whiteBlur" />
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
       </defs>
       <path
-        className="arc-os-active-arrow-path arc-os-trace-glow arc-os-arrow-desktop"
+        className="arc-os-active-arrow-path arc-os-home-energy arc-os-arrow-desktop"
         d={geometry.desktopPath}
         fill="none"
-        filter={`url(#${glowFilterId})`}
+        filter={`url(#${homeGlowFilterId})`}
+        stroke={`url(#${homeLineGradientId})`}
         pathLength="1"
       />
       <path
-        className="arc-os-active-arrow-path arc-os-trace-core arc-os-arrow-desktop"
+        className="arc-os-active-arrow-path arc-os-command-trail arc-os-arrow-desktop"
         d={geometry.desktopPath}
         fill="none"
+        filter={`url(#${commandGlowFilterId})`}
         pathLength="1"
       />
       <path
-        className="arc-os-active-arrow-path arc-os-trace-glow arc-os-arrow-mobile"
-        d={geometry.mobilePath}
+        className="arc-os-active-arrow-path arc-os-home-spark arc-os-arrow-desktop"
+        d={geometry.desktopPath}
         fill="none"
-        filter={`url(#${glowFilterId})`}
+        filter={`url(#${homeGlowFilterId})`}
+        stroke={`url(#${homeSparkGradientId})`}
         pathLength="1"
       />
       <path
-        className="arc-os-active-arrow-path arc-os-trace-core arc-os-arrow-mobile"
+        className="arc-os-active-arrow-path arc-os-home-energy arc-os-arrow-mobile"
         d={geometry.mobilePath}
         fill="none"
+        filter={`url(#${homeGlowFilterId})`}
+        stroke={`url(#${homeLineGradientId})`}
+        pathLength="1"
+      />
+      <path
+        className="arc-os-active-arrow-path arc-os-command-trail arc-os-arrow-mobile"
+        d={geometry.mobilePath}
+        fill="none"
+        filter={`url(#${commandGlowFilterId})`}
+        pathLength="1"
+      />
+      <path
+        className="arc-os-active-arrow-path arc-os-home-spark arc-os-arrow-mobile"
+        d={geometry.mobilePath}
+        fill="none"
+        filter={`url(#${homeGlowFilterId})`}
+        stroke={`url(#${homeSparkGradientId})`}
         pathLength="1"
       />
       <circle className="arc-os-arrow-origin arc-os-arrow-desktop" cx={geometry.startX} cy={geometry.startY} r="3.4" />
       <circle className="arc-os-arrow-origin arc-os-arrow-mobile" cx="560" cy="8" r="3.4" />
       <circle className="arc-os-arrival-node arc-os-arrow-desktop" cx={geometry.endX} cy="294" r="4.2" />
       <circle className="arc-os-arrival-node arc-os-arrow-mobile" cx="560" cy="294" r="4.2" />
-      <g className="arc-os-signal-head arc-os-arrow-desktop" filter={`url(#${glowFilterId})`}>
-        <path className="arc-os-signal-head-tail" d="M-18 0 L-5 0" />
+      <g className="arc-os-signal-head arc-os-arrow-desktop" filter={`url(#${homeGlowFilterId})`}>
+        <path className="arc-os-signal-head-tail" d="M-28 0 L-5 0" stroke={`url(#${homeSparkGradientId})`} />
+        <path className="arc-os-signal-head-glow" d="M10 0 L-8 -7 L-4 0 L-8 7 Z" />
         <path className="arc-os-signal-head-core" d="M8 0 L-7 -6 L-3 0 L-7 6 Z" />
-        <animateMotion begin="0.08s" dur="3.8s" repeatCount="indefinite" path={geometry.desktopPath} rotate="auto" />
+        <animateMotion begin={ARC_ROUTE_BEGIN} dur={ARC_ROUTE_TRAVEL_DURATION} repeatCount="1" fill="freeze" rotate="auto">
+          <mpath href={`#${desktopPathId}`} />
+        </animateMotion>
       </g>
-      <g className="arc-os-signal-head arc-os-arrow-mobile" filter={`url(#${glowFilterId})`}>
-        <path className="arc-os-signal-head-tail" d="M-18 0 L-5 0" />
+      <g className="arc-os-signal-head arc-os-arrow-mobile" filter={`url(#${homeGlowFilterId})`}>
+        <path className="arc-os-signal-head-tail" d="M-28 0 L-5 0" stroke={`url(#${homeSparkGradientId})`} />
+        <path className="arc-os-signal-head-glow" d="M10 0 L-8 -7 L-4 0 L-8 7 Z" />
         <path className="arc-os-signal-head-core" d="M8 0 L-7 -6 L-3 0 L-7 6 Z" />
-        <animateMotion begin="0.08s" dur="3.8s" repeatCount="indefinite" path={geometry.mobilePath} rotate="auto" />
+        <animateMotion begin={ARC_ROUTE_BEGIN} dur={ARC_ROUTE_TRAVEL_DURATION} repeatCount="1" fill="freeze" rotate="auto">
+          <mpath href={`#${mobilePathId}`} />
+        </animateMotion>
       </g>
     </svg>
   );
@@ -220,7 +286,11 @@ export default function Arc() {
     <section ref={sectionRef} className="arc-os-section relative isolate overflow-hidden bg-black text-white">
       <style>{`
         .arc-os-section {
-          --arc-yellow: #F4ED15;
+          --arc-yellow: ${HOME_LINE_YELLOW_STYLE.arcYellow};
+          --arc-yellow-rgb: ${HOME_LINE_YELLOW_STYLE.arcYellowRgb};
+          --arc-peak-yellow-rgb: ${HOME_LINE_YELLOW_STYLE.peakYellowRgb};
+          --arc-spark-yellow-rgb: ${HOME_LINE_YELLOW_STYLE.sparkYellowRgb};
+          --arc-spark-peak-rgb: ${HOME_LINE_YELLOW_STYLE.sparkPeakRgb};
           --arc-line: rgba(255, 255, 255, 0.72);
           --arc-muted: rgba(255, 255, 255, 0.72);
           --arc-faint: rgba(255, 255, 255, 0.42);
@@ -471,7 +541,7 @@ export default function Arc() {
         }
 
         .arc-os-product-trigger:focus-visible {
-          outline: 1px solid rgba(244, 237, 21, 0.88);
+          outline: 1px solid rgba(var(--arc-yellow-rgb), 0.88);
           outline-offset: 10px;
         }
 
@@ -681,6 +751,8 @@ export default function Arc() {
           z-index: 4;
           left: 50%;
           top: var(--arc-products-top);
+          --arc-route-duration: 2.65s;
+          --arc-route-delay: 0.08s;
           /* Must track .arc-os-products width exactly — the svg is stretched
              (preserveAspectRatio: none) so path x coords hit the column centres. */
           width: min(1240px, 100vw);
@@ -689,40 +761,95 @@ export default function Arc() {
           overflow: visible;
           opacity: 0;
           transform: translateX(-50%) translateY(-12px);
-          animation: arcTraceWrap 0.45s ease-out forwards;
+          animation:
+            arcTraceWrap 0.22s ease-out forwards,
+            arcTraceFade 0.58s ease-in 3s forwards;
           will-change: opacity, transform;
         }
 
+        /* Dash maths: with pathLength=1 and dasharray "trail 1", animating
+           dashoffset from +trail to (trail - 1) makes the dash's LEADING edge
+           track the animateMotion head exactly (head position = t), with the
+           trail extending behind it — one segment, no wrap-around. */
         .arc-os-active-arrow-path {
           stroke-linecap: round;
           stroke-linejoin: round;
+          stroke-dasharray: var(--arc-route-trail, 0.15) 1;
+          stroke-dashoffset: var(--arc-route-trail, 0.15);
+          opacity: 0;
+          vector-effect: non-scaling-stroke;
+          animation: arcRouteEnergy var(--arc-route-duration) linear var(--arc-route-delay) both;
         }
 
-        /* Trail drawn behind the moving signal head, in sync with its 3.8s
-           travel, so the line only exists where the arrow has already been. */
-        .arc-os-trace-core {
+        .arc-os-command-trail {
+          --arc-route-trail: 0.145;
           stroke: rgba(255, 255, 255, 0.92);
-          stroke-width: 1.6;
-          stroke-dasharray: 1 1;
-          stroke-dashoffset: 1;
-          animation: arcTraceDraw 3.8s linear 0.08s infinite;
+          stroke-width: 1.45;
+          filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.72));
         }
 
-        .arc-os-trace-glow {
-          stroke: rgba(255, 255, 255, 0.3);
-          stroke-width: 4;
-          stroke-dasharray: 1 1;
-          stroke-dashoffset: 1;
-          opacity: 0.48;
-          animation: arcTraceDraw 3.8s linear 0.08s infinite;
+        .arc-os-home-energy {
+          --arc-route-trail: 0.18;
+          stroke-width: 4.2;
+          mix-blend-mode: screen;
+          animation-name: arcRouteHomeEnergy;
         }
 
-        @keyframes arcTraceDraw {
+        .arc-os-home-spark {
+          --arc-route-trail: 0.105;
+          stroke-width: 1.18;
+          mix-blend-mode: screen;
+          animation-name: arcRouteHomeSpark;
+        }
+
+        @keyframes arcRouteEnergy {
           0% {
-            stroke-dashoffset: 1;
+            opacity: 0;
+            stroke-dashoffset: 0.145;
+          }
+          5% {
+            opacity: 0.82;
+          }
+          88% {
+            opacity: 0.9;
           }
           100% {
-            stroke-dashoffset: 0;
+            opacity: 0.85;
+            stroke-dashoffset: -0.855;
+          }
+        }
+
+        @keyframes arcRouteHomeEnergy {
+          0% {
+            opacity: 0;
+            stroke-dashoffset: 0.18;
+          }
+          6% {
+            opacity: 0.42;
+          }
+          46% {
+            opacity: 0.68;
+          }
+          100% {
+            opacity: 0.5;
+            stroke-dashoffset: -0.82;
+          }
+        }
+
+        @keyframes arcRouteHomeSpark {
+          0% {
+            opacity: 0;
+            stroke-dashoffset: 0.105;
+          }
+          8% {
+            opacity: 0.72;
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0.8;
+            stroke-dashoffset: -0.895;
           }
         }
 
@@ -733,41 +860,55 @@ export default function Arc() {
           filter:
             drop-shadow(0 0 10px rgba(255, 255, 255, 0.82));
           opacity: 0;
-          animation: arcOriginPop 0.28s ease-out 0.02s forwards;
+          animation:
+            arcOriginPop 0.22s ease-out 0.02s forwards,
+            arcOriginFade 0.34s ease-in 0.56s forwards;
         }
 
         .arc-os-arrival-node {
-          fill: rgba(255, 255, 255, 0.98);
+          fill: ${HOME_LINE_YELLOW_STYLE.sparkCore};
           transform-box: fill-box;
           transform-origin: center;
           opacity: 0;
           filter:
-            drop-shadow(0 0 8px rgba(255, 255, 255, 0.82));
-          animation: arcArrivalLock 0.52s ease-out 1.86s forwards;
+            drop-shadow(0 0 8px rgba(var(--arc-spark-peak-rgb), 0.92))
+            drop-shadow(0 0 18px rgba(var(--arc-yellow-rgb), 0.34));
+          animation: arcArrivalLock 0.62s ease-out 2.7s forwards;
         }
 
         .arc-os-signal-head {
           opacity: 0;
           transform-box: fill-box;
           transform-origin: center;
-          animation: arcSparkAppear 0.18s ease-out 0.08s forwards;
+          animation:
+            arcSparkAppear 0.16s ease-out 0.08s forwards,
+            arcSignalFade 0.46s ease-in 2.74s forwards;
+        }
+
+        .arc-os-signal-head-glow {
+          fill: ${HOME_LINE_YELLOW_STYLE.sparkCore};
+          opacity: 0.48;
+          filter:
+            drop-shadow(0 0 7px rgba(var(--arc-spark-peak-rgb), 0.98))
+            drop-shadow(0 0 15px rgba(var(--arc-yellow-rgb), 0.34));
         }
 
         .arc-os-signal-head-core {
           fill: rgba(255, 255, 255, 0.98);
           filter:
-            drop-shadow(0 0 8px rgba(255, 255, 255, 0.96));
+            drop-shadow(0 0 7px rgba(255, 255, 255, 0.96))
+            drop-shadow(0 0 12px rgba(var(--arc-yellow-rgb), 0.22));
         }
 
         .arc-os-signal-head-tail {
           fill: none;
-          stroke: rgba(255, 255, 255, 0.72);
-          stroke-width: 2;
+          stroke-width: 1.65;
           stroke-linecap: round;
           filter:
-            drop-shadow(0 0 6px rgba(255, 255, 255, 0.74));
+            drop-shadow(0 0 5px rgba(var(--arc-spark-peak-rgb), 0.92))
+            drop-shadow(0 0 10px rgba(var(--arc-yellow-rgb), 0.28));
           animation:
-            arcSignalTailBreath 0.92s ease-in-out 0.18s infinite;
+            arcSignalTailBreath 0.86s ease-in-out 0.18s infinite;
         }
 
         .arc-os-arrow-mobile {
@@ -785,18 +926,28 @@ export default function Arc() {
           }
         }
 
+        @keyframes arcTraceFade {
+          to {
+            opacity: 0;
+          }
+        }
+
         @keyframes arcArrivalLock {
           0% {
             opacity: 0;
             transform: scale(0.34);
           }
-          48% {
+          34% {
             opacity: 1;
-            transform: scale(1.6);
+            transform: scale(1.78);
+          }
+          58% {
+            opacity: 0.82;
+            transform: scale(1.08);
           }
           100% {
-            opacity: 0.9;
-            transform: scale(1);
+            opacity: 0;
+            transform: scale(2.28);
           }
         }
 
@@ -811,9 +962,22 @@ export default function Arc() {
           }
         }
 
+        @keyframes arcOriginFade {
+          to {
+            opacity: 0;
+            transform: scale(1.5);
+          }
+        }
+
         @keyframes arcSparkAppear {
           to {
             opacity: 1;
+          }
+        }
+
+        @keyframes arcSignalFade {
+          to {
+            opacity: 0;
           }
         }
 
@@ -836,14 +1000,14 @@ export default function Arc() {
           width: min(1000px, 88%);
           height: 432px;
           transform: translateX(-50%);
-          border: 1px solid rgba(244, 237, 21, 0.86);
+          border: 1px solid rgba(var(--arc-yellow-rgb), 0.86);
           border-radius: 92px;
           background:
             radial-gradient(circle at 11% 100%, rgba(82, 99, 225, 0.58) 0%, rgba(36, 47, 127, 0.36) 28%, rgba(0, 0, 0, 0) 54%),
             linear-gradient(180deg, rgba(4, 5, 12, 0.2), rgba(0, 0, 0, 0.82));
           box-shadow:
             inset 0 0 44px rgba(0, 0, 0, 0.72),
-            0 0 0 1px rgba(244, 237, 21, 0.08);
+            0 0 0 1px rgba(var(--arc-yellow-rgb), 0.08);
           overflow: visible;
           isolation: isolate;
           transition:
@@ -877,12 +1041,12 @@ export default function Arc() {
         }
 
         .arc-os-panel.is-active {
-          border-color: rgba(244, 237, 21, 0.94);
+          border-color: rgba(var(--arc-yellow-rgb), 0.94);
           box-shadow:
             inset 0 0 54px rgba(0, 0, 0, 0.84),
-            0 0 42px rgba(244, 237, 21, 0.16),
-            0 0 0 1px rgba(244, 237, 21, 0.14);
-          animation: arcPanelBorderLock 0.95s ease-out 0.5s both;
+            0 0 42px rgba(var(--arc-yellow-rgb), 0.16),
+            0 0 0 1px rgba(var(--arc-yellow-rgb), 0.14);
+          animation: arcPanelBorderLock 1.08s ease-out 2.62s both;
         }
 
         .arc-os-panel-target {
@@ -899,8 +1063,8 @@ export default function Arc() {
           transform: translate(-50%, -50%) scale(0.22);
           box-shadow:
             0 0 24px rgba(255, 255, 255, 0.18),
-            inset 0 0 34px rgba(244, 237, 21, 0.08);
-          animation: arcPanelTargetPop 0.86s cubic-bezier(0.12, 1.12, 0.24, 1) 0.4s forwards;
+            inset 0 0 34px rgba(var(--arc-yellow-rgb), 0.08);
+          animation: arcPanelTargetPop 0.86s cubic-bezier(0.12, 1.12, 0.24, 1) 2.7s forwards;
         }
 
         .arc-os-panel-target::before,
@@ -939,8 +1103,8 @@ export default function Arc() {
             0 -18px 34px rgba(255, 255, 255, 0.1),
             0 24px 48px rgba(0, 0, 0, 0.42);
           animation:
-            arcPanelImagePop 1.12s cubic-bezier(0.12, 1.16, 0.24, 1) 0.45s forwards,
-            arcPanelImageSettle 4.4s ease-in-out 1.6s infinite;
+            arcPanelImagePop 1.12s cubic-bezier(0.12, 1.16, 0.24, 1) 2.78s forwards,
+            arcPanelImageSettle 4.4s ease-in-out 3.95s infinite;
           will-change: opacity, transform, filter, clip-path;
         }
 
@@ -951,10 +1115,19 @@ export default function Arc() {
           right: 28px;
           top: 34px;
           height: 1px;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.94), transparent);
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(var(--arc-spark-yellow-rgb), 0.45),
+            rgba(var(--arc-spark-peak-rgb), 1),
+            rgba(var(--arc-spark-yellow-rgb), 0.45),
+            transparent
+          );
           opacity: 0;
-          box-shadow: 0 0 18px rgba(255, 255, 255, 0.62);
-          animation: arcPanelScan 1.14s ease-out 0.42s forwards;
+          box-shadow:
+            0 0 8px rgba(var(--arc-spark-peak-rgb), 0.94),
+            0 0 22px rgba(var(--arc-yellow-rgb), 0.22);
+          animation: arcPanelScan 1.14s ease-out 2.76s forwards;
         }
 
         .arc-os-panel-burst {
@@ -965,11 +1138,11 @@ export default function Arc() {
           pointer-events: none;
           opacity: 0;
           background:
-            linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, 0.72) 48%, transparent 62%),
-            radial-gradient(circle at 50% 48%, rgba(244, 237, 21, 0.18), transparent 58%);
+            linear-gradient(110deg, transparent 0%, rgba(var(--arc-spark-peak-rgb), 0.72) 48%, transparent 62%),
+            radial-gradient(circle at 50% 48%, rgba(var(--arc-yellow-rgb), 0.18), transparent 58%);
           mix-blend-mode: screen;
           transform: translateX(-48%) skewX(-12deg);
-          animation: arcPanelBurst 0.78s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+          animation: arcPanelBurst 0.78s cubic-bezier(0.16, 1, 0.3, 1) 2.8s forwards;
         }
 
         .arc-os-panel-caption {
@@ -987,7 +1160,7 @@ export default function Arc() {
           text-transform: uppercase;
           color: rgba(255, 255, 255, 0.72);
           opacity: 0;
-          animation: arcPanelTextPop 0.34s ease-out 0.95s forwards;
+          animation: arcPanelTextPop 0.34s ease-out 3.26s forwards;
         }
 
         @keyframes arcPanelImagePop {
@@ -1093,19 +1266,20 @@ export default function Arc() {
         @keyframes arcPanelBorderLock {
           0%,
           100% {
-            border-color: rgba(244, 237, 21, 0.94);
+            border-color: rgba(var(--arc-yellow-rgb), 0.94);
             box-shadow:
               inset 0 0 54px rgba(0, 0, 0, 0.84),
-              0 0 42px rgba(244, 237, 21, 0.16),
-              0 0 0 1px rgba(244, 237, 21, 0.14);
+              0 0 42px rgba(var(--arc-yellow-rgb), 0.16),
+              0 0 0 1px rgba(var(--arc-yellow-rgb), 0.14);
           }
           36% {
-            border-color: rgba(255, 255, 255, 0.96);
+            border-color: rgba(var(--arc-peak-yellow-rgb), 0.98);
             box-shadow:
               inset 0 0 58px rgba(0, 0, 0, 0.84),
-              0 0 18px rgba(255, 255, 255, 0.22),
-              0 0 58px rgba(244, 237, 21, 0.3),
-              0 0 0 1px rgba(255, 255, 255, 0.34);
+              0 0 10px rgba(var(--arc-spark-peak-rgb), 0.32),
+              0 0 34px rgba(var(--arc-spark-yellow-rgb), 0.24),
+              0 0 58px rgba(var(--arc-yellow-rgb), 0.3),
+              0 0 0 1px rgba(var(--arc-peak-yellow-rgb), 0.28);
           }
         }
 
@@ -1143,6 +1317,7 @@ export default function Arc() {
           }
 
           .arc-os-active-arrow-path {
+            opacity: 1;
             stroke-dashoffset: 0;
             stroke-dasharray: 1 0;
           }

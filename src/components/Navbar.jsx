@@ -227,6 +227,7 @@ const MENU_ITEMS = [
 
 export function Navbar({ currentPath = "/", onNavigate }) {
   const [openMobile, setOpenMobile] = useState(false);
+  const isArcOsPage = currentPath === "/aec-os";
 
   const [selectedMenu, setSelectedMenu] = useState(null);
   const routeActiveMenu =
@@ -271,27 +272,28 @@ export function Navbar({ currentPath = "/", onNavigate }) {
       className={`
         fixed top-0 left-0 right-0 z-9999
         transition-transform duration-300
-        px-4 sm:px-6 md:px-10 lg:px-14 py-5
+        ${isArcOsPage ? "px-4 sm:px-6 md:px-8 lg:px-10 py-3.5" : "px-4 sm:px-6 md:px-10 lg:px-14 py-5"}
         ${isVisible ? "translate-y-0" : "-translate-y-full"}
       `}
     >
       {/* NAV WRAPPER */}
-      <div className="w-full max-w-[1500px] mx-auto flex items-center justify-between">
+      <div className={`w-full mx-auto flex items-center justify-between ${isArcOsPage ? "max-w-[1080px]" : "max-w-[1500px]"}`}>
 
         {/* LOGO */}
         <img
           src={logo}
           alt="Logo"
-          className="h-[40px] sm:h-[42px] md:h-[44px] lg:h-[48px] w-auto cursor-pointer"
+          className={`${isArcOsPage ? "h-[34px]" : "h-[40px] sm:h-[42px] md:h-[44px] lg:h-[48px]"} w-auto cursor-pointer`}
         />
 
         {/* DESKTOP MENU */}
         <div className="hidden lg:flex flex-1 justify-center">
-          <div className="flex items-center gap-7 xl:gap-9 font-azonix">
+          <div className={`flex items-center font-azonix ${isArcOsPage ? "gap-5 xl:gap-6" : "gap-7 xl:gap-9"}`}>
             {MENU_ITEMS.map((item) => (
               <MenuItem
                 key={item.label}
                 active={activeMenu === item.label}
+                compact={isArcOsPage}
                 onClick={() => handleMenuClick(item)}
               >
                 {item.label}
@@ -300,7 +302,7 @@ export function Navbar({ currentPath = "/", onNavigate }) {
           </div>
         </div>
 
-        <div className="hidden lg:block h-[48px] w-[48px]" aria-hidden="true" />
+        <div className={`hidden lg:block ${isArcOsPage ? "h-[34px] w-[34px]" : "h-[48px] w-[48px]"}`} aria-hidden="true" />
 
         {/* MOBILE BURGER */}
         <button

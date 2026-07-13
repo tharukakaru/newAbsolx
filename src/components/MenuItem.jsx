@@ -1,13 +1,13 @@
-export default function MenuItem({ active, onClick, children }) {
+export default function MenuItem({ active, compact = false, onClick, children }) {
   return (
     <button
       onClick={onClick}
       style={{
         fontFamily: "Azonix",
-        fontSize: "12px",
+        fontSize: compact ? "clamp(8px, 0.58vw, 9px)" : "12px",
         fontWeight: 400,
-        lineHeight: "16px",
-        letterSpacing: "1.45px",
+        lineHeight: compact ? "12px" : "16px",
+        letterSpacing: compact ? "1.05px" : "1.45px",
         textShadow: "0 4px 4px rgba(0, 0, 0, 0.25)",
       }}
       className={`

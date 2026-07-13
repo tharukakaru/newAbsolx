@@ -158,6 +158,7 @@ export default function ArsOs() {
     <section className="ars-os-hero" aria-label="ARC OS">
       <style>{`
         .ars-os-hero {
+          --ars-os-hero-scale: 1;
           position: relative;
           width: 100%;
           height: clamp(315px, 28vw, 520px);
@@ -167,49 +168,33 @@ export default function ArsOs() {
           isolation: isolate;
         }
 
+        .ars-os-hero-inner {
+          position: absolute;
+          inset: 0;
+          transform-origin: top center;
+        }
+
+        /* Home page line untouched — natural slope already matches h3 (right
+           end high, left end low). No rotation: rotating steepened the drop
+           and pushed the low-left branch below the hero's overflow: hidden
+           edge, which is what "hid" the lower line. Position only: right end
+           lands near the top-right corner just under the navbar, left end
+           enters at the letters' level behind the title. */
         .ars-os-lines {
           position: absolute;
-          left: 50%;
-          top: clamp(-92px, -5vw, -52px);
-          z-index: 50;
-          width: min(2300px, 166vw);
+          left: 0;
+          right: 0;
+          width: auto;
+          top: clamp(-28px, -2vw, -12px);
+          z-index: 0;
           pointer-events: none;
-          opacity: 0.95;
-          transform: translateX(-50%);
-          mix-blend-mode: screen;
-        }
-
-        .ars-os-lines > div {
-          position: relative !important;
-          left: 0 !important;
-          top: 0 !important;
-          width: 100% !important;
-          translate: 0 0 !important;
-          rotate: none !important;
-          transform: rotate(-0.5deg) scaleY(0.56) !important;
-          transform-origin: center !important;
-        }
-
-        .ars-os-lines svg {
-          width: 100%;
-          height: auto;
-        }
-
-        .ars-os-lines path[id="path1"] {
-          stroke-width: 1.55;
-          stroke-opacity: 0.9;
-        }
-
-        .ars-os-lines path[id="path2"] {
-          stroke-width: 1.65;
-          stroke-opacity: 1;
         }
 
         .ars-os-title {
           position: absolute;
           left: 39.5%;
           bottom: clamp(-10px, -0.9vh, -2px);
-          z-index: 20;
+          z-index: 2;
           margin: 0;
           display: flex;
           align-items: baseline;
@@ -279,6 +264,51 @@ export default function ArsOs() {
           line-height: inherit;
         }
 
+        @media (min-width: 1024px) {
+          .ars-os-hero {
+            --ars-os-hero-scale: 0.72;
+            height: clamp(227px, 28vw, 374px);
+            min-height: 227px;
+          }
+
+          .ars-os-hero-inner {
+            inset: auto;
+            top: 0;
+            left: 50%;
+            width: calc(100% / var(--ars-os-hero-scale));
+            height: calc(100% / var(--ars-os-hero-scale));
+            transform: translateX(-50%) scale(var(--ars-os-hero-scale));
+          }
+
+          .ars-os-title {
+            left: 50%;
+            gap: clamp(34px, 7.78vw, 84px);
+            font-size: clamp(70px, 14.52vw, 146px);
+            letter-spacing: clamp(1.4px, 0.445vw, 4px);
+          }
+
+          .ars-os-lines {
+            width: 100%;
+            left: 0;
+            /* Inner space is 1/0.72 scale — band top tracks the hero so the
+               right end stays just under the navbar at every width. */
+            top: clamp(-64px, calc(8px - 2.2vw), -14px);
+          }
+
+          .ars-os-lines > div {
+            --hero-line-scale: 0.9;
+            top: 32px !important;
+            width: calc(100vw / var(--ars-os-hero-scale) / var(--hero-line-scale)) !important;
+            translate: -50% 30px !important;
+          }
+        }
+
+        @media (min-width: 1536px) {
+          .ars-os-lines > div {
+            --hero-line-scale: 0.92;
+          }
+        }
+
         @media (max-width: 760px) {
           .ars-os-hero {
             height: clamp(245px, 58vw, 360px);
@@ -296,9 +326,7 @@ export default function ArsOs() {
           }
 
           .ars-os-lines {
-            top: clamp(-100px, -24vw, -72px);
-            width: 250vw;
-            opacity: 0.88;
+            top: clamp(16px, 8vw, 40px);
           }
         }
 
@@ -309,45 +337,42 @@ export default function ArsOs() {
           }
         }
 
-        @media (min-width: 1400px) {
-          .ars-os-lines {
-            top: -28px;
-          }
-        }
       `}</style>
 
-      <div className="ars-os-lines" aria-hidden="true">
-        <AnimatedLine />
-      </div>
+      <div className="ars-os-hero-inner">
+        <div className="ars-os-lines" aria-hidden="true">
+          <AnimatedLine />
+        </div>
 
-      <h1 className="ars-os-title">
-        <span
-          ref={arcTitleRef}
-          className="ars-os-arc ars-os-shuffle"
-          data-initial="011803"
-          data-target="ARC"
-        >
-          ARC
-        </span>
-        <span className="ars-os-os">
+        <h1 className="ars-os-title">
           <span
-            ref={oTitleRef}
-            className="ars-os-o ars-os-shuffle"
-            data-initial="15"
-            data-target="O"
+            ref={arcTitleRef}
+            className="ars-os-arc ars-os-shuffle"
+            data-initial="011803"
+            data-target="ARC"
           >
-            O
+            ARC
           </span>
-          <span
-            ref={sTitleRef}
-            className="ars-os-s ars-os-shuffle"
-            data-initial="19"
-            data-target="S"
-          >
-            S
+          <span className="ars-os-os">
+            <span
+              ref={oTitleRef}
+              className="ars-os-o ars-os-shuffle"
+              data-initial="15"
+              data-target="O"
+            >
+              O
+            </span>
+            <span
+              ref={sTitleRef}
+              className="ars-os-s ars-os-shuffle"
+              data-initial="19"
+              data-target="S"
+            >
+              S
+            </span>
           </span>
-        </span>
-      </h1>
+        </h1>
+      </div>
     </section>
 
     <section className="ars-os-intro" aria-label="ARC OS overview">
