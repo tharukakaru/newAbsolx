@@ -626,9 +626,11 @@ export default function ArsOs() {
           /* Ambient edge tints to match the reference: warm olive (#51451f)
              at the lower-left near the dial, and a broad navy (#252c62) glow
              down the right side that brightens toward the edge. */
+          /* Both tints fade to zero before the section's edges so the
+             boundary with the intro above / SENTINEL below stays seamless. */
           background:
-            radial-gradient(42% 48% at 4% 92%, rgba(81, 69, 31, 0.32), rgba(0, 0, 0, 0) 62%),
-            radial-gradient(62% 88% at 100% 54%, rgba(37, 44, 98, 0.9), rgba(37, 44, 98, 0.32) 40%, rgba(0, 0, 0, 0) 78%),
+            radial-gradient(42% 32% at 4% 82%, rgba(81, 69, 31, 0.32), rgba(0, 0, 0, 0) 62%),
+            radial-gradient(62% 58% at 100% 52%, rgba(37, 44, 98, 0.9), rgba(37, 44, 98, 0.32) 40%, rgba(0, 0, 0, 0) 76%),
             #000;
           overflow: hidden;
           isolation: isolate;
@@ -996,16 +998,28 @@ export default function ArsOs() {
           --sentinel-right-gutter: clamp(34px, 5vw, 96px);
           position: relative;
           width: 100%;
-          /* Navy (#22285a) wash on the left, falling back to black on the
-             right so the video reads like the reference frame. */
-          background:
-            radial-gradient(62% 96% at 0% 52%, rgba(34, 40, 90, 0.92), rgba(34, 40, 90, 0.34) 40%, rgba(0, 0, 0, 0) 80%),
-            radial-gradient(48% 44% at 0% 100%, rgba(34, 40, 90, 0.72), rgba(34, 40, 90, 0.22) 42%, rgba(0, 0, 0, 0) 76%),
-            #000;
+          background: #000;
           overflow: hidden;
           isolation: isolate;
           padding: clamp(26px, 3.4vw, 64px) 0 clamp(48px, 6vw, 110px);
           font-family: "Plus Jakarta Sans", Arial, sans-serif;
+        }
+
+        /* Navy (#22285a) wash painted as ONE continuous screen-blended layer
+           over the whole section — video included — instead of separate
+           section-background + scene-overlay layers, so no seam can appear at
+           the scene's top edge. Both radials fade to zero before the section's
+           top/bottom edges, keeping the joins with HYENA / ARC C2 seamless. */
+        .sentinel::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          z-index: 4;
+          pointer-events: none;
+          mix-blend-mode: screen;
+          background:
+            radial-gradient(62% 56% at 0% 50%, rgba(34, 40, 90, 0.9), rgba(34, 40, 90, 0.32) 42%, rgba(0, 0, 0, 0) 76%),
+            radial-gradient(46% 32% at 0% 78%, rgba(34, 40, 90, 0.85), rgba(34, 40, 90, 0.28) 46%, rgba(0, 0, 0, 0) 74%);
         }
 
         /* White vertical guide line on the left — solid so the page-long
@@ -1351,20 +1365,9 @@ export default function ArsOs() {
           user-select: none;
         }
 
-        /* Navy (#22285a) wash layered ON TOP of the video from the left edge,
-           screen-blended so it glows over the black frame instead of fogging
-           the footage — matches the reference (dp1) composition. */
-        .sentinel-scene::after {
-          content: "";
-          position: absolute;
-          inset: 0;
-          z-index: 2;
-          pointer-events: none;
-          mix-blend-mode: screen;
-          background:
-            radial-gradient(70% 110% at 0% 62%, rgba(34, 40, 90, 0.95), rgba(34, 40, 90, 0.38) 44%, rgba(0, 0, 0, 0) 78%),
-            radial-gradient(42% 54% at 0% 100%, rgba(34, 40, 90, 0.85), rgba(34, 40, 90, 0.28) 46%, rgba(0, 0, 0, 0) 74%);
-        }
+        /* The navy wash over the video comes from the section-level
+           .sentinel::after layer — no scene-local overlay, so the scene's
+           top edge can't print a seam. */
 
         /* Between 760 and 920 the one-line head no longer fits — drop the
            metadata onto its own row instead of ellipsizing it. */
@@ -1583,9 +1586,12 @@ export default function ArsOs() {
           width: 100%;
           /* Navy ambient: a glow at the top-right and a broad wash sweeping
              up from the lower-left, on black. */
+          /* The top-right glow fades out before the section's top edge so the
+             join with SENTINEL above stays seamless; the bottom glows are
+             covered by the footer's own masked overlap. */
           background:
             radial-gradient(48% 52% at 86% 99%, rgba(43, 37, 16, 0.98), rgba(43, 37, 16, 0.42) 46%, rgba(43, 37, 16, 0) 76%),
-            radial-gradient(50% 60% at 100% 0%, rgba(37, 44, 99, 0.9), rgba(37, 44, 99, 0.28) 42%, rgba(0, 0, 0, 0) 76%),
+            radial-gradient(50% 34% at 100% 24%, rgba(37, 44, 99, 0.9), rgba(37, 44, 99, 0.28) 42%, rgba(0, 0, 0, 0) 74%),
             radial-gradient(60% 70% at 8% 100%, rgba(33, 40, 92, 0.62), rgba(0, 0, 0, 0) 70%),
             #000;
           overflow: hidden;
