@@ -270,7 +270,7 @@ export function Navbar({ currentPath = "/", onNavigate }) {
   return (
     <nav
       className={`
-        fixed top-0 left-0 right-0 z-9999
+        fixed top-0 left-0 right-0 z-[9999]
         transition-transform duration-300
         ${isArcOsPage ? "px-4 sm:px-6 md:px-8 lg:px-10 py-3.5" : "px-4 sm:px-6 md:px-10 lg:px-14 py-5"}
         ${isVisible ? "translate-y-0" : "-translate-y-full"}

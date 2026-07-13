@@ -2,10 +2,9 @@ import { useRef } from "react";
 import AnimatedLine from "../Utils/AnimatedLine";
 import useTextShuffle from "../Utils/useTextShuffle";
 import plusJakartaSans from "../assets/fonts/PlusJakartaSans[wght].ttf";
-import handsImage from "../assets/yertg 2.webp";
+import handsImage from "../assets/yertg 2.png";
 import swarmFigure from "../assets/gfjhjhjhjlhugh 1.webp";
-import sentryFigure from "../assets/Gemini_Generated_Image_ghrd4sghrd4sghrd 1.png";
-import droneFigure from "../assets/Group 1000002154.png";
+import fenrirCounterUasVideo from "../assets/Fenrir 002 Counter-UAS 16x9 (1).mp4";
 import terrainMesh from "../assets/09f8626770d522bace35bbcf8ca7d0ff4eb5528d.webp";
 import terrainDots from "../assets/2072e0a6f65bd90c64aec41f97bcfecf866d0c47.gif";
 
@@ -160,17 +159,54 @@ export default function ArsOs() {
         .ars-os-hero {
           --ars-os-hero-scale: 1;
           position: relative;
+          z-index: 5;
           width: 100%;
-          height: clamp(315px, 28vw, 520px);
-          min-height: 315px;
+          height: clamp(340px, 31vw, 560px);
+          min-height: 340px;
           overflow: hidden;
-          background: #000;
+          background: transparent;
           isolation: isolate;
+        }
+
+        /* Soft #0d1427 navy atmosphere on both edges — depth, not glow.
+           z-index 0 keeps it under the yellow line (1) and title (3). */
+        .ars-os-hero::before,
+        .ars-os-hero::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: clamp(260px, 34vw, 720px);
+          z-index: 0;
+          pointer-events: none;
+        }
+
+        .ars-os-hero::before {
+          left: 0;
+          background: radial-gradient(
+            90% 70% at 0% 58%,
+            rgba(13, 20, 39, 0.72) 0%,
+            rgba(13, 20, 39, 0.34) 42%,
+            rgba(13, 20, 39, 0.12) 68%,
+            rgba(13, 20, 39, 0) 88%
+          );
+        }
+
+        .ars-os-hero::after {
+          right: 0;
+          background: radial-gradient(
+            90% 70% at 100% 58%,
+            rgba(13, 20, 39, 0.72) 0%,
+            rgba(13, 20, 39, 0.34) 42%,
+            rgba(13, 20, 39, 0.12) 68%,
+            rgba(13, 20, 39, 0) 88%
+          );
         }
 
         .ars-os-hero-inner {
           position: absolute;
           inset: 0;
+          z-index: 1;
           transform-origin: top center;
         }
 
@@ -185,16 +221,16 @@ export default function ArsOs() {
           left: 0;
           right: 0;
           width: auto;
-          top: clamp(-28px, -2vw, -12px);
-          z-index: 0;
+          top: clamp(-42px, -3vw, -18px);
+          z-index: 1;
           pointer-events: none;
         }
 
         .ars-os-title {
           position: absolute;
-          left: 39.5%;
-          bottom: clamp(-10px, -0.9vh, -2px);
-          z-index: 2;
+          left: 53%;
+          bottom: clamp(8px, 1.2vh, 18px);
+          z-index: 3;
           margin: 0;
           display: flex;
           align-items: baseline;
@@ -267,8 +303,8 @@ export default function ArsOs() {
         @media (min-width: 1024px) {
           .ars-os-hero {
             --ars-os-hero-scale: 0.72;
-            height: clamp(227px, 28vw, 374px);
-            min-height: 227px;
+            height: clamp(250px, 30vw, 410px);
+            min-height: 250px;
           }
 
           .ars-os-hero-inner {
@@ -281,10 +317,11 @@ export default function ArsOs() {
           }
 
           .ars-os-title {
-            left: 50%;
-            gap: clamp(34px, 7.78vw, 84px);
-            font-size: clamp(70px, 14.52vw, 146px);
-            letter-spacing: clamp(1.4px, 0.445vw, 4px);
+            left: 40.5%;
+            bottom: clamp(80px, 5.0vh, 95px);
+            gap: clamp(42px, 8.6vw, 112px);
+            font-size: clamp(85px, 17.9vw, 198px);
+            letter-spacing: clamp(1.5px, 0.48vw, 4.8px);
           }
 
           .ars-os-lines {
@@ -292,14 +329,14 @@ export default function ArsOs() {
             left: 0;
             /* Inner space is 1/0.72 scale — band top tracks the hero so the
                right end stays just under the navbar at every width. */
-            top: clamp(-64px, calc(8px - 2.2vw), -14px);
+            top: clamp(-82px, calc(-10px - 2.6vw), -26px);
           }
 
           .ars-os-lines > div {
             --hero-line-scale: 0.9;
-            top: 32px !important;
+            top: 20px !important;
             width: calc(100vw / var(--ars-os-hero-scale) / var(--hero-line-scale)) !important;
-            translate: -50% 30px !important;
+            translate: -50% 18px !important;
           }
         }
 
@@ -326,7 +363,7 @@ export default function ArsOs() {
           }
 
           .ars-os-lines {
-            top: clamp(16px, 8vw, 40px);
+            top: clamp(8px, 5vw, 28px);
           }
         }
 
@@ -388,8 +425,10 @@ export default function ArsOs() {
         .ars-os-intro {
           position: relative;
           width: 100%;
+          margin-top: clamp(-18px, -2vw, -6px);
+          z-index: 1;
           background: #000;
-          overflow: hidden;
+          overflow: visible;
           isolation: isolate;
         }
 
@@ -432,18 +471,21 @@ export default function ArsOs() {
         /* Robotic hands — screen blend drops the black background out
            seamlessly against the section's black. */
         .ars-os-intro-img {
+          position: relative;
+          z-index: 0;
           display: block;
           width: min(1726px, 100%);
-          margin: 0 auto;
+          margin: clamp(-132px, -20vw, -92px) auto 0;
           aspect-ratio: 57 / 32;
           object-fit: cover;
+          object-position: center top;
           mix-blend-mode: screen;
           user-select: none;
           pointer-events: none;
           /* Fade the lower edge so the image's own dark tone doesn't print
              a hard rectangle seam against the HYENA section below. */
-          -webkit-mask-image: linear-gradient(180deg, #000 84%, transparent 100%);
-          mask-image: linear-gradient(180deg, #000 84%, transparent 100%);
+          -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 10%, #000 84%, transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0%, #000 10%, #000 84%, transparent 100%);
         }
 
         /* Description copy overlaid on the upper-left area. */
@@ -475,10 +517,10 @@ export default function ArsOs() {
         .ars-os-vline {
           position: absolute;
           left: clamp(22px, 4.1vw, 70px);
-          top: clamp(8px, 1.6vw, 24px);
+          top: clamp(140px, 12vw, 260px);
           bottom: 0;
           width: 1px;
-          z-index: 4;
+          z-index: 1;
           background: linear-gradient(
             180deg,
             rgba(255, 255, 255, 0) 0%,
@@ -546,6 +588,7 @@ export default function ArsOs() {
 
           .ars-os-vline {
             left: clamp(24px, 7vw, 34px);
+            top: clamp(8px, 1.6vw, 24px);
           }
         }
 
@@ -929,16 +972,15 @@ export default function ArsOs() {
     <section id="sentinel" className="sentinel" aria-label="SENTINEL — Subsystem 02">
       <style>{`
         .sentinel {
+          --sentinel-left-gutter: clamp(48px, 7.1vw, 150px);
+          --sentinel-right-gutter: clamp(34px, 5vw, 96px);
           position: relative;
           width: 100%;
-          /* Warm olive (#5e5124) ambient on the left, navy (#252c63) glow
-             down the right side — matching the reference. The extra
-             bottom-right radial carries the navy into ARC C2's top-right
-             glow so the section seam has no hard edge. */
+          /* Navy (#22285a) wash on the left, falling back to black on the
+             right so the video reads like the reference frame. */
           background:
-            radial-gradient(46% 70% at 0% 30%, rgba(94, 81, 36, 0.34), rgba(0, 0, 0, 0) 60%),
-            radial-gradient(62% 96% at 100% 52%, rgba(37, 44, 99, 0.92), rgba(37, 44, 99, 0.34) 40%, rgba(0, 0, 0, 0) 80%),
-            radial-gradient(50% 40% at 100% 100%, rgba(37, 44, 99, 0.9), rgba(37, 44, 99, 0.28) 42%, rgba(0, 0, 0, 0) 76%),
+            radial-gradient(62% 96% at 0% 52%, rgba(34, 40, 90, 0.92), rgba(34, 40, 90, 0.34) 40%, rgba(0, 0, 0, 0) 80%),
+            radial-gradient(48% 44% at 0% 100%, rgba(34, 40, 90, 0.72), rgba(34, 40, 90, 0.22) 42%, rgba(0, 0, 0, 0) 76%),
             #000;
           overflow: hidden;
           isolation: isolate;
@@ -954,7 +996,7 @@ export default function ArsOs() {
           top: 0;
           bottom: 0;
           width: 1px;
-          z-index: 2;
+          z-index: 6;
           background: rgba(255, 255, 255, 0.5);
         }
 
@@ -962,7 +1004,7 @@ export default function ArsOs() {
           position: absolute;
           left: clamp(2px, 0.55vw, 14px);
           bottom: clamp(18px, 4vw, 92px);
-          z-index: 2;
+          z-index: 6;
           transform: rotate(180deg);
           writing-mode: vertical-rl;
           font-weight: 400;
@@ -976,8 +1018,8 @@ export default function ArsOs() {
         .sentinel-inner {
           position: relative;
           z-index: 3;
-          margin-left: clamp(48px, 7.1vw, 150px);
-          margin-right: clamp(34px, 5vw, 96px);
+          margin-left: var(--sentinel-left-gutter);
+          margin-right: var(--sentinel-right-gutter);
         }
 
         .sentinel-head {
@@ -1123,6 +1165,13 @@ export default function ArsOs() {
            annotation positioned against it on the right. */
         .sentinel-scene {
           position: relative;
+          margin: clamp(18px, 2.2vw, 42px) calc(var(--sentinel-right-gutter) * -1) 0 calc(var(--sentinel-left-gutter) * -1);
+          width: calc(100% + var(--sentinel-left-gutter) + var(--sentinel-right-gutter));
+          height: clamp(560px, 50vw, 900px);
+          max-height: calc(100svh - clamp(72px, 7vw, 128px));
+          overflow: hidden;
+          isolation: isolate;
+          background: #000;
         }
 
         /* Sentry-radar line-art anchored to the lower-left, just inside the
@@ -1264,10 +1313,40 @@ export default function ArsOs() {
           height: 100%;
         }
 
+        .sentinel-video {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          object-position: 30% center;
+          opacity: 1;
+          filter: none;
+          pointer-events: none;
+          user-select: none;
+        }
+
+        /* Navy (#22285a) wash layered ON TOP of the video from the left edge,
+           screen-blended so it glows over the black frame instead of fogging
+           the footage — matches the reference (dp1) composition. */
+        .sentinel-scene::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          z-index: 2;
+          pointer-events: none;
+          mix-blend-mode: screen;
+          background:
+            radial-gradient(70% 110% at 0% 62%, rgba(34, 40, 90, 0.95), rgba(34, 40, 90, 0.38) 44%, rgba(0, 0, 0, 0) 78%),
+            radial-gradient(42% 54% at 0% 100%, rgba(34, 40, 90, 0.85), rgba(34, 40, 90, 0.28) 46%, rgba(0, 0, 0, 0) 74%);
+        }
+
         @media (max-width: 760px) {
           .sentinel-inner {
-            margin-left: clamp(44px, 11vw, 64px);
-            margin-right: clamp(18px, 5vw, 34px);
+            --sentinel-left-gutter: clamp(44px, 11vw, 64px);
+            --sentinel-right-gutter: clamp(18px, 5vw, 34px);
           }
 
           .sentinel-head {
@@ -1308,7 +1387,8 @@ export default function ArsOs() {
           }
 
           .sentinel-scene {
-            min-height: clamp(350px, 104vw, 560px);
+            height: clamp(420px, 82vw, 620px);
+            max-height: none;
           }
 
           .sentinel-sentry {
@@ -1348,8 +1428,8 @@ export default function ArsOs() {
 
         @media (max-width: 560px) {
           .sentinel-inner {
-            margin-left: clamp(42px, 12vw, 58px);
-            margin-right: clamp(16px, 5vw, 28px);
+            --sentinel-left-gutter: clamp(42px, 12vw, 58px);
+            --sentinel-right-gutter: clamp(16px, 5vw, 28px);
           }
 
           .sentinel-rule {
@@ -1435,74 +1515,16 @@ export default function ArsOs() {
         </div>
 
         <div className="sentinel-scene">
-          <img
-            className="sentinel-sentry"
-            src={sentryFigure}
-            alt=""
+          <video
+            className="sentinel-video"
+            src={fenrirCounterUasVideo}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
             aria-hidden="true"
           />
-
-          <img
-            className="sentinel-drone"
-            src={droneFigure}
-            alt=""
-            aria-hidden="true"
-          />
-
-          <div className="sentinel-radar-callout" aria-hidden="true">
-            <span className="sentinel-radar-l1">
-              SE<span className="sentinel-radar-y">N</span>TRY C&mdash; RADAR
-            </span>
-            <span className="sentinel-radar-rule" />
-            <span className="sentinel-radar-l2">
-              <span className="sentinel-radar-y">N</span>ODE 01 UAS
-            </span>
-          </div>
-
-          <div className="sentinel-target" aria-hidden="true">
-            <div className="sentinel-target-lock">TARGET LOCK</div>
-            <div className="sentinel-target-meta">
-              Lock at 14:24, 10/10/2025
-              <br />
-              assess loop · ARC OS
-            </div>
-          </div>
-
-          <span className="sentinel-reticle" aria-hidden="true">
-        <svg viewBox="0 0 200 200" fill="none">
-          {/* Yellow dashed crosshair arms */}
-          <g
-            stroke="#f4ed15"
-            strokeWidth="2.4"
-            strokeDasharray="7 6"
-            strokeLinecap="butt"
-          >
-            <line x1="100" y1="8" x2="100" y2="84" />
-            <line x1="100" y1="116" x2="100" y2="192" />
-            <line x1="8" y1="100" x2="84" y2="100" />
-            <line x1="116" y1="100" x2="192" y2="100" />
-          </g>
-
-          {/* Solid yellow centre plus */}
-          <g stroke="#f4ed15" strokeWidth="3" strokeLinecap="square">
-            <line x1="100" y1="91" x2="100" y2="109" />
-            <line x1="91" y1="100" x2="109" y2="100" />
-          </g>
-
-          {/* Four white square brackets framing the centre */}
-          <g
-            stroke="#ffffff"
-            strokeWidth="3.2"
-            strokeLinecap="butt"
-            strokeLinejoin="miter"
-          >
-            <path d="M60 50 H46 V82 H60" />
-            <path d="M140 50 H154 V82 H140" />
-            <path d="M60 150 H46 V118 H60" />
-            <path d="M140 150 H154 V118 H140" />
-          </g>
-        </svg>
-          </span>
         </div>
       </div>
     </section>
