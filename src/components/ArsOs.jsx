@@ -572,15 +572,7 @@ export default function ArsOs() {
         aria-hidden="true"
       />
 
-      <p className="ars-os-intro-copy">
-        The{" "}
-        <span className="ars-os-hl">
-          Autonomous Command &amp; Control battle management System
-        </span>{" "}
-        &mdash; a full-autonomy, agentic platform that turns sensors into
-        decisions at machine speed, while humans hold command. Three subsystems.
-        Three domains. One intelligence core.
-      </p>
+      
     </section>
 
     <section id="hyena" className="hyena" aria-label="HYENA — Subsystem 01">
