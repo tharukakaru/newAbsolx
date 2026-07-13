@@ -626,11 +626,13 @@ export default function ArsOs() {
           /* Ambient edge tints to match the reference: warm olive (#51451f)
              at the lower-left near the dial, and a broad navy (#252c62) glow
              down the right side that brightens toward the edge. */
-          /* Both tints fade to zero before the section's edges so the
-             boundary with the intro above / SENTINEL below stays seamless. */
+          /* Palette: #544820 golden-brown at the dial, #202553 blue-violet
+             down the right. Both tints fade to zero before the section's
+             edges so the boundary with the intro above / SENTINEL below
+             stays seamless. */
           background:
-            radial-gradient(42% 32% at 4% 82%, rgba(81, 69, 31, 0.32), rgba(0, 0, 0, 0) 62%),
-            radial-gradient(62% 58% at 100% 52%, rgba(37, 44, 98, 0.9), rgba(37, 44, 98, 0.32) 40%, rgba(0, 0, 0, 0) 76%),
+            radial-gradient(42% 32% at 4% 82%, rgba(84, 72, 32, 0.32), rgba(0, 0, 0, 0) 62%),
+            radial-gradient(62% 58% at 100% 52%, rgba(32, 37, 83, 0.92), rgba(32, 37, 83, 0.34) 40%, rgba(0, 0, 0, 0) 76%),
             #000;
           overflow: hidden;
           isolation: isolate;
@@ -793,15 +795,20 @@ export default function ArsOs() {
           white-space: nowrap;
         }
 
+        /* The page's single "SEE FIRST…" rail label — sits in the upper-
+           middle of the section (alongside the second card row / fan top),
+           matching the reference. The SENTINEL scene's copy is baked into
+           the video, so no second DOM instance exists. */
         .hyena-first-label {
           position: absolute;
           left: clamp(2px, 0.55vw, 14px);
-          bottom: clamp(18px, 4vw, 92px);
+          top: 36%;
           z-index: 2;
           transform: rotate(180deg);
           writing-mode: vertical-rl;
+          font-family: "Yapari Trial Regular", "Yapari Trial", "Azonix", sans-serif;
           font-weight: 400;
-          font-size: clamp(10px, 0.95vw, 16px);
+          font-size: clamp(8px, 0.78vw, 13px);
           letter-spacing: 0.18em;
           text-transform: uppercase;
           color: rgba(255, 255, 255, 0.4);
@@ -1032,21 +1039,6 @@ export default function ArsOs() {
           width: 1px;
           z-index: 6;
           background: rgba(255, 255, 255, 0.5);
-        }
-
-        .sentinel-first-label {
-          position: absolute;
-          left: clamp(2px, 0.55vw, 14px);
-          bottom: clamp(18px, 4vw, 92px);
-          z-index: 6;
-          transform: rotate(180deg);
-          writing-mode: vertical-rl;
-          font-weight: 400;
-          font-size: clamp(10px, 0.95vw, 16px);
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.4);
-          pointer-events: none;
         }
 
         .sentinel-inner {
@@ -1424,10 +1416,6 @@ export default function ArsOs() {
             border-bottom: 0;
           }
 
-          .sentinel-first-label {
-            display: none;
-          }
-
           .sentinel-scene {
             height: clamp(420px, 82vw, 620px);
             max-height: none;
@@ -1503,9 +1491,9 @@ export default function ArsOs() {
       `}</style>
 
       <span className="sentinel-vline" aria-hidden="true" />
-      <span className="sentinel-first-label" aria-hidden="true">
-        SEE FIRST. DECIDE FIRST. ACT FIRST.
-      </span>
+      {/* No DOM "SEE FIRST…" label here — the video's own baked-in HUD
+          already carries it in the scene, and the page-level label lives
+          once, on the HYENA rail, as in the reference. */}
 
       <div className="sentinel-inner">
         <div className="sentinel-head">
@@ -1586,13 +1574,15 @@ export default function ArsOs() {
           width: 100%;
           /* Navy ambient: a glow at the top-right and a broad wash sweeping
              up from the lower-left, on black. */
-          /* The top-right glow fades out before the section's top edge so the
-             join with SENTINEL above stays seamless; the bottom glows are
-             covered by the footer's own masked overlap. */
+          /* Palette: #2e2711 dark-olive lower-right, #202553 blue-violet at
+             the upper-right and lower-left. The top-right glow fades out
+             before the section's top edge so the join with SENTINEL above
+             stays seamless; the bottom glows are covered by the footer's own
+             masked overlap. */
           background:
-            radial-gradient(48% 52% at 86% 99%, rgba(43, 37, 16, 0.98), rgba(43, 37, 16, 0.42) 46%, rgba(43, 37, 16, 0) 76%),
-            radial-gradient(50% 34% at 100% 24%, rgba(37, 44, 99, 0.9), rgba(37, 44, 99, 0.28) 42%, rgba(0, 0, 0, 0) 74%),
-            radial-gradient(60% 70% at 8% 100%, rgba(33, 40, 92, 0.62), rgba(0, 0, 0, 0) 70%),
+            radial-gradient(48% 52% at 86% 99%, rgba(46, 39, 17, 0.98), rgba(46, 39, 17, 0.42) 46%, rgba(46, 39, 17, 0) 76%),
+            radial-gradient(50% 34% at 100% 24%, rgba(32, 37, 83, 0.9), rgba(32, 37, 83, 0.28) 42%, rgba(0, 0, 0, 0) 74%),
+            radial-gradient(60% 70% at 8% 100%, rgba(32, 37, 83, 0.62), rgba(0, 0, 0, 0) 70%),
             #000;
           overflow: hidden;
           isolation: isolate;
