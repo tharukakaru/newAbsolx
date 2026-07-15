@@ -1029,6 +1029,7 @@ export default function ResearchPage2() {
       <div className="atmosphere-stage network-stage">
         <div className="atmosphere-stage__lighting" aria-hidden="true">
           <span className="megha-light-blob network-blue" />
+          <span className="megha-stage-bottom-fade" />
         </div>
 
       <section

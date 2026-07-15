@@ -767,7 +767,7 @@ export default function ResearchPage() {
            opacity and the near-black base, never from dark blended
            replacement colours. */
         :root {
-          --megha-atmosphere-blur: clamp(10rem, 19.7vw, 21.28125rem);
+          --megha-atmosphere-blur: clamp(10rem, 19.7vw, 28rem);
         }
 
         .research-story-stage {
@@ -883,6 +883,27 @@ export default function ResearchPage() {
           transform:
             translateY(-50%)
             translate3d(0, 0, 0);
+        }
+
+        /* Ends the page in pure black so the boundary into the footer
+           (whose top is also pure black) is invisible — kills the seam
+           created by the page background's right-edge navy radial.
+           Lives in the lighting layer: above the blobs and page bg,
+           below all stage content. bottom:12rem = the stage's true
+           bottom edge because the lighting layer bleeds -12rem. */
+        .megha-stage-bottom-fade {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 12rem;
+          height: 24rem;
+          background: linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(1, 2, 6, 0.6) 55%,
+            #000 100%
+          );
+          pointer-events: none;
         }
 
         @media (max-width: 64rem) {
@@ -1679,25 +1700,25 @@ export default function ResearchPage() {
                 id="problems-megha-solves"
                 className="research-problems-content"
               >
-              <p className="research-problems-eyebrow uppercase">
-                // 02 - Problems MEGHA Solves
-              </p>
+                <p className="research-problems-eyebrow uppercase">
+                  // 02 - Problems MEGHA Solves
+                </p>
 
-              <h2 className="research-problems-heading text-white">
-                Real Battlefield Problems, Engineered Solutions
-              </h2>
+                <h2 className="research-problems-heading text-white">
+                  Real Battlefield Problems, Engineered Solutions
+                </h2>
 
-              <div className="problems-grid">
-                {problemCards.map((problem) => (
-                  <article className="problem-card" key={problem.id}>
-                    <p className="problem-label">
-                      {problem.id} / {problem.category}
-                    </p>
-                    <h3 className="problem-title">{problem.title}</h3>
-                    <p className="problem-body">{problem.body}</p>
-                  </article>
-                ))}
-              </div>
+                <div className="problems-grid">
+                  {problemCards.map((problem) => (
+                    <article className="problem-card" key={problem.id}>
+                      <p className="problem-label">
+                        {problem.id} / {problem.category}
+                      </p>
+                      <h3 className="problem-title">{problem.title}</h3>
+                      <p className="problem-body">{problem.body}</p>
+                    </article>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

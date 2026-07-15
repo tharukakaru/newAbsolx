@@ -269,18 +269,18 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
 
         .research-footer-glow--gold {
           left: -45%;
-          top: 57%;
-          width: clamp(54rem, 80vw, 86rem);
-          height: clamp(58rem, 86vw, 92rem);
+          top: 63%;
+          width: clamp(54rem, 80vw, 102rem);
+          height: clamp(58rem, 86vw, 108rem);
           background: #F3D05D;
           opacity: 0.52;
         }
 
         .research-footer-glow--blue {
           right: -47%;
-          top: 54%;
-          width: clamp(56rem, 82vw, 88rem);
-          height: clamp(60rem, 88vw, 94rem);
+          top: 59%;
+          width: clamp(56rem, 82vw, 106rem);
+          height: clamp(60rem, 88vw, 112rem);
           background: #5D6EF3;
           opacity: 0.64;
         }
@@ -382,7 +382,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 z-[6] h-36 bg-gradient-to-b from-black via-black/85 to-transparent sm:h-44"
+            className="pointer-events-none absolute inset-x-0 top-0 z-[6] h-64 bg-gradient-to-b from-black via-black/70 to-transparent sm:h-80"
           />
         </>
       ) : isArcOsFooter ? (
