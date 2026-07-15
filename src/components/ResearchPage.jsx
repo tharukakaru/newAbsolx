@@ -3,6 +3,7 @@ import yapariBold from "../assets/fonts/YapariTrial-Bold.ttf";
 import yapariRegular from "../assets/fonts/YapariTrial-Regular.ttf";
 import archivoRegular from "../assets/fonts/archivo.regular.ttf";
 import plusJakartaSans from "../assets/fonts/PlusJakartaSans[wght].ttf";
+import sourceCodeProLight from "../assets/fonts/SourceCodePro-Light.ttf";
 import uavBlueprintVideo from "../assets/uav-blueprint-2k.mp4";
 import shahedDroneImage from "../assets/US-Shahed-136-drone 1.webp";
 import launchDroneImage from "../assets/8611730 1 (1).webp";
@@ -16,7 +17,11 @@ const problemCards = [
   {
     id: "P-01",
     category: "Cost",
-    title: "The Cost of War Has Collapsed",
+    title: (
+      <>
+        The <span className="y">Cost</span> of War Has Collapsed
+      </>
+    ),
     body: (
       <>
         A $20,000 drone now forces defenders to fire $3&ndash;4 million
@@ -29,7 +34,11 @@ const problemCards = [
   {
     id: "P-02",
     category: "Precision",
-    title: "Precise Strike, Not Blunt Force",
+    title: (
+      <>
+        <span className="y">Precise</span> Strike, Not Blunt Force
+      </>
+    ),
     body: (
       <>
         Onboard computer vision identifies and locks the exact target. MEGHA
@@ -42,7 +51,11 @@ const problemCards = [
   {
     id: "P-03",
     category: "Human Error",
-    title: "Removing Human Error",
+    title: (
+      <>
+        Removing Human <span className="y">Error</span>
+      </>
+    ),
     body: (
       <>
         Fatigue, stress, and split-second misjudgement cost lives. Edge-level AI
@@ -54,7 +67,11 @@ const problemCards = [
   {
     id: "P-04",
     category: "Civilian Safety",
-    title: "Lower Damage to Civilians",
+    title: (
+      <>
+        <span className="y">Lower</span> Damage to Civilians
+      </>
+    ),
     body: (
       <>
         Precision targeting and abort-aware autonomy keep destruction confined
@@ -68,7 +85,9 @@ const problemCards = [
     category: "Speed",
     title: (
       <>
-        Act Fast &mdash; See First, Strike First
+        <span className="y">Act</span> Fast &mdash;{" "}
+        <span className="y">See</span> First,{" "}
+        <span className="y">Strike</span> First
       </>
     ),
     body: (
@@ -82,7 +101,11 @@ const problemCards = [
   {
     id: "P-06",
     category: "Supply",
-    title: "Rapid Manufacturing",
+    title: (
+      <>
+        <span className="y">Rapid</span> Manufacturing
+      </>
+    ),
     body: (
       <>
         Distributed 3D-print farms output thousands of units. Engineers tweak a
@@ -181,6 +204,18 @@ export default function ResearchPage() {
           font-family: "Archivo Condensed";
           src: url(${archivoRegular}) format("truetype");
           font-weight: 400;
+          font-style: normal;
+          font-display: swap;
+        }
+
+        /* Monospace for the P-0x / CATEGORY metadata. The design asks for
+           Fira Code; no Fira Code file ships with the project, so Source
+           Code Pro Light is registered as the loaded fallback — the family
+           chain tries Fira Code first if the system provides it. */
+        @font-face {
+          font-family: "Research Mono";
+          src: url(${sourceCodeProLight}) format("truetype");
+          font-weight: 300;
           font-style: normal;
           font-display: swap;
         }
@@ -650,25 +685,60 @@ export default function ResearchPage() {
           letter-spacing: 0;
         }
 
-        .research-panel-media {
+        /* UAV blueprint video: anchored directly above the problems block
+           (bottom: 100% of .research-problems-content), so it always sits
+           in the gap above the heading regardless of the panel's height.
+           The MP4 encodes a black canvas — screen blending plus a soft
+           radial edge mask removes the rectangle without adding any black
+           backing layer. */
+        .uav-blueprint-video-wrap {
           position: absolute;
-          inset: 0;
           z-index: 1;
+          left: 50%;
+          bottom: calc(100% - 1.5rem);
+          transform: translateX(-50%);
+
+          width: clamp(38rem, 58vw, 59rem);
+          aspect-ratio: 16 / 9;
+
+          /* The site's own base colour sits beneath the video: the video's
+             screen blend turns its encoded black canvas into exactly this
+             colour, so the interior reads as page background, and the
+             closest-side mask feathers every edge (not just the corners)
+             into the real page behind. */
+          background: #030510;
+          border: 0;
+          box-shadow: none;
+          overflow: visible;
           pointer-events: none;
+
+          -webkit-mask-image: radial-gradient(
+            closest-side at 50% 50%,
+            #000 48%,
+            rgba(0, 0, 0, 0.75) 72%,
+            transparent 98%
+          );
+          mask-image: radial-gradient(
+            closest-side at 50% 50%,
+            #000 48%,
+            rgba(0, 0, 0, 0.75) 72%,
+            transparent 98%
+          );
         }
 
-        .research-video {
-          position: absolute;
-          left: 50%;
-          top: 26%;
-          width: 62%;
-          height: 34%;
-          object-fit: cover;
-          object-position: center center;
-          opacity: 0.85;
-          filter: saturate(0.9) contrast(1.14) brightness(0.9);
+        .uav-blueprint-video {
+          display: block;
+          width: 100%;
+          height: 100%;
+
+          object-fit: contain;
+          background: transparent;
+          border: 0;
+          box-shadow: none;
+
+          filter: saturate(0.9) contrast(1.12);
           mix-blend-mode: screen;
-          transform: translateX(-50%) scaleX(-1);
+          transform: scaleX(-1);
         }
 
         .research-deco-shape {
@@ -707,20 +777,19 @@ export default function ResearchPage() {
         .research-autonomy-label {
           position: absolute;
           right: clamp(2px, 0.8vw, 14px);
-          top: clamp(170px, 16vw, 300px);
-          z-index: 3;
+          top: clamp(540px, 58vw, 860px);
+          z-index: 4;
           writing-mode: vertical-rl;
           text-orientation: mixed;
           white-space: nowrap;
-          color: #FFF;
+          color: rgba(201, 209, 211, 0.48);
           font-family: "Research Yapari Regular", "Yapari Trial", "Azonix", sans-serif;
           font-size: clamp(26px, 2.6vw, 46px);
           font-style: normal;
           font-weight: 400;
           line-height: 1;
-          letter-spacing: 0.06em;
+          letter-spacing: 0.08em;
           text-transform: uppercase;
-          opacity: 0.4;
           pointer-events: none;
           user-select: none;
         }
@@ -731,7 +800,6 @@ export default function ResearchPage() {
         }
 
         .research-problems-eyebrow,
-        .problem-label,
         .problem-title,
         .problem-body {
           font-family: "Research Plus Jakarta", "Plus Jakarta Sans", Arial, sans-serif;
@@ -739,22 +807,44 @@ export default function ResearchPage() {
         }
 
         .research-problems-eyebrow {
-          font-size: 14px;
-          line-height: 1.35;
-          font-weight: 400;
-          color: rgba(255,255,255,0.78);
+          position: relative;
+          z-index: 5;
+          margin-bottom: clamp(1rem, 1.4vw, 1.5rem);
+          font-size: clamp(0.875rem, 1.15vw, 1.25rem);
+          line-height: 1.2;
+          font-weight: 300;
+          color: rgba(255,255,255,0.82);
         }
 
+        /* Exactly three controlled heading rows — no automatic wrapping.
+           Weight 700 maps to the real YapariTrial-Bold file (no synthetic
+           weight). At 1440px this resolves to ~53.3px / 3.33px tracking. */
         .research-problems-heading {
-          margin-top: 10px;
-          max-width: 980px;
-          font-family: Georgia, "Times New Roman", serif;
-          font-size: clamp(25px, 2.35vw, 38px);
-          line-height: 1.16;
+          position: relative;
+          z-index: 5;
+          margin: 0 0 clamp(1.75rem, 3vw, 3rem);
+          font-family: "Research Yapari", "Yapari Trial", "Azonix", sans-serif;
+          font-size: clamp(2.2rem, 3.7037vw, 4rem);
+          line-height: 0.98;
           font-weight: 700;
-          letter-spacing: 0;
+          letter-spacing: clamp(0.08rem, 0.2315vw, 0.25rem);
           text-transform: uppercase;
-          text-wrap: balance;
+          color: #fff;
+        }
+
+        .research-problems-heading .heading-line {
+          display: block;
+          white-space: nowrap;
+        }
+
+        .research-problems-heading .heading-accent,
+        .research-problems-heading .y {
+          color: #E3E41B;
+        }
+
+        .problems-grid {
+          position: relative;
+          z-index: 5;
         }
 
         /* ── Atmospheric colour-grading system ──────────────────
@@ -1128,8 +1218,9 @@ export default function ResearchPage() {
         }
 
         .problem-card {
-          min-height: 188px;
-          padding: 24px 0;
+          min-width: 0;
+          height: auto;
+          padding: clamp(1.25rem, 2vw, 1.85rem) 0;
           border-top: 1px solid rgba(255,255,255,0.34);
         }
 
@@ -1139,30 +1230,34 @@ export default function ResearchPage() {
         }
 
         .problem-label {
-          margin-bottom: 13px;
-          font-size: 11px;
-          line-height: 1.3;
-          font-weight: 500;
+          margin-bottom: clamp(0.45rem, 0.8vw, 0.75rem);
+          font-family: "Fira Code", "Research Mono", "Source Code Pro", Consolas, monospace;
+          font-size: clamp(0.75rem, 1.157vw, 1.25rem);
+          line-height: 1.6;
+          font-weight: 300;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.74);
+          color: rgba(255,255,255,0.78);
         }
 
         .problem-title {
-          max-width: 290px;
-          font-size: 20px;
-          line-height: 0.98;
-          font-weight: 700;
+          margin: clamp(0.45rem, 0.8vw, 0.75rem) 0 clamp(1rem, 1.5vw, 1.5rem);
+          font-size: clamp(1.125rem, 1.852vw, 2rem);
+          line-height: 1;
+          font-weight: 600;
           color: #fff;
           text-wrap: balance;
         }
 
+        .problem-title .y {
+          color: #E3E41B;
+        }
+
         .problem-body {
-          margin-top: 22px;
-          max-width: 294px;
-          font-size: 13px;
-          line-height: 1.42;
-          font-weight: 400;
-          color: rgba(255,255,255,0.74);
+          margin: 0;
+          font-size: clamp(0.875rem, 1.273vw, 1.375rem);
+          line-height: 1.45;
+          font-weight: 300;
+          color: rgba(255,255,255,0.84);
         }
 
         @media (min-width: 768px) {
@@ -1259,22 +1354,10 @@ export default function ResearchPage() {
             padding: clamp(22px, 5.6vw, 32px) clamp(18px, 5vw, 28px) !important;
           }
 
-          .research-panel-media {
-            top: clamp(420px, 114vw, 620px);
-            bottom: auto;
-            height: clamp(330px, 88vw, 500px);
-            overflow: hidden;
-            z-index: 0;
-          }
-
-          .research-video {
-            left: 50%;
-            top: 0;
-            width: min(720px, 156vw);
-            height: 100%;
-            opacity: 0.75;
-            object-fit: cover;
-            object-position: center;
+          .uav-blueprint-video-wrap {
+            bottom: calc(100% - 0.25rem);
+            width: min(640px, 140vw);
+            opacity: 0.72;
           }
 
           .research-left-shape {
@@ -1313,6 +1396,11 @@ export default function ResearchPage() {
             max-width: 100%;
             font-size: clamp(23px, 6.3vw, 31px);
             line-height: 1.08;
+            letter-spacing: 0.06em;
+          }
+
+          .research-problems-heading .heading-line {
+            white-space: normal;
           }
 
           .problems-grid {
@@ -1374,11 +1462,6 @@ export default function ResearchPage() {
           .research-copy {
             font-size: clamp(12px, 3.4vw, 14px);
             letter-spacing: 0.035em;
-          }
-
-          .research-panel-media {
-            top: clamp(390px, 118vw, 510px);
-            height: clamp(310px, 92vw, 420px);
           }
 
           .research-problems-content {
@@ -1646,18 +1729,6 @@ export default function ResearchPage() {
 
         <div className="research-panel-wrap mt-6 w-full max-w-[1380px]">
           <div className="research-panel w-full">
-            <div className="research-panel-media" aria-hidden="true">
-              <video
-                className="research-video"
-                src={uavBlueprintVideo}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="auto"
-              />
-            </div>
-
             <div className="relative z-10 px-4 pt-6 pb-7 sm:px-5 sm:pt-7 sm:pb-9 lg:px-6 lg:pt-7 lg:pb-11">
               <p className="research-kicker text-[clamp(12px,0.95vw,15px)] uppercase text-white/80">
                 // 01 - THE QUESTION
@@ -1700,12 +1771,28 @@ export default function ResearchPage() {
                 id="problems-megha-solves"
                 className="research-problems-content"
               >
+                <div className="uav-blueprint-video-wrap" aria-hidden="true">
+                  <video
+                    className="uav-blueprint-video"
+                    src={uavBlueprintVideo}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="auto"
+                  />
+                </div>
+
                 <p className="research-problems-eyebrow uppercase">
                   // 02 - Problems MEGHA Solves
                 </p>
 
                 <h2 className="research-problems-heading text-white">
-                  Real Battlefield Problems, Engineered Solutions
+                  <span className="heading-line">Real Battlefield</span>
+                  <span className="heading-line">
+                    Problems, <span className="heading-accent">Engineered</span>
+                  </span>
+                  <span className="heading-line">Solutions</span>
                 </h2>
 
                 <div className="problems-grid">

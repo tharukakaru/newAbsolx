@@ -12,6 +12,7 @@ import Drone from "./components/drone";
 import DroneSubSection from "./components/dronesub-section";
 import ResearchPage from "./components/ResearchPage";
 import ArsOs from "./components/ArsOs";
+import NewMegha from "./components/newmegha";
 
 function HomePage() {
   return (
@@ -127,11 +128,14 @@ export default function App() {
 
   const isResearchPage = path === "/research";
   const isAecOsPage = path === "/aec-os";
+  const isNewMeghaPage = path === "/newmegha";
 
   return (
     <div className={`relative w-full min-h-screen bg-black overflow-x-hidden ${isAecOsPage ? "arc-os-page" : ""}`}>
       <Navbar currentPath={path} onNavigate={navigate} />
-      {isResearchPage ? (
+      {isNewMeghaPage ? (
+        <NewMegha />
+      ) : isResearchPage ? (
         <>
           <ResearchPage />
           <Footer showReadmeBridge={false} variant="research" />
