@@ -187,18 +187,26 @@ export default function ResearchPage() {
 
         .research-page {
           background:
-            radial-gradient(ellipse at 0% 50%, rgba(9, 14, 28, 0.94) 0%, rgba(9, 14, 28, 0.44) 26%, rgba(9, 14, 28, 0) 56%),
-            radial-gradient(ellipse at 100% 52%, rgba(9, 14, 28, 0.98) 0%, rgba(9, 14, 28, 0.5) 30%, rgba(9, 14, 28, 0) 60%),
-            #020409;
+            radial-gradient(ellipse at 0% 50%, rgba(11, 18, 35, 0.94) 0%, rgba(11, 18, 35, 0.44) 26%, rgba(11, 18, 35, 0) 56%),
+            radial-gradient(ellipse at 100% 52%, rgba(11, 18, 35, 0.98) 0%, rgba(11, 18, 35, 0.5) 30%, rgba(11, 18, 35, 0) 60%),
+            #030510;
         }
 
+        /* Hero-scoped atmosphere: soft deep-navy glow to the right, faint muted
+           olive around the yellow-line zone. Sized in vh so it stays confined to
+           the first viewport instead of stretching down the whole page. */
         .research-page::before {
           content: "";
           position: absolute;
           inset: 0;
-          background:
+          background-image:
+            radial-gradient(ellipse 44% 46% at 82% 38%, rgba(32, 37, 83, 0.28), rgba(32, 37, 83, 0) 72%),
+            radial-gradient(ellipse 54% 30% at 38% 12%, rgba(84, 72, 32, 0.12), rgba(46, 39, 17, 0) 68%),
             linear-gradient(180deg, rgba(0,0,0,0.48) 0%, rgba(2,4,9,0) 32%, rgba(2,4,9,0.28) 100%),
-            radial-gradient(ellipse at 50% 18%, rgba(255,255,255,0.05), rgba(255,255,255,0) 34%);
+            radial-gradient(ellipse at 50% 18%, rgba(255,255,255,0.04), rgba(255,255,255,0) 34%);
+          background-size: 100% 110vh, 100% 80vh, 100% 100%, 100% 100%;
+          background-position: top center, top center, 0 0, 0 0;
+          background-repeat: no-repeat;
           pointer-events: none;
         }
 
@@ -208,9 +216,21 @@ export default function ResearchPage() {
           top: clamp(-184px, -8.2vw, -132px);
           z-index: 0;
           width: min(2400px, 162vw);
-          opacity: 0.84;
+          opacity: 0.72;
+          filter: saturate(1.08) brightness(0.94);
           pointer-events: none;
           transform: translateX(-50%);
+        }
+
+        /* Page-scoped overrides of the shared AnimatedLine: slightly thinner
+           than the homepage but with the yellow kept vivid. */
+        .research-network-lines path#path1 {
+          stroke-width: 1.35;
+        }
+
+        .research-network-lines path#path2 {
+          stroke-width: 1.05;
+          opacity: 0.92;
         }
 
         .research-network-lines > div {
@@ -238,12 +258,15 @@ export default function ResearchPage() {
           display: flex;
           flex-wrap: nowrap;
           align-items: baseline;
-          gap: clamp(18px, 3vw, 58px);
-          font-family: "Research Yapari", "Yapari Trial", "Azonix", sans-serif;
-          font-size: clamp(58px, 8.3vw, 146px);
+          gap: clamp(16px, 2.6vw, 50px);
+          padding-left: clamp(2px, 0.5vw, 10px);
+          font-family: "Research Yapari";
+          font-weight: 700;
+          font-size: clamp(40px, 6.5vw, 108px);
           line-height: 0.76;
           letter-spacing: 0.105em;
           word-spacing: 0.12em;
+          transform: translate(42px, -10px);
         }
 
         .research-title-word {
@@ -273,9 +296,9 @@ export default function ResearchPage() {
         }
 
         .research-title-shuffle.is-number-mode {
-          font-family: "Azonix", sans-serif;
+          font-family: "Research Yapari";
           font-size: 0.32em;
-          font-weight: 400;
+          font-weight: 700;
           line-height: 1;
           letter-spacing: 0.015em;
         }
@@ -310,9 +333,9 @@ export default function ResearchPage() {
         .research-title-megha::before {
           content: "";
           position: absolute;
-          left: -0.16em;
+          left: -0.14em;
           top: 50%;
-          width: 1.46em;
+          width: 0.82em;
           height: 0.96em;
           z-index: -1;
           border-radius: 999px;
@@ -320,6 +343,29 @@ export default function ResearchPage() {
           filter: blur(8px);
           transform: translateY(-50%);
           pointer-events: none;
+        }
+
+        /* Force the non-accent title letters to clean pure white so the dark M
+           gradient and yellow G glow don't bleed a tint onto E / HA. */
+        .research-title-plain {
+          color: #ffffff;
+          -webkit-text-fill-color: #ffffff;
+        }
+
+        /* Subtle dark-metallic fade on the E only: roughly the first fifth of
+           the glyph carries the shadow, the rest stays clearly white. */
+        .research-title-e {
+          color: transparent;
+          background: linear-gradient(
+            90deg,
+            #3c3c3c 0%,
+            #8f8f8f 16%,
+            #f2f2f2 46%,
+            #ffffff 100%
+          );
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
 
         .research-title-m {
@@ -338,8 +384,8 @@ export default function ResearchPage() {
         .research-title-g {
           color: #E3E41B;
           text-shadow:
-            0 0 14px rgba(227, 228, 27, 0.24),
-            0 9px 22px rgba(0, 0, 0, 0.36);
+            0 0 5px rgba(227, 228, 27, 0.08),
+            0 6px 16px rgba(0, 0, 0, 0.30);
         }
 
         .research-title-megha
@@ -360,21 +406,24 @@ export default function ResearchPage() {
           .ltr:nth-child(3) {
           color: #E3E41B;
           text-shadow:
-            0 0 14px rgba(227, 228, 27, 0.24),
-            0 9px 22px rgba(0, 0, 0, 0.36);
+            0 0 5px rgba(227, 228, 27, 0.08),
+            0 6px 16px rgba(0, 0, 0, 0.30);
           -webkit-text-fill-color: currentColor;
         }
 
+        /* Figma source: 1522px track / 32px / ls 4px at 1728 frame width.
+           1.85185vw reproduces 32px at 1728 and 26.67px at 1440; the max cap
+           keeps the three fixed lines inside the 1500px page shell. */
         .research-copy {
-          margin-left: clamp(14px, 1.4vw, 22px);
-          max-width: 1100px;
+          margin-left: clamp(20px, 2.6vw, 44px);
+          max-width: 100%;
           font-family: "Research Plus Jakarta", "Plus Jakarta Sans", Arial, sans-serif;
-          font-size: clamp(12px, 1vw, 18px);
-          line-height: 1.46;
+          font-size: clamp(0.875rem, 1.5vw, 1.375rem);
+          line-height: 1.32;
           font-weight: 400;
-          letter-spacing: 0.18em;
-          text-transform: capitalize;
-          color: rgba(255,255,255,0.86);
+          letter-spacing: clamp(0.08rem, 0.19vw, 0.18rem);
+          text-transform: none;
+          color: #C9D1D3;
           text-wrap: normal;
         }
 
@@ -385,14 +434,20 @@ export default function ResearchPage() {
 
         .research-copy-highlight {
           color: #E3E41B;
-          font-weight: 800;
-          letter-spacing: 0.17em;
+          font-weight: 600;
         }
 
         .research-copy-strong {
           color: #FFFFFF;
           font-weight: 800;
-          letter-spacing: 0.14em;
+        }
+
+        /* Below ~1150px the fixed line breaks no longer fit the content track —
+           let the paragraph wrap naturally instead of clipping. */
+        @media (max-width: 1151px) {
+          .research-copy-line {
+            white-space: normal;
+          }
         }
 
         @media (max-width: 767px) {
@@ -422,7 +477,8 @@ export default function ResearchPage() {
             max-width: 100%;
             min-width: 0;
             gap: clamp(6px, 2vw, 12px);
-            font-size: clamp(38px, 12.8vw, 62px);
+            padding-left: 0;
+            font-size: clamp(31px, 10.5vw, 50px);
             line-height: 0.82;
             letter-spacing: 0.045em;
             word-spacing: 0;
@@ -442,22 +498,14 @@ export default function ResearchPage() {
           .research-copy {
             margin-left: 0;
             max-width: 100%;
-            font-size: clamp(12px, 3.35vw, 16px);
-            line-height: 1.45;
-            letter-spacing: 0.055em;
+            font-size: clamp(13px, 3.6vw, 17px);
+            line-height: 1.35;
+            letter-spacing: 0.05em;
             overflow-wrap: anywhere;
           }
 
           .research-copy-line {
             white-space: normal;
-          }
-
-          .research-copy-highlight {
-            letter-spacing: 0.05em;
-          }
-
-          .research-copy-strong {
-            letter-spacing: 0.05em;
           }
 
           .research-panel-title {
@@ -479,15 +527,15 @@ export default function ResearchPage() {
           display: block;
           overflow: visible;
           z-index: 120;
-          --research-line-height: 5200px;
+          --research-line-height: clamp(4700px, 479vw, 8400px);
           --research-line-current: 560px;
           background:
-            linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 6%, rgba(255,255,255,0.38) 48%, rgba(255,255,255,0.18) 94%, transparent 100%),
-            linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.02) 12%, rgba(255,255,255,0.52) 36%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.52) 64%, rgba(255,255,255,0.02) 88%, transparent 100%);
+            linear-gradient(90deg, rgba(201,209,211,0.55) 0%, rgba(201,209,211,0.26) 62%, rgba(201,209,211,0.08) 88%, transparent 100%),
+            linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.02) 12%, rgba(255,255,255,0.16) 36%, rgba(255,255,255,0.32) 50%, rgba(255,255,255,0.16) 64%, rgba(255,255,255,0.02) 88%, transparent 100%);
           background-repeat: no-repeat;
           background-size: 100% 100%, 28% 100%;
           background-position: 0 0, -34% 0;
-          box-shadow: 0 0 5px rgba(255,255,255,0.22);
+          box-shadow: none;
           will-change: background-position;
           animation: researchSignalSweep 6.8s linear infinite;
         }
@@ -502,12 +550,12 @@ export default function ResearchPage() {
           height: var(--research-line-height);
           background: linear-gradient(
             180deg,
-            rgba(255,255,255,0.62),
-            rgba(255,255,255,0.76) 6%,
-            rgba(255,255,255,0.52) 58%,
-            rgba(255,255,255,0.24) 100%
+            rgba(255,255,255,0.36),
+            rgba(255,255,255,0.44) 6%,
+            rgba(255,255,255,0.28) 58%,
+            rgba(255,255,255,0.12) 100%
           );
-          box-shadow: 0 0 10px rgba(255,255,255,0.28);
+          box-shadow: 0 0 6px rgba(255,255,255,0.12);
           pointer-events: none;
         }
 
@@ -530,8 +578,8 @@ export default function ResearchPage() {
             transparent 100%
           );
           filter:
-            drop-shadow(0 0 4px rgba(255,255,255,0.55))
-            drop-shadow(0 0 10px rgba(255,255,180,0.24));
+            drop-shadow(0 0 3px rgba(255,255,255,0.4))
+            drop-shadow(0 0 8px rgba(255,255,180,0.16));
           pointer-events: none;
           will-change: transform;
           animation: researchSignalCurrentY 8.8s linear infinite;
@@ -546,6 +594,26 @@ export default function ResearchPage() {
         @keyframes researchSignalCurrentY {
           0%   { transform: translateY(calc(var(--research-line-current) * -1)); }
           100% { transform: translateY(var(--research-line-height)); }
+        }
+
+        /* Thin cyan technical accent hugging the hero's right edge */
+        .research-right-accent {
+          position: absolute;
+          top: clamp(90px, 12vh, 170px);
+          right: 0;
+          width: 1px;
+          height: min(58vh, 620px);
+          z-index: 40;
+          background: linear-gradient(
+            180deg,
+            rgba(96, 206, 255, 0) 0%,
+            rgba(96, 206, 255, 0.32) 26%,
+            rgba(140, 222, 255, 0.5) 52%,
+            rgba(96, 206, 255, 0.18) 78%,
+            rgba(96, 206, 255, 0) 100%
+          );
+          box-shadow: 0 0 6px rgba(96, 206, 255, 0.14);
+          pointer-events: none;
         }
 
         .research-panel-wrap {
@@ -613,13 +681,13 @@ export default function ResearchPage() {
 
         .research-left-shape {
           position: absolute;
-          left: clamp(-104px, -6vw, -54px);
-          top: clamp(88px, 8.4vw, 145px);
-          width: clamp(220px, 23vw, 345px);
+          left: clamp(-96px, -5.4vw, -48px);
+          top: clamp(200px, 19vw, 330px);
+          width: clamp(190px, 19.5vw, 292px);
           opacity: 0.94;
           filter: brightness(1.08) contrast(1.04);
           pointer-events: none;
-          z-index: 5;
+          z-index: 2;
         }
 
         .research-right-shape {
@@ -638,21 +706,21 @@ export default function ResearchPage() {
 
         .research-autonomy-label {
           position: absolute;
-          right: clamp(-10px, 0.2vw, 6px);
-          top: clamp(122px, 12vw, 220px);
-          z-index: 6;
+          right: clamp(2px, 0.8vw, 14px);
+          top: clamp(170px, 16vw, 300px);
+          z-index: 3;
           writing-mode: vertical-rl;
           text-orientation: mixed;
           white-space: nowrap;
           color: #FFF;
           font-family: "Research Yapari Regular", "Yapari Trial", "Azonix", sans-serif;
-          font-size: clamp(38px, 4.25vw, 78px);
+          font-size: clamp(26px, 2.6vw, 46px);
           font-style: normal;
           font-weight: 400;
           line-height: 1;
-          letter-spacing: 0.045em;
+          letter-spacing: 0.06em;
           text-transform: uppercase;
-          opacity: 0.43;
+          opacity: 0.4;
           pointer-events: none;
           user-select: none;
         }
@@ -689,30 +757,187 @@ export default function ResearchPage() {
           text-wrap: balance;
         }
 
-        .research-followup-section {
+        /* ── Atmospheric colour-grading system ──────────────────
+           Four controlled stages light the page (battle / mobility /
+           network / footer). Each stage owns one shared lighting layer;
+           content sections stay transparent so the falloff passes
+           continuously across section boundaries. Every source is an
+           enormous solid blurred blob whose unblurred centre sits
+           outside the visible page — the muted look comes from blur,
+           opacity and the near-black base, never from dark blended
+           replacement colours. */
+        :root {
+          --megha-atmosphere-blur: clamp(10rem, 19.7vw, 21.28125rem);
+        }
+
+        .research-story-stage {
           position: relative;
           isolation: isolate;
         }
 
-        .research-followup-section::before {
-          content: "";
+        .research-story-stage::before,
+        .research-story-stage::after {
+          content: none;
+        }
+
+        .atmosphere-stage {
+          position: relative;
+          isolation: isolate;
+          background: transparent;
+        }
+
+        .atmosphere-stage__lighting {
           position: absolute;
-          left: -16%;
-          right: -16%;
-          top: 16%;
-          height: 68%;
-          z-index: 0;
-          background:
-            radial-gradient(ellipse at 4% 34%, rgba(243, 208, 93, 0.36), rgba(243, 208, 93, 0.12) 26%, rgba(243, 208, 93, 0) 58%),
-            radial-gradient(ellipse at 96% 48%, rgba(93, 110, 243, 0.38), rgba(93, 110, 243, 0.14) 28%, rgba(93, 110, 243, 0) 60%),
-            linear-gradient(106deg, rgba(243, 208, 93, 0.08), rgba(2, 4, 9, 0) 48%, rgba(93, 110, 243, 0.1));
-          filter: blur(18px);
-          opacity: 0.7;
-          -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 76%, transparent 100%);
-          mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 76%, transparent 100%);
+          inset: -12rem 0;
+          z-index: 1;
+          overflow: visible;
           pointer-events: none;
         }
 
+        .megha-light-blob {
+          position: absolute;
+          display: block;
+
+          width: clamp(48rem, 74vw, 80rem);
+          height: clamp(52rem, 80vw, 86rem);
+
+          border-radius: 2423px;
+          filter: blur(var(--megha-atmosphere-blur));
+
+          pointer-events: none;
+          transform: translate3d(0, 0, 0);
+          mix-blend-mode: normal;
+        }
+
+        /* Stage 1 — battlefield + scarcity + metrics (colo2).
+           Blue peaks upper-right around the Real Battlefield graphic
+           above this section — the lighting layer overflows upward and
+           nothing between it and the page root clips it. Gold grows
+           from the lower-left along the destroyed-aircraft → scarcity
+           → metrics run. Centres are vertically far apart. */
+        .battle-gold {
+          left: -48%;
+          top: 62%;
+
+          background: #F3D05D;
+          opacity: 0.58;
+
+          transform:
+            translateY(-50%)
+            translate3d(0, 0, 0);
+        }
+
+        .battle-blue {
+          right: -50%;
+          top: 56%;
+
+          background: #5D6EF3;
+          opacity: 0.62;
+
+          transform:
+            translateY(-50%)
+            translate3d(0, 0, 0);
+        }
+
+        /* Stage 2 — Man-Portable → SEE FIRST → Stealth (colo4).
+           Continuation, lower opacity than Stage 1: gold tail on the
+           left rising again near the Stealth heading, blue dominant on
+           the right slightly higher (around SEE FIRST). */
+        .mobility-gold {
+          left: -54%;
+          top: 55%;
+
+          background: #F3D05D;
+          opacity: 0.44;
+
+          transform:
+            translateY(-50%)
+            translate3d(0, 0, 0);
+        }
+
+        .mobility-blue {
+          right: -51%;
+          top: 38%;
+
+          background: #5D6EF3;
+          opacity: 0.62;
+
+          transform:
+            translateY(-50%)
+            translate3d(0, 0, 0);
+        }
+
+        /* Stage 3 — wireframes + Networked Swarm (colo5).
+           One restrained blue from the left only; the right side of
+           this region stays black and the CAD drawings stay white. */
+        .network-blue {
+          left: -57%;
+          top: 32%;
+
+          width: clamp(44rem, 68vw, 72rem);
+          height: clamp(48rem, 72vw, 78rem);
+
+          background: #5D6EF3;
+          opacity: 0.36;
+
+          transform:
+            translateY(-50%)
+            translate3d(0, 0, 0);
+        }
+
+        @media (max-width: 64rem) {
+          .megha-light-blob {
+            width: clamp(38rem, 88vw, 54rem);
+            height: clamp(42rem, 96vw, 60rem);
+          }
+
+          .battle-gold,
+          .mobility-gold {
+            left: -66%;
+          }
+
+          .battle-blue,
+          .mobility-blue {
+            right: -70%;
+          }
+
+          .network-blue {
+            left: -74%;
+          }
+        }
+
+        @media (max-width: 48rem) {
+          .megha-light-blob {
+            width: clamp(28rem, 140vw, 42rem);
+            height: clamp(34rem, 160vw, 48rem);
+          }
+
+          .battle-gold,
+          .mobility-gold {
+            left: -95%;
+          }
+
+          .battle-blue,
+          .mobility-blue {
+            right: -98%;
+          }
+
+          .network-blue {
+            left: -100%;
+          }
+
+          .battle-gold { opacity: 0.48; }
+          .battle-blue { opacity: 0.52; }
+          .mobility-gold { opacity: 0.36; }
+          .mobility-blue { opacity: 0.48; }
+          .network-blue { opacity: 0.30; }
+        }
+
+        .research-followup-section {
+          position: relative;
+        }
+
+        .research-followup-section::before,
         .research-followup-section::after {
           content: none;
         }
@@ -751,7 +976,7 @@ export default function ResearchPage() {
 
         .research-shahed-copy {
           margin: 12px auto 0;
-          max-width: 980px;
+          max-width: 100%;
           text-align: center;
           font-family: "Research Plus Jakarta", "Plus Jakarta Sans", Arial, sans-serif;
           font-size: clamp(10px, 0.82vw, 12px);
@@ -781,25 +1006,9 @@ export default function ResearchPage() {
           isolation: isolate;
         }
 
-        .research-cost-panel::before {
-          content: "";
-          position: absolute;
-          left: -8%;
-          right: -8%;
-          top: 62%;
-          height: 34%;
-          z-index: 0;
-          background:
-            radial-gradient(ellipse at 6% 82%, rgba(243, 208, 93, 0.34), rgba(243, 208, 93, 0.1) 30%, rgba(243, 208, 93, 0) 64%),
-            radial-gradient(ellipse at 92% 78%, rgba(93, 110, 243, 0.36), rgba(93, 110, 243, 0.1) 32%, rgba(93, 110, 243, 0) 66%),
-            linear-gradient(105deg, rgba(243, 208, 93, 0.12) 0%, rgba(6, 7, 12, 0) 50%, rgba(93, 110, 243, 0.14) 100%);
-          filter: blur(30px);
-          opacity: 0.52;
-          -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 26%, #000 72%, transparent 100%);
-          mask-image: linear-gradient(180deg, transparent 0%, #000 26%, #000 72%, transparent 100%);
-          pointer-events: none;
-        }
-
+        /* Per-section colour blooms removed — lighting is owned solely by
+           the shared .megha-light sources. */
+        .research-cost-panel::before,
         .research-cost-panel::after {
           content: none;
         }
@@ -817,6 +1026,35 @@ export default function ResearchPage() {
           font-weight: 400;
           text-transform: uppercase;
           color: rgba(255,255,255,0.78);
+        }
+
+        /* Short technical ticks: 1px lines that leave the vertical rail and
+           point at each section kicker. Desktop only — the rail geometry is
+           only stable at the lg gutter. */
+        @media (min-width: 1024px) {
+          .research-problems-eyebrow,
+          .research-cost-kicker {
+            position: relative;
+          }
+
+          .research-problems-eyebrow::before,
+          .research-cost-kicker::before {
+            content: "";
+            position: absolute;
+            top: 0.62em;
+            height: 1px;
+            width: clamp(13px, 1.1vw, 22px);
+            background: rgba(255, 255, 255, 0.72);
+            pointer-events: none;
+          }
+
+          .research-problems-eyebrow::before {
+            left: -24px;
+          }
+
+          .research-cost-kicker::before {
+            left: -34px;
+          }
         }
 
         .research-cost-title {
@@ -840,30 +1078,17 @@ export default function ResearchPage() {
         }
 
         .research-launch-stage::before {
-          content: "";
-          position: absolute;
-          inset: -20%;
-          background:
-            radial-gradient(circle at 18% 58%, rgba(243, 208, 93, 0.16), rgba(243, 208, 93, 0) 45%),
-            radial-gradient(circle at 88% 30%, rgba(93, 110, 243, 0.16), rgba(93, 110, 243, 0) 42%);
-          filter: blur(28px);
-          opacity: 0.76;
-          pointer-events: none;
-          z-index: -1;
+          content: none;
         }
 
         .research-launch-card {
           overflow: hidden;
           border: 1px solid rgba(255,255,255,0.18);
           border-radius: 34px;
-          background:
-            linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02)),
-            rgba(10, 11, 13, 0.54);
+          background: rgba(10, 11, 13, 0.54);
           box-shadow:
             inset 0 1px 0 rgba(255,255,255,0.18),
-            0 22px 54px rgba(0,0,0,0.34),
-            0 0 42px rgba(186,154,47,0.1);
-          backdrop-filter: blur(14px);
+            0 22px 54px rgba(0,0,0,0.34);
         }
 
         .research-launch-image {
@@ -1002,7 +1227,7 @@ export default function ResearchPage() {
           .research-network-lines {
             top: clamp(-118px, -24vw, -76px);
             width: 250vw;
-            opacity: 0.78;
+            opacity: 0.62;
           }
 
           .research-panel-wrap {
@@ -1121,18 +1346,13 @@ export default function ResearchPage() {
 
         @media (max-width: 420px) {
           .research-title {
-            font-size: clamp(28px, 9vw, 34px);
+            font-size: clamp(24px, 8vw, 30px);
             letter-spacing: 0.025em;
           }
 
           .research-copy {
-            font-size: clamp(11.5px, 3.25vw, 13.5px);
+            font-size: clamp(12px, 3.4vw, 14px);
             letter-spacing: 0.035em;
-          }
-
-          .research-copy-highlight,
-          .research-copy-strong {
-            letter-spacing: 0.03em;
           }
 
           .research-panel-media {
@@ -1258,27 +1478,25 @@ export default function ResearchPage() {
         }
 
         .cost-bottom-para strong {
-          color: #fff;
+          color: #E3E41B;
           font-weight: 700;
         }
 
+        /* Metrics card: nearly transparent neutral surface — the stage
+           lighting shows around and slightly behind it, untinted. */
         .cost-stats-section {
           position: relative;
+          z-index: 5;
           margin: 42px auto 0;
           width: min(100%, 1120px);
           border-radius: 18px;
           overflow: hidden;
-          background:
-            radial-gradient(circle at 0% 100%, rgba(243, 208, 93, 0.48), rgba(243, 208, 93, 0.12) 36%, rgba(243, 208, 93, 0) 66%),
-            radial-gradient(circle at 100% 92%, rgba(93, 110, 243, 0.54), rgba(93, 110, 243, 0.18) 38%, rgba(93, 110, 243, 0) 68%),
-            linear-gradient(105deg, rgba(243, 208, 93, 0.24) 0%, rgba(8, 8, 14, 0.3) 46%, rgba(93, 110, 243, 0.28) 100%);
+          background: rgba(4, 6, 13, 0.06);
+          backdrop-filter: none;
         }
 
         .cost-stats-overlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.04));
-          pointer-events: none;
+          display: none;
         }
 
         .cost-stats-grid {
@@ -1286,7 +1504,7 @@ export default function ResearchPage() {
           z-index: 1;
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          border: 1px solid rgba(255,255,255,0.48);
+          border: 1px solid rgba(255, 255, 255, 0.34);
           border-radius: 18px;
           overflow: hidden;
         }
@@ -1347,12 +1565,14 @@ export default function ResearchPage() {
 
       `}</style>
 
-      <section className="research-hero-section relative z-10 mx-auto flex min-h-screen w-full max-w-[1500px] flex-col px-7 pt-44 pb-16 sm:px-14 sm:pt-48 lg:px-24 lg:pt-52">
+      <div className="research-right-accent" aria-hidden="true" />
+
+      <section className="research-hero-section relative z-10 mx-auto flex min-h-screen w-full max-w-[1500px] flex-col px-7 pt-36 pb-16 sm:px-14 sm:pt-40 lg:px-[clamp(4.5rem,5.96vw,6.4375rem)] lg:pt-44">
         <div className="research-network-lines" aria-hidden="true">
           <AnimatedLine />
         </div>
 
-        <div className="relative z-10 max-w-[1180px]">
+        <div className="relative z-10 w-full">
           <h1 className="research-title uppercase text-white">
             <span className="research-title-word research-title-megha">
               <span
@@ -1361,8 +1581,10 @@ export default function ResearchPage() {
                 data-initial="1305070801"
                 data-target="MEGHA"
               >
-                <span className="research-title-m">M</span>E
-                <span className="research-title-g">G</span>HA
+                <span className="research-title-m">M</span>
+                <span className="research-title-plain research-title-e">E</span>
+                <span className="research-title-g">G</span>
+                <span className="research-title-plain">HA</span>
               </span>
             </span>
             <span className="research-title-word">
@@ -1377,31 +1599,31 @@ export default function ResearchPage() {
             </span>
           </h1>
 
-          <p className="research-copy mt-12">
+          <p className="research-copy mt-10">
             <span className="research-copy-line">
-              A New Class Of{" "}
+              A new class of{" "}
               <span className="research-copy-highlight">
-                Low-Cost, 3D-Printed, Edge-Autonomous
+                low-cost, 3D-printed, edge-autonomous
               </span>{" "}
-              Aerial Systems Built
+              aerial systems built
             </span>
             <span className="research-copy-line">
-              To Win The Wars Of Mass — Commanded In Their Thousands By A Single
-              Operator
+              to win the wars of mass — commanded in their thousands by a single
+              operator
             </span>
             <span className="research-copy-line">
-              Through <span className="research-copy-strong">ARC OS</span>, And
-              Built To Keep Human Warfighters Out Of The Kill Zone.
+              through <span className="research-copy-strong">ARC OS</span>, and
+              built to keep human warfighters out of the kill zone.
             </span>
           </p>
 
           <div
             aria-hidden="true"
-            className="research-signal-line mt-2 h-px w-full max-w-[1100px]"
+            className="research-signal-line mt-3 h-px w-full"
           />
         </div>
 
-        <div className="research-panel-wrap mt-14 w-full max-w-[1380px]">
+        <div className="research-panel-wrap mt-6 w-full max-w-[1380px]">
           <div className="research-panel w-full">
             <div className="research-panel-media" aria-hidden="true">
               <video
@@ -1415,16 +1637,19 @@ export default function ResearchPage() {
               />
             </div>
 
-            <div className="relative z-10 p-7 sm:p-9 lg:p-11">
-              <p className="research-kicker text-[15px] uppercase text-white/80 sm:text-[18px]">
+            <div className="relative z-10 px-4 pt-6 pb-7 sm:px-5 sm:pt-7 sm:pb-9 lg:px-6 lg:pt-7 lg:pb-11">
+              <p className="research-kicker text-[clamp(12px,0.95vw,15px)] uppercase text-white/80">
                 // 01 - THE QUESTION
               </p>
 
-              <h2 className="research-panel-title mt-4 text-[clamp(30px,3.6vw,58px)] uppercase leading-[0.95] text-white">
-                Why Do We Need MEGHA?
+              <h2 className="research-panel-title mt-3 text-[clamp(26px,3.2vw,50px)] uppercase leading-[0.98] text-white">
+                Why Do We Need{" "}
+                <span className="whitespace-nowrap">
+                  <span className="text-[#E3E41B]">MEGHA</span>?
+                </span>
               </h2>
 
-              <div className="research-panel-body mt-6 max-w-[1130px] space-y-5 text-[clamp(13px,0.95vw,17px)] leading-[1.12] text-white/82">
+              <div className="research-panel-body mt-5 max-w-[900px] space-y-5 text-[clamp(12px,0.88vw,15px)] leading-[1.4] text-white/76">
                 <p>
                   For seventy years, air power meant a handful of extraordinarily
                   expensive aircraft flown by humans who had to be physically
@@ -1454,28 +1679,29 @@ export default function ResearchPage() {
                 id="problems-megha-solves"
                 className="research-problems-content"
               >
-                <p className="research-problems-eyebrow uppercase">
-                  // 02 - Problems MEGHA Solves
-                </p>
+              <p className="research-problems-eyebrow uppercase">
+                // 02 - Problems MEGHA Solves
+              </p>
 
-                <h2 className="research-problems-heading text-white">
-                  Real Battlefield Problems, Engineered Solutions
-                </h2>
+              <h2 className="research-problems-heading text-white">
+                Real Battlefield Problems, Engineered Solutions
+              </h2>
 
-                <div className="problems-grid">
-                  {problemCards.map((problem) => (
-                    <article className="problem-card" key={problem.id}>
-                      <p className="problem-label">
-                        {problem.id} / {problem.category}
-                      </p>
-                      <h3 className="problem-title">{problem.title}</h3>
-                      <p className="problem-body">{problem.body}</p>
-                    </article>
-                  ))}
-                </div>
+              <div className="problems-grid">
+                {problemCards.map((problem) => (
+                  <article className="problem-card" key={problem.id}>
+                    <p className="problem-label">
+                      {problem.id} / {problem.category}
+                    </p>
+                    <h3 className="problem-title">{problem.title}</h3>
+                    <p className="problem-body">{problem.body}</p>
+                  </article>
+                ))}
+              </div>
               </div>
             </div>
           </div>
+
           <img
             className="research-deco-shape research-left-shape"
             src={abstractShapeRender}
@@ -1494,10 +1720,17 @@ export default function ResearchPage() {
         </div>
       </section>
 
+      <div className="research-story-stage">
+
       <section
         id="cost-argument-showcase"
-        className="research-followup-section relative z-10 mx-auto w-full max-w-[1500px] px-7 pb-28 sm:px-14 lg:px-24"
+        className="atmosphere-stage battle-stage research-followup-section relative z-10 mx-auto w-full max-w-[1500px] px-7 pb-28 sm:px-14 lg:px-[clamp(4.5rem,5.96vw,6.4375rem)]"
       >
+        <div className="atmosphere-stage__lighting" aria-hidden="true">
+          <span className="megha-light-blob battle-gold" />
+          <span className="megha-light-blob battle-blue" />
+        </div>
+
         <div className="research-shahed-stage">
           <div className="research-shahed-card">
             <img
@@ -1598,6 +1831,8 @@ export default function ResearchPage() {
       </section>
 
       <ResearchPage2 />
+
+      </div>
 
     </main>
   );

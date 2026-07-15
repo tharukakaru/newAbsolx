@@ -256,27 +256,50 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
           bottom: clamp(24px, 2.6vw, 50px);
         }
 
+        /* Stage 4 — closing statement + footer (colo6). One broad gold
+           source lower-left, one broad blue source lower-right; solid
+           centres stay outside the page, only blurred falloff enters. */
         .research-footer-glow {
           position: absolute;
-          width: 2423px;
-          height: 665px;
           border-radius: 2423px;
-          filter: blur(340.5px);
+          filter: blur(var(--megha-atmosphere-blur, 283.75px));
           pointer-events: none;
+          transform: translateY(-50%) translate3d(0, 0, 0);
         }
 
         .research-footer-glow--gold {
-          left: -1370px;
-          top: 24%;
+          left: -45%;
+          top: 57%;
+          width: clamp(54rem, 80vw, 86rem);
+          height: clamp(58rem, 86vw, 92rem);
           background: #F3D05D;
-          opacity: 0.54;
+          opacity: 0.52;
         }
 
         .research-footer-glow--blue {
-          right: -1280px;
-          top: 24%;
+          right: -47%;
+          top: 54%;
+          width: clamp(56rem, 82vw, 88rem);
+          height: clamp(60rem, 88vw, 94rem);
           background: #5D6EF3;
           opacity: 0.64;
+        }
+
+        @media (max-width: 48rem) {
+          .research-footer-glow {
+            width: clamp(28rem, 140vw, 42rem);
+            height: clamp(34rem, 160vw, 48rem);
+          }
+
+          .research-footer-glow--gold {
+            left: -95%;
+            opacity: 0.44;
+          }
+
+          .research-footer-glow--blue {
+            right: -98%;
+            opacity: 0.54;
+          }
         }
 
         .research-footer-hashtag {
@@ -356,10 +379,6 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_16%,_rgba(0,0,0,0.94)_0%,_rgba(0,0,0,0.82)_34%,_rgba(0,0,0,0)_68%),radial-gradient(ellipse_at_center,_rgba(0,0,0,0)_46%,_rgba(0,0,0,0.68)_100%)]"
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 z-[5] bg-[radial-gradient(ellipse_at_0%_86%,_rgba(243,208,93,0.2)_0%,_rgba(243,208,93,0.08)_26%,_rgba(243,208,93,0)_58%),radial-gradient(ellipse_at_100%_88%,_rgba(93,110,243,0.34)_0%,_rgba(93,110,243,0.14)_30%,_rgba(93,110,243,0)_62%)]"
           />
           <div
             aria-hidden="true"

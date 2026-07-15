@@ -103,48 +103,11 @@ export default function ResearchPage2() {
           isolation: isolate;
         }
 
+        /* The vertical rail is now ONE continuous element owned by the page
+           (the hero divider's ::before spine) — per-section lines removed so
+           the rail never doubles or restarts at section boundaries. */
         .isr-section::before {
-          content: "";
-          position: absolute;
-          left: var(--isr-line-x);
-          top: -1px;
-          bottom: -1px;
-          width: 1px;
-          z-index: 5;
-          background:
-            linear-gradient(
-              180deg,
-              rgba(255,255,255,0.54) 0%,
-              rgba(255,255,255,0.48) 54%,
-              rgba(255,255,255,0.4) 100%
-            ),
-            linear-gradient(
-              180deg,
-              transparent 0%,
-              rgba(255,255,210,0.08) 16%,
-              rgba(255,255,180,0.32) 34%,
-              rgba(255,255,255,1) 50%,
-              rgba(255,255,150,0.32) 66%,
-              rgba(255,255,120,0.08) 84%,
-              transparent 100%
-            );
-          background-repeat: no-repeat, repeat-y;
-          background-size: 100% 100%, 100% 520px;
-          background-position: 0 0, 0 -520px;
-          box-shadow: 0 0 9px rgba(255,255,255,0.22);
-          will-change: background-position;
-          animation: isrSectionLineRunY 6.8s linear infinite;
-          pointer-events: none;
-        }
-
-        @keyframes isrSectionLineRunY {
-          0% {
-            background-position: 0 0, 0 -520px;
-          }
-
-          100% {
-            background-position: 0 0, 0 520px;
-          }
+          content: none;
         }
 
         .capabilities-section {
@@ -173,19 +136,12 @@ export default function ResearchPage2() {
             linear-gradient(180deg, transparent 0%, #000 12%, #000 92%, transparent 100%);
         }
 
-        .isr-bg-glow {
-          position: absolute;
-          inset: 0 -14% -8%;
-          z-index: 0;
-          pointer-events: none;
-          background:
-            radial-gradient(ellipse at 0% 88%, rgba(227, 197, 65, 0.46), rgba(227, 197, 65, 0.15) 34%, rgba(227, 197, 65, 0) 66%),
-            radial-gradient(ellipse at 96% 96%, rgba(88, 98, 210, 0.56), rgba(88, 98, 210, 0.18) 36%, rgba(88, 98, 210, 0) 70%),
-            linear-gradient(115deg, rgba(227, 197, 65, 0.08) 0%, rgba(2, 4, 9, 0) 48%, rgba(88, 98, 210, 0.12) 100%);
-          filter: blur(10px);
-          opacity: 0.98;
-          -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 88%, transparent 100%);
-          mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 88%, transparent 100%);
+        /* Side lighting now comes from the shared atmosphere stages — all
+           old section-sized glow rectangles are disabled to kill the seams. */
+        .isr-bg-glow,
+        .swm-bg-glow,
+        .afr-bg-glow {
+          display: none;
         }
 
         .isr-inner {
@@ -343,13 +299,28 @@ export default function ResearchPage2() {
 
         @media (min-width: 1024px) {
           .isr-section {
-            --isr-line-x: 96px;
+            --isr-line-x: clamp(4.5rem, 5.96vw, 6.4375rem);
             --isr-content-shift: clamp(44px, 4.2vw, 64px);
+          }
+
+          .isr-kicker {
+            position: relative;
+          }
+
+          .isr-kicker::before {
+            content: "";
+            position: absolute;
+            left: calc(-1 * var(--isr-content-shift));
+            top: 0.62em;
+            width: clamp(13px, 1.1vw, 22px);
+            height: 1px;
+            background: rgba(255, 255, 255, 0.72);
+            pointer-events: none;
           }
 
           .capabilities-section {
             min-height: 597px;
-            padding-left: 96px !important;
+            padding-left: clamp(4.5rem, 5.96vw, 6.4375rem) !important;
             padding-right: clamp(24px, 3vw, 44px) !important;
           }
 
@@ -649,25 +620,6 @@ export default function ResearchPage2() {
           background: transparent;
         }
 
-        .swm-section::before {
-          bottom: auto;
-          height: calc(100% - clamp(280px, 25vw, 450px));
-        }
-
-        .swm-bg-glow {
-          position: absolute;
-          inset: 0 -10% 0;
-          z-index: 0;
-          pointer-events: none;
-          background:
-            radial-gradient(ellipse at 0% 72%, rgba(243, 208, 93, 0.1), rgba(243, 208, 93, 0.025) 28%, rgba(243, 208, 93, 0) 62%),
-            radial-gradient(ellipse at 100% 72%, rgba(93, 110, 243, 0.12), rgba(93, 110, 243, 0.03) 30%, rgba(93, 110, 243, 0) 64%);
-          filter: blur(22px);
-          opacity: 0.68;
-          -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 42%, #000 70%, #000 96%, transparent 100%);
-          mask-image: linear-gradient(180deg, transparent 0%, transparent 42%, #000 70%, #000 96%, transparent 100%);
-        }
-
         .swm-bg-glow::before,
         .swm-bg-glow::after {
           content: none;
@@ -680,6 +632,13 @@ export default function ResearchPage2() {
         .swm-intro strong {
           font-weight: 700;
           color: #FFFFFF;
+        }
+
+        .swm-intro .swm-arc-os-o {
+          color: #E3E41B;
+          font-family: "Yapari Trial", "Research Yapari", "Azonix", sans-serif;
+          font-style: normal;
+          font-weight: 700;
         }
 
         .swm-box {
@@ -942,9 +901,15 @@ export default function ResearchPage2() {
         }
       `}</style>
 
+      <div className="atmosphere-stage mobility-stage">
+        <div className="atmosphere-stage__lighting" aria-hidden="true">
+          <span className="megha-light-blob mobility-gold" />
+          <span className="megha-light-blob mobility-blue" />
+        </div>
+
       <section
         id="capabilities-isr"
-        className="isr-section capabilities-section relative z-10 mx-auto w-full max-w-[1500px] px-7 pt-20 pb-32 sm:px-14 sm:pt-24 lg:px-24"
+        className="isr-section capabilities-section relative z-10 mx-auto w-full max-w-[1500px] px-7 pt-20 pb-32 sm:px-14 sm:pt-24 lg:px-[clamp(4.5rem,5.96vw,6.4375rem)]"
       >
         <div className="isr-bg-glow" aria-hidden="true" />
         <img
@@ -1003,7 +968,7 @@ export default function ResearchPage2() {
 
       <section
         id="the-airframe"
-        className="isr-section afr-section relative z-10 mx-auto w-full max-w-[1500px] px-7 pt-20 pb-32 sm:px-14 sm:pt-24 lg:px-24"
+        className="isr-section afr-section relative z-10 mx-auto w-full max-w-[1500px] px-7 pt-20 pb-32 sm:px-14 sm:pt-24 lg:px-[clamp(4.5rem,5.96vw,6.4375rem)]"
       >
         <div className="afr-bg-glow" aria-hidden="true" />
 
@@ -1059,9 +1024,16 @@ export default function ResearchPage2() {
         </div>
       </section>
 
+      </div>
+
+      <div className="atmosphere-stage network-stage">
+        <div className="atmosphere-stage__lighting" aria-hidden="true">
+          <span className="megha-light-blob network-blue" />
+        </div>
+
       <section
         id="swarm-autonomy"
-        className="isr-section swm-section relative z-10 mx-auto w-full max-w-[1500px] px-7 pt-20 pb-32 sm:px-14 sm:pt-24 lg:px-24"
+        className="isr-section swm-section relative z-10 mx-auto w-full max-w-[1500px] px-7 pt-20 pb-32 sm:px-14 sm:pt-24 lg:px-[clamp(4.5rem,5.96vw,6.4375rem)]"
       >
         <div className="swm-bg-glow" aria-hidden="true" />
 
@@ -1075,7 +1047,10 @@ export default function ResearchPage2() {
 
           <p className="isr-intro swm-intro">
             A single MEGHA is powerful. The real weapon is the swarm.{" "}
-            <strong>Through ARC OS — ABSOL X's</strong> agentic
+            <strong>
+              Through ARC <span className="swm-arc-os-o">O</span>S — ABSOL X's
+            </strong>{" "}
+            agentic
             command-and-control platform — one commander dictates the strategic
             intent, the "what" and the "why," while thousands of distributed
             MEGHA agents intelligently determine the "how." And on every modern
@@ -1157,6 +1132,8 @@ export default function ResearchPage2() {
           </p>
         </div>
       </section>
+
+      </div>
     </>
   );
 }
