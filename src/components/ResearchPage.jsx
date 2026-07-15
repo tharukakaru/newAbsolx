@@ -777,14 +777,14 @@ export default function ResearchPage() {
         .research-autonomy-label {
           position: absolute;
           right: clamp(2px, 0.8vw, 14px);
-          top: clamp(540px, 58vw, 860px);
+          top: clamp(320px, 32vw, 520px);
           z-index: 4;
           writing-mode: vertical-rl;
           text-orientation: mixed;
           white-space: nowrap;
           color: rgba(201, 209, 211, 0.48);
           font-family: "Research Yapari Regular", "Yapari Trial", "Azonix", sans-serif;
-          font-size: clamp(26px, 2.6vw, 46px);
+          font-size: clamp(36px, 3.6vw, 56px);
           font-style: normal;
           font-weight: 400;
           line-height: 1;
