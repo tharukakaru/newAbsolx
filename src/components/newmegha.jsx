@@ -15,13 +15,16 @@ const aircraftSpecs = [
     ],
   },
   { kind: "single", label: "Payload", value: "25 lbs (11 kg)" },
-  { kind: "single", label: "Weight (Dual Batteries)", value: "55 lbs (25 kg)" },
+  {
+    kind: "single",
+    label: "Weight (Dual Batteries)",
+    value: "55 lbs (25 kg)",
+  },
 ];
 
 const descriptionParagraphs = [
   "X-Striker is a jet-powered, fully autonomous combat aircraft developed under ABSOL-X program Hangar 18. It is not a scout with a weapon bolted on. It is a fighter, and it flies itself.",
-  "Built as a collaborative combat aircraft, it flies alongside crewed fighters and other unmanned systems, taking the forward position and extending the reach of the force behind it. It also operates alone.",
-  "It runs at high subsonic speed today, with the roadmap targeting Mach 1, which is what lets it hold air-to-air engagements against hostile aircraft and drones, and press air-to-surface missions past 1000 km.",
+  "Built as a Collaborative Combat Aircraft, it flies alongside crewed fighters and other unmanned systems taking the forward position and extending the reach of the force behind it. It also operates alone. It runs at high subsonic speed today, with the roadmap targeting Mach 1, which is what lets it hold air-to-air engagements against hostile aircraft and drones, and press air-to-surface missions past 1000 km.",
 ];
 
 const capabilityTags = ["ISR", "Strike", "Air to Air", "SUPER SONIC", "Swarm"];
@@ -58,12 +61,18 @@ export default function NewMegha() {
           font-size: 100%;
         }
 
+        .x-striker-section,
+        .x-striker-section * {
+          box-sizing: border-box;
+        }
+
         .x-striker-section {
+          --x-striker-content-inset: clamp(0.75rem, 1.5vw, 1.5rem);
+          --x-striker-desc-line-height: clamp(19rem, 65vh, 40rem);
           width: 100%;
-          min-height: 64rem;
           min-height: max(64rem, 100svh);
           overflow-x: hidden;
-          color: #FFFFFF;
+          color: #ffffff;
           background:
             radial-gradient(
               ellipse at left center,
@@ -79,15 +88,14 @@ export default function NewMegha() {
             ),
             linear-gradient(
               90deg,
-              #080C17 0%,
-              #04060A 42%,
-              #04060A 58%,
-              #0A1120 100%
+              #080c17 0%,
+              #04060a 42%,
+              #04060a 58%,
+              #0a1120 100%
             );
         }
 
         .x-striker-section__container {
-          box-sizing: border-box;
           display: flex;
           flex-direction: column;
           width: min(100%, 90rem);
@@ -97,16 +105,15 @@ export default function NewMegha() {
         }
 
         .x-striker-section__header {
-          box-sizing: border-box;
           display: flex;
           flex: 0 0 auto;
           align-items: center;
           justify-content: center;
           width: 100%;
           min-height: clamp(11.5rem, 17vw, 15.625rem);
-          padding-inline: clamp(1.25rem, 4vw, 4rem);
           padding-block-start: clamp(2rem, 3.5vw, 3.125rem);
           padding-block-end: clamp(0.75rem, 1.25vw, 1rem);
+          padding-inline: clamp(1.25rem, 4vw, 4rem);
         }
 
         .megha-uas-title {
@@ -116,7 +123,7 @@ export default function NewMegha() {
           column-gap: clamp(1rem, 2.5vw, 2.5rem);
           margin: 0;
           padding-inline-start: clamp(0.55rem, 1.8vw, 1.625rem);
-          font-family: "Yapari Trial", "Plus Jakarta Sans", sans-serif;
+          font-family: "Yapari Trial", sans-serif;
           font-size: clamp(3.25rem, 5.85vw, 5.25rem);
           font-style: normal;
           font-weight: 400;
@@ -125,6 +132,11 @@ export default function NewMegha() {
           text-align: center;
           text-transform: uppercase;
           white-space: nowrap;
+        }
+
+        .megha-uas-title__word {
+          display: inline-flex;
+          align-items: center;
         }
 
         .megha-uas-title__me,
@@ -145,12 +157,7 @@ export default function NewMegha() {
         }
 
         .megha-uas-title__g {
-          background-image: linear-gradient(90deg, #DADD00 0%, #F0F214 100%);
-        }
-
-        .megha-uas-title__word {
-          display: inline-flex;
-          align-items: center;
+          background-image: linear-gradient(90deg, #dadd00 0%, #f0f214 100%);
         }
 
         .megha-uas-title__rest {
@@ -162,32 +169,20 @@ export default function NewMegha() {
         }
 
         .x-striker-section__content {
-          display: flex;
+          position: relative;
+          display: grid;
           flex: 1 1 auto;
-          align-items: stretch;
+          grid-template-columns: minmax(0, 1.35fr) minmax(23rem, 0.85fr);
           min-width: 0;
-          min-height: 0;
+          padding-inline-start: var(--x-striker-content-inset);
+          padding-block-end: clamp(2rem, 4vh, 3.5rem);
+          border-inline-start: 0.0625rem solid rgba(255, 255, 255, 0.55);
+          border-block-end: 0.0625rem solid rgba(255, 255, 255, 0.55);
         }
 
         .x-striker-profile {
-          position: relative;
-          width: min(58%, 52rem);
           min-width: 0;
-          padding-block-end: clamp(2rem, 4vh, 3.5rem);
-        }
-
-        .x-striker-profile__rail {
-          position: absolute;
-          inset-block: clamp(0.5rem, 1vh, 1rem) 0;
-          inset-inline-start: 0;
-          width: 0.0625rem;
-          background: rgba(255, 255, 255, 0.55);
-          pointer-events: none;
-        }
-
-        .x-striker-profile__inner {
-          min-width: 0;
-          padding-inline-start: clamp(0.75rem, 1.5vw, 1.5rem);
+          padding-inline-end: clamp(1rem, 2vw, 2rem);
         }
 
         .x-striker-profile__hangar-title {
@@ -195,6 +190,7 @@ export default function NewMegha() {
           width: clamp(9.5rem, 14vw, 13.5rem);
           height: auto;
           margin: 0 0 clamp(3.5rem, 6vh, 6rem);
+          margin-inline-start: calc(0rem - var(--x-striker-content-inset));
           object-fit: contain;
           object-position: left center;
           user-select: none;
@@ -213,6 +209,7 @@ export default function NewMegha() {
 
         .x-striker-aircraft-stage__name,
         .x-striker-aircraft-stage__year {
+          grid-row: 1;
           margin: 0;
           padding-block-start: clamp(4.5rem, 9vh, 7rem);
           font-family: "Inter", sans-serif;
@@ -221,19 +218,28 @@ export default function NewMegha() {
           font-weight: 700;
           line-height: 1;
           white-space: nowrap;
-          color: #FFFFFF;
-          -webkit-text-stroke: 0.015625rem rgba(255, 255, 255, 0.9);
+          color: #ffffff;
         }
 
         .x-striker-aircraft-stage__name {
           grid-column: 1;
-          grid-row: 1;
-          justify-self: center;
+          display: flex;
+          align-items: center;
+          justify-self: stretch;
+          gap: clamp(0.35rem, 0.7vw, 0.6rem);
+        }
+
+        .x-striker-aircraft-stage__name::before {
+          content: "";
+          flex: 1 1 auto;
+          height: 0.0625rem;
+          margin-inline-start: calc(0rem - var(--x-striker-content-inset));
+          background: rgba(255, 255, 255, 0.75);
+          pointer-events: none;
         }
 
         .x-striker-aircraft-stage__year {
           grid-column: 3;
-          grid-row: 1;
           justify-self: center;
         }
 
@@ -247,7 +253,7 @@ export default function NewMegha() {
 
         .x-striker-aircraft-stage__image {
           display: block;
-          width: min(100%, clamp(16rem, 27vw, 27rem));
+          width: min(100%, clamp(15rem, 24vw, 24rem));
           max-height: clamp(22rem, 44vh, 34rem);
           height: auto;
           margin-inline: auto;
@@ -256,15 +262,15 @@ export default function NewMegha() {
           filter: drop-shadow(0 0.6rem 1.2rem rgba(0, 0, 0, 0.55));
         }
 
-        /* ── Specification table ─────────────────────────────── */
-
         .x-striker-specs {
-          margin: clamp(2rem, 4.5vh, 3.5rem) 0 0;
           max-width: clamp(24rem, 40vw, 38.5rem);
+          margin: clamp(2rem, 4.5vh, 3.5rem) 0 0;
         }
 
         .x-striker-specs__row {
-          padding-block: clamp(0.5rem, 1vh, 0.75rem) clamp(0.55rem, 1.1vh, 0.85rem);
+          padding-block:
+            clamp(0.5rem, 1vh, 0.75rem)
+            clamp(0.55rem, 1.1vh, 0.85rem);
           border-block-end: 0.0625rem solid rgba(255, 255, 255, 0.72);
         }
 
@@ -274,7 +280,7 @@ export default function NewMegha() {
 
         .x-striker-specs__row--split {
           display: grid;
-          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: clamp(1rem, 2.5vw, 3rem);
         }
 
@@ -285,7 +291,7 @@ export default function NewMegha() {
           font-weight: 700;
           line-height: 1.2;
           text-transform: uppercase;
-          color: #FFFFFF;
+          color: #ffffff;
         }
 
         .x-striker-specs__value {
@@ -298,16 +304,13 @@ export default function NewMegha() {
         }
 
         .x-striker-specs__value--megha {
-          font-family: "Yapari Trial", "Plus Jakarta Sans", sans-serif;
+          font-family: "Yapari Trial", sans-serif;
           font-size: clamp(1.15rem, 1.6vw, 1.625rem);
           font-weight: 400;
           line-height: 1;
           letter-spacing: clamp(0.25rem, 0.65vw, 0.56875rem);
           text-transform: uppercase;
-          color: #FFFFFF;
         }
-
-        /* ── Capability tags ─────────────────────────────────── */
 
         .x-striker-tags {
           display: flex;
@@ -329,42 +332,41 @@ export default function NewMegha() {
           color: rgba(255, 255, 255, 0.52);
         }
 
-        /* ── Right description panel ─────────────────────────── */
-
         .x-striker-desc {
           position: relative;
-          flex: 1 1 auto;
-          align-self: flex-start;
+          align-self: start;
           min-width: 0;
-          margin-block-start: clamp(9rem, 19vh, 12.5rem);
+          margin-block-start: clamp(2.75rem, 6vh, 4rem);
           margin-inline-start: clamp(2rem, 4vw, 4.5rem);
-          padding-inline-start: clamp(1.5rem, 2.4vw, 2.5rem);
+          padding-inline-start: clamp(1rem, 2vw, 1.5rem);
         }
 
         .x-striker-desc::before {
           content: "";
           position: absolute;
-          inset-block: 0 clamp(-1rem, -1.5vh, -0.5rem);
+          inset-block-start: 0;
           inset-inline-start: 0;
           width: 0.0625rem;
+          height: var(--x-striker-desc-line-height);
           background: rgba(255, 255, 255, 0.75);
         }
 
-        /* Angled connector leaving the divider's top diagonally up-right. */
         .x-striker-desc__connector {
           position: absolute;
-          inset-inline-start: 0;
+          inset-inline-start: auto;
+          inset-inline-end: 100%;
           inset-block-start: 0;
           width: clamp(2rem, 2.8vw, 3rem);
           height: 0.0625rem;
           background: rgba(255, 255, 255, 0.75);
-          transform: rotate(-45deg);
-          transform-origin: left center;
+          transform: rotate(40deg);
+          transform-origin: right center;
+          pointer-events: none;
         }
 
         .x-striker-desc__copy {
-          margin: 0;
           max-width: 31rem;
+          margin: 0;
           font-family: "Inter", sans-serif;
           font-size: clamp(0.78rem, 0.9vw, 1rem);
           font-weight: 400;
@@ -374,12 +376,12 @@ export default function NewMegha() {
         }
 
         .x-striker-desc__copy + .x-striker-desc__copy {
-          margin-block-start: clamp(0.6rem, 1.2vh, 1rem);
+          margin-block-start: clamp(0.25rem, 0.6vh, 0.4rem);
         }
 
         @media (max-width: 64rem) and (min-width: 48rem) {
-          .x-striker-profile {
-            width: min(60%, 43rem);
+          .x-striker-section__content {
+            grid-template-columns: minmax(0, 1.2fr) minmax(19rem, 0.8fr);
           }
 
           .x-striker-aircraft-stage {
@@ -390,8 +392,8 @@ export default function NewMegha() {
           }
 
           .x-striker-desc {
+            margin-block-start: clamp(2.5rem, 5vh, 3.5rem);
             margin-inline-start: clamp(1rem, 2vw, 2rem);
-            margin-block-start: clamp(6rem, 14vh, 9rem);
           }
 
           .x-striker-specs {
@@ -407,12 +409,13 @@ export default function NewMegha() {
             padding-inline-start: clamp(0.2rem, 1.7vw, 0.8rem);
           }
 
-          .x-striker-profile {
-            width: 100%;
+          .x-striker-section__content {
+            grid-template-columns: 1fr;
+            row-gap: clamp(2rem, 6vw, 3rem);
           }
 
-          .x-striker-profile__inner {
-            padding-inline-start: clamp(0.75rem, 4vw, 1.25rem);
+          .x-striker-profile {
+            padding-inline-end: 0;
           }
 
           .x-striker-profile__hangar-title {
@@ -450,17 +453,12 @@ export default function NewMegha() {
             width: min(100%, clamp(15rem, 72vw, 22rem));
           }
 
-          .x-striker-section__content {
-            flex-direction: column;
-          }
-
           .x-striker-specs {
             max-width: 100%;
           }
 
           .x-striker-desc {
-            margin-block-start: clamp(1.5rem, 5vw, 2.5rem);
-            margin-inline-start: 0;
+            margin: 0;
             padding-inline-start: 0;
             padding-block-start: clamp(1.25rem, 4vw, 1.75rem);
             border-block-start: 0.0625rem solid rgba(255, 255, 255, 0.4);
@@ -485,6 +483,10 @@ export default function NewMegha() {
             row-gap: 0.35rem;
             white-space: normal;
           }
+
+          .x-striker-specs__row--split {
+            grid-template-columns: 1fr;
+          }
         }
       `}</style>
 
@@ -506,79 +508,78 @@ export default function NewMegha() {
 
         <div className="x-striker-section__content">
           <div className="x-striker-profile">
-            <div className="x-striker-profile__rail" aria-hidden="true" />
+            <img
+              className="x-striker-profile__hangar-title"
+              src={hangarTitle}
+              alt="Hangar 18"
+              draggable="false"
+            />
 
-            <div className="x-striker-profile__inner">
-              <img
-                className="x-striker-profile__hangar-title"
-                src={hangarTitle}
-                alt="Hangar 18"
-                draggable="false"
-              />
+            <div className="x-striker-aircraft-stage">
+              <h2 className="x-striker-aircraft-stage__name">
+                <span>X-Striker</span>
+              </h2>
+              <span className="x-striker-aircraft-stage__year">2028</span>
 
-              <div className="x-striker-aircraft-stage">
-                <h3 className="x-striker-aircraft-stage__name">X-Striker</h3>
-                <span className="x-striker-aircraft-stage__year">2028</span>
-
-                <figure className="x-striker-aircraft-stage__figure">
-                  <img
-                    className="x-striker-aircraft-stage__image"
-                    src={strikerImage}
-                    alt="X-Striker autonomous aircraft"
-                    draggable="false"
-                  />
-                </figure>
-              </div>
-
-              <dl className="x-striker-specs">
-                {aircraftSpecs.map((row) =>
-                  row.kind === "split" ? (
-                    <div
-                      className="x-striker-specs__row x-striker-specs__row--split"
-                      key={row.cells[0].label}
-                    >
-                      {row.cells.map((cell) => (
-                        <div className="x-striker-specs__cell" key={cell.label}>
-                          <dt className="x-striker-specs__label">{cell.label}</dt>
-                          <dd className="x-striker-specs__value">{cell.value}</dd>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="x-striker-specs__row" key={row.label}>
-                      <dt className="x-striker-specs__label">{row.label}</dt>
-                      <dd
-                        className={
-                          row.megha
-                            ? "x-striker-specs__value x-striker-specs__value--megha"
-                            : "x-striker-specs__value"
-                        }
-                      >
-                        {row.value}
-                      </dd>
-                    </div>
-                  )
-                )}
-              </dl>
-
-              <ul className="x-striker-tags">
-                {capabilityTags.map((tag) => (
-                  <li className="x-striker-tags__tag" key={tag}>
-                    {tag}
-                  </li>
-                ))}
-              </ul>
+              <figure className="x-striker-aircraft-stage__figure">
+                <img
+                  className="x-striker-aircraft-stage__image"
+                  src={strikerImage}
+                  alt="X-Striker autonomous aircraft"
+                  draggable="false"
+                />
+              </figure>
             </div>
+
+            <dl className="x-striker-specs">
+              {aircraftSpecs.map((row) =>
+                row.kind === "split" ? (
+                  <div
+                    className="x-striker-specs__row x-striker-specs__row--split"
+                    key={row.cells[0].label}
+                  >
+                    {row.cells.map((cell) => (
+                      <div className="x-striker-specs__cell" key={cell.label}>
+                        <dt className="x-striker-specs__label">{cell.label}</dt>
+                        <dd className="x-striker-specs__value">{cell.value}</dd>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="x-striker-specs__row" key={row.label}>
+                    <dt className="x-striker-specs__label">{row.label}</dt>
+                    <dd
+                      className={
+                        row.megha
+                          ? "x-striker-specs__value x-striker-specs__value--megha"
+                          : "x-striker-specs__value"
+                      }
+                    >
+                      {row.value}
+                    </dd>
+                  </div>
+                ),
+              )}
+            </dl>
+
+            <ul className="x-striker-tags">
+              {capabilityTags.map((tag) => (
+                <li className="x-striker-tags__tag" key={tag}>
+                  {tag}
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div className="x-striker-desc">
+          <aside className="x-striker-desc" aria-label="X-Striker description">
             <span className="x-striker-desc__connector" aria-hidden="true" />
+
             {descriptionParagraphs.map((paragraph) => (
-              <p className="x-striker-desc__copy" key={paragraph.slice(0, 24)}>
+              <p className="x-striker-desc__copy" key={paragraph}>
                 {paragraph}
               </p>
             ))}
-          </div>
+          </aside>
         </div>
       </div>
     </section>

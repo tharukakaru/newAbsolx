@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import yapariBold from "../assets/fonts/YapariTrial-Bold.ttf";
 import yapariRegular from "../assets/fonts/YapariTrial-Regular.ttf";
 import archivoRegular from "../assets/fonts/archivo.regular.ttf";
@@ -172,6 +172,34 @@ export default function ResearchPage() {
     triggerSelector: ".research-copy",
     triggerPoint: 0,
   });
+
+  // Stretch the hero spine so it ends exactly at the megha-frame corner in
+  // the swarm section — one continuous vertical rail whose travelling glow
+  // sweeps the entire length instead of restarting mid-page.
+  useEffect(() => {
+    const update = () => {
+      const line = document.querySelector(".research-signal-line");
+      const frame = document.querySelector(".megha-frame");
+      if (!line || !frame) return;
+      const lineTop = line.getBoundingClientRect().top + window.scrollY;
+      const frameBottom = frame.getBoundingClientRect().bottom + window.scrollY;
+      // The spine (::before) starts 16px above the divider (top: -16px).
+      line.style.setProperty(
+        "--research-line-height",
+        `${Math.max(0, frameBottom - lineTop + 16)}px`,
+      );
+    };
+
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(document.body);
+    window.addEventListener("resize", update);
+    document.fonts?.ready?.then(update);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", update);
+    };
+  }, []);
 
   return (
     <main className="research-page relative min-h-screen overflow-hidden text-white">
@@ -562,7 +590,10 @@ export default function ResearchPage() {
           display: block;
           overflow: visible;
           z-index: 120;
-          --research-line-height: clamp(4700px, 479vw, 8400px);
+          /* Max is capped so the spine always ends above the swarm section's
+             megha-frame corner — the frame's own left border carries the rail
+             the rest of the way down to the bottom rule. */
+          --research-line-height: clamp(4700px, 479vw, 7600px);
           --research-line-current: 560px;
           background:
             linear-gradient(90deg, rgba(201,209,211,0.55) 0%, rgba(201,209,211,0.26) 62%, rgba(201,209,211,0.08) 88%, transparent 100%),
@@ -617,7 +648,7 @@ export default function ResearchPage() {
             drop-shadow(0 0 8px rgba(255,255,180,0.16));
           pointer-events: none;
           will-change: transform;
-          animation: researchSignalCurrentY 8.8s linear infinite;
+          animation: researchSignalCurrentY 6s linear infinite;
         }
 
         @keyframes researchSignalSweep {
@@ -626,6 +657,9 @@ export default function ResearchPage() {
           100% { background-position: 0 0, 134% 0; }
         }
 
+        /* Band starts just above the spine's top edge and exits past its
+           bottom end (the megha-frame corner) — visible for the whole cycle,
+           never idling off-screen. */
         @keyframes researchSignalCurrentY {
           0%   { transform: translateY(calc(var(--research-line-current) * -1)); }
           100% { transform: translateY(var(--research-line-height)); }

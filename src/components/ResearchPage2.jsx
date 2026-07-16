@@ -618,6 +618,13 @@ export default function ResearchPage2() {
         .swm-section {
           padding-bottom: clamp(34px, 4vw, 64px) !important;
           background: transparent;
+          /* Decorative frame geometry: how far below the scope's top the rail
+             begins, how far above the scope's bottom the rule sits (the old
+             rule hugged the future-text baseline by 0.125rem), and how far the
+             bottom rule runs — tuned to stop by the "N" of "Numerous". */
+          --megha-rail-start: 0rem;
+          --megha-bottom-position: 0.125rem;
+          --megha-rule-length: clamp(19rem, 25.3vw, 25.5rem);
         }
 
         .swm-bg-glow::before,
@@ -791,46 +798,30 @@ export default function ResearchPage2() {
           white-space: nowrap;
         }
 
-        .swm-future-rule {
-          display: block;
+        /* One shared decorative frame: the left rail continuation and the
+           bottom rule are two borders of the SAME element, so they always
+           meet at an exact 90° corner — no gap at any viewport width. The
+           scope wrapper ends right after .swm-future, which pins the bottom
+           border to the rule's original spot regardless of how the closing
+           copy below it wraps. */
+        .megha-frame-scope {
           position: relative;
-          z-index: 4;
-          width: clamp(300px, 31vw, 620px);
-          height: 1px;
-          margin-top: -2px;
-          margin-left: calc(-1 * var(--isr-content-shift));
-          background:
-            linear-gradient(90deg, rgba(255,255,255,0.58), rgba(255,255,255,0.34) 58%, rgba(255,255,255,0)),
-            linear-gradient(
-              90deg,
-              transparent 0%,
-              rgba(255,255,210,0.08) 16%,
-              rgba(255,255,180,0.38) 34%,
-              rgba(255,255,255,1) 50%,
-              rgba(255,255,180,0.38) 66%,
-              rgba(255,255,210,0.08) 84%,
-              transparent 100%
-            );
-          background-repeat: no-repeat;
-          background-size: 100% 100%, 44% 100%;
-          background-position: 0 0, -48% 0;
-          box-shadow: 0 0 4px rgba(255,255,255,0.16);
-          will-change: background-position;
-          animation: swmFutureRuleRunX 7.2s linear infinite;
         }
 
-        @keyframes swmFutureRuleRunX {
-          0% {
-            background-position: 0 0, -48% 0;
-          }
-
-          92% {
-            background-position: 0 0, 148% 0;
-          }
-
-          100% {
-            background-position: 0 0, 148% 0;
-          }
+        .megha-frame {
+          position: absolute;
+          z-index: 1;
+          inset-inline-start: calc(-1 * var(--isr-content-shift));
+          inset-block-start: var(--megha-rail-start);
+          inset-block-end: var(--megha-bottom-position);
+          width: var(--megha-rule-length);
+          border-inline-start: 0.0625rem solid rgba(255, 255, 255, 0.55);
+          border-block-end: 0.0625rem solid rgba(255, 255, 255, 0.55);
+          /* No animation of its own: the page spine (.research-signal-line's
+             pseudo elements) is stretched by JS to end exactly at this
+             frame's corner, so its full-length travelling glow passes over
+             this border in one continuous run. */
+          pointer-events: none;
         }
 
         .swm-closing {
@@ -895,8 +886,8 @@ export default function ResearchPage2() {
             white-space: normal;
           }
 
-          .swm-future-rule {
-            width: clamp(180px, 62vw, 320px);
+          .swm-section {
+            --megha-rule-length: clamp(11rem, 62vw, 20rem);
           }
         }
       `}</style>
@@ -1039,77 +1030,80 @@ export default function ResearchPage2() {
         <div className="swm-bg-glow" aria-hidden="true" />
 
         <div className="isr-inner">
-          <p className="isr-kicker">// 04 — Capabilities &amp; ISR</p>
+          <div className="megha-frame-scope">
+            <p className="isr-kicker">// 04 — Capabilities &amp; ISR</p>
 
-          <h2 className="isr-title">
-            Networked <span className="isr-accent">Swarm Autonomy</span>,
-            Resilient to Electronic Warfare
-          </h2>
+            <h2 className="isr-title">
+              Networked <span className="isr-accent">Swarm Autonomy</span>,
+              Resilient to Electronic Warfare
+            </h2>
 
-          <p className="isr-intro swm-intro">
-            A single MEGHA is powerful. The real weapon is the swarm.{" "}
-            <strong>
-              Through ARC <span className="swm-arc-os-o">O</span>S — ABSOL X's
-            </strong>{" "}
-            agentic
-            command-and-control platform — one commander dictates the strategic
-            intent, the "what" and the "why," while thousands of distributed
-            MEGHA agents intelligently determine the "how." And on every modern
-            battlefield the radio link is the first thing the enemy attacks.
-            MEGHA bypasses Electronic Warfare entirely: the moment the link is
-            severed, the onboard AI promotes itself to operator and executes the
-            commander's intent independently.
-          </p>
-
-          <div className="swm-box">
-            <h3 className="swm-box-tagline">
-              <span className="y">One</span> commander.{" "}
-              <span className="y">One</span> hand. Thousands of intelligent UAVs
-              acting as a single coordinated swarm.
-            </h3>
-
-            <p className="swm-box-body">
-              If localized jamming degrades part of the swarm, the surviving
-              MEGHA assets automatically re-route their mesh communications,
-              redistribute tactical roles, and continue the mission. The swarm{" "}
-              <strong>degrades gracefully rather than collapsing</strong> — each
-              AI agent acting as a localized battlefield commander.
+            <p className="isr-intro swm-intro">
+              A single MEGHA is powerful. The real weapon is the swarm.{" "}
+              <strong>
+                Through ARC <span className="swm-arc-os-o">O</span>S — ABSOL X's
+              </strong>{" "}
+              agentic
+              command-and-control platform — one commander dictates the strategic
+              intent, the "what" and the "why," while thousands of distributed
+              MEGHA agents intelligently determine the "how." And on every modern
+              battlefield the radio link is the first thing the enemy attacks.
+              MEGHA bypasses Electronic Warfare entirely: the moment the link is
+              severed, the onboard AI promotes itself to operator and executes the
+              commander's intent independently.
             </p>
-          </div>
 
-          <div className="swm-compare">
-            <div className="swm-col swm-col--old">
-              <p className="swm-col-head">
-                // Old Way — Dependent on a Distant Brain
+            <div className="swm-box">
+              <h3 className="swm-box-tagline">
+                <span className="y">One</span> commander.{" "}
+                <span className="y">One</span> hand. Thousands of intelligent UAVs
+                acting as a single coordinated swarm.
+              </h3>
+
+              <p className="swm-box-body">
+                If localized jamming degrades part of the swarm, the surviving
+                MEGHA assets automatically re-route their mesh communications,
+                redistribute tactical roles, and continue the mission. The swarm{" "}
+                <strong>degrades gracefully rather than collapsing</strong> — each
+                AI agent acting as a localized battlefield commander.
               </p>
-              <div className="swm-col-rule" />
-              <ul className="swm-list">
-                {swarmOldWay.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
             </div>
 
-            <div className="swm-col swm-col--megha">
-              <p className="swm-col-head">// MEGHA — Edge-Autonomous Agent</p>
-              <div className="swm-col-rule" />
-              <ul className="swm-list">
-                {swarmMeghaWay.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
+            <div className="swm-compare">
+              <div className="swm-col swm-col--old">
+                <p className="swm-col-head">
+                  // Old Way — Dependent on a Distant Brain
+                </p>
+                <div className="swm-col-rule" />
+                <ul className="swm-list">
+                  {swarmOldWay.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="swm-col swm-col--megha">
+                <p className="swm-col-head">// MEGHA — Edge-Autonomous Agent</p>
+                <div className="swm-col-rule" />
+                <ul className="swm-list">
+                  {swarmMeghaWay.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
+
+            <p className="swm-future">
+              <span className="swm-future-line">
+                The <span className="y">Future</span> of Power Belongs to
+              </span>
+              <span className="swm-future-line">
+                Cheap, Numerous, <span className="y">Intelligent</span> Mass
+              </span>
+            </p>
+
+            <div className="megha-frame" aria-hidden="true" />
           </div>
-
-          <p className="swm-future">
-            <span className="swm-future-line">
-              The <span className="y">Future</span> of Power Belongs to
-            </span>
-            <span className="swm-future-line">
-              Cheap, Numerous, <span className="y">Intelligent</span> Mass
-            </span>
-          </p>
-          <span className="swm-future-rule" aria-hidden="true" />
 
           <p className="swm-closing">
             <span className="swm-closing-line">
