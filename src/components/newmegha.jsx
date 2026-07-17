@@ -5,6 +5,7 @@ import strikerImage from "../assets/STRIKER_without_bg 2 2.png";
 import rakhaImage from "../assets/RAKHA 1X.png";
 import talosImage from "../assets/TALOS 1X.png";
 import ravenImage from "../assets/RAVENA 001.png";
+import aresImage from "../assets/ARES X 001.png";
 import hangarTitle from "../assets/hangar18.png";
 
 const aircraftSpecs = [
@@ -191,6 +192,50 @@ const ravenCapabilityTags = [
 
 const ravenMissionNote =
   "HYENA keeps it flying and on task in jammed airspace, navigating visually when GPS is denied. Every engagement stays under human command: the operator identifies, decides, and authorizes. The aircraft executes.";
+
+const aresSpecs = [
+  {
+    kind: "single",
+    label: "Class",
+    value: "MEGHA",
+    megha: true,
+  },
+  {
+    kind: "single",
+    label: "Endurance",
+    value: "15 min",
+  },
+  {
+    kind: "single",
+    label: "Range",
+    value: "Autonomous · point defence",
+  },
+  {
+    kind: "single",
+    label: "Payload",
+    value: "25 lbs (11 kg)",
+  },
+  {
+    kind: "single",
+    label: "Weight (Dual Batteries)",
+    value: "55 lbs (25 kg)",
+  },
+];
+
+const aresDescriptionParagraphs = [
+  "FENRIR 002 is an interceptor. It has one job — bringing down hostile drones — and it is built for nothing else.",
+  "It sits in its case, ready, at the position it defends: a forward base, a radar site, a command post, a convoy halt. No crew standing by. When the SENTINEL radar mesh detects a hostile UAV and ARC OS confirms the track, FENRIR launches within seconds — climbing before an operator could have reacted.",
+  "From that moment it flies itself. HYENA runs the intercept end to end: it takes the track from the network, closes at 250–300 km/h to a ceiling of 500 m, acquires the target with its own onboard vision, and runs it down. No operator on the sticks, no GPS dependency, no radio link that can be cut.",
+];
+
+const aresCapabilityTags = [
+  "Counter-UAS",
+  "Air Defence",
+  "Base Protection",
+];
+
+const aresMissionNote =
+  "FENRIR exists because of economics. Attacks come from cheap drones launched in numbers, and answering a thousand-dollar threat with a million-dollar missile is a losing exchange no country can sustain. FENRIR is the cheap answer to the cheap threat — and it is man-portable, so the protection moves with the force. A drone problem gets a drone answer, in seconds.";
 
 export default function NewMegha() {
   return (
@@ -1948,6 +1993,545 @@ export default function NewMegha() {
             grid-template-columns: 1fr;
           }
         }
+
+        .ares-section,
+        .ares-section * {
+          box-sizing: border-box;
+        }
+
+        .ares-section {
+          --ares-content-inset: clamp(0.75rem, 1.5vw, 1.5rem);
+          width: 100%;
+          min-height: clamp(46rem, 88vh, 60rem);
+          overflow: hidden;
+          color: #ffffff;
+          background:
+            radial-gradient(
+              ellipse 54% 72% at 100% 100%,
+              #28220f 0%,
+              rgba(40, 34, 15, 0.72) 36%,
+              rgba(40, 34, 15, 0.28) 66%,
+              transparent 100%
+            ),
+            radial-gradient(
+              ellipse 42% 42% at 0% 100%,
+              rgba(29, 34, 75, 0.46) 0%,
+              rgba(29, 34, 75, 0.16) 58%,
+              transparent 100%
+            ),
+            linear-gradient(
+              90deg,
+              #020204 0%,
+              #010102 58%,
+              #050401 100%
+            );
+        }
+
+        .ares-section__container {
+          position: relative;
+          width: min(100%, 90rem);
+          min-height: inherit;
+          margin-inline: auto;
+          padding-inline: clamp(1.5rem, 3vw, 2.75rem);
+          padding-block:
+            clamp(3.5rem, 7vh, 5rem)
+            clamp(4rem, 8vh, 6rem);
+        }
+
+        .ares-section__container::before {
+          content: "";
+          position: absolute;
+          inset-block: 0;
+          left: clamp(1.5rem, 3vw, 2.75rem);
+          width: 0.0625rem;
+          background: rgba(255, 255, 255, 0.55);
+          pointer-events: none;
+        }
+
+        .ares-section__container::after {
+          content: "";
+          position: absolute;
+          inset-block-end: 0;
+          left: clamp(1.5rem, 3vw, 2.75rem);
+          width: 0.0625rem;
+          height: clamp(0.75rem, 2vh, 1.25rem);
+          background: #a92b20;
+          pointer-events: none;
+        }
+
+        .ares-section__content {
+          position: relative;
+          display: grid;
+          grid-template-columns:
+            minmax(0, 1.35fr)
+            minmax(23rem, 0.85fr);
+          min-width: 0;
+          padding-inline-start: var(--ares-content-inset);
+        }
+
+        .ares-section__rail-copy {
+          position: absolute;
+          left: -2.25rem;
+          top: clamp(1rem, 3vh, 2rem);
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.7rem, 0.9vw, 0.9rem);
+          font-weight: 600;
+          line-height: 1;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          white-space: nowrap;
+          writing-mode: vertical-rl;
+          transform: rotate(180deg);
+          color: rgba(255, 255, 255, 0.45);
+        }
+
+        .ares-profile {
+          min-width: 0;
+          padding-inline-end: clamp(1rem, 2vw, 2rem);
+        }
+
+        .ares-aircraft-stage {
+          display: grid;
+          grid-template-columns:
+            minmax(8rem, 1fr)
+            minmax(18rem, 1.9fr)
+            minmax(5rem, 0.75fr);
+          align-items: start;
+          width: 100%;
+          min-width: 0;
+        }
+
+        .ares-aircraft-stage__name {
+          grid-column: 1;
+          grid-row: 1;
+          z-index: 1;
+          display: flex;
+          align-items: center;
+          align-self: start;
+          justify-self: stretch;
+          gap: clamp(0.35rem, 0.7vw, 0.6rem);
+          margin: 0;
+          padding-block-start: clamp(1rem, 2.5vh, 2rem);
+          font-family: "Inter", sans-serif;
+          font-size: clamp(1.45rem, 2vw, 2.625rem);
+          font-style: normal;
+          font-weight: 700;
+          line-height: 1;
+          white-space: nowrap;
+          color: #ffffff;
+        }
+
+        .ares-aircraft-stage__name::before {
+          content: "";
+          flex: 1 1 auto;
+          height: 0.0625rem;
+          margin-inline-start: calc(0rem - var(--ares-content-inset));
+          background: rgba(255, 255, 255, 0.75);
+          pointer-events: none;
+        }
+
+        .ares-aircraft-stage__figure {
+          grid-column: 1 / -1;
+          grid-row: 1;
+          width: 100%;
+          min-width: 0;
+          margin: 0;
+          overflow: visible;
+        }
+
+        .ares-aircraft-stage__image {
+          display: block;
+          width: min(100%, clamp(14rem, 24vw, 22rem));
+          max-height: clamp(24rem, 50vh, 34rem);
+          height: auto;
+          margin-inline: auto;
+          object-fit: contain;
+          user-select: none;
+          filter: drop-shadow(0 0.6rem 1.2rem rgba(0, 0, 0, 0.55));
+        }
+
+        .ares-specs {
+          max-width: clamp(24rem, 40vw, 38.5rem);
+          margin:
+            clamp(1.75rem, 4vh, 3rem)
+            0
+            0
+            clamp(3rem, 5vw, 5rem);
+        }
+
+        .ares-specs__row {
+          padding-block:
+            clamp(0.5rem, 1vh, 0.75rem)
+            clamp(0.55rem, 1.1vh, 0.85rem);
+          border-block-end: 0.0625rem solid rgba(255, 255, 255, 0.72);
+        }
+
+        .ares-specs__row:last-child {
+          border-block-end: 0;
+        }
+
+        .ares-specs__label {
+          margin: 0 0 0.3rem;
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.65rem, 0.75vw, 1.125rem);
+          font-weight: 700;
+          line-height: 1.2;
+          text-transform: uppercase;
+          color: #ffffff;
+        }
+
+        .ares-specs__value {
+          margin: 0;
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.85rem, 1vw, 1.15rem);
+          font-weight: 400;
+          line-height: 1.3;
+          color: rgba(255, 255, 255, 0.95);
+        }
+
+        .ares-specs__value--megha {
+          display: inline-flex;
+          font-family: "Yapari Trial", sans-serif;
+          font-size: clamp(1.15rem, 1.6vw, 1.625rem);
+          font-weight: 400;
+          line-height: 1;
+          letter-spacing: clamp(0.25rem, 0.65vw, 0.56875rem);
+          text-transform: uppercase;
+          color: #ffffff;
+        }
+
+        .ares-specs__megha-accent {
+          color: #e3e41b;
+        }
+
+        .ares-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: clamp(0.5rem, 1vw, 1rem);
+          margin:
+            clamp(1.75rem, 4vh, 3rem)
+            0
+            0
+            clamp(0.75rem, 1.5vw, 1.5rem);
+          padding: 0;
+          list-style: none;
+        }
+
+        .ares-tags__tag {
+          padding: 0.25rem 0.65rem;
+          border: 0.0625rem solid rgba(255, 255, 255, 0.09);
+          border-radius: 0.3rem;
+          background: rgba(255, 255, 255, 0.025);
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.65rem, 0.8vw, 0.85rem);
+          line-height: 1.4;
+          color: rgba(255, 255, 255, 0.52);
+        }
+
+        .ares-section__mission-note {
+          max-width: clamp(34rem, 55vw, 52rem);
+          margin:
+            clamp(4rem, 8vh, 6rem)
+            0
+            0
+            clamp(0.75rem, 1.5vw, 1.5rem);
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.78rem, 1vw, 1rem);
+          font-weight: 400;
+          line-height: 1.2;
+          text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.92);
+        }
+
+        .ares-desc {
+          position: relative;
+          align-self: start;
+          min-width: 0;
+          margin-block-start: clamp(2.75rem, 6vh, 4rem);
+          margin-inline-start: clamp(-5rem, -4vw, -2.5rem);
+          padding-inline-start: clamp(1rem, 2vw, 1.5rem);
+        }
+
+        .ares-desc::before {
+          content: "";
+          position: absolute;
+          inset-block-start: 0;
+          inset-inline-start: 0;
+          width: 0.0625rem;
+          height: clamp(34rem, 78vh, 52rem);
+          background: rgba(255, 255, 255, 0.75);
+        }
+
+        .ares-desc__connector {
+          position: absolute;
+          inset-inline-start: auto;
+          inset-inline-end: 100%;
+          inset-block-start: 0;
+          width: clamp(2rem, 2.8vw, 3rem);
+          height: 0.0625rem;
+          background: rgba(255, 255, 255, 0.75);
+          transform: rotate(40deg);
+          transform-origin: right center;
+          pointer-events: none;
+        }
+
+        .ares-desc__copy {
+          max-width: 31rem;
+          margin: 0;
+          font-family: "Inter", sans-serif;
+          font-size: clamp(1rem, 1.2vw, 1.25rem);
+          font-weight: 400;
+          line-height: 1.35;
+          text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.96);
+        }
+
+        .ares-desc__copy + .ares-desc__copy {
+          margin-block-start: clamp(0.75rem, 1.4vh, 1.125rem);
+        }
+
+        @media (max-width: 64rem) and (min-width: 48rem) {
+          .ares-section__content {
+            grid-template-columns: minmax(0, 1.2fr) minmax(19rem, 0.8fr);
+          }
+
+          .ares-aircraft-stage {
+            grid-template-columns:
+              minmax(5.5rem, 1fr)
+              minmax(14rem, 1.7fr)
+              minmax(4rem, 0.75fr);
+          }
+
+          .ares-aircraft-stage__image {
+            width: min(100%, clamp(13rem, 22vw, 19rem));
+          }
+
+          .ares-desc {
+            margin-block-start: clamp(2.5rem, 5vh, 3.5rem);
+            margin-inline-start: clamp(1rem, 2vw, 2rem);
+          }
+
+          .ares-specs {
+            max-width: 100%;
+          }
+        }
+
+        @media (max-width: 47.999rem) {
+          .ares-section {
+            min-height: auto;
+          }
+
+          .ares-section__container {
+            padding-block:
+              clamp(2.5rem, 8vw, 3.5rem)
+              clamp(3rem, 9vw, 4.5rem);
+          }
+
+          .ares-section__rail-copy {
+            display: none;
+          }
+
+          .ares-section__content {
+            grid-template-columns: 1fr;
+            row-gap: clamp(2rem, 6vw, 3rem);
+          }
+
+          .ares-profile {
+            padding-inline-end: 0;
+          }
+
+          .ares-aircraft-stage {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto;
+            row-gap: clamp(1.5rem, 5vh, 2.5rem);
+          }
+
+          .ares-aircraft-stage__name {
+            grid-column: 1;
+            grid-row: 1;
+            justify-self: start;
+            padding-block-start: 0;
+          }
+
+          .ares-aircraft-stage__figure {
+            grid-column: 1;
+            grid-row: 2;
+          }
+
+          .ares-aircraft-stage__image {
+            width: min(100%, clamp(12rem, 62vw, 20rem));
+          }
+
+          .ares-specs,
+          .ares-tags,
+          .ares-section__mission-note {
+            margin-inline-start: 0;
+            max-width: 100%;
+          }
+
+          .ares-desc {
+            margin: 0;
+            padding-inline-start: 0;
+            padding-block-start: clamp(1.25rem, 4vw, 1.75rem);
+            border-block-start: 0.0625rem solid rgba(255, 255, 255, 0.4);
+          }
+
+          .ares-desc::before,
+          .ares-desc__connector {
+            display: none;
+          }
+        }
+
+        .megha-read-bridge,
+        .megha-read-bridge * {
+          box-sizing: border-box;
+        }
+
+        .megha-read-bridge {
+          position: relative;
+          display: flex;
+          align-items: flex-start;
+          justify-content: center;
+          width: 100%;
+          min-height: clamp(28rem, 58vh, 42rem);
+          padding:
+            clamp(5rem, 11vh, 8rem)
+            clamp(1.5rem, 4vw, 4rem)
+            0;
+          overflow: hidden;
+          color: #ffffff;
+          background:
+            radial-gradient(
+              ellipse 48% 38% at 100% 0%,
+              rgba(40, 34, 15, 0.48) 0%,
+              rgba(40, 34, 15, 0.16) 52%,
+              transparent 100%
+            ),
+            #000000;
+        }
+
+        .megha-read-cta {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: clamp(0.65rem, 1.2vw, 1rem);
+          max-width: 100%;
+          color: #ffffff;
+          text-decoration: none;
+          outline: none;
+        }
+
+        .megha-read-cta__frame {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-width: clamp(19rem, 32vw, 26rem);
+          min-height: 2.35rem;
+          padding: 0.35rem clamp(1rem, 2vw, 1.5rem);
+          border-block: 0.0625rem solid rgba(255, 255, 255, 0.78);
+          transition:
+            border-color 180ms ease,
+            background-color 180ms ease;
+        }
+
+        .megha-read-cta__frame::before,
+        .megha-read-cta__frame::after {
+          content: "";
+          position: absolute;
+          inset-block: -0.0625rem;
+          width: 0.45rem;
+          border-block: 0.0625rem solid rgba(255, 255, 255, 0.78);
+          transition: border-color 180ms ease;
+        }
+
+        .megha-read-cta__frame::before {
+          inset-inline-start: 0;
+          border-inline-start: 0.0625rem solid rgba(255, 255, 255, 0.78);
+        }
+
+        .megha-read-cta__frame::after {
+          inset-inline-end: 0;
+          border-inline-end: 0.0625rem solid rgba(255, 255, 255, 0.78);
+        }
+
+        .megha-read-cta__label {
+          color: #ffffff;
+          text-align: center;
+          font-family: "Yapari Trial", sans-serif;
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+          letter-spacing: 2.6px;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+
+        .megha-read-cta__chevrons {
+          display: inline-flex;
+          align-items: center;
+          gap: 0;
+          font-family: "Inter", sans-serif;
+          font-size: clamp(1.7rem, 2.2vw, 2.15rem);
+          font-weight: 300;
+          line-height: 1;
+          letter-spacing: 0;
+          color: rgba(255, 255, 255, 0.92);
+          transition: transform 180ms ease;
+        }
+
+        .megha-read-cta:hover .megha-read-cta__frame,
+        .megha-read-cta:focus-visible .megha-read-cta__frame {
+          border-color: #ffffff;
+          background: rgba(255, 255, 255, 0.035);
+        }
+
+        .megha-read-cta:hover .megha-read-cta__frame::before,
+        .megha-read-cta:hover .megha-read-cta__frame::after,
+        .megha-read-cta:focus-visible .megha-read-cta__frame::before,
+        .megha-read-cta:focus-visible .megha-read-cta__frame::after {
+          border-color: #ffffff;
+        }
+
+        .megha-read-cta:hover .megha-read-cta__chevrons,
+        .megha-read-cta:focus-visible .megha-read-cta__chevrons {
+          transform: translateX(0.3rem);
+        }
+
+        .megha-read-cta:focus-visible {
+          outline: 0.125rem solid rgba(255, 255, 255, 0.8);
+          outline-offset: 0.4rem;
+        }
+
+        @media (max-width: 47.999rem) {
+          .megha-read-bridge {
+            min-height: clamp(22rem, 55vh, 30rem);
+            padding-block-start: clamp(4rem, 16vw, 6rem);
+          }
+
+          .megha-read-cta {
+            width: 100%;
+            max-width: 22rem;
+          }
+
+          .megha-read-cta__frame {
+            flex: 1 1 auto;
+            min-width: 0;
+            min-height: 2rem;
+            padding-inline: clamp(0.6rem, 3vw, 1rem);
+          }
+
+          .megha-read-cta__label {
+            font-size: clamp(0.75rem, 3.6vw, 1rem);
+            letter-spacing: clamp(0.1rem, 0.55vw, 0.1625rem);
+          }
+
+          .megha-read-cta__chevrons {
+            flex: 0 0 auto;
+            font-size: clamp(1.45rem, 7vw, 1.8rem);
+          }
+        }
       `}</style>
 
       <div className="x-striker-section__container">
@@ -2305,6 +2889,82 @@ export default function NewMegha() {
           </aside>
         </div>
       </div>
+    </section>
+
+    <section className="ares-section" aria-labelledby="ares-title">
+      <div className="ares-section__container">
+        <div className="ares-section__content">
+          <span className="ares-section__rail-copy" aria-hidden="true">
+            SEE FIRST. DECIDE FIRST. ACT FIRST.
+          </span>
+
+          <div className="ares-profile">
+            <div className="ares-aircraft-stage">
+              <h2 id="ares-title" className="ares-aircraft-stage__name">
+                <span>ARES X 001</span>
+              </h2>
+
+              <figure className="ares-aircraft-stage__figure">
+                <img
+                  className="ares-aircraft-stage__image"
+                  src={aresImage}
+                  alt="ARES X 001 autonomous counter-UAS interceptor"
+                  draggable="false"
+                />
+              </figure>
+            </div>
+
+            <dl className="ares-specs">
+              {aresSpecs.map((row) => (
+                <div className="ares-specs__row" key={row.label}>
+                  <dt className="ares-specs__label">{row.label}</dt>
+                  {row.megha ? (
+                    <dd className="ares-specs__value ares-specs__value--megha">
+                      <span>ME</span>
+                      <span className="ares-specs__megha-accent">G</span>
+                      <span>HA</span>
+                    </dd>
+                  ) : (
+                    <dd className="ares-specs__value">{row.value}</dd>
+                  )}
+                </div>
+              ))}
+            </dl>
+
+            <ul className="ares-tags">
+              {aresCapabilityTags.map((tag) => (
+                <li className="ares-tags__tag" key={tag}>
+                  {tag}
+                </li>
+              ))}
+            </ul>
+
+            <p className="ares-section__mission-note">{aresMissionNote}</p>
+          </div>
+
+          <aside className="ares-desc" aria-label="ARES X 001 description">
+            <span className="ares-desc__connector" aria-hidden="true" />
+
+            {aresDescriptionParagraphs.map((paragraph) => (
+              <p className="ares-desc__copy" key={paragraph}>
+                {paragraph}
+              </p>
+            ))}
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section className="megha-read-bridge" aria-label="Read why MEGHA is needed">
+      <a className="megha-read-cta" href="/research">
+        <span className="megha-read-cta__frame">
+          <span className="megha-read-cta__label">WHY MEGHA NEED? READ</span>
+        </span>
+        <span className="megha-read-cta__chevrons" aria-hidden="true">
+          <span>›</span>
+          <span>›</span>
+        </span>
+      </a>
     </section>
     </>
   );
