@@ -3,6 +3,7 @@ import interFont from "../assets/fonts/Inter.ttf";
 import yapariRegular from "../assets/fonts/YapariTrial-Regular.ttf";
 import strikerImage from "../assets/STRIKER_without_bg 2 2.png";
 import rakhaImage from "../assets/RAKHA 1X.png";
+import talosImage from "../assets/TALOS 1X.png";
 import hangarTitle from "../assets/hangar18.png";
 
 const aircraftSpecs = [
@@ -81,6 +82,60 @@ const rakhaCapabilityTags = [
 
 const rakhaMissionNote =
   "RAKHA 1X is not only a military aircraft. In disaster response it maps flood extent, locates survivors, and tracks wildfires — launched from the roadside, minutes after arriving, when minutes are all that matter.";
+
+const talosSpecs = [
+  {
+    kind: "single",
+    label: "Class",
+    value: "MEGHA",
+    megha: true,
+  },
+  {
+    kind: "single",
+    label: "Endurance",
+    value: "4–6 hrs (cruise)",
+  },
+  {
+    kind: "split",
+    cells: [
+      {
+        label: "Range",
+        value: "15.5 miles (25 km)",
+      },
+      {
+        label: "C-Speed",
+        value: "60–70 km/h",
+      },
+    ],
+  },
+  {
+    kind: "single",
+    label: "Payload",
+    value: "EO/IR · 8× Gimbal · HYENA AI Units · Custom Head",
+  },
+  {
+    kind: "single",
+    label: "Weight (Dual Batteries)",
+    value: "55 lbs (25 kg)",
+  },
+];
+
+const talosDescriptionParagraphs = [
+  "TALOS 1X VTOL is the long-endurance eye in the sky built to stay up and stay out.",
+  "It is a tiltrotor: it lifts off vertically from a field, a rooftop, or a hilltop, tilts its rotors forward, and flies on the wing with fixed-wing efficiency. No runway, no launcher, no recovery net. It is purpose-designed for ship-deck operations — a confined vertical footprint means it launches and recovers from a patrol boat in conditions where fixed-wing UAVs cannot operate at all.",
+  "Six hours aloft and 180 to 500 km of reach under HYENA autonomy, far past the 50 km radio horizon. Over open water, where there are no landmarks and GPS is easily denied, HYENA holds the flight path on visual and inertial reference alone.",
+];
+
+const talosCapabilityTags = [
+  "ISR",
+  "Maritime Patrol",
+  "Border Patrol",
+  "Search & Rescue",
+  "Swarm",
+];
+
+const talosMissionNote =
+  "For border and maritime patrol it runs autonomously on schedule — set the route once and it flies recurring long-range patrols along a coastline or exclusion zone, sortie after sortie, reporting straight into ARC OS. For search and rescue it sweeps in hours what would take ground teams days, finds people lost at sea or in the mountains, and stays overhead until help arrives.";
 
 export default function NewMegha() {
   return (
@@ -560,13 +615,19 @@ export default function NewMegha() {
         .x-striker-autonomy {
           width: 100%;
           min-height: clamp(20rem, 41.21vh, 26.375rem);
-          background: linear-gradient(
-            90deg,
-            #080c17 0%,
-            #04060a 42%,
-            #04060a 58%,
-            #0a1120 100%
-          );
+          background:
+            linear-gradient(
+              180deg,
+              rgba(0, 0, 1, 0) calc(100% - clamp(4rem, 10vh, 7rem)),
+              #000001 100%
+            ),
+            linear-gradient(
+              90deg,
+              #080c17 0%,
+              #04060a 42%,
+              #04060a 58%,
+              #0a1120 100%
+            );
           color: #ffffff;
           overflow-x: hidden;
         }
@@ -656,57 +717,42 @@ export default function NewMegha() {
 
         .rakha-section {
           --x-striker-content-inset: clamp(0.75rem, 1.5vw, 1.5rem);
-          position: relative;
           width: 100%;
           min-height: clamp(46rem, 86vh, 58rem);
           overflow: hidden;
           color: #ffffff;
           background:
-            radial-gradient(
-              ellipse at left 72%,
-              rgba(86, 73, 33, 0.9) 0%,
-              rgba(86, 73, 33, 0.42) 27%,
-              rgba(86, 73, 33, 0.14) 43%,
-              transparent 61%
+            linear-gradient(
+              180deg,
+              #000001 0%,
+              rgba(0, 0, 1, 0) clamp(4rem, 12vh, 8rem)
             ),
             radial-gradient(
-              ellipse at right 44%,
+              ellipse 30% 52% at 0% 100%,
+              rgba(86, 73, 33, 0.92) 0%,
+              rgba(86, 73, 33, 0.5) 38%,
+              rgba(86, 73, 33, 0.18) 68%,
+              transparent 100%
+            ),
+            radial-gradient(
+              ellipse 30% 42% at 100% 55%,
               rgba(53, 63, 138, 0.95) 0%,
-              rgba(53, 63, 138, 0.52) 31%,
-              rgba(53, 63, 138, 0.16) 48%,
-              transparent 65%
+              rgba(53, 63, 138, 0.55) 36%,
+              rgba(53, 63, 138, 0.2) 66%,
+              transparent 100%
             ),
             #000001;
         }
 
-        .rakha-section::after {
-          content: "";
-          position: absolute;
-          inset-inline: 0;
-          inset-block-start: 0;
-          height: clamp(4rem, 10vh, 7rem);
-          background: linear-gradient(
-            90deg,
-            #080c17 0%,
-            #04060a 42%,
-            #04060a 58%,
-            #0a1120 100%
-          );
-          -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
-          mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
-          pointer-events: none;
-        }
-
         .rakha-section__container {
           position: relative;
-          z-index: 1;
           width: min(100%, 90rem);
           min-height: inherit;
           margin-inline: auto;
           padding-inline: clamp(1.5rem, 3vw, 2.75rem);
           padding-block:
-            clamp(5rem, 10vh, 7rem)
-            clamp(3.5rem, 7vh, 5rem);
+            clamp(0.4rem, 0.5vh, 0.5rem)
+            clamp(2.0rem, 5vh, 3rem);
         }
 
         .rakha-section__container::before {
@@ -727,6 +773,7 @@ export default function NewMegha() {
             minmax(23rem, 0.85fr);
           min-width: 0;
           padding-inline-start: var(--x-striker-content-inset);
+          
         }
 
         .rakha-section__rail-copy {
@@ -748,6 +795,7 @@ export default function NewMegha() {
         .rakha-profile {
           min-width: 0;
           padding-inline-end: clamp(1rem, 2vw, 2rem);
+          transform: translateY(-9rem);
         }
 
         .rakha-aircraft-stage {
@@ -773,10 +821,11 @@ export default function NewMegha() {
           font-family: "Inter", sans-serif;
           font-size: clamp(1.45rem, 2vw, 2.625rem);
           font-style: normal;
-          font-weight: 700;
+          font-weight: 800;
           line-height: 1;
           white-space: nowrap;
           color: #ffffff;
+          transform: translateY(5rem);
         }
 
         .rakha-aircraft-stage__name::before {
@@ -805,6 +854,10 @@ export default function NewMegha() {
           object-fit: contain;
           user-select: none;
           filter: drop-shadow(0 0.6rem 1.2rem rgba(0, 0, 0, 0.55));
+          width: clamp(58rem, 10vw, 61rem);
+          max-width: none;
+          max-height: none;
+          transform: translate(-20rem, 9rem);
         }
 
         .rakha-specs {
@@ -915,7 +968,7 @@ export default function NewMegha() {
           inset-block-start: 0;
           inset-inline-start: 0;
           width: 0.0625rem;
-          height: clamp(23rem, 68vh, 39rem);
+          height: clamp(34rem, 86vh, 58rem);
           background: rgba(255, 255, 255, 0.75);
         }
 
@@ -986,6 +1039,7 @@ export default function NewMegha() {
 
           .rakha-profile {
             padding-inline-end: 0;
+            transform: none;
           }
 
           .rakha-aircraft-stage {
@@ -999,6 +1053,7 @@ export default function NewMegha() {
             grid-row: 1;
             justify-self: start;
             padding-block-start: 0;
+            transform: none;
           }
 
           .rakha-aircraft-stage__figure {
@@ -1040,6 +1095,410 @@ export default function NewMegha() {
 
         @media (max-width: 30rem) {
           .rakha-specs__row--split {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        .talos-section,
+        .talos-section * {
+          box-sizing: border-box;
+        }
+
+        .talos-section {
+          --x-striker-content-inset: clamp(0.75rem, 1.5vw, 1.5rem);
+          width: 100%;
+          min-height: clamp(48rem, 92vh, 62rem);
+          overflow: hidden;
+          color: #ffffff;
+          background:
+            radial-gradient(
+              ellipse 30% 52% at 0% 0%,
+              rgba(86, 73, 33, 0.92) 0%,
+              rgba(86, 73, 33, 0.5) 38%,
+              rgba(86, 73, 33, 0.18) 68%,
+              transparent 100%
+            ),
+            radial-gradient(
+              ellipse 58% 34% at 0% 34%,
+              rgba(82, 70, 32, 0.5) 0%,
+              rgba(82, 70, 32, 0.26) 45%,
+              rgba(82, 70, 32, 0.09) 75%,
+              transparent 100%
+            ),
+            radial-gradient(
+              ellipse 52% 40% at 0% 86%,
+              rgba(52, 62, 136, 0.95) 0%,
+              rgba(52, 62, 136, 0.62) 34%,
+              rgba(52, 62, 136, 0.28) 62%,
+              rgba(52, 62, 136, 0.09) 84%,
+              transparent 100%
+            ),
+            radial-gradient(
+              ellipse 68% 46% at 6% 100%,
+              rgba(16, 18, 33, 0.85) 0%,
+              rgba(16, 18, 33, 0.45) 48%,
+              rgba(16, 18, 33, 0.16) 76%,
+              transparent 100%
+            ),
+            linear-gradient(
+              90deg,
+              #020101 0%,
+              #020101 57%,
+              #000000 100%
+            );
+        }
+
+        .talos-section__container {
+          position: relative;
+          width: min(100%, 90rem);
+          min-height: inherit;
+          margin-inline: auto;
+          padding-inline: clamp(1.5rem, 3vw, 2.75rem);
+          padding-block:
+            clamp(3.5rem, 7vh, 5rem)
+            clamp(4rem, 8vh, 6rem);
+        }
+
+        .talos-section__container::before {
+          content: "";
+          position: absolute;
+          inset-block: 0;
+          left: clamp(1.5rem, 3vw, 2.75rem);
+          width: 0.0625rem;
+          background: rgba(255, 255, 255, 0.55);
+          pointer-events: none;
+        }
+
+        .talos-section__content {
+          position: relative;
+          display: grid;
+          grid-template-columns:
+            minmax(0, 1.35fr)
+            minmax(23rem, 0.85fr);
+          min-width: 0;
+          padding-inline-start: var(--x-striker-content-inset);
+        }
+
+        .talos-section__rail-copy {
+          position: absolute;
+          left: -2.25rem;
+          top: clamp(1rem, 3vh, 2rem);
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.7rem, 0.9vw, 0.9rem);
+          font-weight: 600;
+          line-height: 1;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          white-space: nowrap;
+          writing-mode: vertical-rl;
+          transform: rotate(180deg);
+          color: rgba(255, 255, 255, 0.45);
+        }
+
+        .talos-profile {
+          min-width: 0;
+          padding-inline-end: clamp(1rem, 2vw, 2rem);
+        }
+
+        .talos-aircraft-stage {
+          display: grid;
+          grid-template-columns:
+            minmax(8rem, 1fr)
+            minmax(18rem, 1.9fr)
+            minmax(5rem, 0.75fr);
+          align-items: start;
+          width: 100%;
+          min-width: 0;
+        }
+
+        .talos-aircraft-stage__name {
+          grid-column: 1;
+          grid-row: 1;
+          z-index: 1;
+          display: flex;
+          align-items: center;
+          align-self: start;
+          justify-self: stretch;
+          gap: clamp(0.35rem, 0.7vw, 0.6rem);
+          margin: 0;
+          padding-block-start: clamp(1rem, 2.5vh, 2rem);
+          font-family: "Inter", sans-serif;
+          font-size: clamp(1.45rem, 2vw, 2.625rem);
+          font-style: normal;
+          font-weight: 700;
+          line-height: 1;
+          white-space: nowrap;
+          color: #ffffff;
+        }
+
+        .talos-aircraft-stage__name::before {
+          content: "";
+          flex: 1 1 auto;
+          height: 0.0625rem;
+          margin-inline-start: calc(0rem - var(--x-striker-content-inset));
+          background: rgba(255, 255, 255, 0.75);
+          pointer-events: none;
+        }
+
+        .talos-aircraft-stage__type {
+          margin-inline-start: clamp(0.25rem, 0.45vw, 0.45rem);
+          font-size: 0.42em;
+          font-weight: 700;
+          line-height: 1;
+          letter-spacing: 0.04em;
+          align-self: center;
+        }
+
+        .talos-aircraft-stage__figure {
+          grid-column: 1 / -1;
+          grid-row: 1;
+          width: 100%;
+          min-width: 0;
+          margin: 0;
+          overflow: visible;
+        }
+
+        .talos-aircraft-stage__image {
+          display: block;
+          width: min(100%, clamp(24rem, 43vw, 40rem));
+          max-height: clamp(20rem, 46vh, 32rem);
+          height: auto;
+          margin-inline: auto;
+          object-fit: contain;
+          user-select: none;
+          filter: drop-shadow(0 0.6rem 1.2rem rgba(0, 0, 0, 0.55));
+        }
+
+        .talos-specs {
+          max-width: clamp(24rem, 40vw, 38.5rem);
+          margin:
+            clamp(1.75rem, 4vh, 3rem)
+            0
+            0
+            clamp(3rem, 5vw, 5rem);
+        }
+
+        .talos-specs__row {
+          padding-block:
+            clamp(0.5rem, 1vh, 0.75rem)
+            clamp(0.55rem, 1.1vh, 0.85rem);
+          border-block-end: 0.0625rem solid rgba(255, 255, 255, 0.72);
+        }
+
+        .talos-specs__row:last-child {
+          border-block-end: 0;
+        }
+
+        .talos-specs__row--split {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: clamp(1rem, 2.5vw, 3rem);
+        }
+
+        .talos-specs__label {
+          margin: 0 0 0.3rem;
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.65rem, 0.75vw, 1.125rem);
+          font-weight: 700;
+          line-height: 1.2;
+          text-transform: uppercase;
+          color: #ffffff;
+        }
+
+        .talos-specs__value {
+          margin: 0;
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.85rem, 1vw, 1.15rem);
+          font-weight: 400;
+          line-height: 1.3;
+          color: rgba(255, 255, 255, 0.95);
+        }
+
+        .talos-specs__value--megha {
+          display: inline-flex;
+          font-family: "Yapari Trial", sans-serif;
+          font-size: clamp(1.15rem, 1.6vw, 1.625rem);
+          font-weight: 400;
+          line-height: 1;
+          letter-spacing: clamp(0.25rem, 0.65vw, 0.56875rem);
+          text-transform: uppercase;
+          color: #ffffff;
+        }
+
+        .talos-specs__megha-accent {
+          color: #e3e41b;
+        }
+
+        .talos-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: clamp(0.5rem, 1vw, 1rem);
+          margin:
+            clamp(1.75rem, 4vh, 3rem)
+            0
+            0
+            clamp(0.75rem, 1.5vw, 1.5rem);
+          padding: 0;
+          list-style: none;
+        }
+
+        .talos-tags__tag {
+          padding: 0.25rem 0.65rem;
+          border: 0.0625rem solid rgba(255, 255, 255, 0.09);
+          border-radius: 0.3rem;
+          background: rgba(255, 255, 255, 0.025);
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.65rem, 0.8vw, 0.85rem);
+          line-height: 1.4;
+          color: rgba(255, 255, 255, 0.52);
+        }
+
+        .talos-section__mission-note {
+          max-width: clamp(34rem, 55vw, 52rem);
+          margin:
+            clamp(4rem, 8vh, 6rem)
+            0
+            0
+            clamp(0.75rem, 1.5vw, 1.5rem);
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.78rem, 1vw, 1rem);
+          font-weight: 400;
+          line-height: 1.2;
+          text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.92);
+        }
+
+        .talos-desc {
+          position: relative;
+          align-self: start;
+          min-width: 0;
+          margin-block-start: clamp(2.75rem, 6vh, 4rem);
+          margin-inline-start: clamp(-8rem, -7vw, -4rem);
+          padding-inline-start: clamp(1rem, 2vw, 1.5rem);
+        }
+
+        .talos-desc::before {
+          content: "";
+          position: absolute;
+          inset-block-start: 0;
+          inset-inline-start: 0;
+          width: 0.0625rem;
+          height: clamp(36rem, 84vh, 58rem);
+          background: rgba(255, 255, 255, 0.75);
+        }
+
+        .talos-desc__connector {
+          position: absolute;
+          inset-inline-start: auto;
+          inset-inline-end: 100%;
+          inset-block-start: 0;
+          width: clamp(2rem, 2.8vw, 3rem);
+          height: 0.0625rem;
+          background: rgba(255, 255, 255, 0.75);
+          transform: rotate(40deg);
+          transform-origin: right center;
+          pointer-events: none;
+        }
+
+        .talos-desc__copy {
+          max-width: 31rem;
+          margin: 0;
+          font-family: "Inter", sans-serif;
+          font-size: clamp(1rem, 1.2vw, 1.25rem);
+          font-weight: 400;
+          line-height: 1.35;
+          text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.96);
+        }
+
+        .talos-desc__copy + .talos-desc__copy {
+          margin-block-start: clamp(0.75rem, 1.4vh, 1.125rem);
+        }
+
+        @media (max-width: 64rem) and (min-width: 48rem) {
+          .talos-section__content {
+            grid-template-columns: minmax(0, 1.2fr) minmax(19rem, 0.8fr);
+          }
+
+          .talos-aircraft-stage {
+            grid-template-columns:
+              minmax(5.5rem, 1fr)
+              minmax(14rem, 1.7fr)
+              minmax(4rem, 0.75fr);
+          }
+
+          .talos-aircraft-stage__image {
+            width: min(100%, clamp(15rem, 26vw, 24rem));
+          }
+
+          .talos-desc {
+            margin-block-start: clamp(2.5rem, 5vh, 3.5rem);
+            margin-inline-start: clamp(1rem, 2vw, 2rem);
+          }
+
+          .talos-specs {
+            max-width: 100%;
+          }
+        }
+
+        @media (max-width: 47.999rem) {
+          .talos-section__rail-copy {
+            display: none;
+          }
+
+          .talos-section__content {
+            grid-template-columns: 1fr;
+            row-gap: clamp(2rem, 6vw, 3rem);
+          }
+
+          .talos-profile {
+            padding-inline-end: 0;
+          }
+
+          .talos-aircraft-stage {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto;
+            row-gap: clamp(1.5rem, 5vh, 2.5rem);
+          }
+
+          .talos-aircraft-stage__name {
+            grid-column: 1;
+            grid-row: 1;
+            justify-self: start;
+            padding-block-start: 0;
+          }
+
+          .talos-aircraft-stage__figure {
+            grid-column: 1;
+            grid-row: 2;
+          }
+
+          .talos-aircraft-stage__image {
+            width: min(100%, clamp(18rem, 88vw, 29rem));
+          }
+
+          .talos-specs,
+          .talos-tags,
+          .talos-section__mission-note {
+            margin-inline-start: 0;
+            max-width: 100%;
+          }
+
+          .talos-desc {
+            margin: 0;
+            padding-inline-start: 0;
+            padding-block-start: clamp(1.25rem, 4vw, 1.75rem);
+            border-block-start: 0.0625rem solid rgba(255, 255, 255, 0.4);
+          }
+
+          .talos-desc::before,
+          .talos-desc__connector {
+            display: none;
+          }
+        }
+
+        @media (max-width: 30rem) {
+          .talos-specs__row--split {
             grid-template-columns: 1fr;
           }
         }
@@ -1237,6 +1696,85 @@ export default function NewMegha() {
 
             {rakhaDescriptionParagraphs.map((paragraph) => (
               <p className="rakha-desc__copy" key={paragraph}>
+                {paragraph}
+              </p>
+            ))}
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section className="talos-section" aria-labelledby="talos-title">
+      <div className="talos-section__container">
+        <div className="talos-section__content">
+          <span className="talos-section__rail-copy" aria-hidden="true">
+            SEE FIRST. DECIDE FIRST. ACT FIRST.
+          </span>
+
+          <div className="talos-profile">
+            <div className="talos-aircraft-stage">
+              <h2 id="talos-title" className="talos-aircraft-stage__name">
+                <span>TALOS 1X</span>
+                <span className="talos-aircraft-stage__type">VTOL</span>
+              </h2>
+
+              <figure className="talos-aircraft-stage__figure">
+                <img
+                  className="talos-aircraft-stage__image"
+                  src={talosImage}
+                  alt="TALOS 1X VTOL tiltrotor surveillance aircraft"
+                  draggable="false"
+                />
+              </figure>
+            </div>
+
+            <dl className="talos-specs">
+              {talosSpecs.map((row) =>
+                row.kind === "split" ? (
+                  <div
+                    className="talos-specs__row talos-specs__row--split"
+                    key={row.cells[0].label}
+                  >
+                    {row.cells.map((cell) => (
+                      <div className="talos-specs__cell" key={cell.label}>
+                        <dt className="talos-specs__label">{cell.label}</dt>
+                        <dd className="talos-specs__value">{cell.value}</dd>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="talos-specs__row" key={row.label}>
+                    <dt className="talos-specs__label">{row.label}</dt>
+                    {row.megha ? (
+                      <dd className="talos-specs__value talos-specs__value--megha">
+                        <span>ME</span>
+                        <span className="talos-specs__megha-accent">G</span>
+                        <span>HA</span>
+                      </dd>
+                    ) : (
+                      <dd className="talos-specs__value">{row.value}</dd>
+                    )}
+                  </div>
+                ),
+              )}
+            </dl>
+
+            <ul className="talos-tags">
+              {talosCapabilityTags.map((tag) => (
+                <li className="talos-tags__tag" key={tag}>
+                  {tag}
+                </li>
+              ))}
+            </ul>
+
+            <p className="talos-section__mission-note">{talosMissionNote}</p>
+          </div>
+
+          <aside className="talos-desc" aria-label="TALOS 1X VTOL description">
+            <span className="talos-desc__connector" aria-hidden="true" />
+
+            {talosDescriptionParagraphs.map((paragraph) => (
+              <p className="talos-desc__copy" key={paragraph}>
                 {paragraph}
               </p>
             ))}
