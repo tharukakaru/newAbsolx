@@ -4,6 +4,7 @@ import yapariRegular from "../assets/fonts/YapariTrial-Regular.ttf";
 import strikerImage from "../assets/STRIKER_without_bg 2 2.png";
 import rakhaImage from "../assets/RAKHA 1X.png";
 import talosImage from "../assets/TALOS 1X.png";
+import ravenImage from "../assets/RAVENA 001.png";
 import hangarTitle from "../assets/hangar18.png";
 
 const aircraftSpecs = [
@@ -136,6 +137,60 @@ const talosCapabilityTags = [
 
 const talosMissionNote =
   "For border and maritime patrol it runs autonomously on schedule — set the route once and it flies recurring long-range patrols along a coastline or exclusion zone, sortie after sortie, reporting straight into ARC OS. For search and rescue it sweeps in hours what would take ground teams days, finds people lost at sea or in the mountains, and stays overhead until help arrives.";
+
+const ravenSpecs = [
+  {
+    kind: "single",
+    label: "Class",
+    value: "MEGHA",
+    megha: true,
+  },
+  {
+    kind: "single",
+    label: "Endurance",
+    value: "2 hrs (cruise)",
+  },
+  {
+    kind: "split",
+    cells: [
+      {
+        label: "Range",
+        value: "15 km",
+      },
+      {
+        label: "C-Speed",
+        value: "170–250 km/h",
+      },
+    ],
+  },
+  {
+    kind: "single",
+    label: "Payload",
+    value: "EO/IR · HYENA AI Units · Custom Head",
+  },
+  {
+    kind: "single",
+    label: "Weight (Dual Batteries)",
+    value: "1.7–2 kg",
+  },
+];
+
+const ravenDescriptionParagraphs = [
+  "RAVEN 001 is deliberately short-legged, and that is the point. It is not a deep-strike aircraft; it belongs to the people on the ground.",
+  "The whole system fits in one backpack and weighs under two kilograms. One soldier carries it, one soldier hand-launches it, and it is airborne in under five minutes. Nothing to set up, nothing to leave behind.",
+  "It loiters for two hours at 500 to 1,000 m — quiet, small, hard to see — feeding live imagery back to the team that owns it. The 15 km link is short on purpose: it keeps the aircraft organic to the unit on the ground rather than borrowed from a higher headquarters. RAVEN is built for the sharp end — surgical strike teams, ambush groups, reconnaissance patrols. Their own eyes, their own timing, no request chain.",
+];
+
+const ravenCapabilityTags = [
+  "Loitering Striker",
+  "Close ISR",
+  "Small-Unit Support",
+  "One-way Striker",
+  "Swarm",
+];
+
+const ravenMissionNote =
+  "HYENA keeps it flying and on task in jammed airspace, navigating visually when GPS is denied. Every engagement stays under human command: the operator identifies, decides, and authorizes. The aircraft executes.";
 
 export default function NewMegha() {
   return (
@@ -1502,6 +1557,397 @@ export default function NewMegha() {
             grid-template-columns: 1fr;
           }
         }
+
+        .raven-section,
+        .raven-section * {
+          box-sizing: border-box;
+        }
+
+        .raven-section {
+          --raven-content-inset: clamp(0.75rem, 1.5vw, 1.5rem);
+          width: 100%;
+          min-height: clamp(46rem, 88vh, 60rem);
+          overflow: hidden;
+          color: #ffffff;
+          background:
+            radial-gradient(
+              ellipse 42% 60% at 0% 0%,
+              rgba(51, 66, 154, 0.95) 0%,
+              rgba(51, 66, 154, 0.58) 34%,
+              rgba(51, 66, 154, 0.2) 68%,
+              transparent 100%
+            ),
+            radial-gradient(
+              ellipse 46% 58% at 100% 100%,
+              rgba(82, 69, 31, 0.78) 0%,
+              rgba(82, 69, 31, 0.38) 42%,
+              rgba(82, 69, 31, 0.12) 72%,
+              transparent 100%
+            ),
+            linear-gradient(
+              90deg,
+              #050711 0%,
+              #020204 48%,
+              #020201 72%,
+              #070601 100%
+            );
+        }
+
+        .raven-section__container {
+          position: relative;
+          width: min(100%, 90rem);
+          min-height: inherit;
+          margin-inline: auto;
+          padding-inline: clamp(1.5rem, 3vw, 2.75rem);
+          padding-block:
+            clamp(3.5rem, 7vh, 5rem)
+            clamp(4rem, 8vh, 6rem);
+        }
+
+        .raven-section__container::before {
+          content: "";
+          position: absolute;
+          inset-block: 0;
+          left: clamp(1.5rem, 3vw, 2.75rem);
+          width: 0.0625rem;
+          background: rgba(255, 255, 255, 0.55);
+          pointer-events: none;
+        }
+
+        .raven-section__content {
+          position: relative;
+          display: grid;
+          grid-template-columns:
+            minmax(0, 1.35fr)
+            minmax(23rem, 0.85fr);
+          min-width: 0;
+          padding-inline-start: var(--raven-content-inset);
+        }
+
+        .raven-section__rail-copy {
+          position: absolute;
+          left: -2.25rem;
+          top: clamp(1rem, 3vh, 2rem);
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.7rem, 0.9vw, 0.9rem);
+          font-weight: 600;
+          line-height: 1;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          white-space: nowrap;
+          writing-mode: vertical-rl;
+          transform: rotate(180deg);
+          color: rgba(255, 255, 255, 0.45);
+        }
+
+        .raven-profile {
+          min-width: 0;
+          padding-inline-end: clamp(1rem, 2vw, 2rem);
+        }
+
+        .raven-aircraft-stage {
+          display: grid;
+          grid-template-columns:
+            minmax(8rem, 1fr)
+            minmax(18rem, 1.9fr)
+            minmax(5rem, 0.75fr);
+          align-items: start;
+          width: 100%;
+          min-width: 0;
+        }
+
+        .raven-aircraft-stage__name {
+          grid-column: 1;
+          grid-row: 1;
+          z-index: 1;
+          display: flex;
+          align-items: center;
+          align-self: start;
+          justify-self: stretch;
+          gap: clamp(0.35rem, 0.7vw, 0.6rem);
+          margin: 0;
+          padding-block-start: clamp(1rem, 2.5vh, 2rem);
+          font-family: "Inter", sans-serif;
+          font-size: clamp(1.45rem, 2vw, 2.625rem);
+          font-style: normal;
+          font-weight: 700;
+          line-height: 1;
+          white-space: nowrap;
+          color: #ffffff;
+        }
+
+        .raven-aircraft-stage__name::before {
+          content: "";
+          flex: 1 1 auto;
+          height: 0.0625rem;
+          margin-inline-start: calc(0rem - var(--raven-content-inset));
+          background: rgba(255, 255, 255, 0.75);
+          pointer-events: none;
+        }
+
+        .raven-aircraft-stage__figure {
+          grid-column: 1 / -1;
+          grid-row: 1;
+          width: 100%;
+          min-width: 0;
+          margin: 0;
+          overflow: visible;
+        }
+
+        .raven-aircraft-stage__image {
+          display: block;
+          width: min(100%, clamp(26rem, 45vw, 42rem));
+          max-height: clamp(20rem, 46vh, 32rem);
+          height: auto;
+          margin-inline: auto;
+          object-fit: contain;
+          user-select: none;
+          filter: drop-shadow(0 0.6rem 1.2rem rgba(0, 0, 0, 0.55));
+        }
+
+        .raven-specs {
+          max-width: clamp(24rem, 40vw, 38.5rem);
+          margin:
+            clamp(1.75rem, 4vh, 3rem)
+            0
+            0
+            clamp(3rem, 5vw, 5rem);
+        }
+
+        .raven-specs__row {
+          padding-block:
+            clamp(0.5rem, 1vh, 0.75rem)
+            clamp(0.55rem, 1.1vh, 0.85rem);
+          border-block-end: 0.0625rem solid rgba(255, 255, 255, 0.72);
+        }
+
+        .raven-specs__row:last-child {
+          border-block-end: 0;
+        }
+
+        .raven-specs__row--split {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: clamp(1rem, 2.5vw, 3rem);
+        }
+
+        .raven-specs__label {
+          margin: 0 0 0.3rem;
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.65rem, 0.75vw, 1.125rem);
+          font-weight: 700;
+          line-height: 1.2;
+          text-transform: uppercase;
+          color: #ffffff;
+        }
+
+        .raven-specs__value {
+          margin: 0;
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.85rem, 1vw, 1.15rem);
+          font-weight: 400;
+          line-height: 1.3;
+          color: rgba(255, 255, 255, 0.95);
+        }
+
+        .raven-specs__value--megha {
+          display: inline-flex;
+          font-family: "Yapari Trial", sans-serif;
+          font-size: clamp(1.15rem, 1.6vw, 1.625rem);
+          font-weight: 400;
+          line-height: 1;
+          letter-spacing: clamp(0.25rem, 0.65vw, 0.56875rem);
+          text-transform: uppercase;
+          color: #ffffff;
+        }
+
+        .raven-specs__megha-accent {
+          color: #e3e41b;
+        }
+
+        .raven-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: clamp(0.5rem, 1vw, 1rem);
+          margin:
+            clamp(1.75rem, 4vh, 3rem)
+            0
+            0
+            clamp(0.75rem, 1.5vw, 1.5rem);
+          padding: 0;
+          list-style: none;
+        }
+
+        .raven-tags__tag {
+          padding: 0.25rem 0.65rem;
+          border: 0.0625rem solid rgba(255, 255, 255, 0.09);
+          border-radius: 0.3rem;
+          background: rgba(255, 255, 255, 0.025);
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.65rem, 0.8vw, 0.85rem);
+          line-height: 1.4;
+          color: rgba(255, 255, 255, 0.52);
+        }
+
+        .raven-section__mission-note {
+          max-width: clamp(34rem, 55vw, 52rem);
+          margin:
+            clamp(4rem, 8vh, 6rem)
+            0
+            0
+            clamp(0.75rem, 1.5vw, 1.5rem);
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.78rem, 1vw, 1rem);
+          font-weight: 400;
+          line-height: 1.2;
+          text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.92);
+        }
+
+        .raven-desc {
+          position: relative;
+          align-self: start;
+          min-width: 0;
+          margin-block-start: clamp(2.75rem, 6vh, 4rem);
+          margin-inline-start: clamp(-5rem, -4vw, -2.5rem);
+          padding-inline-start: clamp(1rem, 2vw, 1.5rem);
+        }
+
+        .raven-desc::before {
+          content: "";
+          position: absolute;
+          inset-block-start: 0;
+          inset-inline-start: 0;
+          width: 0.0625rem;
+          height: clamp(34rem, 78vh, 52rem);
+          background: rgba(255, 255, 255, 0.75);
+        }
+
+        .raven-desc__connector {
+          position: absolute;
+          inset-inline-start: auto;
+          inset-inline-end: 100%;
+          inset-block-start: 0;
+          width: clamp(2rem, 2.8vw, 3rem);
+          height: 0.0625rem;
+          background: rgba(255, 255, 255, 0.75);
+          transform: rotate(40deg);
+          transform-origin: right center;
+          pointer-events: none;
+        }
+
+        .raven-desc__copy {
+          max-width: 31rem;
+          margin: 0;
+          font-family: "Inter", sans-serif;
+          font-size: clamp(1rem, 1.2vw, 1.25rem);
+          font-weight: 400;
+          line-height: 1.35;
+          text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.96);
+        }
+
+        .raven-desc__copy + .raven-desc__copy {
+          margin-block-start: clamp(0.75rem, 1.4vh, 1.125rem);
+        }
+
+        @media (max-width: 64rem) and (min-width: 48rem) {
+          .raven-section__content {
+            grid-template-columns: minmax(0, 1.2fr) minmax(19rem, 0.8fr);
+          }
+
+          .raven-aircraft-stage {
+            grid-template-columns:
+              minmax(5.5rem, 1fr)
+              minmax(14rem, 1.7fr)
+              minmax(4rem, 0.75fr);
+          }
+
+          .raven-aircraft-stage__image {
+            width: min(100%, clamp(20rem, 36vw, 30rem));
+          }
+
+          .raven-desc {
+            margin-block-start: clamp(2.5rem, 5vh, 3.5rem);
+            margin-inline-start: clamp(1rem, 2vw, 2rem);
+          }
+
+          .raven-specs {
+            max-width: 100%;
+          }
+        }
+
+        @media (max-width: 47.999rem) {
+          .raven-section {
+            min-height: auto;
+          }
+
+          .raven-section__container {
+            padding-block:
+              clamp(2.5rem, 8vw, 3.5rem)
+              clamp(3rem, 9vw, 4.5rem);
+          }
+
+          .raven-section__rail-copy {
+            display: none;
+          }
+
+          .raven-section__content {
+            grid-template-columns: 1fr;
+            row-gap: clamp(2rem, 6vw, 3rem);
+          }
+
+          .raven-profile {
+            padding-inline-end: 0;
+          }
+
+          .raven-aircraft-stage {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto;
+            row-gap: clamp(1.5rem, 5vh, 2.5rem);
+          }
+
+          .raven-aircraft-stage__name {
+            grid-column: 1;
+            grid-row: 1;
+            justify-self: start;
+            padding-block-start: 0;
+          }
+
+          .raven-aircraft-stage__figure {
+            grid-column: 1;
+            grid-row: 2;
+          }
+
+          .raven-aircraft-stage__image {
+            width: min(100%, clamp(18rem, 90vw, 31rem));
+          }
+
+          .raven-specs,
+          .raven-tags,
+          .raven-section__mission-note {
+            margin-inline-start: 0;
+            max-width: 100%;
+          }
+
+          .raven-desc {
+            margin: 0;
+            padding-inline-start: 0;
+            padding-block-start: clamp(1.25rem, 4vw, 1.75rem);
+            border-block-start: 0.0625rem solid rgba(255, 255, 255, 0.4);
+          }
+
+          .raven-desc::before,
+          .raven-desc__connector {
+            display: none;
+          }
+        }
+
+        @media (max-width: 30rem) {
+          .raven-specs__row--split {
+            grid-template-columns: 1fr;
+          }
+        }
       `}</style>
 
       <div className="x-striker-section__container">
@@ -1775,6 +2221,84 @@ export default function NewMegha() {
 
             {talosDescriptionParagraphs.map((paragraph) => (
               <p className="talos-desc__copy" key={paragraph}>
+                {paragraph}
+              </p>
+            ))}
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section className="raven-section" aria-labelledby="raven-title">
+      <div className="raven-section__container">
+        <div className="raven-section__content">
+          <span className="raven-section__rail-copy" aria-hidden="true">
+            SEE FIRST. DECIDE FIRST. ACT FIRST.
+          </span>
+
+          <div className="raven-profile">
+            <div className="raven-aircraft-stage">
+              <h2 id="raven-title" className="raven-aircraft-stage__name">
+                <span>RAVEN 001</span>
+              </h2>
+
+              <figure className="raven-aircraft-stage__figure">
+                <img
+                  className="raven-aircraft-stage__image"
+                  src={ravenImage}
+                  alt="RAVEN 001 small-unit autonomous aircraft"
+                  draggable="false"
+                />
+              </figure>
+            </div>
+
+            <dl className="raven-specs">
+              {ravenSpecs.map((row) =>
+                row.kind === "split" ? (
+                  <div
+                    className="raven-specs__row raven-specs__row--split"
+                    key={row.cells[0].label}
+                  >
+                    {row.cells.map((cell) => (
+                      <div className="raven-specs__cell" key={cell.label}>
+                        <dt className="raven-specs__label">{cell.label}</dt>
+                        <dd className="raven-specs__value">{cell.value}</dd>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="raven-specs__row" key={row.label}>
+                    <dt className="raven-specs__label">{row.label}</dt>
+                    {row.megha ? (
+                      <dd className="raven-specs__value raven-specs__value--megha">
+                        <span>ME</span>
+                        <span className="raven-specs__megha-accent">G</span>
+                        <span>HA</span>
+                      </dd>
+                    ) : (
+                      <dd className="raven-specs__value">{row.value}</dd>
+                    )}
+                  </div>
+                ),
+              )}
+            </dl>
+
+            <ul className="raven-tags">
+              {ravenCapabilityTags.map((tag) => (
+                <li className="raven-tags__tag" key={tag}>
+                  {tag}
+                </li>
+              ))}
+            </ul>
+
+            <p className="raven-section__mission-note">{ravenMissionNote}</p>
+          </div>
+
+          <aside className="raven-desc" aria-label="RAVEN 001 description">
+            <span className="raven-desc__connector" aria-hidden="true" />
+
+            {ravenDescriptionParagraphs.map((paragraph) => (
+              <p className="raven-desc__copy" key={paragraph}>
                 {paragraph}
               </p>
             ))}
