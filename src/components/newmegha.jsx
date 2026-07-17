@@ -2,6 +2,7 @@ import plusJakartaSans from "../assets/fonts/PlusJakartaSans[wght].ttf";
 import interFont from "../assets/fonts/Inter.ttf";
 import yapariRegular from "../assets/fonts/YapariTrial-Regular.ttf";
 import strikerImage from "../assets/STRIKER_without_bg 2 2.png";
+import rakhaImage from "../assets/RAKHA 1X.png";
 import hangarTitle from "../assets/hangar18.png";
 
 const aircraftSpecs = [
@@ -29,8 +30,61 @@ const descriptionParagraphs = [
 
 const capabilityTags = ["ISR", "Strike", "Air to Air", "SUPER SONIC", "Swarm"];
 
+const rakhaSpecs = [
+  {
+    kind: "single",
+    label: "Class",
+    value: "MEGHA",
+    megha: true,
+  },
+  {
+    kind: "single",
+    label: "Endurance",
+    value: "240 min (cruise)",
+  },
+  {
+    kind: "split",
+    cells: [
+      {
+        label: "Range",
+        value: "27.9 miles (45 km)",
+      },
+      {
+        label: "C-Speed",
+        value: "60–70 km/h",
+      },
+    ],
+  },
+  {
+    kind: "single",
+    label: "Payload",
+    value: "EO/IR",
+  },
+  {
+    kind: "single",
+    label: "Weight (With Batteries)",
+    value: "8.8 lbs (4 kg)",
+  },
+];
+
+const rakhaDescriptionParagraphs = [
+  "The whole system fits into two backpacks. Two people carry it, assemble it, and hand-launch it in under ten minutes. No runway, no launcher, no ground crew. It lands on its belly, packs away, and goes again.",
+  "In the air it holds station for three and a half hours at up to 2000 m — high enough to be neither seen nor heard while it watches, streaming live imagery straight into ARC OS. Radio control covers 50 km; under HYENA autonomy it operates out to 500 km and keeps flying with GPS fully jammed, navigating by camera and terrain reference alone.",
+];
+
+const rakhaCapabilityTags = [
+  "ISR",
+  "One-way Strike",
+  "Disaster Response",
+  "Swarm",
+];
+
+const rakhaMissionNote =
+  "RAKHA 1X is not only a military aircraft. In disaster response it maps flood extent, locates survivors, and tracks wildfires — launched from the roadside, minutes after arriving, when minutes are all that matter.";
+
 export default function NewMegha() {
   return (
+    <>
     <section className="x-striker-section" aria-labelledby="x-striker-title">
       <style>{`
         @font-face {
@@ -68,7 +122,7 @@ export default function NewMegha() {
 
         .x-striker-section {
           --x-striker-content-inset: clamp(0.75rem, 1.5vw, 1.5rem);
-          --x-striker-desc-line-height: clamp(19rem, 65vh, 40rem);
+          --x-striker-desc-line-height: clamp(32rem, 95vh, 70rem);
           width: 100%;
           min-height: max(64rem, 100svh);
           overflow-x: hidden;
@@ -177,7 +231,6 @@ export default function NewMegha() {
           padding-inline-start: var(--x-striker-content-inset);
           padding-block-end: clamp(2rem, 4vh, 3.5rem);
           border-inline-start: 0.0625rem solid rgba(255, 255, 255, 0.55);
-          border-block-end: 0.0625rem solid rgba(255, 255, 255, 0.55);
         }
 
         .x-striker-profile {
@@ -249,15 +302,18 @@ export default function NewMegha() {
           width: 100%;
           min-width: 0;
           margin: 0;
+          overflow: visible;
         }
 
         .x-striker-aircraft-stage__image {
           display: block;
-          width: min(100%, clamp(15rem, 24vw, 24rem));
-          max-height: clamp(22rem, 44vh, 34rem);
+          width: clamp(46rem, 55vw, 65rem);
+          max-width: none;
+          max-height: clamp(30rem, 60vh, 48rem);
           height: auto;
-          margin-inline: auto;
+          margin-inline: 0 auto;
           object-fit: contain;
+          transform: translateX(clamp(-10rem, -11vw, -7rem));
           user-select: none;
           filter: drop-shadow(0 0.6rem 1.2rem rgba(0, 0, 0, 0.55));
         }
@@ -331,13 +387,18 @@ export default function NewMegha() {
           line-height: 1.4;
           color: rgba(255, 255, 255, 0.52);
         }
+        
+        .x-striker-specs,
+        .x-striker-tags {
+        margin-inline-start: clamp(4rem, 8vw, 8rem);
+        }
 
         .x-striker-desc {
           position: relative;
           align-self: start;
           min-width: 0;
-          margin-block-start: clamp(2.75rem, 6vh, 4rem);
-          margin-inline-start: clamp(2rem, 4vw, 4.5rem);
+          margin-block-start: clamp(7.75rem, 12vh, 11rem);
+          margin-inline-start: clamp(-4.5rem, -5.5vw, -2rem);
           padding-inline-start: clamp(1rem, 2vw, 1.5rem);
         }
 
@@ -368,15 +429,15 @@ export default function NewMegha() {
           max-width: 31rem;
           margin: 0;
           font-family: "Inter", sans-serif;
-          font-size: clamp(0.78rem, 0.9vw, 1rem);
+          font-size: clamp(1rem, 1.2vw, 1.25rem);
           font-weight: 400;
-          line-height: 1.15;
+          line-height: 1.35;
           text-transform: uppercase;
           color: rgba(255, 255, 255, 0.96);
         }
 
         .x-striker-desc__copy + .x-striker-desc__copy {
-          margin-block-start: clamp(0.25rem, 0.6vh, 0.4rem);
+          margin-block-start: clamp(0.75rem, 1.4vh, 1.125rem);
         }
 
         @media (max-width: 64rem) and (min-width: 48rem) {
@@ -450,7 +511,9 @@ export default function NewMegha() {
           }
 
           .x-striker-aircraft-stage__image {
-            width: min(100%, clamp(15rem, 72vw, 22rem));
+            width: clamp(18rem, 92vw, 31rem);
+            margin-inline: auto;
+            transform: none;
           }
 
           .x-striker-specs {
@@ -485,6 +548,498 @@ export default function NewMegha() {
           }
 
           .x-striker-specs__row--split {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        .x-striker-autonomy,
+        .x-striker-autonomy * {
+          box-sizing: border-box;
+        }
+
+        .x-striker-autonomy {
+          width: 100%;
+          min-height: clamp(20rem, 41.21vh, 26.375rem);
+          background: linear-gradient(
+            90deg,
+            #080c17 0%,
+            #04060a 42%,
+            #04060a 58%,
+            #0a1120 100%
+          );
+          color: #ffffff;
+          overflow-x: hidden;
+        }
+
+        .x-striker-autonomy__rail {
+          position: relative;
+          width: min(100%, 90rem);
+          min-height: inherit;
+          margin-inline: auto;
+        }
+
+        .x-striker-autonomy__rail::before {
+          content: "";
+          position: absolute;
+          inset-block: 0;
+          left: clamp(1.5rem, 3vw, 2.75rem);
+          width: 0.0625rem;
+          background: rgba(255, 255, 255, 0.55);
+          pointer-events: none;
+        }
+
+        .x-striker-autonomy__inner {
+          width: min(100%, 85rem);
+          margin-inline: auto;
+          padding-inline: clamp(1.5rem, 4vw, 4rem);
+          padding-block:
+            clamp(2.75rem, 6vh, 4.5rem)
+            clamp(3rem, 7vh, 5rem);
+        }
+
+        .x-striker-autonomy__copy {
+          max-width: 85rem;
+          margin: 0;
+          font-family: "Inter", sans-serif;
+          font-style: normal;
+          font-weight: 400;
+          font-size: clamp(0.78rem, 1.1vw, 1.05rem);
+          line-height: 1.15;
+          letter-spacing: 0;
+          text-align: left;
+          text-transform: uppercase;
+          color: #ffffff;
+        }
+
+        .x-striker-autonomy__copy + .x-striker-autonomy__copy {
+          margin-block-start: clamp(0.3rem, 0.7vh, 0.55rem);
+        }
+
+        .sr-only {
+          position: absolute;
+          width: 0.0625rem;
+          height: 0.0625rem;
+          padding: 0;
+          margin: -0.0625rem;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
+        }
+
+        @media (max-width: 64rem) {
+          .x-striker-autonomy__inner {
+            padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+          }
+        }
+
+        @media (max-width: 48rem) {
+          .x-striker-autonomy {
+            min-height: auto;
+          }
+
+          .x-striker-autonomy__inner {
+            padding-inline: clamp(1.25rem, 5vw, 2rem);
+            padding-block: clamp(2.5rem, 8vw, 3.5rem);
+          }
+
+          .x-striker-autonomy__copy {
+            font-size: clamp(0.74rem, 2.8vw, 0.9rem);
+            line-height: 1.25;
+          }
+        }
+
+        .rakha-section,
+        .rakha-section * {
+          box-sizing: border-box;
+        }
+
+        .rakha-section {
+          --x-striker-content-inset: clamp(0.75rem, 1.5vw, 1.5rem);
+          position: relative;
+          width: 100%;
+          min-height: clamp(46rem, 86vh, 58rem);
+          overflow: hidden;
+          color: #ffffff;
+          background:
+            radial-gradient(
+              ellipse at left 72%,
+              rgba(86, 73, 33, 0.9) 0%,
+              rgba(86, 73, 33, 0.42) 27%,
+              rgba(86, 73, 33, 0.14) 43%,
+              transparent 61%
+            ),
+            radial-gradient(
+              ellipse at right 44%,
+              rgba(53, 63, 138, 0.95) 0%,
+              rgba(53, 63, 138, 0.52) 31%,
+              rgba(53, 63, 138, 0.16) 48%,
+              transparent 65%
+            ),
+            #000001;
+        }
+
+        .rakha-section::after {
+          content: "";
+          position: absolute;
+          inset-inline: 0;
+          inset-block-start: 0;
+          height: clamp(4rem, 10vh, 7rem);
+          background: linear-gradient(
+            90deg,
+            #080c17 0%,
+            #04060a 42%,
+            #04060a 58%,
+            #0a1120 100%
+          );
+          -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+          mask-image: linear-gradient(180deg, #000 0%, transparent 100%);
+          pointer-events: none;
+        }
+
+        .rakha-section__container {
+          position: relative;
+          z-index: 1;
+          width: min(100%, 90rem);
+          min-height: inherit;
+          margin-inline: auto;
+          padding-inline: clamp(1.5rem, 3vw, 2.75rem);
+          padding-block:
+            clamp(5rem, 10vh, 7rem)
+            clamp(3.5rem, 7vh, 5rem);
+        }
+
+        .rakha-section__container::before {
+          content: "";
+          position: absolute;
+          inset-block: 0;
+          left: clamp(1.5rem, 3vw, 2.75rem);
+          width: 0.0625rem;
+          background: rgba(255, 255, 255, 0.55);
+          pointer-events: none;
+        }
+
+        .rakha-section__content {
+          position: relative;
+          display: grid;
+          grid-template-columns:
+            minmax(0, 1.35fr)
+            minmax(23rem, 0.85fr);
+          min-width: 0;
+          padding-inline-start: var(--x-striker-content-inset);
+        }
+
+        .rakha-section__rail-copy {
+          position: absolute;
+          left: -2.25rem;
+          top: clamp(1rem, 3vh, 2rem);
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.7rem, 0.9vw, 0.9rem);
+          font-weight: 600;
+          line-height: 1;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          white-space: nowrap;
+          writing-mode: vertical-rl;
+          transform: rotate(180deg);
+          color: rgba(255, 255, 255, 0.42);
+        }
+
+        .rakha-profile {
+          min-width: 0;
+          padding-inline-end: clamp(1rem, 2vw, 2rem);
+        }
+
+        .rakha-aircraft-stage {
+          display: grid;
+          grid-template-columns:
+            minmax(7rem, 1fr)
+            minmax(17rem, 1.8fr)
+            minmax(5rem, 0.75fr);
+          align-items: start;
+          width: 100%;
+          min-width: 0;
+        }
+
+        .rakha-aircraft-stage__name {
+          grid-column: 1;
+          grid-row: 1;
+          display: flex;
+          align-items: center;
+          justify-self: stretch;
+          gap: clamp(0.35rem, 0.7vw, 0.6rem);
+          margin: 0;
+          padding-block-start: clamp(3.5rem, 7vh, 5.5rem);
+          font-family: "Inter", sans-serif;
+          font-size: clamp(1.45rem, 2vw, 2.625rem);
+          font-style: normal;
+          font-weight: 700;
+          line-height: 1;
+          white-space: nowrap;
+          color: #ffffff;
+        }
+
+        .rakha-aircraft-stage__name::before {
+          content: "";
+          flex: 1 1 auto;
+          height: 0.0625rem;
+          margin-inline-start: calc(0rem - var(--x-striker-content-inset));
+          background: rgba(255, 255, 255, 0.75);
+          pointer-events: none;
+        }
+
+        .rakha-aircraft-stage__figure {
+          grid-column: 2;
+          grid-row: 1;
+          width: 100%;
+          min-width: 0;
+          margin: 0;
+        }
+
+        .rakha-aircraft-stage__image {
+          display: block;
+          width: min(100%, clamp(17rem, 27vw, 27rem));
+          max-height: clamp(18rem, 36vh, 25rem);
+          height: auto;
+          margin-inline: auto;
+          object-fit: contain;
+          user-select: none;
+          filter: drop-shadow(0 0.6rem 1.2rem rgba(0, 0, 0, 0.55));
+        }
+
+        .rakha-specs {
+          width: min(100%, clamp(22rem, 39vw, 36rem));
+          margin-block-start: clamp(1.5rem, 3.5vh, 2.75rem);
+          margin-inline-start: clamp(4rem, 8vw, 8rem);
+        }
+
+        .rakha-specs__row {
+          padding-block:
+            clamp(0.5rem, 1vh, 0.75rem)
+            clamp(0.55rem, 1.1vh, 0.85rem);
+          border-block-end: 0.0625rem solid rgba(255, 255, 255, 0.72);
+        }
+
+        .rakha-specs__row:last-child {
+          border-block-end: 0;
+        }
+
+        .rakha-specs__row--split {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: clamp(1rem, 2.5vw, 3rem);
+        }
+
+        .rakha-specs__label {
+          margin: 0 0 0.3rem;
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.65rem, 0.75vw, 1.125rem);
+          font-weight: 700;
+          line-height: 1.2;
+          text-transform: uppercase;
+          color: #ffffff;
+        }
+
+        .rakha-specs__value {
+          margin: 0;
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.85rem, 1vw, 1.15rem);
+          font-weight: 400;
+          line-height: 1.3;
+          color: rgba(255, 255, 255, 0.95);
+        }
+
+        .rakha-specs__value--megha {
+          display: inline-flex;
+          font-family: "Yapari Trial", sans-serif;
+          font-size: clamp(1.15rem, 1.6vw, 1.625rem);
+          font-weight: 400;
+          line-height: 1;
+          letter-spacing: clamp(0.25rem, 0.65vw, 0.56875rem);
+          text-transform: uppercase;
+          color: #ffffff;
+        }
+
+        .rakha-specs__megha-accent {
+          color: #e3e41b;
+        }
+
+        .rakha-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: clamp(0.5rem, 1vw, 1rem);
+          margin: clamp(1.75rem, 4vh, 3rem) 0 0;
+          margin-inline-start: clamp(4rem, 8vw, 8rem);
+          padding: 0;
+          list-style: none;
+        }
+
+        .rakha-tags__tag {
+          padding: 0.25rem 0.65rem;
+          border: 0.0625rem solid rgba(255, 255, 255, 0.09);
+          border-radius: 0.3rem;
+          background: rgba(255, 255, 255, 0.025);
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.65rem, 0.8vw, 0.85rem);
+          line-height: 1.4;
+          color: rgba(255, 255, 255, 0.52);
+        }
+
+        .rakha-section__mission-note {
+          max-width: clamp(28rem, 48vw, 44rem);
+          margin:
+            clamp(2.5rem, 5vh, 4rem)
+            0
+            0
+            clamp(1rem, 2vw, 2rem);
+          font-family: "Inter", sans-serif;
+          font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+          font-weight: 400;
+          line-height: 1.2;
+          text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.88);
+        }
+
+        .rakha-desc {
+          position: relative;
+          align-self: start;
+          min-width: 0;
+          margin-block-start: clamp(2.75rem, 6vh, 4rem);
+          margin-inline-start: clamp(-5rem, -6vw, -3rem);
+          padding-inline-start: clamp(1rem, 2vw, 1.5rem);
+        }
+
+        .rakha-desc::before {
+          content: "";
+          position: absolute;
+          inset-block-start: 0;
+          inset-inline-start: 0;
+          width: 0.0625rem;
+          height: clamp(23rem, 68vh, 39rem);
+          background: rgba(255, 255, 255, 0.75);
+        }
+
+        .rakha-desc__connector {
+          position: absolute;
+          inset-inline-start: auto;
+          inset-inline-end: 100%;
+          inset-block-start: 0;
+          width: clamp(2.75rem, 3.8vw, 4rem);
+          height: 0.0625rem;
+          background: rgba(255, 255, 255, 0.75);
+          transform: rotate(40deg);
+          transform-origin: right center;
+          pointer-events: none;
+        }
+
+        .rakha-desc__copy {
+          max-width: 31rem;
+          margin: 0;
+          font-family: "Inter", sans-serif;
+          font-size: clamp(1rem, 1.2vw, 1.25rem);
+          font-weight: 400;
+          line-height: 1.35;
+          text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.96);
+        }
+
+        .rakha-desc__copy + .rakha-desc__copy {
+          margin-block-start: clamp(0.75rem, 1.4vh, 1.125rem);
+        }
+
+        @media (max-width: 64rem) and (min-width: 48rem) {
+          .rakha-section__content {
+            grid-template-columns: minmax(0, 1.2fr) minmax(19rem, 0.8fr);
+          }
+
+          .rakha-aircraft-stage {
+            grid-template-columns:
+              minmax(5rem, 1fr)
+              minmax(13rem, 1.6fr)
+              minmax(4rem, 0.75fr);
+          }
+
+          .rakha-aircraft-stage__image {
+            width: min(100%, clamp(14rem, 24vw, 22rem));
+          }
+
+          .rakha-desc {
+            margin-block-start: clamp(2.5rem, 5vh, 3.5rem);
+            margin-inline-start: clamp(1rem, 2vw, 2rem);
+          }
+
+          .rakha-specs {
+            width: auto;
+            max-width: 100%;
+          }
+        }
+
+        @media (max-width: 47.999rem) {
+          .rakha-section__rail-copy {
+            display: none;
+          }
+
+          .rakha-section__content {
+            grid-template-columns: 1fr;
+            row-gap: clamp(2rem, 6vw, 3rem);
+          }
+
+          .rakha-profile {
+            padding-inline-end: 0;
+          }
+
+          .rakha-aircraft-stage {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto;
+            row-gap: clamp(1.5rem, 5vh, 2.5rem);
+          }
+
+          .rakha-aircraft-stage__name {
+            grid-column: 1;
+            grid-row: 1;
+            justify-self: start;
+            padding-block-start: 0;
+          }
+
+          .rakha-aircraft-stage__figure {
+            grid-column: 1;
+            grid-row: 2;
+          }
+
+          .rakha-aircraft-stage__image {
+            width: min(100%, clamp(15rem, 72vw, 22rem));
+          }
+
+          .rakha-specs {
+            width: auto;
+            max-width: 100%;
+            margin-inline-start: 0;
+          }
+
+          .rakha-tags {
+            margin-inline-start: 0;
+          }
+
+          .rakha-desc {
+            margin: 0;
+            padding-inline-start: 0;
+            padding-block-start: clamp(1.25rem, 4vw, 1.75rem);
+            border-block-start: 0.0625rem solid rgba(255, 255, 255, 0.4);
+          }
+
+          .rakha-desc::before,
+          .rakha-desc__connector {
+            display: none;
+          }
+
+          .rakha-section__mission-note {
+            max-width: 100%;
+            margin-inline-start: 0;
+          }
+        }
+
+        @media (max-width: 30rem) {
+          .rakha-specs__row--split {
             grid-template-columns: 1fr;
           }
         }
@@ -583,5 +1138,112 @@ export default function NewMegha() {
         </div>
       </div>
     </section>
+
+    <section
+      className="x-striker-autonomy"
+      aria-labelledby="x-striker-autonomy-title"
+    >
+      <div className="x-striker-autonomy__rail">
+      <div className="x-striker-autonomy__inner">
+        <h2 id="x-striker-autonomy-title" className="sr-only">
+          X-Striker autonomous operations
+        </h2>
+
+        <p className="x-striker-autonomy__copy">
+          There is no pilot and no operator on the sticks. ARC OS flies the
+          aircraft and HYENA runs the mission — takeoff, transit, search,
+          engagement, return. It navigates visually off terrain and structures,
+          so it keeps flying and keeps fighting when GPS is denied and the
+          datalink is cut. Through ARC OS, one operator commands a formation of
+          them: they split the airspace, share what they see, and fight as one
+          team on one screen.
+        </p>
+
+        <p className="x-striker-autonomy__copy">
+          Weapons release stays under human authority. The aircraft flies,
+          finds, and tracks. A human commands the engagement.
+        </p>
+      </div>
+      </div>
+    </section>
+
+    <section className="rakha-section" aria-labelledby="rakha-title">
+      <div className="rakha-section__container">
+        <div className="rakha-section__content">
+          <span className="rakha-section__rail-copy" aria-hidden="true">
+            SEE FIRST. DECIDE FIRST. ACT FIRST.
+          </span>
+
+          <div className="rakha-profile">
+            <div className="rakha-aircraft-stage">
+              <h2 id="rakha-title" className="rakha-aircraft-stage__name">
+                <span>RAKHA 1X</span>
+              </h2>
+
+              <figure className="rakha-aircraft-stage__figure">
+                <img
+                  className="rakha-aircraft-stage__image"
+                  src={rakhaImage}
+                  alt="RAKHA 1X autonomous aircraft"
+                  draggable="false"
+                />
+              </figure>
+            </div>
+
+            <dl className="rakha-specs">
+              {rakhaSpecs.map((row) =>
+                row.kind === "split" ? (
+                  <div
+                    className="rakha-specs__row rakha-specs__row--split"
+                    key={row.cells[0].label}
+                  >
+                    {row.cells.map((cell) => (
+                      <div className="rakha-specs__cell" key={cell.label}>
+                        <dt className="rakha-specs__label">{cell.label}</dt>
+                        <dd className="rakha-specs__value">{cell.value}</dd>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="rakha-specs__row" key={row.label}>
+                    <dt className="rakha-specs__label">{row.label}</dt>
+                    {row.megha ? (
+                      <dd className="rakha-specs__value rakha-specs__value--megha">
+                        <span>ME</span>
+                        <span className="rakha-specs__megha-accent">G</span>
+                        <span>HA</span>
+                      </dd>
+                    ) : (
+                      <dd className="rakha-specs__value">{row.value}</dd>
+                    )}
+                  </div>
+                ),
+              )}
+            </dl>
+
+            <ul className="rakha-tags">
+              {rakhaCapabilityTags.map((tag) => (
+                <li className="rakha-tags__tag" key={tag}>
+                  {tag}
+                </li>
+              ))}
+            </ul>
+
+            <p className="rakha-section__mission-note">{rakhaMissionNote}</p>
+          </div>
+
+          <aside className="rakha-desc" aria-label="RAKHA 1X description">
+            <span className="rakha-desc__connector" aria-hidden="true" />
+
+            {rakhaDescriptionParagraphs.map((paragraph) => (
+              <p className="rakha-desc__copy" key={paragraph}>
+                {paragraph}
+              </p>
+            ))}
+          </aside>
+        </div>
+      </div>
+    </section>
+    </>
   );
 }
