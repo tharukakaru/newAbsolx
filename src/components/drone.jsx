@@ -377,7 +377,7 @@ export default function Drone() {
           position: absolute;
           z-index: 16;
           right: 3%;
-          top: 2.5%;
+          top: 0.2%;
           color: rgba(255, 255, 255, 0.42);
           font-family: "Yapari Trial Regular", "Yapari Trial", "Azonix", sans-serif;
           font-size: clamp(18px, 2.15vw, 38px);
@@ -442,7 +442,7 @@ export default function Drone() {
 
           .drone-edge-label {
             right: 2%;
-            top: 5%;
+            top: 0.2%;
             font-size: clamp(16px, 2.7vw, 30px);
           }
         }
@@ -531,7 +531,7 @@ export default function Drone() {
 
           .drone-edge-label {
             right: 2.2%;
-            top: 8%;
+            top: 0.2%;
             font-size: clamp(13px, 4vw, 23px);
           }
         }

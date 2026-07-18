@@ -781,10 +781,10 @@ export default function ArsOs() {
 
         .hyena-edge-label {
           position: absolute;
-          right: clamp(30px, 4.6vw, 78px);
-          top: 50%;
+          right: clamp(120px, 14vw, 210px);
+          top: clamp(260px, 19vw, 346px);
           z-index: 2;
-          transform: translateY(-50%) rotate(180deg);
+          transform: rotate(180deg);
           writing-mode: vertical-rl;
           font-weight: 600;
           font-size: clamp(22px, 3.1vw, 52px);

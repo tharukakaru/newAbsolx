@@ -82,8 +82,14 @@ const rakhaCapabilityTags = [
   "Swarm",
 ];
 
-const rakhaMissionNote =
-  "RAKHA 1X is not only a military aircraft. In disaster response it maps flood extent, locates survivors, and tracks wildfires — launched from the roadside, minutes after arriving, when minutes are all that matter.";
+const rakhaMissionNote = (
+  <>
+    <strong>RAKHA 1X</strong> is not only a military aircraft. In disaster
+    response it maps flood extent, locates survivors, and tracks wildfires
+    launched from the roadside, minutes after arriving, when minutes are all
+    that matter
+  </>
+);
 
 const talosSpecs = [
   {
@@ -137,7 +143,7 @@ const talosCapabilityTags = [
 ];
 
 const talosMissionNote =
-  "For border and maritime patrol it runs autonomously on schedule — set the route once and it flies recurring long-range patrols along a coastline or exclusion zone, sortie after sortie, reporting straight into ARC OS. For search and rescue it sweeps in hours what would take ground teams days, finds people lost at sea or in the mountains, and stays overhead until help arrives.";
+  "For border and maritime patrol it runs autonomously on schedule  set the route once and it flies recurring long-range patrols along a coastline or exclusion zone, sortie after sortie, reporting straight into ARC OS. For search and rescue it sweeps in hours what would take ground teams days, finds people lost at sea or in the mountains, and stays overhead until help arrives";
 
 const ravenSpecs = [
   {
@@ -234,8 +240,16 @@ const aresCapabilityTags = [
   "Base Protection",
 ];
 
-const aresMissionNote =
-  "FENRIR exists because of economics. Attacks come from cheap drones launched in numbers, and answering a thousand-dollar threat with a million-dollar missile is a losing exchange no country can sustain. FENRIR is the cheap answer to the cheap threat — and it is man-portable, so the protection moves with the force. A drone problem gets a drone answer, in seconds.";
+const aresMissionNote = (
+  <>
+    FENRIR exists because of economics. Attacks come from cheap drones launched
+    in numbers, and answering a thousand-dollar threat with a million-dollar
+    missile is a losing exchange no country can sustain. FENRIR is the cheap
+    answer to the cheap threat and it is man-portable, so the protection moves
+    with the force.
+    <br />A drone problem gets a drone answer, in seconds.
+  </>
+);
 
 export default function NewMegha() {
   return (
@@ -402,6 +416,7 @@ export default function NewMegha() {
           object-fit: contain;
           object-position: left center;
           user-select: none;
+          transform: translateX(clamp(1rem, 3vw,1rem));
         }
 
         .x-striker-aircraft-stage {
@@ -764,8 +779,8 @@ export default function NewMegha() {
           font-family: "Inter", sans-serif;
           font-style: normal;
           font-weight: 400;
-          font-size: clamp(0.78rem, 1.1vw, 1.05rem);
-          line-height: 1.15;
+          font-size: clamp(0.78rem, 1vw, 1rem);
+          line-height: 1.2;
           letter-spacing: 0;
           text-align: left;
           text-transform: uppercase;
@@ -878,18 +893,20 @@ export default function NewMegha() {
 
         .rakha-section__rail-copy {
           position: absolute;
-          left: -2.25rem;
-          top: clamp(1rem, 3vh, 2rem);
-          font-family: "Inter", sans-serif;
-          font-size: clamp(0.7rem, 0.9vw, 0.9rem);
+          top: clamp(5rem, 12vh, 8rem);
+          left: calc(0rem - clamp(1.5rem, 2.2vw, 2.2rem));
+          z-index: 0;
+          font-family: "Yapari Trial", sans-serif;
+          font-size: clamp(0.875rem, 1.4vw, 1.25rem);
+          font-style: normal;
           font-weight: 600;
-          line-height: 1;
-          letter-spacing: 0.08em;
+          line-height: 0.889;
           text-transform: uppercase;
           white-space: nowrap;
           writing-mode: vertical-rl;
           transform: rotate(180deg);
-          color: rgba(255, 255, 255, 0.42);
+          color: rgba(255, 255, 255, 0.37);
+          pointer-events: none;
         }
 
         .rakha-profile {
@@ -1039,18 +1056,19 @@ export default function NewMegha() {
         }
 
         .rakha-section__mission-note {
-          max-width: clamp(28rem, 48vw, 44rem);
+          width: min(72vw, 72rem);
+          max-width: none;
           margin:
             clamp(2.5rem, 5vh, 4rem)
             0
             0
             clamp(1rem, 2vw, 2rem);
           font-family: "Inter", sans-serif;
-          font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+          font-size: clamp(0.78rem, 1vw, 1rem);
           font-weight: 400;
           line-height: 1.2;
           text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.88);
+          color: rgba(255, 255, 255, 0.92);
         }
 
         .rakha-desc {
@@ -1188,6 +1206,7 @@ export default function NewMegha() {
           }
 
           .rakha-section__mission-note {
+            width: auto;
             max-width: 100%;
             margin-inline-start: 0;
           }
@@ -1281,18 +1300,20 @@ export default function NewMegha() {
 
         .talos-section__rail-copy {
           position: absolute;
-          left: -2.25rem;
-          top: clamp(1rem, 3vh, 2rem);
-          font-family: "Inter", sans-serif;
-          font-size: clamp(0.7rem, 0.9vw, 0.9rem);
+          top: clamp(5rem, 12vh, 8rem);
+          left: calc(0rem - clamp(1.5rem, 2.2vw, 2.2rem));
+          z-index: 0;
+          font-family: "Yapari Trial", sans-serif;
+          font-size: clamp(0.875rem, 1.4vw, 1.25rem);
+          font-style: normal;
           font-weight: 600;
-          line-height: 1;
-          letter-spacing: 0.08em;
+          line-height: 0.889;
           text-transform: uppercase;
           white-space: nowrap;
           writing-mode: vertical-rl;
           transform: rotate(180deg);
-          color: rgba(255, 255, 255, 0.45);
+          color: rgba(255, 255, 255, 0.37);
+          pointer-events: none;
         }
 
         .talos-profile {
@@ -1454,7 +1475,8 @@ export default function NewMegha() {
         }
 
         .talos-section__mission-note {
-          max-width: clamp(34rem, 55vw, 52rem);
+          width: min(72vw, 72rem);
+          max-width: none;
           margin:
             clamp(4rem, 8vh, 6rem)
             0
@@ -1580,6 +1602,7 @@ export default function NewMegha() {
           .talos-specs,
           .talos-tags,
           .talos-section__mission-note {
+            width: auto;
             margin-inline-start: 0;
             max-width: 100%;
           }
@@ -1616,10 +1639,24 @@ export default function NewMegha() {
           color: #ffffff;
           background:
             radial-gradient(
-              ellipse 42% 60% at 0% 0%,
-              rgba(51, 66, 154, 0.95) 0%,
-              rgba(51, 66, 154, 0.58) 34%,
-              rgba(51, 66, 154, 0.2) 68%,
+              ellipse 52% 40% at 0% -14%,
+              rgba(52, 62, 136, 0.95) 0%,
+              rgba(52, 62, 136, 0.62) 34%,
+              rgba(52, 62, 136, 0.28) 62%,
+              rgba(52, 62, 136, 0.09) 84%,
+              transparent 100%
+            ),
+            radial-gradient(
+              ellipse 68% 46% at 6% 0%,
+              rgba(16, 18, 33, 0.85) 0%,
+              rgba(16, 18, 33, 0.45) 48%,
+              rgba(16, 18, 33, 0.16) 76%,
+              transparent 100%
+            ),
+            radial-gradient(
+              ellipse 42% 38% at 0% 38%,
+              rgba(51, 66, 154, 0.6) 0%,
+              rgba(51, 66, 154, 0.28) 52%,
               transparent 100%
             ),
             radial-gradient(
@@ -1631,10 +1668,10 @@ export default function NewMegha() {
             ),
             linear-gradient(
               90deg,
-              #050711 0%,
+              #020204 0%,
               #020204 48%,
               #020201 72%,
-              #070601 100%
+              #030301 100%
             );
         }
 
@@ -1835,7 +1872,8 @@ export default function NewMegha() {
         }
 
         .raven-section__mission-note {
-          max-width: clamp(34rem, 55vw, 52rem);
+          width: min(72vw, 72rem);
+          max-width: none;
           margin:
             clamp(4rem, 8vh, 6rem)
             0
@@ -1971,6 +2009,7 @@ export default function NewMegha() {
           .raven-specs,
           .raven-tags,
           .raven-section__mission-note {
+            width: auto;
             margin-inline-start: 0;
             max-width: 100%;
           }
@@ -2006,6 +2045,13 @@ export default function NewMegha() {
           overflow: hidden;
           color: #ffffff;
           background:
+            radial-gradient(
+              ellipse 46% 46% at 100% 0%,
+              rgba(82, 69, 31, 0.78) 0%,
+              rgba(82, 69, 31, 0.38) 42%,
+              rgba(82, 69, 31, 0.12) 72%,
+              transparent 100%
+            ),
             radial-gradient(
               ellipse 54% 72% at 100% 100%,
               #28220f 0%,
@@ -2045,17 +2091,6 @@ export default function NewMegha() {
           left: clamp(1.5rem, 3vw, 2.75rem);
           width: 0.0625rem;
           background: rgba(255, 255, 255, 0.55);
-          pointer-events: none;
-        }
-
-        .ares-section__container::after {
-          content: "";
-          position: absolute;
-          inset-block-end: 0;
-          left: clamp(1.5rem, 3vw, 2.75rem);
-          width: 0.0625rem;
-          height: clamp(0.75rem, 2vh, 1.25rem);
-          background: #a92b20;
           pointer-events: none;
         }
 
@@ -2229,7 +2264,8 @@ export default function NewMegha() {
         }
 
         .ares-section__mission-note {
-          max-width: clamp(34rem, 55vw, 52rem);
+          width: min(72vw, 72rem);
+          max-width: none;
           margin:
             clamp(4rem, 8vh, 6rem)
             0
@@ -2365,6 +2401,7 @@ export default function NewMegha() {
           .ares-specs,
           .ares-tags,
           .ares-section__mission-note {
+            width: auto;
             margin-inline-start: 0;
             max-width: 100%;
           }
@@ -2390,31 +2427,47 @@ export default function NewMegha() {
         .megha-read-bridge {
           position: relative;
           display: flex;
-          align-items: flex-start;
+          align-items: center;
           justify-content: center;
           width: 100%;
-          min-height: clamp(28rem, 58vh, 42rem);
+          min-height: clamp(16rem, 34vh, 24rem);
           padding:
-            clamp(5rem, 11vh, 8rem)
-            clamp(1.5rem, 4vw, 4rem)
-            0;
+            clamp(3rem, 7vh, 5rem)
+            clamp(1.5rem, 4vw, 4rem);
           overflow: hidden;
           color: #ffffff;
           background:
             radial-gradient(
-              ellipse 48% 38% at 100% 0%,
-              rgba(40, 34, 15, 0.48) 0%,
-              rgba(40, 34, 15, 0.16) 52%,
+              ellipse 54% 50% at 100% 0%,
+              #28220f 0%,
+              rgba(40, 34, 15, 0.72) 36%,
+              rgba(40, 34, 15, 0.28) 66%,
               transparent 100%
             ),
-            #000000;
+            radial-gradient(
+              ellipse 42% 30% at 0% 0%,
+              rgba(29, 34, 75, 0.46) 0%,
+              rgba(29, 34, 75, 0.16) 58%,
+              transparent 100%
+            ),
+            linear-gradient(
+              180deg,
+              rgba(0, 0, 0, 0) 0%,
+              #000000 60%
+            ),
+            linear-gradient(
+              90deg,
+              #020204 0%,
+              #010102 58%,
+              #050401 100%
+            );
         }
 
         .megha-read-cta {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          gap: clamp(0.65rem, 1.2vw, 1rem);
+          gap: clamp(0.45rem, 0.85vw, 0.75rem);
           max-width: 100%;
           color: #ffffff;
           text-decoration: none;
@@ -2426,9 +2479,9 @@ export default function NewMegha() {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          min-width: clamp(19rem, 32vw, 26rem);
-          min-height: 2.35rem;
-          padding: 0.35rem clamp(1rem, 2vw, 1.5rem);
+          min-width: clamp(15.5rem, 25vw, 20.5rem);
+          min-height: 1.85rem;
+          padding: 0.22rem clamp(0.75rem, 1.4vw, 1.1rem);
           border-block: 0.0625rem solid rgba(255, 255, 255, 0.78);
           transition:
             border-color 180ms ease,
@@ -2459,11 +2512,11 @@ export default function NewMegha() {
           color: #ffffff;
           text-align: center;
           font-family: "Yapari Trial", sans-serif;
-          font-size: 20px;
+          font-size: clamp(0.82rem, 1vw, 1rem);
           font-style: normal;
           font-weight: 400;
           line-height: normal;
-          letter-spacing: 2.6px;
+          letter-spacing: clamp(0.12rem, 0.45vw, 0.18rem);
           text-transform: uppercase;
           white-space: nowrap;
         }
@@ -2473,7 +2526,7 @@ export default function NewMegha() {
           align-items: center;
           gap: 0;
           font-family: "Inter", sans-serif;
-          font-size: clamp(1.7rem, 2.2vw, 2.15rem);
+          font-size: clamp(1.35rem, 1.75vw, 1.7rem);
           font-weight: 300;
           line-height: 1;
           letter-spacing: 0;
@@ -2816,9 +2869,7 @@ export default function NewMegha() {
     <section className="raven-section" aria-labelledby="raven-title">
       <div className="raven-section__container">
         <div className="raven-section__content">
-          <span className="raven-section__rail-copy" aria-hidden="true">
-            SEE FIRST. DECIDE FIRST. ACT FIRST.
-          </span>
+          
 
           <div className="raven-profile">
             <div className="raven-aircraft-stage">
@@ -2894,10 +2945,7 @@ export default function NewMegha() {
     <section className="ares-section" aria-labelledby="ares-title">
       <div className="ares-section__container">
         <div className="ares-section__content">
-          <span className="ares-section__rail-copy" aria-hidden="true">
-            SEE FIRST. DECIDE FIRST. ACT FIRST.
-          </span>
-
+          
           <div className="ares-profile">
             <div className="ares-aircraft-stage">
               <h2 id="ares-title" className="ares-aircraft-stage__name">

@@ -1015,6 +1015,24 @@ export default function Arc() {
             box-shadow 0.35s ease;
         }
 
+        .arc-os-panel-edge-label {
+          position: absolute;
+          z-index: 7;
+          right: clamp(-74px, -4.2vw, -46px);
+          top: 50%;
+          transform: translateY(-50%) rotate(180deg);
+          writing-mode: vertical-rl;
+          font-family: "Yapari Trial Regular", "Yapari Trial", "Azonix", sans-serif;
+          font-size: clamp(18px, 2vw, 34px);
+          font-weight: 400;
+          line-height: 1;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.46);
+          white-space: nowrap;
+          pointer-events: none;
+        }
+
         .arc-os-panel::before,
         .arc-os-panel::after {
           content: "";
@@ -1612,6 +1630,12 @@ export default function Arc() {
             border-radius: 58px;
           }
 
+          .arc-os-panel-edge-label {
+            right: clamp(-34px, -7vw, -24px);
+            font-size: clamp(11px, 3.4vw, 17px);
+            letter-spacing: 0.1em;
+          }
+
           .arc-os-panel-image {
             inset: 16px;
             width: calc(100% - 32px);
@@ -1704,6 +1728,11 @@ export default function Arc() {
             border-radius: 42px;
           }
 
+          .arc-os-panel-edge-label {
+            right: -24px;
+            font-size: 10px;
+          }
+
           .arc-os-panel-image {
             inset: 12px;
             width: calc(100% - 24px);
@@ -1782,6 +1811,7 @@ export default function Arc() {
         {activeProduct ? <ActiveArrow product={activeProduct} /> : null}
 
         <div className={`arc-os-panel ${activeProduct ? "is-active" : ""}`} aria-live="polite">
+          <span className="arc-os-panel-edge-label" aria-hidden="true">TEAMING AT THE EDGE</span>
           {activeProduct ? (
             <>
               <span className="arc-os-panel-target" aria-hidden="true" />
