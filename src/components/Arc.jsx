@@ -987,17 +987,18 @@ export default function Arc() {
 
         .arc-os-panel {
           /* Edit these three values to place the right-side vertical label. */
-          --arc-panel-edge-label-right: clamp(-82px, -4.8vw, -56px);
-          --arc-panel-edge-label-top: 64%;
-          --arc-panel-edge-label-size: clamp(12px, 1.45vw, 22px);
+          --arc-panel-edge-label-right: clamp(-56px, -3.4vw, -46px);
+          --arc-panel-edge-label-top: 70%;
+          --arc-panel-edge-label-size: clamp(22px, 3.15vw, 38px);
+          --arc-panel-radius: clamp(10px, 1vw, 14px);
           position: absolute;
           left: 50%;
           top: var(--arc-panel-top);
           width: min(1000px, 88%);
-          height: 432px;
+          aspect-ratio: 16 / 9;
           transform: translateX(-50%);
           border: 1px solid rgba(var(--arc-yellow-rgb), 0.86);
-          border-radius: 92px;
+          border-radius: var(--arc-panel-radius);
           background:
             radial-gradient(circle at 11% 100%, rgba(82, 99, 225, 0.58) 0%, rgba(36, 47, 127, 0.36) 28%, rgba(0, 0, 0, 0) 54%),
             linear-gradient(180deg, rgba(4, 5, 12, 0.2), rgba(0, 0, 0, 0.82));
@@ -1029,11 +1030,21 @@ export default function Arc() {
           pointer-events: none;
         }
 
+        /* On larger screens the rail intentionally crosses the ARC -> Drone
+           boundary. Drone owns that copy so the next stacking context cannot
+           clip it; the panel copy remains the compact-screen version. */
+        @media (min-width: 761px) {
+          .arc-os-panel-edge-label {
+            display: none;
+          }
+        }
+
         .arc-os-panel::before,
         .arc-os-panel::after {
           content: "";
           position: absolute;
           inset: 0;
+          border-radius: inherit;
           pointer-events: none;
         }
 
@@ -1103,23 +1114,17 @@ export default function Arc() {
         .arc-os-panel-video {
           position: absolute;
           z-index: 2;
-          inset: 10px 18px 22px;
-          width: calc(100% - 36px);
-          height: calc(100% - 32px);
+          inset: 0;
+          width: 100%;
+          height: 100%;
           object-fit: cover;
-          border-radius: 78px;
-          opacity: 0;
-          clip-path: inset(0 46% 92% 46% round 88px);
-          filter: saturate(0.82) contrast(1.16) brightness(0.72);
-          transform: translateY(-28px) scale(0.72);
-          transform-origin: 50% 8%;
+          border-radius: calc(var(--arc-panel-radius) - 1px);
+          opacity: 1;
+          filter: saturate(0.96) contrast(1.06) brightness(0.82);
           box-shadow:
             0 -18px 34px rgba(255, 255, 255, 0.1),
             0 24px 48px rgba(0, 0, 0, 0.42);
-          animation:
-            arcPanelImagePop 1.12s cubic-bezier(0.12, 1.16, 0.24, 1) 2.78s forwards,
-            arcPanelImageSettle 4.4s ease-in-out 3.95s infinite;
-          will-change: opacity, transform, filter, clip-path;
+          pointer-events: none;
         }
 
         .arc-os-panel-scan {
@@ -1371,6 +1376,7 @@ export default function Arc() {
         @media (max-width: 1024px) {
           .arc-os-section {
             padding-top: 58px;
+            padding-bottom: 75px;
           }
 
           .arc-os-shell {
@@ -1460,16 +1466,10 @@ export default function Arc() {
 
           .arc-os-panel {
             top: var(--arc-panel-top);
-            height: 378px;
-            border-radius: 74px;
-          }
-
-          .arc-os-panel-video {
-            border-radius: 58px;
           }
 
           .arc-os-panel-burst {
-            border-radius: 58px;
+            border-radius: var(--arc-panel-radius);
           }
         }
 
@@ -1624,8 +1624,6 @@ export default function Arc() {
             z-index: 2;
             top: 930px;
             width: min(500px, 92%);
-            height: 300px;
-            border-radius: 58px;
           }
 
           .arc-os-panel-edge-label {
@@ -1633,15 +1631,14 @@ export default function Arc() {
           }
 
           .arc-os-panel-video {
-            inset: 16px;
-            width: calc(100% - 32px);
-            height: calc(100% - 32px);
-            border-radius: 44px;
+            inset: 0;
+            width: 100%;
+            height: 100%;
           }
 
           .arc-os-panel-burst {
-            inset: 16px;
-            border-radius: 44px;
+            inset: 12px;
+            border-radius: var(--arc-panel-radius);
           }
 
           .arc-os-panel-caption {
@@ -1722,20 +1719,17 @@ export default function Arc() {
             --arc-panel-edge-label-right: -22px;
             --arc-panel-edge-label-size: 9px;
             top: 896px;
-            height: 270px;
-            border-radius: 42px;
           }
 
           .arc-os-panel-video {
-            inset: 12px;
-            width: calc(100% - 24px);
-            height: calc(100% - 24px);
-            border-radius: 32px;
+            inset: 0;
+            width: 100%;
+            height: 100%;
           }
 
           .arc-os-panel-burst {
-            inset: 12px;
-            border-radius: 32px;
+            inset: 10px;
+            border-radius: var(--arc-panel-radius);
           }
 
           .arc-os-panel-caption {
@@ -1805,20 +1799,20 @@ export default function Arc() {
 
         <div className={`arc-os-panel ${activeProduct ? "is-active" : ""}`} aria-live="polite">
           <span className="arc-os-panel-edge-label" aria-hidden="true">TEAMING AT THE EDGE</span>
+          <video
+            aria-label="ARC OS three core systems"
+            autoPlay
+            className="arc-os-panel-video"
+            disablePictureInPicture
+            loop
+            muted
+            playsInline
+            preload="auto"
+            src={arcSystemsVideo}
+          />
           {activeProduct ? (
             <>
               <span className="arc-os-panel-target" aria-hidden="true" />
-              <video
-                aria-label="ARC OS three core systems"
-                autoPlay
-                className="arc-os-panel-video"
-                disablePictureInPicture
-                loop
-                muted
-                playsInline
-                preload="metadata"
-                src={arcSystemsVideo}
-              />
               <span className="arc-os-panel-scan" aria-hidden="true" />
               <span className="arc-os-panel-burst" aria-hidden="true" />
               <p className="arc-os-panel-caption" key={`${activeProduct.id}-caption`}>

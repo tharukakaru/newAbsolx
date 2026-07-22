@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import SourceCodeProRegular from "../assets/fonts/SourceCodePro-Regular.otf";
 import DroneAssembly from "../assets/vipoer assmbly 2.webp";
 import TacticalTerrain from "../assets/gfjhjhjhjlhugh 1.webp";
@@ -13,8 +13,42 @@ const cornerMarks = (
 );
 
 export default function Drone() {
+  const rootRef = useRef(null);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    const panel = document.querySelector(".arc-os-panel");
+
+    if (!root || !panel) return undefined;
+
+    const syncPanelOutline = () => {
+      const rootRect = root.getBoundingClientRect();
+      const panelRect = panel.getBoundingClientRect();
+
+      root.style.setProperty("--drone-panel-outline-left", `${panelRect.left - rootRect.left}px`);
+      root.style.setProperty("--drone-panel-outline-top", `${panelRect.top - rootRect.top}px`);
+      root.style.setProperty("--drone-panel-outline-width", `${panelRect.width}px`);
+      root.style.setProperty("--drone-panel-outline-height", `${panelRect.height}px`);
+      root.style.setProperty("--drone-panel-outline-opacity", "1");
+    };
+
+    const resizeObserver = new ResizeObserver(syncPanelOutline);
+    const animationFrame = window.requestAnimationFrame(syncPanelOutline);
+
+    resizeObserver.observe(panel);
+    resizeObserver.observe(root);
+    window.addEventListener("resize", syncPanelOutline);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", syncPanelOutline);
+    };
+  }, []);
+
   return (
     <section
+      ref={rootRef}
       id="agentic-autonomy"
       className="drone-root relative isolate w-full overflow-hidden bg-black text-white"
       aria-label="Simplified development for AI-enabled autonomy"
@@ -32,6 +66,7 @@ export default function Drone() {
           --drone-yellow: #e5e51b;
           --drone-stage-height: clamp(650px, 62.5vw, 920px);
           --drone-transition: clamp(72px, 7vw, 120px);
+          --drone-blue-overlap: clamp(240px, 30vw, 380px);
           min-height: var(--drone-stage-height);
           overflow: visible;
           background: transparent;
@@ -52,8 +87,32 @@ export default function Drone() {
         /* ARC → autonomy: the higher-z autonomy wrapper now enters as a fade,
            instead of cutting the ARC panel off with its rectangular edge. */
         .drone-root::before {
-          top: calc(var(--drone-transition) * -1);
-          background: linear-gradient(180deg, transparent 0%, rgba(2,2,4,0.52) 56%, #020204 100%);
+          top: calc(var(--drone-blue-overlap) * -1);
+          height: var(--drone-blue-overlap);
+          background:
+            radial-gradient(
+              100% 140% at -3% 105%,
+              rgba(62, 74, 163, 0.88) 0%,
+              rgba(62, 74, 163, 0.68) 30%,
+              rgba(62, 74, 163, 0.38) 50%,
+              rgba(62, 74, 163, 0.16) 70%,
+              transparent 86%
+            ),
+            linear-gradient(180deg, transparent 0%, rgba(2, 2, 4, 0.4) 64%, #020204 100%);
+          -webkit-mask-image: linear-gradient(
+            180deg,
+            transparent 0%,
+            rgba(0, 0, 0, 0.2) 28%,
+            rgba(0, 0, 0, 0.68) 62%,
+            #000 100%
+          );
+          mask-image: linear-gradient(
+            180deg,
+            transparent 0%,
+            rgba(0, 0, 0, 0.2) 28%,
+            rgba(0, 0, 0, 0.68) 62%,
+            #000 100%
+          );
         }
 
         /* Autonomy → MEGHA: extend a black-to-transparent veil over the next
@@ -105,8 +164,47 @@ export default function Drone() {
               transparent 68%,
               rgba(0, 0, 0, 0.96) 100%
             ),
-            radial-gradient(48% 52% at 8% 30%, rgba(74, 92, 226, 0.66), rgba(28, 38, 116, 0.34) 42%, transparent 74%),
             radial-gradient(35% 44% at 96% 81%, rgba(116, 104, 22, 0.18), transparent 68%);
+        }
+
+        /* Layered ARC blue field. Two offset lobes give the wash an organic
+           edge: it opens beneath the command view, reaches inward through
+           the upper-middle, then folds back toward the lower-left terrain. */
+        .drone-ambient::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          background:
+            radial-gradient(
+              100% 52% at -3% 4%,
+              rgba(62, 74, 163, 0.88) 0%,
+              rgba(62, 74, 163, 0.68) 30%,
+              rgba(62, 74, 163, 0.38) 50%,
+              rgba(62, 74, 163, 0.16) 70%,
+              transparent 86%
+            ),
+            radial-gradient(
+              70% 104% at -7% 76%,
+              rgba(62, 74, 163, 0.66) 0%,
+              rgba(62, 74, 163, 0.46) 38%,
+              rgba(40, 49, 119, 0.2) 64%,
+              transparent 84%
+            );
+          -webkit-mask-image: linear-gradient(
+            180deg,
+            #000 0%,
+            #000 76%,
+            rgba(0, 0, 0, 0.72) 91%,
+            transparent 100%
+          );
+          mask-image: linear-gradient(
+            180deg,
+            #000 0%,
+            #000 76%,
+            rgba(0, 0, 0, 0.72) 91%,
+            transparent 100%
+          );
         }
 
         .drone-command-view {
@@ -144,7 +242,7 @@ export default function Drone() {
           inset: 0;
           z-index: 2;
           background:
-            radial-gradient(62% 90% at 8% 100%, rgba(53, 72, 203, 0.78), rgba(21, 29, 93, 0.28) 48%, transparent 76%),
+            radial-gradient(62% 90% at 8% 100%, rgba(62, 74, 163, 0.62), rgba(36, 44, 105, 0.24) 48%, transparent 76%),
             linear-gradient(180deg, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.06) 54%, rgba(0, 0, 0, 0.24));
           pointer-events: none;
         }
@@ -373,6 +471,46 @@ export default function Drone() {
           display: block;
         }
 
+        .drone-edge-label {
+          display: none;
+          position: absolute;
+          z-index: 12;
+          top: clamp(-169px, -14vw, -145px);
+          right: clamp(18px, 3.4vw, 42px);
+          transform: translateY(-50%) rotate(180deg);
+          writing-mode: vertical-rl;
+          color: rgba(255, 255, 255, 0.4);
+          font-family: "Yapari Trial Regular", "Yapari Trial", "Azonix", sans-serif;
+          font-size: clamp(22px, 3.15vw, 38px);
+          font-weight: 400;
+          line-height: 1;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          white-space: nowrap;
+          pointer-events: none;
+        }
+
+        .drone-panel-outline {
+          position: absolute;
+          z-index: 13;
+          left: var(--drone-panel-outline-left, 0px);
+          top: var(--drone-panel-outline-top, 0px);
+          width: var(--drone-panel-outline-width, 0px);
+          height: var(--drone-panel-outline-height, 0px);
+          box-sizing: border-box;
+          border: 1px solid rgba(251, 253, 0, 0.86);
+          border-radius: clamp(10px, 1vw, 14px);
+          opacity: var(--drone-panel-outline-opacity, 0);
+          box-shadow: 0 0 0 1px rgba(251, 253, 0, 0.06);
+          pointer-events: none;
+        }
+
+        @media (min-width: 761px) {
+          .drone-edge-label {
+            display: block;
+          }
+        }
+
         @media (max-width: 1100px) {
           .drone-root {
             --drone-stage-height: clamp(560px, 72vw, 760px);
@@ -430,6 +568,7 @@ export default function Drone() {
         @media (max-width: 760px) {
           .drone-root {
             --drone-stage-height: clamp(620px, 126.5vw, 790px);
+            --drone-blue-overlap: clamp(190px, 30vw, 240px);
           }
 
           .drone-stage {
@@ -541,6 +680,9 @@ export default function Drone() {
           }
         }
       `}</style>
+
+      <span className="drone-panel-outline" aria-hidden="true" />
+      <span className="drone-edge-label" aria-hidden="true">TEAMING AT THE EDGE</span>
 
       <div className="drone-stage">
         <img className="drone-terrain" src={TacticalTerrain} alt="" aria-hidden="true" />
