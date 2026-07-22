@@ -625,16 +625,18 @@ export default function ArsOs() {
           --hyena-edge-rail: clamp(96px, 11vw, 176px);
           position: relative;
           width: 100%;
-          /* Ambient edge tints to match the reference: warm olive (#51451f)
-             at the lower-left near the dial, and a broad navy (#252c62) glow
-             down the right side that brightens toward the edge. */
-          /* Palette: #544820 golden-brown at the dial, #202553 blue-violet
-             down the right. Both tints fade to zero before the section's
-             edges so the boundary with the intro above / SENTINEL below
-             stays seamless. */
+          /* Reference-matched edge tints: warm olive at the lower-left and
+             #2b3371 at the far-right, fading smoothly into the black field. */
           background:
             radial-gradient(42% 32% at 4% 82%, rgba(84, 72, 32, 0.32), rgba(0, 0, 0, 0) 62%),
-            radial-gradient(32% 58% at 105% 52%, rgba(32, 37, 83, 0.9), rgba(32, 37, 83, 0.3) 42%, rgba(0, 0, 0, 0) 78%),
+            radial-gradient(
+              36% 62% at 106% 54%,
+              #2b3371 0%,
+              rgba(43, 51, 113, 0.68) 34%,
+              rgba(43, 51, 113, 0.30) 58%,
+              rgba(43, 51, 113, 0.10) 72%,
+              rgba(43, 51, 113, 0) 86%
+            ),
             #000;
           overflow: hidden;
           isolation: isolate;
@@ -786,8 +788,8 @@ export default function ArsOs() {
 
         .hyena-edge-label {
           position: absolute;
-          right: clamp(24px, 3vw, 54px);
-          top: clamp(260px, 19vw, 346px);
+          right: clamp(22px, 2.7vw, 48px);
+          top: clamp(350px, 25vw, 470px);
           z-index: 2;
           transform: rotate(180deg);
           writing-mode: vertical-rl;
@@ -795,7 +797,7 @@ export default function ArsOs() {
           font-size: clamp(22px, 3.1vw, 52px);
           letter-spacing: 0.1em;
           text-transform: uppercase;
-          color: rgba(178, 185, 222, 0.72);
+          color: rgba(178, 185, 222, 0.64);
           pointer-events: none;
           white-space: nowrap;
         }
