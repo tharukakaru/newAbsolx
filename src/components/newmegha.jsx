@@ -2432,6 +2432,7 @@ export default function NewMegha() {
 
         .megha-read-bridge {
           position: relative;
+          z-index: 51;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -2464,30 +2465,63 @@ export default function NewMegha() {
           min-width: clamp(15.5rem, 25vw, 20.5rem);
           min-height: 1.85rem;
           padding: 0.22rem clamp(0.75rem, 1.4vw, 1.1rem);
-          border-block: 0.0625rem solid rgba(255, 255, 255, 0.78);
+          border: 0.0625rem solid rgba(255, 255, 255, 0.78);
+          isolation: isolate;
           transition:
             border-color 180ms ease,
             background-color 180ms ease;
         }
 
-        .megha-read-cta__frame::before,
-        .megha-read-cta__frame::after {
-          content: "";
+        .megha-read-cta__frame::before {
+          content: none;
+        }
+
+        .megha-read-cta__bottom-edge {
+          display: block;
           position: absolute;
-          inset-block: -0.0625rem;
-          width: 0.45rem;
-          border-block: 0.0625rem solid rgba(255, 255, 255, 0.78);
+          inset-inline: -0.0625rem;
+          inset-block-end: -0.0625rem;
+          z-index: 10;
+          height: 0.0625rem;
+          background: rgba(255, 255, 255, 0.9);
+          box-shadow: 0 0 0.0625rem rgba(255, 255, 255, 0.24);
+          pointer-events: none;
+          transform: translateZ(0);
+        }
+
+        .megha-read-cta__corner {
+          position: absolute;
+          z-index: 12;
+          width: 0.85rem;
+          height: 0.4rem;
+          pointer-events: none;
+          border-color: rgba(255, 255, 255, 0.94);
+          border-style: solid;
           transition: border-color 180ms ease;
         }
 
-        .megha-read-cta__frame::before {
-          inset-inline-start: 0;
-          border-inline-start: 0.0625rem solid rgba(255, 255, 255, 0.78);
+        .megha-read-cta__corner--tl {
+          inset-block-start: -0.125rem;
+          inset-inline-start: -0.125rem;
+          border-width: 0.125rem 0 0 0.125rem;
         }
 
-        .megha-read-cta__frame::after {
-          inset-inline-end: 0;
-          border-inline-end: 0.0625rem solid rgba(255, 255, 255, 0.78);
+        .megha-read-cta__corner--tr {
+          inset-block-start: -0.125rem;
+          inset-inline-end: -0.125rem;
+          border-width: 0.125rem 0.125rem 0 0;
+        }
+
+        .megha-read-cta__corner--bl {
+          inset-block-end: -0.125rem;
+          inset-inline-start: -0.125rem;
+          border-width: 0 0 0.125rem 0.125rem;
+        }
+
+        .megha-read-cta__corner--br {
+          inset-block-end: -0.125rem;
+          inset-inline-end: -0.125rem;
+          border-width: 0 0.125rem 0.125rem 0;
         }
 
         .megha-read-cta__label {
@@ -2522,10 +2556,13 @@ export default function NewMegha() {
           background: rgba(255, 255, 255, 0.035);
         }
 
-        .megha-read-cta:hover .megha-read-cta__frame::before,
-        .megha-read-cta:hover .megha-read-cta__frame::after,
-        .megha-read-cta:focus-visible .megha-read-cta__frame::before,
-        .megha-read-cta:focus-visible .megha-read-cta__frame::after {
+        .megha-read-cta:hover .megha-read-cta__bottom-edge,
+        .megha-read-cta:focus-visible .megha-read-cta__bottom-edge {
+          background: #ffffff;
+        }
+
+        .megha-read-cta:hover .megha-read-cta__corner,
+        .megha-read-cta:focus-visible .megha-read-cta__corner {
           border-color: #ffffff;
         }
 
@@ -2989,6 +3026,11 @@ export default function NewMegha() {
       <a className="megha-read-cta" href="/research">
         <span className="megha-read-cta__frame">
           <span className="megha-read-cta__label">WHY MEGHA NEED? READ</span>
+          <span className="megha-read-cta__bottom-edge" aria-hidden="true" />
+          <span className="megha-read-cta__corner megha-read-cta__corner--tl" aria-hidden="true" />
+          <span className="megha-read-cta__corner megha-read-cta__corner--tr" aria-hidden="true" />
+          <span className="megha-read-cta__corner megha-read-cta__corner--bl" aria-hidden="true" />
+          <span className="megha-read-cta__corner megha-read-cta__corner--br" aria-hidden="true" />
         </span>
         <span className="megha-read-cta__chevrons" aria-hidden="true">
           <span>›</span>
