@@ -2045,6 +2045,12 @@ export default function NewMegha() {
           overflow: hidden;
           color: #ffffff;
           background:
+            linear-gradient(
+              180deg,
+              transparent 76%,
+              rgba(0, 0, 0, 0.78) 92%,
+              #000 100%
+            ),
             radial-gradient(
               ellipse 46% 46% at 100% 0%,
               rgba(82, 69, 31, 0.78) 0%,
@@ -2436,31 +2442,7 @@ export default function NewMegha() {
             clamp(1.5rem, 4vw, 4rem);
           overflow: hidden;
           color: #ffffff;
-          background:
-            radial-gradient(
-              ellipse 54% 50% at 100% 0%,
-              #28220f 0%,
-              rgba(40, 34, 15, 0.72) 36%,
-              rgba(40, 34, 15, 0.28) 66%,
-              transparent 100%
-            ),
-            radial-gradient(
-              ellipse 42% 30% at 0% 0%,
-              rgba(29, 34, 75, 0.46) 0%,
-              rgba(29, 34, 75, 0.16) 58%,
-              transparent 100%
-            ),
-            linear-gradient(
-              180deg,
-              rgba(0, 0, 0, 0) 0%,
-              #000000 60%
-            ),
-            linear-gradient(
-              90deg,
-              #020204 0%,
-              #010102 58%,
-              #050401 100%
-            );
+          background: #000;
         }
 
         .megha-read-cta {

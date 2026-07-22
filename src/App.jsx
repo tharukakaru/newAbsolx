@@ -136,7 +136,7 @@ export default function App() {
       {isNewMeghaPage ? (
         <>
           <NewMegha />
-          <Footer showReadmeBridge={false} variant="arc-os" />
+          <Footer showReadmeBridge={false} variant="new-megha" />
         </>
       ) : isResearchPage ? (
         <>

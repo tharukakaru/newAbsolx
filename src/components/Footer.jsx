@@ -162,7 +162,9 @@ function BracketButton({
 export default function Footer({ showReadmeBridge = true, variant = "default" }) {
   const isResearchFooter = variant === "research";
   const isArcOsFooter = variant === "arc-os";
-  const isCompactFooter = isResearchFooter || isArcOsFooter;
+  const isNewMeghaFooter = variant === "new-megha";
+  const isSystemFooter = isArcOsFooter || isNewMeghaFooter;
+  const isCompactFooter = isResearchFooter || isSystemFooter;
 
   /**
    * Title tone: white + light-blue mix (NOT pure white)
@@ -174,11 +176,13 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
     <footer
       className={[
         "relative overflow-hidden text-white font-elios z-50",
-        isArcOsFooter ? "arc-os-footer bg-transparent" : "bg-black",
-        !isResearchFooter && !isArcOsFooter ? "home-footer" : "",
+        isSystemFooter
+          ? `${isNewMeghaFooter ? "new-megha-footer" : "arc-os-footer"} bg-transparent`
+          : "bg-black",
+        !isResearchFooter && !isSystemFooter ? "home-footer" : "",
         isResearchFooter
           ? "research-footer min-h-[400px] sm:min-h-[460px] md:min-h-[500px]"
-          : isArcOsFooter
+          : isSystemFooter
             ? "min-h-[330px] sm:min-h-[390px] md:min-h-[430px]"
             : "",
       ].join(" ")}
@@ -196,7 +200,8 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
           background: #000;
         }
 
-        .arc-os-footer {
+        .arc-os-footer,
+        .new-megha-footer {
           margin-top: clamp(-140px, -8vw, -96px);
           padding-top: clamp(176px, 14vw, 230px);
           background: transparent;
@@ -226,6 +231,28 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
             #000 80px
           );
           pointer-events: none;
+        }
+
+        .new-megha-footer-shader {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          background:
+            radial-gradient(
+              82% 46% at 50% 108%,
+              rgba(63, 79, 174, 0.34) 0%,
+              rgba(43, 56, 132, 0.22) 42%,
+              rgba(18, 25, 67, 0) 76%
+            ),
+            linear-gradient(
+              180deg,
+              #000 0%,
+              #000 48%,
+              #02030a 58%,
+              #090d24 70%,
+              #17204c 84%,
+              #2a367b 100%
+            );
         }
 
         .home-footer {
@@ -385,6 +412,10 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
             className="pointer-events-none absolute inset-x-0 top-0 z-[6] h-64 bg-gradient-to-b from-black via-black/70 to-transparent sm:h-80"
           />
         </>
+      ) : isNewMeghaFooter ? (
+        <>
+          <div aria-hidden="true" className="new-megha-footer-shader" />
+        </>
       ) : isArcOsFooter ? (
         <>
           <div aria-hidden="true" className="arc-os-footer-shader" />
@@ -424,7 +455,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
         </>
       )}
 
-      {!isResearchFooter && !isArcOsFooter ? (
+      {!isCompactFooter ? (
         <img
           src={footerSentinel}
           alt=""
