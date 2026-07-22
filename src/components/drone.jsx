@@ -373,21 +373,6 @@ export default function Drone() {
           display: block;
         }
 
-        .drone-edge-label {
-          position: absolute;
-          z-index: 16;
-          right: 3%;
-          top: 0.2%;
-          color: rgba(255, 255, 255, 0.42);
-          font-family: "Yapari Trial Regular", "Yapari Trial", "Azonix", sans-serif;
-          font-size: clamp(18px, 2.15vw, 38px);
-          line-height: 1;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          writing-mode: vertical-rl;
-          transform: rotate(180deg);
-        }
-
         @media (max-width: 1100px) {
           .drone-root {
             --drone-stage-height: clamp(560px, 72vw, 760px);
@@ -440,11 +425,6 @@ export default function Drone() {
             font-size: clamp(16px, 2.25vw, 24px);
           }
 
-          .drone-edge-label {
-            right: 2%;
-            top: 0.2%;
-            font-size: clamp(16px, 2.7vw, 30px);
-          }
         }
 
         @media (max-width: 760px) {
@@ -529,11 +509,6 @@ export default function Drone() {
             line-height: 0.9;
           }
 
-          .drone-edge-label {
-            right: 2.2%;
-            top: 0.2%;
-            font-size: clamp(13px, 4vw, 23px);
-          }
         }
 
         @media (max-width: 420px) {
@@ -602,8 +577,6 @@ export default function Drone() {
           <span>for AI-enabled</span>
           <span>autonomy</span>
         </h2>
-
-        <p className="drone-edge-label">Teaming at the edge</p>
       </div>
     </section>
   );

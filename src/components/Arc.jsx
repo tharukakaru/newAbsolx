@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { HOME_LINE_YELLOW_STYLE } from "../Utils/AnimatedLine";
-import hyenaImage from "../assets/27c49652d13ae2603bf7615502d578291a89da32.webp";
-import sentinelImage from "../assets/8efcae60e9c9755c92517c46124e7bd251b2d5e4.webp";
-import arcImage from "../assets/a4b1ee2080059fbfd1126c74b0922adf29b3f9d8.webp";
+import arcSystemsVideo from "../assets/ARC OS Three Core Systems 16x9 (1).mp4";
 
 const connectedCopy =
   "Connected Warfare ensures U.S. and allied forces win at the edge, in fast-moving and contested environments where decisions must be made in seconds. We build AI-driven systems that connect sensors, shooters, and decision-makers for faster, smarter, and more resilient operations when every second counts.";
@@ -12,8 +10,6 @@ const products = [
     id: "hyena",
     title: "HYENA",
     body: "Agentic Autonomous Pilot of ARC OS",
-    image: hyenaImage,
-    imageAlt: "HYENA autonomous pilot visual",
     highlightIndex: 2,
     arrowTone: "left",
   },
@@ -21,8 +17,6 @@ const products = [
     id: "sentinel",
     title: "SENTINEL",
     body: "Integrated Air Surveillance & Counter-UAS Layer",
-    image: sentinelImage,
-    imageAlt: "SENTINEL air surveillance visual",
     highlightIndex: 3,
     arrowTone: "center",
   },
@@ -30,8 +24,6 @@ const products = [
     id: "arc-c2",
     title: "ARC C2",
     body: "Command & Control (C2) is an AI-powered battle management",
-    image: arcImage,
-    imageAlt: "ARC C2 command and control visual",
     highlightIndex: 1,
     arrowTone: "right",
   },
@@ -994,6 +986,10 @@ export default function Arc() {
         }
 
         .arc-os-panel {
+          /* Edit these three values to place the right-side vertical label. */
+          --arc-panel-edge-label-right: clamp(-82px, -4.8vw, -56px);
+          --arc-panel-edge-label-top: 64%;
+          --arc-panel-edge-label-size: clamp(12px, 1.45vw, 22px);
           position: absolute;
           left: 50%;
           top: var(--arc-panel-top);
@@ -1018,12 +1014,12 @@ export default function Arc() {
         .arc-os-panel-edge-label {
           position: absolute;
           z-index: 7;
-          right: clamp(-74px, -4.2vw, -46px);
-          top: 50%;
+          right: var(--arc-panel-edge-label-right);
+          top: var(--arc-panel-edge-label-top);
           transform: translateY(-50%) rotate(180deg);
           writing-mode: vertical-rl;
           font-family: "Yapari Trial Regular", "Yapari Trial", "Azonix", sans-serif;
-          font-size: clamp(18px, 2vw, 34px);
+          font-size: var(--arc-panel-edge-label-size);
           font-weight: 400;
           line-height: 1;
           letter-spacing: 0.12em;
@@ -1104,7 +1100,7 @@ export default function Arc() {
           height: 112%;
         }
 
-        .arc-os-panel-image {
+        .arc-os-panel-video {
           position: absolute;
           z-index: 2;
           inset: 10px 18px 22px;
@@ -1311,7 +1307,7 @@ export default function Arc() {
           .arc-os-arrow-origin,
           .arc-os-arrival-node,
           .arc-os-panel.is-active,
-          .arc-os-panel-image,
+          .arc-os-panel-video,
           .arc-os-panel-scan,
           .arc-os-panel-burst,
           .arc-os-panel-target,
@@ -1323,12 +1319,12 @@ export default function Arc() {
           .arc-os-signal-head,
           .arc-os-arrow-origin,
           .arc-os-arrival-node,
-          .arc-os-panel-image,
+          .arc-os-panel-video,
           .arc-os-panel-caption {
             opacity: 1;
           }
 
-          .arc-os-panel-image {
+          .arc-os-panel-video {
             clip-path: inset(0 0 0 0 round 72px);
             filter: saturate(0.96) contrast(1.08) brightness(0.86);
             transform: none;
@@ -1468,7 +1464,7 @@ export default function Arc() {
             border-radius: 74px;
           }
 
-          .arc-os-panel-image {
+          .arc-os-panel-video {
             border-radius: 58px;
           }
 
@@ -1623,6 +1619,8 @@ export default function Arc() {
           }
 
           .arc-os-panel {
+            --arc-panel-edge-label-right: clamp(-30px, -6.6vw, -22px);
+            --arc-panel-edge-label-size: clamp(10px, 3.1vw, 15px);
             z-index: 2;
             top: 930px;
             width: min(500px, 92%);
@@ -1631,12 +1629,10 @@ export default function Arc() {
           }
 
           .arc-os-panel-edge-label {
-            right: clamp(-34px, -7vw, -24px);
-            font-size: clamp(11px, 3.4vw, 17px);
             letter-spacing: 0.1em;
           }
 
-          .arc-os-panel-image {
+          .arc-os-panel-video {
             inset: 16px;
             width: calc(100% - 32px);
             height: calc(100% - 32px);
@@ -1723,17 +1719,14 @@ export default function Arc() {
           }
 
           .arc-os-panel {
+            --arc-panel-edge-label-right: -22px;
+            --arc-panel-edge-label-size: 9px;
             top: 896px;
             height: 270px;
             border-radius: 42px;
           }
 
-          .arc-os-panel-edge-label {
-            right: -24px;
-            font-size: 10px;
-          }
-
-          .arc-os-panel-image {
+          .arc-os-panel-video {
             inset: 12px;
             width: calc(100% - 24px);
             height: calc(100% - 24px);
@@ -1815,11 +1808,16 @@ export default function Arc() {
           {activeProduct ? (
             <>
               <span className="arc-os-panel-target" aria-hidden="true" />
-              <img
-                className="arc-os-panel-image"
-                key={activeProduct.id}
-                src={activeProduct.image}
-                alt={activeProduct.imageAlt}
+              <video
+                aria-label="ARC OS three core systems"
+                autoPlay
+                className="arc-os-panel-video"
+                disablePictureInPicture
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                src={arcSystemsVideo}
               />
               <span className="arc-os-panel-scan" aria-hidden="true" />
               <span className="arc-os-panel-burst" aria-hidden="true" />

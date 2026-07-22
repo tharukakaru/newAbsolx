@@ -621,6 +621,8 @@ export default function ArsOs() {
     <section id="hyena" className="hyena" aria-label="HYENA — Subsystem 01">
       <style>{`
         .hyena {
+          --hyena-content-left: clamp(48px, 7.1vw, 150px);
+          --hyena-edge-rail: clamp(96px, 11vw, 176px);
           position: relative;
           width: 100%;
           /* Ambient edge tints to match the reference: warm olive (#51451f)
@@ -632,7 +634,7 @@ export default function ArsOs() {
              stays seamless. */
           background:
             radial-gradient(42% 32% at 4% 82%, rgba(84, 72, 32, 0.32), rgba(0, 0, 0, 0) 62%),
-            radial-gradient(62% 58% at 100% 52%, rgba(32, 37, 83, 0.92), rgba(32, 37, 83, 0.34) 40%, rgba(0, 0, 0, 0) 76%),
+            radial-gradient(32% 58% at 105% 52%, rgba(32, 37, 83, 0.9), rgba(32, 37, 83, 0.3) 42%, rgba(0, 0, 0, 0) 78%),
             #000;
           overflow: hidden;
           isolation: isolate;
@@ -655,9 +657,9 @@ export default function ArsOs() {
         .hyena-inner {
           position: relative;
           z-index: 3;
-          max-width: min(1180px, 82vw);
-          margin-left: clamp(48px, 7.1vw, 150px);
-          margin-right: clamp(44px, 6vw, 120px);
+          max-width: none;
+          margin-left: var(--hyena-content-left);
+          margin-right: var(--hyena-edge-rail);
         }
 
         .hyena-head {
@@ -719,13 +721,16 @@ export default function ArsOs() {
         .hyena-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          margin-left: clamp(44px, 6.1vw, 78px);
-          max-width: min(980px, calc(100% - clamp(104px, 16vw, 180px)));
+          width: 100%;
+          margin-left: 0;
+          max-width: none;
           background: transparent;
         }
 
         .hyena-card {
-          background: #000;
+          /* Let the section atmosphere flow through every card so the grid
+             never ends as a visible black rectangle against the edge wash. */
+          background: transparent;
           min-height: clamp(166px, 18.2vw, 290px);
           padding: clamp(10px, 1.25vw, 22px) clamp(13px, 1.6vw, 30px) clamp(14px, 1.7vw, 32px);
           border-right: 1px solid rgba(255, 255, 255, 0.22);
@@ -781,7 +786,7 @@ export default function ArsOs() {
 
         .hyena-edge-label {
           position: absolute;
-          right: clamp(120px, 14vw, 210px);
+          right: clamp(24px, 3vw, 54px);
           top: clamp(260px, 19vw, 346px);
           z-index: 2;
           transform: rotate(180deg);
@@ -844,13 +849,15 @@ export default function ArsOs() {
 
         @media (max-width: 760px) {
           .hyena {
+            --hyena-content-left: clamp(44px, 11vw, 64px);
+            --hyena-edge-rail: clamp(18px, 5vw, 34px);
             padding-top: clamp(22px, 6vw, 36px);
           }
 
           .hyena-inner {
             max-width: none;
-            margin-left: clamp(44px, 11vw, 64px);
-            margin-right: clamp(18px, 5vw, 34px);
+            margin-left: var(--hyena-content-left);
+            margin-right: var(--hyena-edge-rail);
           }
 
           .hyena-head {
@@ -893,6 +900,10 @@ export default function ArsOs() {
           .hyena-figure {
             width: min(560px, 92%);
           }
+
+          .hyena-edge-label {
+            display: none;
+          }
         }
 
         @media (max-width: 560px) {
@@ -930,8 +941,7 @@ export default function ArsOs() {
             border-bottom: 0;
           }
 
-          .hyena-meta,
-          .hyena-edge-label {
+          .hyena-meta {
             display: none;
           }
 
@@ -958,7 +968,6 @@ export default function ArsOs() {
 
       <span className="hyena-vline" aria-hidden="true" />
       <span className="hyena-edge-label" aria-hidden="true">TEAMING AT THE EDGE</span>
-      <span className="hyena-first-label" aria-hidden="true">SEE FIRST. DECIDE FIRST. ACT FIRST.</span>
 
       <div className="hyena-inner">
         <div className="hyena-head">
@@ -996,6 +1005,10 @@ export default function ArsOs() {
       </div>
 
       <div className="hyena-figure" aria-hidden="true" />
+
+      <span className="arcos-rail-copy arcos-rail-copy--hyena" aria-hidden="true">
+        SEE FIRST. DECIDE FIRST. ACT FIRST.
+      </span>
     </section>
 
     <section id="sentinel" className="sentinel" aria-label="SENTINEL — Subsystem 02">
@@ -1010,6 +1023,38 @@ export default function ArsOs() {
           isolation: isolate;
           padding: clamp(26px, 3.4vw, 64px) 0 clamp(48px, 6vw, 110px);
           font-family: "Plus Jakarta Sans", Arial, sans-serif;
+        }
+
+        /* "SEE FIRST. DECIDE FIRST. ACT FIRST." left-rail vertical text.
+           Edit the bottom values below to move each copy up/down. */
+        .arcos-rail-copy {
+          position: absolute;
+          z-index: 6;
+          left: clamp(10px, 1.7vw, 30px);
+          font-family: "Yapari Trial", "Yapari Trial Regular", "Azonix", sans-serif;
+          font-size: clamp(0.875rem, 1.4vw, 1.25rem);
+          font-weight: 600;
+          line-height: 0.889;
+          text-transform: uppercase;
+          white-space: nowrap;
+          writing-mode: vertical-rl;
+          transform: rotate(180deg);
+          color: rgba(255, 255, 255, 0.37);
+          pointer-events: none;
+        }
+
+        .arcos-rail-copy--hyena {
+          bottom: 38%;
+        }
+
+        .arcos-rail-copy--sentinel {
+          bottom: 45%;
+        }
+
+        @media (max-width: 760px) {
+          .arcos-rail-copy {
+            display: none;
+          }
         }
 
         /* Navy (#22285a) wash painted as ONE continuous screen-blended layer
@@ -1557,6 +1602,13 @@ export default function ArsOs() {
           />
         </div>
       </div>
+
+      <span
+        className="arcos-rail-copy arcos-rail-copy--sentinel"
+        aria-hidden="true"
+      >
+        SEE FIRST. DECIDE FIRST. ACT FIRST.
+      </span>
     </section>
 
     <section id="arc-c2" className="c2" aria-label="ARC C2 — Subsystem 03">
