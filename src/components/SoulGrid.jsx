@@ -40,17 +40,21 @@ export default function SoulGrid() {
 
         .soul-face-glow {
           position: absolute;
-          top: -10%;
-          right: clamp(-260px, -16vw, -92px);
-          width: 64%;
-          height: 116%;
+          top: -12%;
+          right: clamp(-220px, -13vw, -76px);
+          width: 68%;
+          height: 120%;
           background:
-            radial-gradient(ellipse at 100% 50%,
-              rgba(75, 96, 230, 0.78) 0%,
-              rgba(37, 51, 142, 0.52) 34%,
-              rgba(12, 17, 54, 0.28) 54%,
-              rgba(0, 0, 0, 0) 76%);
-          filter: blur(44px);
+            radial-gradient(ellipse 92% 76% at 100% 58%,
+              #252c60 0%,
+              rgba(37, 44, 96, 0.72) 32%,
+              rgba(37, 44, 96, 0.40) 54%,
+              rgba(37, 44, 96, 0.14) 72%,
+              rgba(37, 44, 96, 0) 90%),
+            radial-gradient(ellipse 70% 48% at 88% 100%,
+              rgba(37, 44, 96, 0.28) 0%,
+              rgba(37, 44, 96, 0) 78%);
+          filter: blur(36px);
           border-radius: 999px;
         }
 

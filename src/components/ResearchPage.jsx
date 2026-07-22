@@ -594,7 +594,7 @@ export default function ResearchPage() {
              megha-frame corner — the frame's own left border carries the rail
              the rest of the way down to the bottom rule. */
           --research-line-height: clamp(4700px, 479vw, 7600px);
-          --research-line-current: 560px;
+          --research-guide-cycle: clamp(320px, 44vh, 560px);
           background:
             linear-gradient(90deg, rgba(201,209,211,0.55) 0%, rgba(201,209,211,0.26) 62%, rgba(201,209,211,0.08) 88%, transparent 100%),
             linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.02) 12%, rgba(255,255,255,0.16) 36%, rgba(255,255,255,0.32) 50%, rgba(255,255,255,0.16) 64%, rgba(255,255,255,0.02) 88%, transparent 100%);
@@ -614,41 +614,34 @@ export default function ResearchPage() {
           z-index: 1;
           width: 1px;
           height: var(--research-line-height);
-          background: linear-gradient(
-            180deg,
-            rgba(255,255,255,0.36),
-            rgba(255,255,255,0.44) 6%,
-            rgba(255,255,255,0.28) 58%,
-            rgba(255,255,255,0.12) 100%
-          );
-          box-shadow: 0 0 6px rgba(255,255,255,0.12);
+          background:
+            linear-gradient(
+              180deg,
+              rgba(255, 255, 255, 0.58) 0%,
+              rgba(255, 255, 255, 0.52) 54%,
+              rgba(255, 255, 255, 0.46) 100%
+            ),
+            linear-gradient(
+              180deg,
+              transparent 0%,
+              rgba(255, 255, 210, 0.08) 16%,
+              rgba(255, 255, 180, 0.26) 36%,
+              rgba(255, 255, 255, 0.92) 50%,
+              rgba(255, 255, 150, 0.26) 64%,
+              rgba(255, 255, 120, 0.08) 84%,
+              transparent 100%
+            );
+          background-repeat: no-repeat, repeat-y;
+          background-size: 100% 100%, 100% var(--research-guide-cycle);
+          background-position: 0 0, 0 calc(0px - var(--research-guide-cycle));
+          filter: drop-shadow(0 0 4px rgba(255, 255, 160, 0.18));
           pointer-events: none;
+          will-change: background-position;
+          animation: researchGuideRunY 4s linear infinite;
         }
 
         .research-signal-line::after {
-          content: "";
-          position: absolute;
-          left: 0;
-          top: -16px;
-          z-index: 2;
-          width: 1px;
-          height: var(--research-line-current);
-          background: linear-gradient(
-            180deg,
-            transparent 0%,
-            rgba(255,255,210,0.08) 16%,
-            rgba(255,255,180,0.36) 34%,
-            rgba(255,255,255,1) 50%,
-            rgba(255,255,150,0.36) 66%,
-            rgba(255,255,120,0.08) 84%,
-            transparent 100%
-          );
-          filter:
-            drop-shadow(0 0 3px rgba(255,255,255,0.4))
-            drop-shadow(0 0 8px rgba(255,255,180,0.16));
-          pointer-events: none;
-          will-change: transform;
-          animation: researchSignalCurrentY 6s linear infinite;
+          content: none;
         }
 
         @keyframes researchSignalSweep {
@@ -657,12 +650,15 @@ export default function ResearchPage() {
           100% { background-position: 0 0, 134% 0; }
         }
 
-        /* Band starts just above the spine's top edge and exits past its
-           bottom end (the megha-frame corner) — visible for the whole cycle,
-           never idling off-screen. */
-        @keyframes researchSignalCurrentY {
-          0%   { transform: translateY(calc(var(--research-line-current) * -1)); }
-          100% { transform: translateY(var(--research-line-height)); }
+        /* ARC OS-style local pulse: every visible rail segment carries the
+           same downward-moving current instead of one runner from page top. */
+        @keyframes researchGuideRunY {
+          0% {
+            background-position: 0 0, 0 calc(0px - var(--research-guide-cycle));
+          }
+          100% {
+            background-position: 0 0, 0 0;
+          }
         }
 
         /* Thin cyan technical accent hugging the hero's right edge */

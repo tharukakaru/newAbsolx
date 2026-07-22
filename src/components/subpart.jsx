@@ -1,4 +1,5 @@
 import React from "react";
+import ravenPanelImage from "../assets/001.png";
 
 export default function Subpart() {
   return (
@@ -24,18 +25,24 @@ export default function Subpart() {
           position: relative;
           z-index: 4;
           width: min(84vw, 1060px);
-          height: clamp(230px, 28vw, 380px);
+          aspect-ratio: 16 / 9;
+          height: auto;
+          overflow: hidden;
           margin: 0 auto;
           border: 1px solid rgba(147, 149, 19, 0.76);
-          border-radius: clamp(42px, 6vw, 86px);
-          background:
-            linear-gradient(90deg, rgba(89, 76, 34, 0.52) 0%, rgba(8, 8, 13, 0.6) 48%, rgba(45, 52, 116, 0.56) 100%),
-            radial-gradient(ellipse at 18% 72%, rgba(89, 76, 34, 0.34), rgba(89, 76, 34, 0) 54%),
-            radial-gradient(ellipse at 88% 74%, rgba(45, 52, 116, 0.3), rgba(45, 52, 116, 0) 58%);
+          border-radius: clamp(6px, 0.8vw, 12px);
+          background: #000;
           box-shadow:
             inset 0 0 36px rgba(0, 0, 0, 0.46),
             0 0 30px rgba(44, 52, 117, 0.16);
-          backdrop-filter: blur(5px);
+        }
+
+        .footer-readme-panel-image {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
         }
 
         .footer-readme-actions {
@@ -129,8 +136,8 @@ export default function Subpart() {
 
           .footer-readme-panel {
             width: min(84vw, 680px);
-            height: clamp(230px, 48.8vw, 310px);
-            border-radius: clamp(38px, 8.5vw, 60px);
+            height: auto;
+            border-radius: clamp(6px, 1.2vw, 10px);
           }
 
           .footer-readme-actions {
@@ -147,8 +154,8 @@ export default function Subpart() {
 
           .footer-readme-panel {
             width: 84vw;
-            height: clamp(200px, 48.8vw, 274px);
-            border-radius: clamp(34px, 8.5vw, 48px);
+            height: auto;
+            border-radius: 6px;
           }
 
           .footer-readme-actions {
@@ -169,7 +176,15 @@ export default function Subpart() {
         }
       `}</style>
 
-      <div className="footer-readme-panel" aria-hidden="true" />
+      <div className="footer-readme-panel">
+        <img
+          className="footer-readme-panel-image"
+          src={ravenPanelImage}
+          alt="RAVEN 001 autonomous aircraft"
+          decoding="async"
+          draggable="false"
+        />
+      </div>
 
       <div className="footer-readme-actions">
         <a className="footer-readme-button" href="#">
