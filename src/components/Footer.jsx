@@ -211,19 +211,19 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
             linear-gradient(180deg, #000 0%, #090b1b 22%, #1f275d 67%, #3b459a 100%);
           -webkit-mask-image: linear-gradient(
             to bottom,
-            transparent 0%,
-            rgba(0,0,0,0.18) 6%,
-            rgba(0,0,0,0.45) 11%,
-            rgba(0,0,0,0.72) 15%,
-            #000 19%
+            transparent 0,
+            rgba(0,0,0,0.18) 24px,
+            rgba(0,0,0,0.45) 44px,
+            rgba(0,0,0,0.72) 64px,
+            #000 80px
           );
           mask-image: linear-gradient(
             to bottom,
-            transparent 0%,
-            rgba(0,0,0,0.18) 6%,
-            rgba(0,0,0,0.45) 11%,
-            rgba(0,0,0,0.72) 15%,
-            #000 19%
+            transparent 0,
+            rgba(0,0,0,0.18) 24px,
+            rgba(0,0,0,0.45) 44px,
+            rgba(0,0,0,0.72) 64px,
+            #000 80px
           );
           pointer-events: none;
         }
