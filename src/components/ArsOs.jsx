@@ -2,6 +2,7 @@ import { useRef } from "react";
 import AnimatedLine from "../Utils/AnimatedLine";
 import useTextShuffle from "../Utils/useTextShuffle";
 import plusJakartaSans from "../assets/fonts/PlusJakartaSans[wght].ttf";
+import yapariTrialBold from "../assets/fonts/YapariTrial-Bold.ttf";
 import handsImage from "../assets/yertg 2.png";
 import swarmFigure from "../assets/gfjhjhjhjlhugh 1.webp";
 import fenrirCounterUasVideo from "../assets/Fenrir 002 Counter-UAS 16x9 (1).mp4";
@@ -620,22 +621,31 @@ export default function ArsOs() {
 
     <section id="hyena" className="hyena" aria-label="HYENA — Subsystem 01">
       <style>{`
+        @font-face {
+          font-family: "Yapari Trial";
+          src: url(${yapariTrialBold}) format("truetype");
+          font-style: normal;
+          font-weight: 700;
+          font-display: swap;
+        }
+
         .hyena {
           --hyena-content-left: clamp(48px, 7.1vw, 150px);
           --hyena-edge-rail: clamp(96px, 11vw, 176px);
           position: relative;
           width: 100%;
           /* Reference-matched edge tints: warm olive at the lower-left and
-             #2b3371 at the far-right, fading smoothly into the black field. */
+             #2c3473 inside the right rail, fading smoothly into black. */
           background:
             radial-gradient(42% 32% at 4% 82%, rgba(84, 72, 32, 0.32), rgba(0, 0, 0, 0) 62%),
             radial-gradient(
-              36% 62% at 106% 54%,
-              #2b3371 0%,
-              rgba(43, 51, 113, 0.68) 34%,
-              rgba(43, 51, 113, 0.30) 58%,
-              rgba(43, 51, 113, 0.10) 72%,
-              rgba(43, 51, 113, 0) 86%
+              40% 72% at 100% 58%,
+              #2c3473 0%,
+              rgba(44, 52, 115, 0.92) 26%,
+              rgba(44, 52, 115, 0.66) 46%,
+              rgba(44, 52, 115, 0.32) 64%,
+              rgba(44, 52, 115, 0.10) 78%,
+              rgba(44, 52, 115, 0) 92%
             ),
             #000;
           overflow: hidden;
@@ -789,15 +799,20 @@ export default function ArsOs() {
         .hyena-edge-label {
           position: absolute;
           right: clamp(22px, 2.7vw, 48px);
-          top: clamp(350px, 25vw, 470px);
-          z-index: 2;
+          top: auto;
+          bottom: 0.5rem;
+          z-index: 4;
           transform: rotate(180deg);
           writing-mode: vertical-rl;
-          font-weight: 600;
-          font-size: clamp(22px, 3.1vw, 52px);
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
           color: rgba(178, 185, 222, 0.64);
+          text-align: center;
+          font-family: "Yapari Trial", sans-serif;
+          font-size: 3.25rem;
+          font-style: normal;
+          font-weight: 700;
+          line-height: normal;
+          letter-spacing: 0.5rem;
+          text-transform: uppercase;
           pointer-events: none;
           white-space: nowrap;
         }
@@ -1072,6 +1087,14 @@ export default function ArsOs() {
           pointer-events: none;
           mix-blend-mode: screen;
           background:
+            radial-gradient(
+              40% 36% at 100% 0%,
+              rgba(44, 52, 115, 0.43) 0%,
+              rgba(44, 52, 115, 0.35) 22%,
+              rgba(44, 52, 115, 0.18) 50%,
+              rgba(44, 52, 115, 0.06) 70%,
+              rgba(44, 52, 115, 0) 86%
+            ),
             radial-gradient(62% 56% at 0% 50%, rgba(34, 40, 90, 0.9), rgba(34, 40, 90, 0.32) 42%, rgba(0, 0, 0, 0) 76%),
             radial-gradient(46% 32% at 0% 78%, rgba(34, 40, 90, 0.85), rgba(34, 40, 90, 0.28) 46%, rgba(0, 0, 0, 0) 74%);
         }
