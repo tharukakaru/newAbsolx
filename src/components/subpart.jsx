@@ -11,6 +11,7 @@ export default function Subpart() {
           min-height: clamp(540px, 50vw, 720px);
           padding: 0 24px;
           background: transparent;
+          isolation: isolate;
         }
 
         .footer-readme-bridge::before {
@@ -24,7 +25,7 @@ export default function Subpart() {
         .footer-readme-panel {
           position: relative;
           z-index: 4;
-          width: min(68vw, 980px);
+          width: min(64vw, 920px);
           aspect-ratio: 16 / 9;
           height: auto;
           overflow: hidden;
@@ -148,8 +149,7 @@ export default function Subpart() {
 
         @media (min-width: 901px) {
           .footer-readme-bridge {
-            transform: translateY(clamp(-22px, -1vw, -12px));
-            margin-bottom: clamp(-22px, -1vw, -12px);
+            padding-top: clamp(18px, 1.25vw, 26px);
           }
         }
 

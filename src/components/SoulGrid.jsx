@@ -21,9 +21,9 @@ export default function SoulGrid() {
           --soul-face-top: 0.92;
           --soul-face-width: clamp(600px, calc(var(--img-w, 0px) * 0.94), 1160px);
           --soul-face-height: clamp(460px, calc(var(--img-h, 0px) * 1), 860px);
-          --soul-copy-top: 95%;
+          --soul-copy-top: 93%;
           --soul-copy-left: 43%;
-          --soul-copy-width: min(86vw, calc(var(--img-w, 0px) * 1.2), 1380px);
+          --soul-copy-width: min(84vw, calc(var(--img-w, 0px) * 1.12), 980px);
           --soul-right-spine-right: clamp(112px, 17.4%, 208px);
           --soul-top-line-width: clamp(116px, calc(var(--soul-face-width) * 0.17), 206px);
           --soul-top-line-top: 8.4%;
@@ -322,14 +322,20 @@ export default function SoulGrid() {
           top: var(--soul-copy-top);
           left: var(--soul-copy-left);
           z-index: 5;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
           width: var(--soul-copy-width);
           transform: translateX(-50%);
           max-width: calc(100vw - 64px);
+          overflow: visible;
+          isolation: isolate;
           text-align: center;
           color: rgba(255, 255, 255, 0.86);
         }
 
         .soul-face-description {
+          width: 100%;
           margin: 0;
           font-family: "Helvetica Now Display", "Helvetica", sans-serif;
           font-size: clamp(10px, calc(var(--img-w, 0px) * 0.0088), 16px);
@@ -345,13 +351,22 @@ export default function SoulGrid() {
         }
 
         .soul-face-tagline {
-          margin-top: clamp(34px, calc(var(--img-h, 0px) * 0.08), 82px);
-          font-family: "Helvetica Now Display", "Helvetica", sans-serif;
+          position: relative;
+          z-index: 2;
+          display: block;
+          flex: 0 0 auto;
+          width: 100%;
+          margin-top: clamp(40px, calc(var(--img-h, 0px) * 0.06), 54px);
+          font-family: "SourceCodePro", "Source Code Pro", ui-monospace, monospace;
           font-size: clamp(10px, calc(var(--img-w, 0px) * 0.0095), 15px);
           font-weight: 400;
           line-height: 1.15;
           letter-spacing: 0.08em;
-          color: rgba(255, 255, 255, 0.72);
+          white-space: nowrap;
+          text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.82);
+          opacity: 1;
+          visibility: visible;
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -485,7 +500,7 @@ export default function SoulGrid() {
           </div>
         </div>
         <SoulSphereCanvas className="soul-sphere-canvas" />
-        <div className="soul-face-copy">
+        <div id="soul-arc-copy" className="soul-face-copy">
           <p className="soul-face-description">
             <strong>ABSOLX ARC OS</strong>
             {ARC_DESCRIPTION.replace("ABSOLX ARC OS", "")}

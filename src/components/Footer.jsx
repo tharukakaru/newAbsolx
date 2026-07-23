@@ -310,6 +310,20 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
               #08080d 52%,
               #171c43 100%
             );
+          -webkit-mask-image: linear-gradient(
+            to bottom,
+            transparent 0,
+            rgba(0, 0, 0, 0.16) 28px,
+            rgba(0, 0, 0, 0.52) 68px,
+            #000 132px
+          );
+          mask-image: linear-gradient(
+            to bottom,
+            transparent 0,
+            rgba(0, 0, 0, 0.16) 28px,
+            rgba(0, 0, 0, 0.52) 68px,
+            #000 132px
+          );
         }
 
         /* Stage 4 — closing statement + footer (colo6). One broad gold
