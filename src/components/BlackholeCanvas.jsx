@@ -486,6 +486,9 @@ export default function BlackHoleCanvas() {
         w-full
         overflow-hidden
         bg-[#050914]
+        max-sm:bottom-[-1dvh]
+        max-sm:h-[36dvh]
+        max-sm:min-h-[280px]
       "
       style={{
         WebkitTapHighlightColor: "transparent",
@@ -510,7 +513,7 @@ export default function BlackHoleCanvas() {
         />
       )}
 
-      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#050914] via-[#050914]/55 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#050914] via-[#050914]/55 to-transparent max-sm:h-24" />
     </div>
   );
 }

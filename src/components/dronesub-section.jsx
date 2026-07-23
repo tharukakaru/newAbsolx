@@ -140,7 +140,7 @@ export default function DroneSubSection() {
         .drone-sub-root {
           --olive-panel: #2e2811;
           --drone-sub-header-height: clamp(230px, 19.8vw, 380px);
-          --drone-sub-catalog-height: clamp(1060px, 116vh, 1260px);
+          --drone-sub-catalog-height: clamp(1200px, 128vh, 1450px);
           z-index: 2;
           min-height: calc(var(--drone-sub-header-height) + var(--drone-sub-catalog-height));
           overflow: visible;
@@ -703,7 +703,7 @@ export default function DroneSubSection() {
 
         @media (max-width: 1100px) {
           .drone-sub-root {
-            --drone-sub-catalog-height: clamp(980px, 125vh, 1280px);
+            --drone-sub-catalog-height: clamp(1200px, 132vh, 1450px);
           }
 
           .drone-sub-feature-copy {

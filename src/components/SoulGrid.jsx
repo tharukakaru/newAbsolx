@@ -20,7 +20,7 @@ export default function SoulGrid() {
           --soul-face-left: 0.555;
           --soul-face-top: 0.92;
           --soul-face-width: clamp(600px, calc(var(--img-w, 0px) * 0.94), 1160px);
-          --soul-face-height: clamp(460px, calc(var(--img-h, 0px) * 0.86), 860px);
+          --soul-face-height: clamp(460px, calc(var(--img-h, 0px) * 1), 860px);
           --soul-copy-top: 95%;
           --soul-copy-left: 43%;
           --soul-copy-width: min(86vw, calc(var(--img-w, 0px) * 1.2), 1380px);

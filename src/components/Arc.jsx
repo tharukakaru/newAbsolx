@@ -1385,6 +1385,16 @@ export default function Arc() {
           }
         }
 
+        @media (min-width: 1200px) {
+          .arc-os-shell {
+            min-height: 1215px;
+          }
+
+          .arc-os-panel {
+            width: min(1240px, 88vw);
+          }
+        }
+
         @media (max-width: 1024px) {
           .arc-os-section {
             padding-top: 58px;

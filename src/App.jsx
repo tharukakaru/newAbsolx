@@ -76,7 +76,7 @@ function HomePage() {
       <section
         className="relative w-full bg-black z-[60]"
         style={{
-          paddingBottom: "clamp(520px, 42vw, 980px)",
+          paddingBottom: "clamp(520px, 48vw, 1080px)",
         }}
       >
         <div className="relative h-[120vh]">

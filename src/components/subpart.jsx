@@ -8,8 +8,8 @@ export default function Subpart() {
         .footer-readme-bridge {
           --readme-left: #594c22;
           --readme-right: #2d3474;
-          min-height: clamp(540px, 58vw, 820px);
-          padding: 68px 24px 0;
+          min-height: clamp(540px, 50vw, 720px);
+          padding: 0 24px;
           background: transparent;
         }
 
@@ -24,7 +24,7 @@ export default function Subpart() {
         .footer-readme-panel {
           position: relative;
           z-index: 4;
-          width: min(84vw, 1060px);
+          width: min(68vw, 980px);
           aspect-ratio: 16 / 9;
           height: auto;
           overflow: hidden;
@@ -144,6 +144,13 @@ export default function Subpart() {
             margin-top: 30px;
           }
 
+        }
+
+        @media (min-width: 901px) {
+          .footer-readme-bridge {
+            transform: translateY(clamp(-22px, -1vw, -12px));
+            margin-bottom: clamp(-22px, -1vw, -12px);
+          }
         }
 
         @media (max-width: 560px) {
