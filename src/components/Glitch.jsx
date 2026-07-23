@@ -252,7 +252,7 @@ export default function ImageGlitch() {
           left: calc(var(--img-x, 0px) + var(--img-w, 0px) * 0.26);
           top: calc(var(--img-y, 0px) + var(--img-h, 0px) * 0.6);
           display: inline-flex;
-          width: max-content;
+          width: calc(var(--img-w, 0px) * 0.59);
           flex-direction: column;
           align-items: center;
           opacity: var(--img-ready, 0);
@@ -421,9 +421,9 @@ export default function ImageGlitch() {
         <h1
           className="font-yapari font-bold text-white uppercase"
           style={{
-            fontSize: "calc(var(--img-w, 0px) * 0.10)",
+            fontSize: "calc(var(--img-w, 0px) * 0.135)",
             letterSpacing: "calc(var(--img-w, 0px) * 0.01)",
-            lineHeight: 0.9,
+            lineHeight: 0.67,
             margin: 0,
             textAlign: "center",
             whiteSpace: "nowrap",

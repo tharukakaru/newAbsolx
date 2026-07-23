@@ -1366,7 +1366,7 @@ export default function Arc() {
           }
 
           .arc-os-copy {
-            right: 206px;
+            right: 156px;
             top: 124px;
             width: 470px;
             font-size: 6.7px;
