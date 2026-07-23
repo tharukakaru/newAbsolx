@@ -2,8 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { HOME_LINE_YELLOW_STYLE } from "../Utils/AnimatedLine";
 import arcSystemsVideo from "../assets/ARC OS Three Core Systems 16x9 (1).mp4";
 
-const connectedCopy =
-  "Connected Warfare ensures U.S. and allied forces win at the edge, in fast-moving and contested environments where decisions must be made in seconds. We build AI-driven systems that connect sensors, shooters, and decision-makers for faster, smarter, and more resilient operations when every second counts.";
+const connectedCopyLines = [
+  "ARC OS ensures sovereign forces win at the edge, in fast-moving and",
+  "contested environments where decisions must be made in seconds.",
+  "We build agentic AI systems that connect sensors, autonomy, and",
+  "command into a single decision loop—delivering faster, smarter, and",
+  "more resilient operations when every second counts.",
+  "See first. Decide first. Act first.",
+];
 
 const products = [
   {
@@ -437,6 +443,7 @@ export default function Arc() {
           right: var(--arc-copy-right);
           top: var(--arc-copy-top);
           width: var(--arc-copy-width);
+          margin: 0;
           font-family: "Helvetica Now Display", "Helvetica", Arial, sans-serif;
           font-size: 6.4px;
           font-weight: 400;
@@ -445,6 +452,11 @@ export default function Arc() {
           text-align: right;
           text-transform: uppercase;
           color: var(--arc-faint);
+        }
+
+        .arc-os-copy-line {
+          display: block;
+          white-space: nowrap;
         }
 
         .arc-os-divider-top {
@@ -1354,8 +1366,8 @@ export default function Arc() {
           }
 
           .arc-os-copy {
-            right: 56px;
-            top: 168px;
+            right: 206px;
+            top: 124px;
             width: 470px;
             font-size: 6.7px;
           }
@@ -1530,10 +1542,10 @@ export default function Arc() {
             text-align: center;
             font-size: clamp(7px, 1.9vw, 8.5px);
             line-height: 1.24;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 4;
+          }
+
+          .arc-os-copy-line {
+            white-space: normal;
           }
 
           .arc-os-divider-top {
@@ -1757,7 +1769,13 @@ export default function Arc() {
           </div>
           <span className="arc-os-war">Agentic Warfare</span>
         </div>
-        <p className="arc-os-copy">{connectedCopy}</p>
+        <p className="arc-os-copy">
+          {connectedCopyLines.map((line) => (
+            <span className="arc-os-copy-line" key={line}>
+              {line}
+            </span>
+          ))}
+        </p>
         <div className="arc-os-divider-top" aria-hidden="true" />
         <div className="arc-os-spine" aria-hidden="true" />
 
