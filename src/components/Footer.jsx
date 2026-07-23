@@ -283,6 +283,35 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
           bottom: clamp(24px, 2.6vw, 50px);
         }
 
+        .home-footer-atmosphere {
+          background:
+            radial-gradient(
+              ellipse 58% 48% at 0% 46%,
+              #5B4E23 0%,
+              rgba(91, 78, 35, 0.96) 20%,
+              rgba(91, 78, 35, 0.66) 45%,
+              rgba(91, 78, 35, 0.48) 60%,
+              rgba(91, 78, 35, 0.14) 82%,
+              rgba(91, 78, 35, 0) 100%
+            ),
+            radial-gradient(
+              ellipse 58% 48% at 100% 46%,
+              #2F3679 0%,
+              rgba(47, 54, 121, 0.96) 20%,
+              rgba(47, 54, 121, 0.66) 45%,
+              rgba(47, 54, 121, 0.48) 60%,
+              rgba(47, 54, 121, 0.14) 82%,
+              rgba(47, 54, 121, 0) 100%
+            ),
+            linear-gradient(
+              180deg,
+              #000 0%,
+              #010102 14%,
+              #08080d 52%,
+              #171c43 100%
+            );
+        }
+
         /* Stage 4 — closing statement + footer (colo6). One broad gold
            source lower-left, one broad blue source lower-right; solid
            centres stay outside the page, only blurred falloff enters. */
@@ -429,28 +458,11 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
              - Push glows lower (no glow touching the top edge)
           ======================================================= */}
 
-          {/* Base gradient: black stays at top, then fades into navy/blue */}
+          {/* Reference-matched side atmosphere: both colours peak at the
+              outer edges and fade softly in both axes toward the centre. */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_12%_68%,_rgba(89,76,34,0.6)_0%,_rgba(89,76,34,0.2)_34%,_rgba(89,76,34,0)_66%),radial-gradient(ellipse_at_86%_70%,_rgba(45,52,116,0.7)_0%,_rgba(45,52,116,0.24)_38%,_rgba(45,52,116,0)_70%),linear-gradient(180deg,_#000_0%,_#000_18%,_#08080d_52%,_#171c43_100%)]"
-          />
-
-          {/* Lower glow (kept low so it doesn't create top band) */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_82%,_rgba(120,150,255,0.28)_0%,_rgba(10,14,28,0)_68%)]"
-          />
-
-          {/* Vignette to darken edges like the reference */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,0,0,0)_45%,_rgba(0,0,0,0.88)_100%)]"
-          />
-
-          {/* Strong top mask (band remover) */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 h-32 sm:h-40 bg-gradient-to-b from-black via-black to-transparent"
+            className="home-footer-atmosphere pointer-events-none absolute inset-0"
           />
         </>
       )}

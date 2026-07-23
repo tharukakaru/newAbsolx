@@ -472,9 +472,9 @@ export default function DroneSubSection() {
         }
 
         .drone-sub-raven-image {
-          right: -0.8%;
-          top: 68%;
-          width: min(34vw, 600px);
+          right: 1%;
+          top: 62%;
+          width: min(28vw, 500px);
         }
 
         .drone-sub-raven-copy {
