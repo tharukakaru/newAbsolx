@@ -6,28 +6,44 @@ const PATH_1_D =
 const PATH_2_D =
   "M-140 366C-120 360 -100 355 -80 352C-48 345 -18 342 11.8599 341.551C34.4933 338.102 53.2336 327.424 77.882 329.626C130.176 334.297 181.973 328.398 234.186 330.968C316.96 335.042 399.822 316.792 479.192 295.026C531.661 280.638 583.702 260.017 634.018 234.152C677.912 211.589 724.83 210.664 769.763 194.36C865.873 159.484 971.087 183.033 1068.56 154.88C1142.69 133.47 1218.61 124.091 1294.34 112.55C1318.69 108.839 1339.23 88.3208 1363.43 81.5173C1385.65 75.2714 1409.71 78.1915 1432.44 74.7282C1471.75 68.7364 1517.5 88.3234 1554.67 71.0119C1584.06 57.3221 1617.98 63.2266 1649.4 58.4376C1703.83 50.143 1759.4 50.0617 1813.93 41.7516C1852.34 35.8977 1890.36 33.7817 1929.1 32.1211C1945.33 31.4253 1961.51 36.0354 1977.51 33.5965C1994.6 31 2014.5 31.4 2080 28.8";
 
-const LINE_1_DURATION = "3.9s";
-const LINE_2_DURATION = "3.9s";
+// This is ONLY the speed of the glow travelling along the line — do not repurpose this for waiting time.
+const LINE_1_MOVE_SECONDS = 0.4;
+const LINE_2_MOVE_SECONDS = 0.4;
 
-export const HOME_LINE_YELLOW_STYLE = {
-  arcYellow: "#FBFD00",
-  arcYellowRgb: "251, 253, 0",
-  peakYellow: "#feff00",
-  peakYellowRgb: "254, 255, 0",
-  sparkYellow: "#fff000",
-  sparkYellowRgb: "255, 240, 0",
-  sparkPeak: "#fff900",
-  sparkPeakRgb: "255, 249, 0",
-  sparkCore: "#ffff66",
-  darkEdge: "#0b0b0b",
-  oliveEdge: "#6f6a00",
-  glowBlurSoft: 1.2,
-  glowBlurWide: 3.2,
-  lineShadowBlur: 4,
-  lineShadowOpacity: 0.3,
-};
+// How long the animation rests (does nothing, invisible) between each play. 120s = 2 minutes.
+const REST_SECONDS = 1.2;
 
-function LineSpark({ pathId, duration, begin = "0s" }) {
+/**
+ * Builds a single "one play + one rest" loop out of SMIL's repeatCount="indefinite".
+ * The trick: make the total repeat duration = move time + rest time, then use
+ * keyTimes/keyPoints so all the actual motion happens in the first sliver of that
+ * duration, and the rest holds still (and invisible) until the cycle restarts.
+ */
+function buildCycle(moveSeconds, restSeconds) {
+  const totalSeconds = moveSeconds + restSeconds;
+  const moveFraction = moveSeconds / totalSeconds;
+
+  // Position timeline: 0 -> moveFraction is the actual travel, moveFraction -> 1 holds.
+  const motionKeyTimes = `0;${moveFraction};1`;
+
+  // Opacity timeline: reuse the original in/out glow curve, but compressed into
+  // the move phase only, then pinned at 0 for the rest of the cycle.
+  const opacityShape = [0, 0.14, 0.5, 0.86, 1]; // fractions of the MOVE phase
+  const opacityKeyTimes = [...opacityShape.map((t) => t * moveFraction), 1]
+    .map((n) => n.toFixed(6))
+    .join(";");
+
+  return {
+    totalDur: `${totalSeconds}s`,
+    motionKeyTimes,
+    opacityKeyTimes,
+  };
+}
+
+function LineSpark({ pathId, moveSeconds, restSeconds = REST_SECONDS, begin = "0s", reverse = false }) {
+  const { totalDur, motionKeyTimes, opacityKeyTimes } = buildCycle(moveSeconds, restSeconds);
+  const motionKeyPoints = reverse ? "1;0;0" : "0;1;1";
+
   return (
     <g className="mix-blend-screen">
       <ellipse
@@ -38,51 +54,51 @@ function LineSpark({ pathId, duration, begin = "0s" }) {
         opacity="0"
       >
         <animateMotion
-          dur={duration}
+          dur={totalDur}
           begin={begin}
           repeatCount="indefinite"
           rotate="auto"
           calcMode="linear"
-          keyPoints="0;1"
-          keyTimes="0;1"
+          keyPoints={motionKeyPoints}
+          keyTimes={motionKeyTimes}
         >
           <mpath href={`#${pathId}`} />
         </animateMotion>
 
         <animate
           attributeName="opacity"
-          values="0;0.55;0.9;0.55;0"
-          keyTimes="0;0.14;0.5;0.86;1"
-          dur={duration}
+          values="0;0.55;0.9;0.55;0;0"
+          keyTimes={opacityKeyTimes}
+          dur={totalDur}
           begin={begin}
           repeatCount="indefinite"
         />
       </ellipse>
 
       <ellipse
-        rx="14"
+        rx="55"
         ry="0.42"
-        fill={HOME_LINE_YELLOW_STYLE.sparkCore}
+        fill="#ffffffad"
         filter="url(#spark-glow)"
         opacity="0"
       >
         <animateMotion
-          dur={duration}
+          dur={totalDur}
           begin={begin}
           repeatCount="indefinite"
           rotate="auto"
           calcMode="linear"
-          keyPoints="0;1"
-          keyTimes="0;1"
+          keyPoints={motionKeyPoints}
+          keyTimes={motionKeyTimes}
         >
           <mpath href={`#${pathId}`} />
         </animateMotion>
 
         <animate
           attributeName="opacity"
-          values="0;0.72;1;0.72;0"
-          keyTimes="0;0.14;0.5;0.86;1"
-          dur={duration}
+          values="0;0.72;1;0.72;0;0"
+          keyTimes={opacityKeyTimes}
+          dur={totalDur}
           begin={begin}
           repeatCount="indefinite"
         />
@@ -98,24 +114,24 @@ export default function AnimatedLine() {
         relative pointer-events-none
         z-30
         left-1/2 -translate-x-1/2
-        [--hero-line-scale:0.74]
-        sm:[--hero-line-scale:0.78]
-        md:[--hero-line-scale:0.82]
-        lg:[--hero-line-scale:0.86]
-        xl:[--hero-line-scale:0.9]
-        2xl:[--hero-line-scale:0.92]
+        [--hero-line-scale:0.64]
+        sm:[--hero-line-scale:0.68]
+        md:[--hero-line-scale:0.72]
+        lg:[--hero-line-scale:0.76]
+        xl:[--hero-line-scale:0.8]
+        2xl:[--hero-line-scale:0.82]
 
         top-0
-        sm:top-2
-        md:top-4
-        lg:top-6
-        xl:top-8
+        sm:top-1
+        md:top-2
+        lg:top-3
+        xl:top-4
 
-        translate-y-[15px]
-        sm:translate-y-5
-        md:translate-y-[25px]
-        lg:translate-y-[76px]
-        xl:translate-y-[30px]
+        translate-y-[0px]
+        sm:translate-y-2
+        md:translate-y-[10px]
+        lg:translate-y-[40px]
+        xl:translate-y-[15px]
 
         -rotate-[0.5deg]
         scale-[var(--hero-line-scale)]
@@ -135,26 +151,26 @@ export default function AnimatedLine() {
             <feDropShadow
               dx="0"
               dy="2"
-              stdDeviation={HOME_LINE_YELLOW_STYLE.lineShadowBlur}
+              stdDeviation="4"
               floodColor="#000000"
-              floodOpacity={HOME_LINE_YELLOW_STYLE.lineShadowOpacity}
+              floodOpacity="0.3"
             />
           </filter>
 
           <linearGradient id="line1-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor={HOME_LINE_YELLOW_STYLE.darkEdge} stopOpacity="0.45" />
-            <stop offset="12%" stopColor={HOME_LINE_YELLOW_STYLE.oliveEdge} stopOpacity="0.8" />
-            <stop offset="50%" stopColor={HOME_LINE_YELLOW_STYLE.peakYellow} stopOpacity="1" />
-            <stop offset="88%" stopColor={HOME_LINE_YELLOW_STYLE.oliveEdge} stopOpacity="0.8" />
-            <stop offset="100%" stopColor={HOME_LINE_YELLOW_STYLE.darkEdge} stopOpacity="0.45" />
+            <stop offset="0%" stopColor="#0b0b0b" stopOpacity="0.45" />
+            <stop offset="12%" stopColor="#6f6a00" stopOpacity="0.8" />
+            <stop offset="50%" stopColor="#feff00" stopOpacity="1" />
+            <stop offset="88%" stopColor="#6f6a00" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#0b0b0b" stopOpacity="0.45" />
           </linearGradient>
 
           <linearGradient id="spark-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor={HOME_LINE_YELLOW_STYLE.sparkYellow} stopOpacity="0" />
-            <stop offset="35%" stopColor={HOME_LINE_YELLOW_STYLE.sparkYellow} stopOpacity="0.45" />
-            <stop offset="50%" stopColor={HOME_LINE_YELLOW_STYLE.sparkPeak} stopOpacity="1" />
-            <stop offset="65%" stopColor={HOME_LINE_YELLOW_STYLE.sparkYellow} stopOpacity="0.45" />
-            <stop offset="100%" stopColor={HOME_LINE_YELLOW_STYLE.sparkYellow} stopOpacity="0" />
+            <stop offset="0%" stopColor="#fff000" stopOpacity="0" />
+            <stop offset="35%" stopColor="#fff000" stopOpacity="0.45" />
+            <stop offset="50%" stopColor="#fff900" stopOpacity="1" />
+            <stop offset="65%" stopColor="#fff000" stopOpacity="0.45" />
+            <stop offset="100%" stopColor="#fff000" stopOpacity="0" />
           </linearGradient>
 
           <linearGradient
@@ -189,8 +205,8 @@ export default function AnimatedLine() {
           </mask>
 
           <filter id="spark-glow" x="-200%" y="-200%" width="500%" height="500%">
-            <feGaussianBlur stdDeviation={HOME_LINE_YELLOW_STYLE.glowBlurSoft} result="blur1" />
-            <feGaussianBlur stdDeviation={HOME_LINE_YELLOW_STYLE.glowBlurWide} result="blur2" />
+            <feGaussianBlur stdDeviation="1.2" result="blur1" />
+            <feGaussianBlur stdDeviation="3.2" result="blur2" />
             <feMerge>
               <feMergeNode in="blur2" />
               <feMergeNode in="blur1" />
@@ -213,14 +229,14 @@ export default function AnimatedLine() {
           <path
             id="path2"
             d={PATH_2_D}
-            stroke={HOME_LINE_YELLOW_STYLE.arcYellow}
+            stroke="#FBFD00"
             strokeWidth="1.25"
             strokeLinecap="round"
             vectorEffect="non-scaling-stroke"
           />
 
-          <LineSpark pathId="path1" duration={LINE_1_DURATION} />
-          <LineSpark pathId="path2" duration={LINE_2_DURATION} />
+          <LineSpark pathId="path1" moveSeconds={LINE_1_MOVE_SECONDS} reverse={false} />
+          <LineSpark pathId="path2" moveSeconds={LINE_2_MOVE_SECONDS} reverse={true} />
         </g>
       </svg>
     </div>

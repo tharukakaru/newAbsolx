@@ -218,10 +218,8 @@ import logo from "../assets/images/new-logo.svg";
 const MENU_ITEMS = [
   { label: "HOME", path: "/" },
   { label: "AEC OS", path: "/aec-os" },
-  { label: "SENTINEL", path: "/sentinel" },
   { label: "MEGHA UAS", path: "/research" },
-  { label: "RESEARCH", path: "/researchTab" },
-  { label: "ENTERPRISE", path: "/newmegha" },
+  { label: "ENTERPRISE" },
   { label: "AUTONOMY" },
   { label: "GROWFORCE" },
   { label: "ABOUT" },
@@ -229,12 +227,6 @@ const MENU_ITEMS = [
 
 export function Navbar({ currentPath = "/", onNavigate }) {
   const [openMobile, setOpenMobile] = useState(false);
-  const usesCompactNavbar =
-    currentPath === "/aec-os" ||
-    currentPath === "/newmegha" ||
-    currentPath === "/sentinel" ||
-    currentPath === "/researchTab" ||
-    currentPath === "/readmore";
 
   const [selectedMenu, setSelectedMenu] = useState(null);
   const routeActiveMenu =
@@ -277,30 +269,29 @@ export function Navbar({ currentPath = "/", onNavigate }) {
   return (
     <nav
       className={`
-        fixed top-0 left-0 right-0 z-[9999]
+        fixed top-0 left-0 right-0 z-9999
         transition-transform duration-300
-        ${usesCompactNavbar ? "px-4 sm:px-6 md:px-8 lg:px-10 py-3.5" : "px-4 sm:px-6 md:px-10 lg:px-14 py-5"}
+        px-4 sm:px-6 md:px-10 lg:px-14 py-5
         ${isVisible ? "translate-y-0" : "-translate-y-full"}
       `}
     >
       {/* NAV WRAPPER */}
-      <div className={`w-full mx-auto flex items-center justify-between ${usesCompactNavbar ? "max-w-[1080px]" : "max-w-[1500px]"}`}>
+      <div className="relative w-full max-w-[1500px] mx-auto flex items-center justify-between">
 
         {/* LOGO */}
         <img
           src={logo}
           alt="Logo"
-          className={`${usesCompactNavbar ? "h-[34px]" : "h-[40px] sm:h-[42px] md:h-[44px] lg:h-[48px]"} w-auto cursor-pointer`}
+          className="h-[15px] sm:h-[22px] md:h-[24px] lg:h-[17px] w-auto cursor-pointer ml-[14vw] lg:ml-[20vw]"
         />
 
-        {/* DESKTOP MENU */}
-        <div className="hidden lg:flex flex-1 justify-center">
-          <div className={`flex items-center font-azonix ${usesCompactNavbar ? "gap-5 xl:gap-6" : "gap-7 xl:gap-9"}`}>
+        {/* DESKTOP MENU — centered on the screen, independent of logo position */}
+        <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2">
+          <div className="flex items-center gap-5 xl:gap-7 font-azonix">
             {MENU_ITEMS.map((item) => (
               <MenuItem
                 key={item.label}
                 active={activeMenu === item.label}
-                compact={usesCompactNavbar}
                 onClick={() => handleMenuClick(item)}
               >
                 {item.label}
@@ -309,7 +300,7 @@ export function Navbar({ currentPath = "/", onNavigate }) {
           </div>
         </div>
 
-        <div className={`hidden lg:block ${usesCompactNavbar ? "h-[34px] w-[34px]" : "h-[48px] w-[48px]"}`} aria-hidden="true" />
+        <div className="hidden lg:block h-[30px] w-[30px]" aria-hidden="true" />
 
         {/* MOBILE BURGER */}
         <button

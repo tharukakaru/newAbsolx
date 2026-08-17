@@ -77,13 +77,17 @@ vec3 diskShade(vec3 pos, vec3 vdir, out float alpha){
   float beta = 0.50 * sqrt(R_IN / max(r, R_IN));
   float dop = pow(max(0.0, 1.0 + 0.65 * beta * dot(tg, -vdir)), 3.0);
 
-  float cw = smoothstep(13.0, 6.5, r);
-  vec3 warm = vec3(0.95, 0.55, 0.25);
-  vec3 cold = vec3(0.50, 0.78, 1.75);
-  vec3 col = mix(warm, cold, cw);
+  // Wide blue halo near the photon ring, red as the disk base, orange as streak highlights on top
+  float tBlueRed = smoothstep(R_IN, 12.0, r);
+  float tOrangeStreak = smoothstep(5.0, 10.0, r) * streak;
+  vec3 cold = vec3(0.5, 0.78, 1.75);
+  vec3 red  = vec3(0.85, 0.08, 0.03);
+  vec3 warm = vec3(0.95, 0.24, 0.08);
+  vec3 col = mix(cold, red, tBlueRed);
+  col = mix(col, warm, clamp(tOrangeStreak, 0.0, 0.4));
 
   float b = emis * (0.18 + 2.2 * streak) * dop;
-  col = col * b * 4.2 + vec3(0.78, 0.90, 1.40) * pow(emis, 3.0) * 0.55 * dop;
+  col = col * b * 4.2 + vec3(0.72, 0.88, 1.45) * pow(emis, 3.0) * 0.55 * dop;
   return col * alpha;
 }
 
@@ -143,8 +147,8 @@ vec3 render(vec3 ro, vec3 rd){
 
   float ring1 = exp(-pow((minr - 1.52) * 3.6, 2.0));
   float ring2 = exp(-pow((minr - 1.46) * 10.0, 2.0));
-  col += vec3(0.70, 0.84, 1.30) * ring1 * 0.15 * (0.35 + 0.65 * trans);
-  col += vec3(0.92, 0.97, 1.30) * ring2 * 1.10 * (0.35 + 0.65 * trans);
+  col += vec3(0.6, 0.78, 1.35) * ring1 * 0.22 * (0.35 + 0.65 * trans);
+  col += vec3(0.85, 0.93, 1.35) * ring2 * 1.30 * (0.35 + 0.65 * trans);
 
   if(!captured && (escaped || minr > 6.0)){
     col += trans * stars(normalize(v));
@@ -485,15 +489,12 @@ export default function BlackHoleCanvas() {
         min-h-[360px]
         w-full
         overflow-hidden
-        bg-[#050914]
-        max-sm:bottom-[-1dvh]
-        max-sm:h-[36dvh]
-        max-sm:min-h-[280px]
+        bg-black
       "
       style={{
         WebkitTapHighlightColor: "transparent",
         background:
-          "radial-gradient(ellipse at 50% 58%, rgba(24, 54, 110, 0.24), rgba(5, 9, 20, 0.92) 52%, #050914 100%)",
+          "radial-gradient(ellipse at 50% 58%, rgba(24, 54, 110, 0.16), rgba(0, 0, 0, 0.96) 26%, #000000 100%)",
       }}
     >
       <canvas
@@ -508,12 +509,13 @@ export default function BlackHoleCanvas() {
           aria-hidden="true"
           style={{
             background:
-              "radial-gradient(ellipse at 50% 42%, rgba(112,166,255,0.42), rgba(22,46,98,0.18) 22%, rgba(5,9,20,0) 48%), radial-gradient(circle at 50% 42%, #000 0 9%, rgba(4,8,18,0.94) 12%, transparent 24%), #050914",
+              "radial-gradient(ellipse at 50% 42%, rgba(112,166,255,0.42), rgba(22,46,98,0.18) 22%, rgba(0,0,0,0) 48%), radial-gradient(circle at 50% 42%, #000 0 9%, rgba(0,0,0,0.94) 12%, transparent 24%), #000000",
           }}
         />
       )}
 
-      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#050914] via-[#050914]/55 to-transparent max-sm:h-24" />
+      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black via-black/55 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-t from-black via-black/85 to-transparent" />
     </div>
   );
 }

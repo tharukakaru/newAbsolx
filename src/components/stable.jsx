@@ -43,12 +43,12 @@ export default function Title({ className = "" }) {
     >
       <style>{`
         .stable-lockup {
-          width: min(92vw, 980px);
+          width: min(85vw, 900px);
           font-family: "Yapari Trial Regular", "Yapari Trial", "Azonix", sans-serif;
-          font-size: clamp(18px, 3.45vw, 36px);
+          font-size: clamp(19px, 3.1vw, 33px);
           font-weight: 600;
-          line-height: 0.92;
-          letter-spacing: 0.075em;
+          line-height: 0.95;
+          letter-spacing: 0.09em;
           text-transform: uppercase;
         }
 
@@ -60,13 +60,13 @@ export default function Title({ className = "" }) {
 
         .stable-row-top {
           justify-content: flex-start;
-          gap: clamp(10px, 1.8vw, 22px);
+          gap: clamp(10px, 1.4vw, 18px);
         }
 
         .stable-row-bottom {
           justify-content: flex-end;
-          gap: clamp(18px, 3.7vw, 42px);
-          margin-top: clamp(14px, 1.7vw, 20px);
+          gap: clamp(14px, 2.4vw, 28px);
+          margin-top: clamp(12px, 1.4vw, 16px);
         }
 
         .stable-token {
@@ -83,11 +83,7 @@ export default function Title({ className = "" }) {
         }
 
         .stable-where {
-          background: linear-gradient(90deg, #343943 0%, #777b86 100%);
-          background-clip: text;
-          -webkit-background-clip: text;
-          color: transparent;
-          -webkit-text-fill-color: transparent;
+          color: rgba(255, 255, 255, 0.55);
         }
 
         .stable-imagination {

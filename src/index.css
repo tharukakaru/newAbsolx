@@ -328,11 +328,16 @@ body,
 
 
 .absolx-gradient {
-  background: linear-gradient(90deg,
+  background:
+    radial-gradient(ellipse 42% 55% at 30% 26%,
+      rgba(0, 0, 0, 0.88),
+      rgba(0, 0, 0, 0) 75%),
+    linear-gradient(90deg,
       #171a00 0%,
       #465000 9%,
       hsla(65, 100%, 50%, 1) 24%,
       hsla(0, 0%, 100%, 1) 100%);
+  background-blend-mode: multiply, normal;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -368,3 +373,29 @@ body,
 .subtitle-container br {
   display: block !important;
 }
+
+/* -------------------------------------------------
+   HERO SIDE GLOW PULSE
+   ------------------------------------------------- */
+@keyframes heroGlowPulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.94);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+.hero-glow-pulse {
+  animation: heroGlowPulse 5s ease-in-out infinite;
+}
+
+.hero-glow-pulse-delayed {
+  animation: heroGlowPulse 5s ease-in-out infinite;
+  animation-delay: 2.5s;
+}
+

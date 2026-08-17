@@ -1,23 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import { HOME_LINE_YELLOW_STYLE } from "../Utils/AnimatedLine";
-import arcSystemsVideo from "../assets/ARC OS Three Core Systems 16x9 (1).mp4";
+import hyenaImage from "../assets/27c49652d13ae2603bf7615502d578291a89da32.webp";
+import sentinelImage from "../assets/8efcae60e9c9755c92517c46124e7bd251b2d5e4.webp";
+import arcImage from "../assets/a4b1ee2080059fbfd1126c74b0922adf29b3f9d8.webp";
 
-const ARC_TAGLINE = "Agentic solutions for defense and intelligence";
-
-const ARC_COPY_LINES = [
-  "ARC OS ensures sovereign forces win at the edge, in fast-moving and",
-  "contested environments where decisions must be made in seconds.",
-  "We build agentic AI systems that connect sensors, autonomy, and",
-  "command into a single decision loop—delivering faster, smarter, and",
-  "more resilient operations when every second counts.",
-  "See first. Decide first. Act first.",
-];
+const connectedCopy =
+  "Connected Warfare ensures U.S. and allied forces win at the edge, in fast-moving and contested environments where decisions must be made in seconds. We build AI-driven systems that connect sensors, shooters, and decision-makers for faster, smarter, and more resilient operations when every second counts.";
 
 const products = [
   {
     id: "hyena",
     title: "HYENA",
     body: "Agentic Autonomous Pilot of ARC OS",
+    image: hyenaImage,
+    imageAlt: "HYENA autonomous pilot visual",
     highlightIndex: 2,
     arrowTone: "left",
   },
@@ -25,6 +20,8 @@ const products = [
     id: "sentinel",
     title: "SENTINEL",
     body: "Integrated Air Surveillance & Counter-UAS Layer",
+    image: sentinelImage,
+    imageAlt: "SENTINEL air surveillance visual",
     highlightIndex: 3,
     arrowTone: "center",
   },
@@ -32,17 +29,18 @@ const products = [
     id: "arc-c2",
     title: "ARC C2",
     body: "Command & Control (C2) is an AI-powered battle management",
+    image: arcImage,
+    imageAlt: "ARC C2 command and control visual",
     highlightIndex: 1,
     arrowTone: "right",
   },
 ];
 
-/* Branch x coords track HYENA / ARC C2 title centres on a ~1440px row. */
 const arrowGeometry = {
   left: {
-    desktopPath: "M144 8 L144 138 Q144 158 164 158 L540 158 Q560 158 560 178 L560 294",
+    desktopPath: "M187 8 L187 138 Q187 158 207 158 L540 158 Q560 158 560 178 L560 294",
     mobilePath: "M560 8 L560 294",
-    startX: 144,
+    startX: 187,
     startY: 8,
     endX: 560,
   },
@@ -54,144 +52,13 @@ const arrowGeometry = {
     endX: 560,
   },
   right: {
-    desktopPath: "M976 8 L976 138 Q976 158 956 158 L580 158 Q560 158 560 178 L560 294",
+    desktopPath: "M933 8 L933 138 Q933 158 913 158 L580 158 Q560 158 560 178 L560 294",
     mobilePath: "M560 8 L560 294",
-    startX: 976,
+    startX: 933,
     startY: 8,
     endX: 560,
   },
 };
-
-const ARC_ROUTE_BEGIN = "0.08s";
-const ARC_ROUTE_TRAVEL_DURATION = "2.65s";
-
-/* One-shot command signal: a glowing head + short trail travels the route
-   once (~2.4s), locks into the panel, then the whole route fades out. */
-function ActiveArrow({ product }) {
-  const geometry = arrowGeometry[product.arrowTone];
-  const routeId = `arc-command-route-${product.id}`;
-  const desktopPathId = `${routeId}-desktop`;
-  const mobilePathId = `${routeId}-mobile`;
-  const homeLineGradientId = `${routeId}-home-line`;
-  const homeSparkGradientId = `${routeId}-home-spark`;
-  const homeGlowFilterId = `${routeId}-home-glow`;
-  const commandGlowFilterId = `${routeId}-command-glow`;
-
-  return (
-    <svg
-      className={`arc-os-active-arrow arc-os-active-arrow--${product.id}`}
-      viewBox="0 0 1120 294"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-      key={product.id}
-    >
-      <defs>
-        <path id={desktopPathId} d={geometry.desktopPath} />
-        <path id={mobilePathId} d={geometry.mobilePath} />
-
-        <linearGradient id={homeLineGradientId} x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor={HOME_LINE_YELLOW_STYLE.darkEdge} stopOpacity="0.45" />
-          <stop offset="12%" stopColor={HOME_LINE_YELLOW_STYLE.oliveEdge} stopOpacity="0.8" />
-          <stop offset="50%" stopColor={HOME_LINE_YELLOW_STYLE.peakYellow} stopOpacity="1" />
-          <stop offset="88%" stopColor={HOME_LINE_YELLOW_STYLE.oliveEdge} stopOpacity="0.8" />
-          <stop offset="100%" stopColor={HOME_LINE_YELLOW_STYLE.darkEdge} stopOpacity="0.45" />
-        </linearGradient>
-
-        <linearGradient id={homeSparkGradientId} x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor={HOME_LINE_YELLOW_STYLE.sparkYellow} stopOpacity="0" />
-          <stop offset="35%" stopColor={HOME_LINE_YELLOW_STYLE.sparkYellow} stopOpacity="0.45" />
-          <stop offset="50%" stopColor={HOME_LINE_YELLOW_STYLE.sparkPeak} stopOpacity="1" />
-          <stop offset="65%" stopColor={HOME_LINE_YELLOW_STYLE.sparkYellow} stopOpacity="0.45" />
-          <stop offset="100%" stopColor={HOME_LINE_YELLOW_STYLE.sparkYellow} stopOpacity="0" />
-        </linearGradient>
-
-        <filter id={homeGlowFilterId} x="-200%" y="-200%" width="500%" height="500%">
-          <feGaussianBlur stdDeviation={HOME_LINE_YELLOW_STYLE.glowBlurSoft} result="blur1" />
-          <feGaussianBlur stdDeviation={HOME_LINE_YELLOW_STYLE.glowBlurWide} result="blur2" />
-          <feMerge>
-            <feMergeNode in="blur2" />
-            <feMergeNode in="blur1" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-
-        <filter id={commandGlowFilterId} x="-120%" y="-120%" width="340%" height="340%">
-          <feGaussianBlur stdDeviation="1.8" result="whiteBlur" />
-          <feMerge>
-            <feMergeNode in="whiteBlur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </defs>
-      <path
-        className="arc-os-active-arrow-path arc-os-home-energy arc-os-arrow-desktop"
-        d={geometry.desktopPath}
-        fill="none"
-        filter={`url(#${homeGlowFilterId})`}
-        stroke={`url(#${homeLineGradientId})`}
-        pathLength="1"
-      />
-      <path
-        className="arc-os-active-arrow-path arc-os-command-trail arc-os-arrow-desktop"
-        d={geometry.desktopPath}
-        fill="none"
-        filter={`url(#${commandGlowFilterId})`}
-        pathLength="1"
-      />
-      <path
-        className="arc-os-active-arrow-path arc-os-home-spark arc-os-arrow-desktop"
-        d={geometry.desktopPath}
-        fill="none"
-        filter={`url(#${homeGlowFilterId})`}
-        stroke={`url(#${homeSparkGradientId})`}
-        pathLength="1"
-      />
-      <path
-        className="arc-os-active-arrow-path arc-os-home-energy arc-os-arrow-mobile"
-        d={geometry.mobilePath}
-        fill="none"
-        filter={`url(#${homeGlowFilterId})`}
-        stroke={`url(#${homeLineGradientId})`}
-        pathLength="1"
-      />
-      <path
-        className="arc-os-active-arrow-path arc-os-command-trail arc-os-arrow-mobile"
-        d={geometry.mobilePath}
-        fill="none"
-        filter={`url(#${commandGlowFilterId})`}
-        pathLength="1"
-      />
-      <path
-        className="arc-os-active-arrow-path arc-os-home-spark arc-os-arrow-mobile"
-        d={geometry.mobilePath}
-        fill="none"
-        filter={`url(#${homeGlowFilterId})`}
-        stroke={`url(#${homeSparkGradientId})`}
-        pathLength="1"
-      />
-      <circle className="arc-os-arrow-origin arc-os-arrow-desktop" cx={geometry.startX} cy={geometry.startY} r="3.4" />
-      <circle className="arc-os-arrow-origin arc-os-arrow-mobile" cx="560" cy="8" r="3.4" />
-      <circle className="arc-os-arrival-node arc-os-arrow-desktop" cx={geometry.endX} cy="294" r="4.2" />
-      <circle className="arc-os-arrival-node arc-os-arrow-mobile" cx="560" cy="294" r="4.2" />
-      <g className="arc-os-signal-head arc-os-arrow-desktop" filter={`url(#${homeGlowFilterId})`}>
-        <path className="arc-os-signal-head-tail" d="M-28 0 L-5 0" stroke={`url(#${homeSparkGradientId})`} />
-        <path className="arc-os-signal-head-glow" d="M10 0 L-8 -7 L-4 0 L-8 7 Z" />
-        <path className="arc-os-signal-head-core" d="M8 0 L-7 -6 L-3 0 L-7 6 Z" />
-        <animateMotion begin={ARC_ROUTE_BEGIN} dur={ARC_ROUTE_TRAVEL_DURATION} repeatCount="1" fill="freeze" rotate="auto">
-          <mpath href={`#${desktopPathId}`} />
-        </animateMotion>
-      </g>
-      <g className="arc-os-signal-head arc-os-arrow-mobile" filter={`url(#${homeGlowFilterId})`}>
-        <path className="arc-os-signal-head-tail" d="M-28 0 L-5 0" stroke={`url(#${homeSparkGradientId})`} />
-        <path className="arc-os-signal-head-glow" d="M10 0 L-8 -7 L-4 0 L-8 7 Z" />
-        <path className="arc-os-signal-head-core" d="M8 0 L-7 -6 L-3 0 L-7 6 Z" />
-        <animateMotion begin={ARC_ROUTE_BEGIN} dur={ARC_ROUTE_TRAVEL_DURATION} repeatCount="1" fill="freeze" rotate="auto">
-          <mpath href={`#${mobilePathId}`} />
-        </animateMotion>
-      </g>
-    </svg>
-  );
-}
 
 function ProductTitle({ product }) {
   if (product.title === "ARC C2") {
@@ -228,9 +95,85 @@ function ProductTitle({ product }) {
   ));
 }
 
+function ActiveArrow({ product }) {
+  const geometry = arrowGeometry[product.arrowTone];
+  const glowFilterId = `arc-arrow-glow-${product.id}`;
+
+  return (
+    <svg
+      className={`arc-os-active-arrow arc-os-active-arrow--${product.id}`}
+      viewBox="0 0 1120 294"
+      aria-hidden="true"
+      key={product.id}
+    >
+      <defs>
+        <filter id={glowFilterId} x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="2.8" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+      <path
+        className="arc-os-wire-bg arc-os-arrow-desktop"
+        d={geometry.desktopPath}
+        fill="none"
+      />
+      <path
+        className="arc-os-wire-bg arc-os-arrow-mobile"
+        d={geometry.mobilePath}
+        fill="none"
+      />
+      <path
+        className="arc-os-active-arrow-path arc-os-trace-glow arc-os-arrow-desktop"
+        d={geometry.desktopPath}
+        fill="none"
+        filter={`url(#${glowFilterId})`}
+        pathLength="1"
+      />
+      <path
+        className="arc-os-active-arrow-path arc-os-trace-core arc-os-arrow-desktop"
+        d={geometry.desktopPath}
+        fill="none"
+        pathLength="1"
+      />
+      <path
+        className="arc-os-active-arrow-path arc-os-trace-glow arc-os-arrow-mobile"
+        d={geometry.mobilePath}
+        fill="none"
+        filter={`url(#${glowFilterId})`}
+        pathLength="1"
+      />
+      <path
+        className="arc-os-active-arrow-path arc-os-trace-core arc-os-arrow-mobile"
+        d={geometry.mobilePath}
+        fill="none"
+        pathLength="1"
+      />
+      <circle className="arc-os-arrow-origin arc-os-arrow-desktop" cx={geometry.startX} cy={geometry.startY} r="3.4" />
+      <circle className="arc-os-arrow-origin arc-os-arrow-mobile" cx="560" cy="8" r="3.4" />
+      <circle className="arc-os-arrival-node arc-os-arrow-desktop" cx={geometry.endX} cy="294" r="4.2" />
+      <circle className="arc-os-arrival-node arc-os-arrow-mobile" cx="560" cy="294" r="4.2" />
+      <g className="arc-os-signal-head arc-os-arrow-desktop" filter={`url(#${glowFilterId})`}>
+        <path className="arc-os-signal-head-tail" d="M-18 0 L-5 0" />
+        <path className="arc-os-signal-head-core" d="M8 0 L-7 -6 L-3 0 L-7 6 Z" />
+        <animateMotion begin="0.08s" dur="3.8s" repeatCount="indefinite" path={geometry.desktopPath} rotate="auto" />
+      </g>
+      <g className="arc-os-signal-head arc-os-arrow-mobile" filter={`url(#${glowFilterId})`}>
+        <path className="arc-os-signal-head-tail" d="M-18 0 L-5 0" />
+        <path className="arc-os-signal-head-core" d="M8 0 L-7 -6 L-3 0 L-7 6 Z" />
+        <animateMotion begin="0.08s" dur="3.8s" repeatCount="indefinite" path={geometry.mobilePath} rotate="auto" />
+      </g>
+    </svg>
+  );
+}
+
 export default function Arc() {
   const sectionRef = useRef(null);
   const [activeProductId, setActiveProductId] = useState(null);
+  const [pinnedProductId, setPinnedProductId] = useState(null);
+  const [inView, setInView] = useState(false);
 
   const activeProduct = products.find((product) => product.id === activeProductId);
 
@@ -242,8 +185,10 @@ export default function Arc() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         const visible = entry.isIntersecting && entry.intersectionRatio >= 0.12;
+        setInView(visible);
         if (!visible) {
           setActiveProductId(null);
+          setPinnedProductId(null);
         }
       },
       { threshold: [0, 0.12] },
@@ -253,6 +198,35 @@ export default function Arc() {
 
     return () => observer.disconnect();
   }, []);
+
+  // On touch devices there is no hover to trigger the reveal, so the trace +
+  // panel animation would never play. When the section is in view on a
+  // no-hover device, auto-activate the products (cycling through them) so the
+  // animation shows the same way it does on desktop hover. A manual tap pins a
+  // product and pauses the cycle.
+  useEffect(() => {
+    if (!inView || pinnedProductId) return undefined;
+    if (window.matchMedia("(hover: hover)").matches) return undefined;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let index = 0;
+    // Activate the first product on the next tick (kept out of the effect body
+    // so it doesn't fire a synchronous setState during render).
+    const kickoff = setTimeout(() => setActiveProductId(products[0].id), 60);
+
+    const interval = reduceMotion
+      ? null
+      : setInterval(() => {
+          index = (index + 1) % products.length;
+          setActiveProductId(products[index].id);
+        }, 4500);
+
+    return () => {
+      clearTimeout(kickoff);
+      if (interval) clearInterval(interval);
+    };
+  }, [inView, pinnedProductId]);
 
   const handlePointerEnter = (productId) => {
     setActiveProductId(productId);
@@ -271,11 +245,10 @@ export default function Arc() {
   const handlePointerLeave = (event) => {
     event.currentTarget.style.removeProperty("--arc-target-x");
     event.currentTarget.style.removeProperty("--arc-target-y");
-    setActiveProductId(null);
   };
 
-  // Tap fallback for touch screens, where pointerenter never fires.
   const handleProductClick = (productId) => {
+    setPinnedProductId(productId);
     setActiveProductId(productId);
   };
 
@@ -283,70 +256,48 @@ export default function Arc() {
     <section ref={sectionRef} className="arc-os-section relative isolate overflow-hidden bg-black text-white">
       <style>{`
         .arc-os-section {
-          --arc-yellow: ${HOME_LINE_YELLOW_STYLE.arcYellow};
-          --arc-yellow-rgb: ${HOME_LINE_YELLOW_STYLE.arcYellowRgb};
-          --arc-peak-yellow-rgb: ${HOME_LINE_YELLOW_STYLE.peakYellowRgb};
-          --arc-spark-yellow-rgb: ${HOME_LINE_YELLOW_STYLE.sparkYellowRgb};
-          --arc-spark-peak-rgb: ${HOME_LINE_YELLOW_STYLE.sparkPeakRgb};
+          --arc-yellow: #F4ED15;
           --arc-line: rgba(255, 255, 255, 0.72);
           --arc-muted: rgba(255, 255, 255, 0.72);
           --arc-faint: rgba(255, 255, 255, 0.42);
-          --arc-copy-color: rgba(255, 255, 255, 0.3);
-          --arc-line-left: 35px;
-          --arc-line-right: 35px;
-          --arc-product-edge: 35px;
-          --arc-title-size: 57px;
-          --arc-title-spacing: 4px;
-          --arc-hyena-half-w: calc((5 * var(--arc-title-size) + 4 * var(--arc-title-spacing)) / 2);
-          --arc-arc-c2-half-w: calc((5 * var(--arc-title-size) + 3 * var(--arc-title-spacing) + 10px) / 2);
-          --arc-hyena-branch-x: calc(var(--arc-product-edge) + var(--arc-hyena-half-w));
-          --arc-arc-c2-branch-x: calc(100% - var(--arc-product-edge) - var(--arc-arc-c2-half-w));
+          --arc-line-left: 11.1%;
+          --arc-line-right: 12.2%;
           --arc-line-center-gap: 26px;
-          --arc-products-top: 416px;
-          --arc-panel-top: 678px;
-          --arc-divider-top: 278px;
-          --arc-upper-spine-top: 162px;
-          --arc-branch-gap: 43px;
-          --arc-branch-height: calc(var(--arc-products-top) - var(--arc-divider-top) - var(--arc-branch-gap));
-          padding: 124px 0 110px;
+          --arc-products-top: 364px;
+          --arc-product-line-top: 158px;
+          --arc-lower-spine-top: 112px;
+          --arc-panel-top: 626px;
+          --arc-war-top: 118px;
+          --arc-copy-top: 114px;
+          --arc-copy-right: 55px;
+          --arc-copy-width: 280px;
+          --arc-upper-spine-top: 137px;
+          --arc-upper-spine-end: 317px;
+          padding: 74px 0 110px;
         }
 
         .arc-os-shell {
           position: relative;
-          width: 100%;
+          width: min(1160px, calc(100% - 48px));
           margin: 0 auto;
           min-height: 1080px;
-          overflow: visible;
         }
 
         .arc-os-lockup {
           position: relative;
           display: flex;
-          flex-direction: column;
-          align-items: center;
+          align-items: flex-start;
           justify-content: center;
-          gap: 0;
+          gap: 90px;
           padding-top: 4px;
-        }
-
-        .arc-os-logo-wrap {
-          position: relative;
-          display: inline-flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 0;
-        }
-
-        .arc-os-logo-block {
-          position: relative;
         }
 
         .arc-os-logo {
           display: flex;
           align-items: flex-start;
           gap: 90px;
-          font-family: "Yapari Trial", sans-serif;
-          font-size: 204px;
+          font-family: "Yapari Trial", "Yapari Trial Regular", "Azonix", sans-serif;
+          font-size: 184px;
           font-weight: 700;
           line-height: 0.68;
           letter-spacing: 0;
@@ -357,17 +308,17 @@ export default function Arc() {
 
         .arc-os-tagline {
           position: absolute;
-          top: -80px;
+          top: -68px;
           left: 50%;
           transform: translateX(-50%);
-          font-family: "Source Code Pro", "SourceCodePro", ui-monospace, monospace;
-          font-size: clamp(13px, 1.35vw, 27px);
+          font-family: "SourceCodePro", "Source Code Pro", ui-monospace, monospace;
+          font-size: 17px;
           font-weight: 400;
-          letter-spacing: 0;
-          line-height: 1.15;
+          letter-spacing: 0.04em;
+          line-height: 1;
           text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.72);
           white-space: nowrap;
-          color: #fff;
         }
 
         .arc-os-top-guide {
@@ -389,6 +340,20 @@ export default function Arc() {
           color: var(--arc-yellow);
         }
 
+        .arc-os-war {
+          position: absolute;
+          left: 48.55%;
+          top: var(--arc-war-top);
+          transform: translateX(-50%);
+          font-family: "SourceCodePro", "Source Code Pro", ui-monospace, monospace;
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 1;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+
         .arc-os-ca {
           position: absolute;
           left: -38px;
@@ -397,7 +362,7 @@ export default function Arc() {
           align-items: center;
           justify-content: center;
           gap: 12px;
-          width: 158px;
+          width: 142px;
           height: 32px;
           padding: 0 12px;
           border: 1px solid rgba(255, 255, 255, 0.94);
@@ -446,49 +411,25 @@ export default function Arc() {
 
         .arc-os-copy {
           position: absolute;
-          right: 0;
-          top: 100%;
-          width: min(380px, 34vw);
-          margin: 0;
-          margin-top: calc(-12px + (1 - 1.43) * 0.5 * 1em);
-          font-family: "Helvetica Now Display", sans-serif;
-          font-size: 8.4px;
+          right: var(--arc-copy-right);
+          top: var(--arc-copy-top);
+          width: var(--arc-copy-width);
+          font-family: "Helvetica Now Display", "Helvetica", Arial, sans-serif;
+          font-size: 6.4px;
           font-weight: 400;
-          font-style: normal;
-          line-height: 1.43;
+          line-height: 1.08;
           letter-spacing: 0;
           text-align: right;
           text-transform: uppercase;
-          color: var(--arc-copy-color);
-        }
-
-        .arc-os-copy-line {
-          display: block;
-          white-space: nowrap;
-        }
-
-        .arc-os-war {
-          position: relative;
-          margin: 0;
-          margin-top: calc(-12px);
-          margin-bottom: 10px;
-          font-family: "Source Code Pro", "SourceCodePro", ui-monospace, monospace;
-          font-size: 18px;
-          font-weight: 350;
-          line-height: 1;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          white-space: nowrap;
+          color: var(--arc-faint);
         }
 
         .arc-os-divider-top {
           position: absolute;
-          z-index: 2;
-          left: var(--arc-hyena-branch-x);
-          right: calc(100% - var(--arc-arc-c2-branch-x));
-          top: var(--arc-divider-top);
+          left: var(--arc-line-left);
+          right: var(--arc-line-right);
+          top: 234px;
           height: 1px;
-          overflow: visible;
           background:
             linear-gradient(90deg, transparent, var(--arc-line) 9%, var(--arc-line) 91%, transparent),
             linear-gradient(90deg, transparent 0%, rgba(255, 255, 210, 0.08) 18%, rgba(255, 255, 180, 0.26) 38%, rgba(255, 255, 255, 0.88) 50%, rgba(255, 255, 150, 0.26) 62%, rgba(255, 255, 120, 0.08) 82%, transparent 100%);
@@ -506,10 +447,8 @@ export default function Arc() {
           position: absolute;
           top: 0;
           width: 1px;
-          height: var(--arc-branch-height);
+          height: 100px;
           background: linear-gradient(180deg, var(--arc-line), rgba(255, 255, 255, 0.18));
-          filter: drop-shadow(0 0 4px rgba(255, 255, 160, 0.18));
-          pointer-events: none;
         }
 
         .arc-os-divider-top::before {
@@ -522,11 +461,10 @@ export default function Arc() {
 
         .arc-os-spine {
           position: absolute;
-          z-index: 2;
-          left: 50%;
+          left: 48.55%;
           top: var(--arc-upper-spine-top);
           width: 1px;
-          height: calc(var(--arc-products-top) - var(--arc-upper-spine-top) - var(--arc-branch-gap));
+          height: calc(var(--arc-upper-spine-end) - var(--arc-upper-spine-top));
           background:
             linear-gradient(180deg, var(--arc-line), rgba(255, 255, 255, 0.18)),
             linear-gradient(180deg, transparent 0%, rgba(255, 255, 210, 0.08) 18%, rgba(255, 255, 180, 0.24) 38%, rgba(255, 255, 255, 0.86) 50%, rgba(255, 255, 150, 0.24) 62%, rgba(255, 255, 120, 0.08) 82%, transparent 100%);
@@ -537,7 +475,6 @@ export default function Arc() {
           will-change: background-position;
           transform: translateX(-50%);
           animation: arcLineRunY 3.85s linear infinite;
-          pointer-events: none;
         }
 
         .arc-os-products {
@@ -545,12 +482,36 @@ export default function Arc() {
           left: 50%;
           top: var(--arc-products-top);
           display: grid;
-          width: 100%;
-          box-sizing: border-box;
-          padding: 0 var(--arc-product-edge);
-          grid-template-columns: 1fr auto 1fr;
-          column-gap: 0;
+          width: min(1240px, 100vw);
+          grid-template-columns: repeat(3, minmax(0, 1fr));
           transform: translateX(-50%);
+        }
+
+        .arc-os-products::before,
+        .arc-os-products::after {
+          content: "";
+          position: absolute;
+          top: var(--arc-product-line-top);
+          height: 1px;
+          background:
+            linear-gradient(90deg, transparent, var(--arc-line) 10%, var(--arc-line) 90%, transparent),
+            linear-gradient(90deg, transparent 0%, rgba(255, 255, 210, 0.08) 18%, rgba(255, 255, 180, 0.26) 38%, rgba(255, 255, 255, 0.88) 50%, rgba(255, 255, 150, 0.26) 62%, rgba(255, 255, 120, 0.08) 82%, transparent 100%);
+          background-repeat: no-repeat;
+          background-size: 100% 100%, 34% 100%;
+          background-position: 0 0, -38% 0;
+          filter: drop-shadow(0 0 4px rgba(255, 255, 160, 0.16));
+          will-change: background-position;
+          animation: arcLineRunX 3.9s linear infinite;
+        }
+
+        .arc-os-products::before {
+          left: var(--arc-line-left);
+          right: calc(50% + var(--arc-line-center-gap));
+        }
+
+        .arc-os-products::after {
+          left: calc(50% + var(--arc-line-center-gap));
+          right: var(--arc-line-right);
         }
 
         .arc-os-product {
@@ -559,20 +520,6 @@ export default function Arc() {
           position: relative;
           min-height: 168px;
           text-align: center;
-        }
-
-        .arc-os-product:first-child {
-          justify-self: start;
-          text-align: left;
-        }
-
-        .arc-os-product:nth-child(2) {
-          justify-self: center;
-        }
-
-        .arc-os-product:nth-child(3) {
-          justify-self: end;
-          text-align: right;
         }
 
         .arc-os-product-trigger {
@@ -585,12 +532,12 @@ export default function Arc() {
           background: transparent;
           color: inherit;
           cursor: pointer;
-          padding: 0 0 14px;
-          text-align: inherit;
+          padding: 0 8px 14px;
+          text-align: center;
         }
 
         .arc-os-product-trigger:focus-visible {
-          outline: 1px solid rgba(var(--arc-yellow-rgb), 0.88);
+          outline: 1px solid rgba(244, 237, 21, 0.88);
           outline-offset: 10px;
         }
 
@@ -664,8 +611,8 @@ export default function Arc() {
 
         .arc-os-product-title {
           margin: 0;
-          font-family: "Yapari Trial Regular", "Yapari Trial", sans-serif;
-          font-size: var(--arc-title-size);
+          font-family: "Yapari Trial Regular", "Azonix", sans-serif;
+          font-size: 52px;
           font-weight: 400;
           line-height: 0.82;
           letter-spacing: 4px;
@@ -677,10 +624,26 @@ export default function Arc() {
             transform 0.25s ease;
         }
 
-        .arc-os-product:first-child .arc-os-product-lock,
-        .arc-os-product:nth-child(2) .arc-os-product-lock,
+        .arc-os-product:first-child .arc-os-product-lock {
+          transform: translateX(-17px);
+        }
+
+        .arc-os-product:nth-child(2) .arc-os-product-lock {
+          font-size: 46px;
+          transform: translateX(-11px);
+        }
+
+        .arc-os-product:nth-child(2) .arc-os-product-title {
+          font-size: inherit;
+        }
+
         .arc-os-product:nth-child(3) .arc-os-product-lock {
-          transform: none;
+          font-size: 49px;
+          transform: translateX(35px);
+        }
+
+        .arc-os-product:nth-child(3) .arc-os-product-title {
+          font-size: inherit;
         }
 
         .arc-os-title-letter {
@@ -726,8 +689,7 @@ export default function Arc() {
         .arc-os-product-c2 {
           display: inline-block;
           margin-left: 10px;
-          font-size: 1em;
-          font-weight: 400;
+          font-size: 0.68em;
           vertical-align: 0.08em;
         }
 
@@ -743,22 +705,70 @@ export default function Arc() {
         }
 
         .arc-os-product:first-child .arc-os-product-body {
-          margin-left: 0;
-          margin-right: auto;
-          text-align: left;
-          transform: none;
+          transform: translateX(-27px);
         }
 
         .arc-os-product:nth-child(2) .arc-os-product-body {
-          transform: translateY(5px);
+          transform: translate(-12px, 5px);
         }
 
         .arc-os-product:nth-child(3) .arc-os-product-body {
-          margin-left: auto;
-          margin-right: 0;
-          text-align: right;
           font-size: 13px;
           transform: translateY(5px);
+        }
+
+        .arc-os-product-rule {
+          position: absolute;
+          bottom: 0;
+          display: none;
+          height: 1px;
+          background:
+            linear-gradient(90deg, transparent, var(--arc-line) 10%, var(--arc-line) 90%, transparent),
+            linear-gradient(90deg, transparent 0%, rgba(255, 255, 210, 0.08) 18%, rgba(255, 255, 180, 0.26) 38%, rgba(255, 255, 255, 0.88) 50%, rgba(255, 255, 150, 0.26) 62%, rgba(255, 255, 120, 0.08) 82%, transparent 100%);
+          background-repeat: no-repeat;
+          background-size: 100% 100%, 34% 100%;
+          background-position: 0 0, -38% 0;
+          filter: drop-shadow(0 0 4px rgba(255, 255, 160, 0.16));
+          will-change: background-position;
+          animation: arcLineRunX 3.9s linear infinite;
+        }
+
+        .arc-os-product:first-child .arc-os-product-rule {
+          left: 18%;
+          right: 4%;
+        }
+
+        .arc-os-product:nth-child(3) .arc-os-product-rule {
+          left: 4%;
+          right: 18%;
+        }
+
+        .arc-os-product:nth-child(2)::after {
+          content: "";
+          position: absolute;
+          left: 50%;
+          top: var(--arc-lower-spine-top);
+          width: 1px;
+          height: calc(var(--arc-panel-top) - var(--arc-products-top) - var(--arc-lower-spine-top));
+          background:
+            linear-gradient(180deg, var(--arc-line), rgba(255, 255, 255, 0.2)),
+            linear-gradient(180deg, transparent 0%, rgba(255, 255, 210, 0.08) 18%, rgba(255, 255, 180, 0.24) 38%, rgba(255, 255, 255, 0.86) 50%, rgba(255, 255, 150, 0.24) 62%, rgba(255, 255, 120, 0.08) 82%, transparent 100%);
+          background-repeat: no-repeat;
+          background-size: 100% 100%, 100% 48%;
+          background-position: 0 0, 0 -54%;
+          filter: drop-shadow(0 0 4px rgba(255, 255, 160, 0.18));
+          will-change: background-position;
+          transform: translateX(-50%);
+          animation: arcLineRunY 4s linear infinite;
+        }
+
+        .arc-os-products::after,
+        .arc-os-product-rule {
+          animation-delay: 0.42s;
+        }
+
+        .arc-os-product:nth-child(2)::after {
+          animation-delay: 0.18s;
         }
 
         @keyframes arcLineRunX {
@@ -781,7 +791,11 @@ export default function Arc() {
 
         @media (prefers-reduced-motion: reduce) {
           .arc-os-divider-top,
-          .arc-os-spine {
+          .arc-os-spine,
+          .arc-os-products::before,
+          .arc-os-products::after,
+          .arc-os-product-rule,
+          .arc-os-product:nth-child(2)::after {
             animation: none;
           }
         }
@@ -791,106 +805,37 @@ export default function Arc() {
           z-index: 4;
           left: 50%;
           top: var(--arc-products-top);
-          --arc-route-duration: 2.65s;
-          --arc-route-delay: 0.08s;
-          /* Must track .arc-os-products width exactly — the svg is stretched
-             (preserveAspectRatio: none) so path x coords hit the column centres. */
-          width: 100%;
+          width: min(1120px, 100%);
           height: calc(var(--arc-panel-top) - var(--arc-products-top));
+          min-height: 294px;
           pointer-events: none;
           overflow: visible;
           opacity: 0;
           transform: translateX(-50%) translateY(-12px);
-          animation:
-            arcTraceWrap 0.22s ease-out forwards,
-            arcTraceFade 0.58s ease-in 3s forwards;
+          animation: arcTraceWrap 0.45s ease-out forwards;
           will-change: opacity, transform;
         }
 
-        /* Dash maths: with pathLength=1 and dasharray "trail 1", animating
-           dashoffset from +trail to (trail - 1) makes the dash's LEADING edge
-           track the animateMotion head exactly (head position = t), with the
-           trail extending behind it — one segment, no wrap-around. */
         .arc-os-active-arrow-path {
           stroke-linecap: round;
           stroke-linejoin: round;
-          stroke-dasharray: var(--arc-route-trail, 0.15) 1;
-          stroke-dashoffset: var(--arc-route-trail, 0.15);
-          opacity: 0;
-          vector-effect: non-scaling-stroke;
-          animation: arcRouteEnergy var(--arc-route-duration) linear var(--arc-route-delay) both;
         }
 
-        .arc-os-command-trail {
-          --arc-route-trail: 0.145;
-          stroke: rgba(255, 255, 255, 0.92);
-          stroke-width: 1.45;
-          filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.72));
+        .arc-os-trace-core {
+          stroke: rgba(255, 255, 255, 0.96);
+          stroke-width: 1.6;
+          stroke-dasharray: 0.08 0.92;
+          stroke-dashoffset: 0;
+          animation: arcTraceCurrent 3.8s linear 0.08s infinite;
         }
 
-        .arc-os-home-energy {
-          --arc-route-trail: 0.18;
-          stroke-width: 4.2;
-          mix-blend-mode: screen;
-          animation-name: arcRouteHomeEnergy;
-        }
-
-        .arc-os-home-spark {
-          --arc-route-trail: 0.105;
-          stroke-width: 1.18;
-          mix-blend-mode: screen;
-          animation-name: arcRouteHomeSpark;
-        }
-
-        @keyframes arcRouteEnergy {
-          0% {
-            opacity: 0;
-            stroke-dashoffset: 0.145;
-          }
-          5% {
-            opacity: 0.82;
-          }
-          88% {
-            opacity: 0.9;
-          }
-          100% {
-            opacity: 0.85;
-            stroke-dashoffset: -0.855;
-          }
-        }
-
-        @keyframes arcRouteHomeEnergy {
-          0% {
-            opacity: 0;
-            stroke-dashoffset: 0.18;
-          }
-          6% {
-            opacity: 0.42;
-          }
-          46% {
-            opacity: 0.68;
-          }
-          100% {
-            opacity: 0.5;
-            stroke-dashoffset: -0.82;
-          }
-        }
-
-        @keyframes arcRouteHomeSpark {
-          0% {
-            opacity: 0;
-            stroke-dashoffset: 0.105;
-          }
-          8% {
-            opacity: 0.72;
-          }
-          50% {
-            opacity: 1;
-          }
-          100% {
-            opacity: 0.8;
-            stroke-dashoffset: -0.895;
-          }
+        .arc-os-trace-glow {
+          stroke: rgba(255, 255, 255, 0.14);
+          stroke-width: 4;
+          stroke-dasharray: 0.11 0.89;
+          stroke-dashoffset: 0;
+          opacity: 0.48;
+          animation: arcTraceCurrent 3.8s linear 0.08s infinite;
         }
 
         .arc-os-arrow-origin {
@@ -900,59 +845,52 @@ export default function Arc() {
           filter:
             drop-shadow(0 0 10px rgba(255, 255, 255, 0.82));
           opacity: 0;
-          animation:
-            arcOriginPop 0.22s ease-out 0.02s forwards,
-            arcOriginFade 0.34s ease-in 0.56s forwards;
+          animation: arcOriginPop 0.28s ease-out 0.02s forwards;
         }
 
         .arc-os-arrival-node {
-          fill: ${HOME_LINE_YELLOW_STYLE.sparkCore};
+          fill: rgba(255, 255, 255, 0.98);
           transform-box: fill-box;
           transform-origin: center;
           opacity: 0;
           filter:
-            drop-shadow(0 0 8px rgba(var(--arc-spark-peak-rgb), 0.92))
-            drop-shadow(0 0 18px rgba(var(--arc-yellow-rgb), 0.34));
-          animation: arcArrivalLock 0.62s ease-out 2.7s forwards;
+            drop-shadow(0 0 8px rgba(255, 255, 255, 0.82));
+          animation: arcArrivalLock 0.52s ease-out 1.86s forwards;
         }
 
         .arc-os-signal-head {
           opacity: 0;
           transform-box: fill-box;
           transform-origin: center;
-          animation:
-            arcSparkAppear 0.16s ease-out 0.08s forwards,
-            arcSignalFade 0.46s ease-in 2.74s forwards;
-        }
-
-        .arc-os-signal-head-glow {
-          fill: ${HOME_LINE_YELLOW_STYLE.sparkCore};
-          opacity: 0.48;
-          filter:
-            drop-shadow(0 0 7px rgba(var(--arc-spark-peak-rgb), 0.98))
-            drop-shadow(0 0 15px rgba(var(--arc-yellow-rgb), 0.34));
+          animation: arcSparkAppear 0.18s ease-out 0.08s forwards;
         }
 
         .arc-os-signal-head-core {
           fill: rgba(255, 255, 255, 0.98);
           filter:
-            drop-shadow(0 0 7px rgba(255, 255, 255, 0.96))
-            drop-shadow(0 0 12px rgba(var(--arc-yellow-rgb), 0.22));
+            drop-shadow(0 0 8px rgba(255, 255, 255, 0.96));
         }
 
         .arc-os-signal-head-tail {
           fill: none;
-          stroke-width: 1.65;
+          stroke: rgba(255, 255, 255, 0.72);
+          stroke-width: 2;
           stroke-linecap: round;
           filter:
-            drop-shadow(0 0 5px rgba(var(--arc-spark-peak-rgb), 0.92))
-            drop-shadow(0 0 10px rgba(var(--arc-yellow-rgb), 0.28));
+            drop-shadow(0 0 6px rgba(255, 255, 255, 0.74));
           animation:
-            arcSignalTailBreath 0.86s ease-in-out 0.18s infinite;
+            arcSignalTailBreath 0.92s ease-in-out 0.18s infinite;
         }
 
         .arc-os-arrow-mobile {
           display: none;
+        }
+
+        .arc-os-wire-bg {
+          stroke: rgba(255, 255, 255, 0.1);
+          stroke-width: 1.5;
+          stroke-linecap: round;
+          stroke-linejoin: round;
         }
 
         @keyframes arcTraceWrap {
@@ -972,22 +910,27 @@ export default function Arc() {
           }
         }
 
+        @keyframes arcTraceCurrent {
+          0% {
+            stroke-dashoffset: 0;
+          }
+          100% {
+            stroke-dashoffset: -1;
+          }
+        }
+
         @keyframes arcArrivalLock {
           0% {
             opacity: 0;
             transform: scale(0.34);
           }
-          34% {
+          48% {
             opacity: 1;
-            transform: scale(1.78);
-          }
-          58% {
-            opacity: 0.82;
-            transform: scale(1.08);
+            transform: scale(1.6);
           }
           100% {
-            opacity: 0;
-            transform: scale(2.28);
+            opacity: 0.9;
+            transform: scale(1);
           }
         }
 
@@ -1002,22 +945,9 @@ export default function Arc() {
           }
         }
 
-        @keyframes arcOriginFade {
-          to {
-            opacity: 0;
-            transform: scale(1.5);
-          }
-        }
-
         @keyframes arcSparkAppear {
           to {
             opacity: 1;
-          }
-        }
-
-        @keyframes arcSignalFade {
-          to {
-            opacity: 0;
           }
         }
 
@@ -1034,25 +964,20 @@ export default function Arc() {
         }
 
         .arc-os-panel {
-          /* Edit these three values to place the right-side vertical label. */
-          --arc-panel-edge-label-right: clamp(-56px, -3.4vw, -46px);
-          --arc-panel-edge-label-top: 70%;
-          --arc-panel-edge-label-size: clamp(22px, 3.15vw, 38px);
-          --arc-panel-radius: clamp(10px, 1vw, 14px);
           position: absolute;
           left: 50%;
           top: var(--arc-panel-top);
-          width: min(1100px, 100%);
-          aspect-ratio: 16 / 9;
+          width: min(1000px, 88%);
+          height: 432px;
           transform: translateX(-50%);
-          border: 1px solid rgba(var(--arc-yellow-rgb), 0.86);
-          border-radius: var(--arc-panel-radius);
+          border: 1px solid rgba(244, 237, 21, 0.86);
+          border-radius: 92px;
           background:
             radial-gradient(circle at 11% 100%, rgba(82, 99, 225, 0.58) 0%, rgba(36, 47, 127, 0.36) 28%, rgba(0, 0, 0, 0) 54%),
             linear-gradient(180deg, rgba(4, 5, 12, 0.2), rgba(0, 0, 0, 0.82));
           box-shadow:
             inset 0 0 44px rgba(0, 0, 0, 0.72),
-            0 0 0 1px rgba(var(--arc-yellow-rgb), 0.08);
+            0 0 0 1px rgba(244, 237, 21, 0.08);
           overflow: visible;
           isolation: isolate;
           transition:
@@ -1060,39 +985,11 @@ export default function Arc() {
             box-shadow 0.35s ease;
         }
 
-        .arc-os-panel-edge-label {
-          position: absolute;
-          z-index: 7;
-          right: var(--arc-panel-edge-label-right);
-          top: var(--arc-panel-edge-label-top);
-          transform: translateY(-50%) rotate(180deg);
-          writing-mode: vertical-rl;
-          font-family: "Yapari Trial Regular", "Yapari Trial", "Azonix", sans-serif;
-          font-size: var(--arc-panel-edge-label-size);
-          font-weight: 400;
-          line-height: 1;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.46);
-          white-space: nowrap;
-          pointer-events: none;
-        }
-
-        /* On larger screens the rail intentionally crosses the ARC -> Drone
-           boundary. Drone owns that copy so the next stacking context cannot
-           clip it; the panel copy remains the compact-screen version. */
-        @media (min-width: 761px) {
-          .arc-os-panel-edge-label {
-            display: none;
-          }
-        }
-
         .arc-os-panel::before,
         .arc-os-panel::after {
           content: "";
           position: absolute;
           inset: 0;
-          border-radius: inherit;
           pointer-events: none;
         }
 
@@ -1114,12 +1011,12 @@ export default function Arc() {
         }
 
         .arc-os-panel.is-active {
-          border-color: rgba(var(--arc-yellow-rgb), 0.94);
+          border-color: rgba(244, 237, 21, 0.94);
           box-shadow:
             inset 0 0 54px rgba(0, 0, 0, 0.84),
-            0 0 42px rgba(var(--arc-yellow-rgb), 0.16),
-            0 0 0 1px rgba(var(--arc-yellow-rgb), 0.14);
-          animation: arcPanelBorderLock 1.08s ease-out 2.62s both;
+            0 0 42px rgba(244, 237, 21, 0.16),
+            0 0 0 1px rgba(244, 237, 21, 0.14);
+          animation: arcPanelBorderLock 0.95s ease-out 1.86s both;
         }
 
         .arc-os-panel-target {
@@ -1136,8 +1033,8 @@ export default function Arc() {
           transform: translate(-50%, -50%) scale(0.22);
           box-shadow:
             0 0 24px rgba(255, 255, 255, 0.18),
-            inset 0 0 34px rgba(var(--arc-yellow-rgb), 0.08);
-          animation: arcPanelTargetPop 0.86s cubic-bezier(0.12, 1.12, 0.24, 1) 2.7s forwards;
+            inset 0 0 34px rgba(244, 237, 21, 0.08);
+          animation: arcPanelTargetPop 0.86s cubic-bezier(0.12, 1.12, 0.24, 1) 1.86s forwards;
         }
 
         .arc-os-panel-target::before,
@@ -1159,20 +1056,26 @@ export default function Arc() {
           height: 112%;
         }
 
-        .arc-os-panel-video {
+        .arc-os-panel-image {
           position: absolute;
           z-index: 2;
-          inset: 0;
-          width: 100%;
-          height: 100%;
+          inset: 10px 18px 22px;
+          width: calc(100% - 36px);
+          height: calc(100% - 32px);
           object-fit: cover;
-          border-radius: calc(var(--arc-panel-radius) - 1px);
-          opacity: 1;
-          filter: saturate(0.96) contrast(1.06) brightness(0.82);
+          border-radius: 78px;
+          opacity: 0;
+          clip-path: inset(0 46% 92% 46% round 88px);
+          filter: saturate(0.82) contrast(1.16) brightness(0.72);
+          transform: translateY(-28px) scale(0.72);
+          transform-origin: 50% 8%;
           box-shadow:
             0 -18px 34px rgba(255, 255, 255, 0.1),
             0 24px 48px rgba(0, 0, 0, 0.42);
-          pointer-events: none;
+          animation:
+            arcPanelImagePop 1.12s cubic-bezier(0.12, 1.16, 0.24, 1) 1.92s forwards,
+            arcPanelImageSettle 4.4s ease-in-out 3.04s infinite;
+          will-change: opacity, transform, filter, clip-path;
         }
 
         .arc-os-panel-scan {
@@ -1182,19 +1085,10 @@ export default function Arc() {
           right: 28px;
           top: 34px;
           height: 1px;
-          background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(var(--arc-spark-yellow-rgb), 0.45),
-            rgba(var(--arc-spark-peak-rgb), 1),
-            rgba(var(--arc-spark-yellow-rgb), 0.45),
-            transparent
-          );
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.94), transparent);
           opacity: 0;
-          box-shadow:
-            0 0 8px rgba(var(--arc-spark-peak-rgb), 0.94),
-            0 0 22px rgba(var(--arc-yellow-rgb), 0.22);
-          animation: arcPanelScan 1.14s ease-out 2.76s forwards;
+          box-shadow: 0 0 18px rgba(255, 255, 255, 0.62);
+          animation: arcPanelScan 1.14s ease-out 1.88s forwards;
         }
 
         .arc-os-panel-burst {
@@ -1205,11 +1099,11 @@ export default function Arc() {
           pointer-events: none;
           opacity: 0;
           background:
-            linear-gradient(110deg, transparent 0%, rgba(var(--arc-spark-peak-rgb), 0.72) 48%, transparent 62%),
-            radial-gradient(circle at 50% 48%, rgba(var(--arc-yellow-rgb), 0.18), transparent 58%);
+            linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, 0.72) 48%, transparent 62%),
+            radial-gradient(circle at 50% 48%, rgba(244, 237, 21, 0.18), transparent 58%);
           mix-blend-mode: screen;
           transform: translateX(-48%) skewX(-12deg);
-          animation: arcPanelBurst 0.78s cubic-bezier(0.16, 1, 0.3, 1) 2.8s forwards;
+          animation: arcPanelBurst 0.78s cubic-bezier(0.16, 1, 0.3, 1) 2.02s forwards;
         }
 
         .arc-os-panel-caption {
@@ -1227,7 +1121,7 @@ export default function Arc() {
           text-transform: uppercase;
           color: rgba(255, 255, 255, 0.72);
           opacity: 0;
-          animation: arcPanelTextPop 0.34s ease-out 3.26s forwards;
+          animation: arcPanelTextPop 0.34s ease-out 2.48s forwards;
         }
 
         @keyframes arcPanelImagePop {
@@ -1333,20 +1227,19 @@ export default function Arc() {
         @keyframes arcPanelBorderLock {
           0%,
           100% {
-            border-color: rgba(var(--arc-yellow-rgb), 0.94);
+            border-color: rgba(244, 237, 21, 0.94);
             box-shadow:
               inset 0 0 54px rgba(0, 0, 0, 0.84),
-              0 0 42px rgba(var(--arc-yellow-rgb), 0.16),
-              0 0 0 1px rgba(var(--arc-yellow-rgb), 0.14);
+              0 0 42px rgba(244, 237, 21, 0.16),
+              0 0 0 1px rgba(244, 237, 21, 0.14);
           }
           36% {
-            border-color: rgba(var(--arc-peak-yellow-rgb), 0.98);
+            border-color: rgba(255, 255, 255, 0.96);
             box-shadow:
               inset 0 0 58px rgba(0, 0, 0, 0.84),
-              0 0 10px rgba(var(--arc-spark-peak-rgb), 0.32),
-              0 0 34px rgba(var(--arc-spark-yellow-rgb), 0.24),
-              0 0 58px rgba(var(--arc-yellow-rgb), 0.3),
-              0 0 0 1px rgba(var(--arc-peak-yellow-rgb), 0.28);
+              0 0 18px rgba(255, 255, 255, 0.22),
+              0 0 58px rgba(244, 237, 21, 0.3),
+              0 0 0 1px rgba(255, 255, 255, 0.34);
           }
         }
 
@@ -1360,7 +1253,7 @@ export default function Arc() {
           .arc-os-arrow-origin,
           .arc-os-arrival-node,
           .arc-os-panel.is-active,
-          .arc-os-panel-video,
+          .arc-os-panel-image,
           .arc-os-panel-scan,
           .arc-os-panel-burst,
           .arc-os-panel-target,
@@ -1372,19 +1265,18 @@ export default function Arc() {
           .arc-os-signal-head,
           .arc-os-arrow-origin,
           .arc-os-arrival-node,
-          .arc-os-panel-video,
+          .arc-os-panel-image,
           .arc-os-panel-caption {
             opacity: 1;
           }
 
-          .arc-os-panel-video {
+          .arc-os-panel-image {
             clip-path: inset(0 0 0 0 round 72px);
             filter: saturate(0.96) contrast(1.08) brightness(0.86);
             transform: none;
           }
 
           .arc-os-active-arrow-path {
-            opacity: 1;
             stroke-dashoffset: 0;
             stroke-dasharray: 1 0;
           }
@@ -1393,45 +1285,37 @@ export default function Arc() {
 
         @media (min-width: 1440px) {
           .arc-os-shell {
-            width: 100%;
+            width: min(1320px, calc(100% - 72px));
           }
 
           .arc-os-logo {
             gap: 84px;
-            font-size: 212px;
+            font-size: 188px;
           }
 
           .arc-os-copy {
-            width: 380px;
-            font-size: 8.7px;
-            margin-top: calc(-12px + (1 - 1.43) * 0.5 * 1em);
+            right: 56px;
+            top: 168px;
+            width: 470px;
+            font-size: 6.7px;
           }
 
           .arc-os-products {
-            width: 100%;
+            width: min(1260px, 100%);
           }
 
           .arc-os-active-arrow {
-            width: 100%;
-          }
-        }
-
-        @media (min-width: 1200px) {
-          .arc-os-shell {
-            min-height: 1215px;
+            width: min(1260px, 100%);
           }
 
-          .arc-os-panel {
-            width: 100%;
+          .arc-os-product-title {
+            font-size: 58px;
           }
         }
 
         @media (max-width: 1024px) {
           .arc-os-section {
-            --arc-title-size: 44px;
-            --arc-title-spacing: 3px;
-            padding-top: 90px;
-            padding-bottom: 75px;
+            padding-top: 58px;
           }
 
           .arc-os-shell {
@@ -1440,11 +1324,16 @@ export default function Arc() {
 
           .arc-os-section {
             --arc-line-center-gap: 22px;
-            --arc-products-top: 350px;
-            --arc-panel-top: 624px;
-            --arc-divider-top: 240px;
-            --arc-upper-spine-top: 178px;
-            --arc-branch-height: calc(var(--arc-products-top) - var(--arc-divider-top) - var(--arc-branch-gap));
+            --arc-products-top: 298px;
+            --arc-product-line-top: 146px;
+            --arc-lower-spine-top: 102px;
+            --arc-panel-top: 572px;
+            --arc-war-top: 136px;
+            --arc-copy-top: 130px;
+            --arc-copy-right: 14px;
+            --arc-copy-width: clamp(230px, calc(51vw - 100px), 324px);
+            --arc-upper-spine-top: 154px;
+            --arc-upper-spine-end: 268px;
           }
 
           .arc-os-lockup,
@@ -1453,14 +1342,12 @@ export default function Arc() {
           }
 
           .arc-os-logo {
-            font-size: 132px;
+            font-size: 118px;
           }
 
           .arc-os-tagline {
-            top: -58px;
-            font-size: clamp(10px, 1.6vw, 15px);
-            white-space: normal;
-            text-align: center;
+            top: -48px;
+            font-size: 13px;
           }
 
           .arc-os-top-guide {
@@ -1468,7 +1355,7 @@ export default function Arc() {
           }
 
           .arc-os-war {
-            font-size: 23px;
+            font-size: 14px;
           }
 
           .arc-os-ca {
@@ -1477,13 +1364,11 @@ export default function Arc() {
           }
 
           .arc-os-copy {
-            width: clamp(200px, calc(44vw - 100px), 260px);
-            font-size: 8px;
-            margin-top: calc(-12px + (1 - 1.43) * 0.5 * 1em);
+            font-size: 6px;
           }
 
           .arc-os-divider-top {
-            top: var(--arc-divider-top);
+            top: 196px;
           }
 
           .arc-os-products {
@@ -1491,57 +1376,72 @@ export default function Arc() {
           }
 
           .arc-os-product-title {
-            font-size: clamp(26px, 3.72vw, 44px);
+            font-size: clamp(26px, 3.72vw, 38px);
           }
 
-          .arc-os-product:first-child .arc-os-product-lock,
-          .arc-os-product:nth-child(2) .arc-os-product-lock,
+          .arc-os-product:first-child .arc-os-product-lock {
+            transform: translateX(-1.2vw);
+          }
+
+          .arc-os-product:nth-child(2) .arc-os-product-lock {
+            font-size: clamp(23px, 3.32vw, 34px);
+            transform: translateX(-0.8vw);
+          }
+
           .arc-os-product:nth-child(3) .arc-os-product-lock {
-            transform: none;
+            font-size: clamp(24px, 3.52vw, 36px);
+            transform: translateX(2.4vw);
           }
 
           .arc-os-product:first-child .arc-os-product-body {
-            transform: none;
+            transform: translateX(-1.9vw);
           }
 
           .arc-os-product:nth-child(2) .arc-os-product-body {
-            transform: translateY(5px);
+            transform: translate(-0.85vw, 5px);
           }
 
           .arc-os-product-body {
             font-size: 14px;
           }
 
+          .arc-os-active-arrow {
+            width: min(860px, 88%);
+            min-height: 158px;
+          }
+
           .arc-os-panel {
             top: var(--arc-panel-top);
+            height: 378px;
+            border-radius: 74px;
+          }
+
+          .arc-os-panel-image {
+            border-radius: 58px;
           }
 
           .arc-os-panel-burst {
-            border-radius: var(--arc-panel-radius);
+            border-radius: 58px;
           }
         }
 
         @media (max-width: 760px) {
           .arc-os-section {
-            --arc-line-left: 35px;
-            --arc-line-right: 35px;
-            --arc-title-size: 48px;
-            --arc-title-spacing: 3px;
+            --arc-line-left: 7%;
+            --arc-line-right: 7%;
             --arc-line-center-gap: 18px;
-            --arc-divider-top: 336px;
-            --arc-upper-spine-top: 142px;
-            --arc-products-top: 418px;
-            --arc-branch-height: calc(var(--arc-products-top) - var(--arc-divider-top) - var(--arc-branch-gap));
-            padding: 70px 0 86px;
+            --arc-war-top: 92px;
+            --arc-copy-top: 132px;
+            --arc-copy-right: auto;
+            --arc-copy-width: min(360px, 88vw);
+            --arc-upper-spine-top: 115px;
+            --arc-upper-spine-end: 356px;
+            padding: 46px 0 86px;
           }
 
           .arc-os-shell {
-            width: 100%;
+            width: min(100% - 28px, 620px);
             min-height: 1250px;
-          }
-
-          .arc-os-logo-wrap {
-            align-items: center;
           }
 
           .arc-os-lockup,
@@ -1550,16 +1450,16 @@ export default function Arc() {
           }
 
           .arc-os-logo {
-            font-size: clamp(64px, 17vw, 94px);
+            font-size: clamp(58px, 15.5vw, 84px);
             transform: none;
           }
 
           .arc-os-tagline {
-            top: -44px;
+            top: -34px;
             max-width: 88vw;
-            font-size: clamp(9px, 2.8vw, 12px);
-            white-space: normal;
-            text-align: center;
+            overflow: hidden;
+            font-size: 10px;
+            text-overflow: ellipsis;
           }
 
           .arc-os-top-guide {
@@ -1567,9 +1467,7 @@ export default function Arc() {
           }
 
           .arc-os-war {
-            margin-top: 0;
-            margin-bottom: 10px;
-            font-size: clamp(13px, 2.8vw, 16px);
+            font-size: clamp(10px, 2.8vw, 13px);
           }
 
           .arc-os-ca {
@@ -1579,20 +1477,21 @@ export default function Arc() {
           .arc-os-copy {
             left: 50%;
             right: auto;
-            width: min(360px, 76vw);
+            width: min(440px, 84vw);
             transform: translateX(-50%);
             text-align: center;
-            font-size: clamp(9px, 1.9vw, 10.5px);
-            line-height: 1.43;
-            margin-top: calc((1 - 1.43) * 0.5 * 1em);
-          }
-
-          .arc-os-copy-line {
-            white-space: normal;
+            font-size: clamp(7px, 1.9vw, 8.5px);
+            line-height: 1.24;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 4;
           }
 
           .arc-os-divider-top {
-            top: var(--arc-divider-top);
+            left: 7%;
+            right: 7%;
+            top: 292px;
           }
 
           .arc-os-spine {
@@ -1601,25 +1500,14 @@ export default function Arc() {
 
           .arc-os-products {
             z-index: 3;
-            top: var(--arc-products-top);
+            top: 366px;
             grid-template-columns: 1fr;
-            column-gap: 0;
-            row-gap: 64px;
+            row-gap: 52px;
           }
 
-          .arc-os-product:first-child {
-            justify-self: start;
-            text-align: left;
-          }
-
-          .arc-os-product:nth-child(2) {
-            justify-self: center;
-            text-align: center;
-          }
-
-          .arc-os-product:nth-child(3) {
-            justify-self: end;
-            text-align: right;
+          .arc-os-products::before,
+          .arc-os-products::after {
+            display: none;
           }
 
           .arc-os-product {
@@ -1636,8 +1524,13 @@ export default function Arc() {
           }
 
           .arc-os-product-title {
-            font-size: clamp(36px, 11.2vw, 57px);
+            font-size: clamp(36px, 11.2vw, 52px);
             letter-spacing: clamp(2px, 1vw, 4px);
+          }
+
+          .arc-os-product:nth-child(2) .arc-os-product-title,
+          .arc-os-product:nth-child(3) .arc-os-product-title {
+            font-size: clamp(34px, 10.8vw, 50px);
           }
 
           .arc-os-product-body {
@@ -1647,29 +1540,14 @@ export default function Arc() {
             line-height: 1.25;
           }
 
-          .arc-os-product:first-child .arc-os-product-body {
-            margin-left: 0;
-            margin-right: auto;
-            text-align: left;
-          }
-
-          .arc-os-product:nth-child(2) .arc-os-product-body {
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-          }
-
           .arc-os-product:nth-child(3) .arc-os-product-body {
-            margin-left: auto;
-            margin-right: 0;
-            text-align: right;
             font-size: clamp(13px, 3.55vw, 16px);
           }
 
           .arc-os-active-arrow {
             left: 50%;
             z-index: 1;
-            width: min(500px, 98%);
+            width: min(500px, 92%);
             min-height: 0;
             opacity: 0.72;
           }
@@ -1697,27 +1575,40 @@ export default function Arc() {
             height: 136px;
           }
 
+          .arc-os-product:first-child .arc-os-product-rule,
+          .arc-os-product:nth-child(3) .arc-os-product-rule,
+          .arc-os-product-rule {
+            display: block;
+            left: 15%;
+            right: 15%;
+          }
+
+          .arc-os-product:nth-child(3) .arc-os-product-rule {
+            display: none;
+          }
+
+          .arc-os-product:nth-child(2)::after {
+            display: none;
+          }
+
           .arc-os-panel {
-            --arc-panel-edge-label-right: clamp(-30px, -6.6vw, -22px);
-            --arc-panel-edge-label-size: clamp(10px, 3.1vw, 15px);
             z-index: 2;
             top: 930px;
-            width: min(500px, 98%);
+            width: min(500px, 92%);
+            height: 300px;
+            border-radius: 58px;
           }
 
-          .arc-os-panel-edge-label {
-            letter-spacing: 0.1em;
-          }
-
-          .arc-os-panel-video {
-            inset: 0;
-            width: 100%;
-            height: 100%;
+          .arc-os-panel-image {
+            inset: 16px;
+            width: calc(100% - 32px);
+            height: calc(100% - 32px);
+            border-radius: 44px;
           }
 
           .arc-os-panel-burst {
-            inset: 12px;
-            border-radius: var(--arc-panel-radius);
+            inset: 16px;
+            border-radius: 44px;
           }
 
           .arc-os-panel-caption {
@@ -1728,46 +1619,47 @@ export default function Arc() {
         }
 
         @media (max-width: 420px) {
-          .arc-os-section {
-            --arc-title-size: 42px;
-            --arc-title-spacing: 2px;
-            --arc-divider-top: 314px;
-            --arc-upper-spine-top: 157px;
-            --arc-products-top: 390px;
-            --arc-branch-height: calc(var(--arc-products-top) - var(--arc-divider-top) - var(--arc-branch-gap));
-          }
-
           .arc-os-shell {
             min-height: 1240px;
           }
 
           .arc-os-logo {
             gap: 14px;
-            font-size: 58px;
+            font-size: 52px;
           }
 
           .arc-os-war {
-            font-size: 13px;
-            margin-bottom: 10px;
+            top: 72px;
+            font-size: 10px;
           }
 
           .arc-os-copy {
-            width: min(270px, 76vw);
-            font-size: 8.8px;
-            margin-top: calc((1 - 1.43) * 0.5 * 1em);
+            top: 112px;
+            width: min(330px, 86vw);
+            font-size: 6.8px;
           }
 
           .arc-os-divider-top {
-            top: var(--arc-divider-top);
+            top: 270px;
+          }
+
+          .arc-os-spine {
+            top: 94px;
+            height: 224px;
           }
 
           .arc-os-products {
-            top: var(--arc-products-top);
-            row-gap: 56px;
+            top: 338px;
+            row-gap: 46px;
           }
 
           .arc-os-product-title {
-            font-size: clamp(30px, 9.6vw, 42px);
+            font-size: clamp(30px, 9.6vw, 36px);
+          }
+
+          .arc-os-product:nth-child(2) .arc-os-product-title,
+          .arc-os-product:nth-child(3) .arc-os-product-title {
+            font-size: clamp(29px, 9.2vw, 34px);
           }
 
           .arc-os-product-body {
@@ -1775,7 +1667,7 @@ export default function Arc() {
           }
 
           .arc-os-active-arrow {
-            width: min(420px, 98%);
+            width: min(420px, 92%);
           }
 
           .arc-os-active-arrow--hyena {
@@ -1794,20 +1686,21 @@ export default function Arc() {
           }
 
           .arc-os-panel {
-            --arc-panel-edge-label-right: -22px;
-            --arc-panel-edge-label-size: 9px;
             top: 896px;
+            height: 270px;
+            border-radius: 42px;
           }
 
-          .arc-os-panel-video {
-            inset: 0;
-            width: 100%;
-            height: 100%;
+          .arc-os-panel-image {
+            inset: 12px;
+            width: calc(100% - 24px);
+            height: calc(100% - 24px);
+            border-radius: 32px;
           }
 
           .arc-os-panel-burst {
-            inset: 10px;
-            border-radius: var(--arc-panel-radius);
+            inset: 12px;
+            border-radius: 32px;
           }
 
           .arc-os-panel-caption {
@@ -1821,32 +1714,24 @@ export default function Arc() {
       <div className="arc-os-shell">
         <span className="arc-os-top-guide" aria-hidden="true" />
         <div className="arc-os-lockup" aria-label="ARC OS">
-          <span className="arc-os-tagline">{ARC_TAGLINE}</span>
-          <div className="arc-os-logo-wrap">
-            <div className="arc-os-logo-block">
-              <div className="arc-os-logo">
-                <span className="arc-os-logo-part">
-                  ARC
-                  <span className="arc-os-ca" aria-label="C2 identifier">
-                    <span className="arc-os-ca-code">&lt;CA1-AAA3&gt;</span>
-                    <span className="arc-os-ca-c2">C2</span>
-                  </span>
-                </span>
-                <span className="arc-os-logo-part">
-                  <span className="arc-os-logo-o">O</span>S
-                </span>
-              </div>
-              <p className="arc-os-copy">
-                {ARC_COPY_LINES.map((line) => (
-                  <span className="arc-os-copy-line" key={line}>
-                    {line}
-                  </span>
-                ))}
-              </p>
-            </div>
-            <span className="arc-os-war">Agentic Warfare</span>
+          <span className="arc-os-tagline">
+            Agentic solutions for defense and intelligence
+          </span>
+          <div className="arc-os-logo">
+            <span className="arc-os-logo-part">
+              ARC
+              <span className="arc-os-ca" aria-hidden="true">
+                <span className="arc-os-ca-code">&lt;CA1-AAA3&gt;</span>
+                <span className="arc-os-ca-c2">C2</span>
+              </span>
+            </span>
+            <span className="arc-os-logo-part">
+              <span className="arc-os-logo-o">O</span>S
+            </span>
           </div>
+          <span className="arc-os-war">Agentic Warfare</span>
         </div>
+        <p className="arc-os-copy">{connectedCopy}</p>
         <div className="arc-os-divider-top" aria-hidden="true" />
         <div className="arc-os-spine" aria-hidden="true" />
 
@@ -1860,7 +1745,7 @@ export default function Arc() {
               onPointerMove={handlePointerMove}
             >
               <button
-                aria-pressed={activeProductId === product.id}
+                aria-pressed={pinnedProductId === product.id}
                 className="arc-os-product-trigger"
                 onBlur={handlePointerLeave}
                 onClick={() => handleProductClick(product.id)}
@@ -1880,6 +1765,7 @@ export default function Arc() {
                 </div>
                 <p className="arc-os-product-body">{product.body}</p>
               </button>
+              <div className="arc-os-product-rule" aria-hidden="true" />
             </article>
           ))}
         </div>
@@ -1887,21 +1773,15 @@ export default function Arc() {
         {activeProduct ? <ActiveArrow product={activeProduct} /> : null}
 
         <div className={`arc-os-panel ${activeProduct ? "is-active" : ""}`} aria-live="polite">
-          <span className="arc-os-panel-edge-label" aria-hidden="true">TEAMING AT THE EDGE</span>
-          <video
-            aria-label="ARC OS three core systems"
-            autoPlay
-            className="arc-os-panel-video"
-            disablePictureInPicture
-            loop
-            muted
-            playsInline
-            preload="auto"
-            src={arcSystemsVideo}
-          />
           {activeProduct ? (
             <>
               <span className="arc-os-panel-target" aria-hidden="true" />
+              <img
+                className="arc-os-panel-image"
+                key={activeProduct.id}
+                src={activeProduct.image}
+                alt={activeProduct.imageAlt}
+              />
               <span className="arc-os-panel-scan" aria-hidden="true" />
               <span className="arc-os-panel-burst" aria-hidden="true" />
               <p className="arc-os-panel-caption" key={`${activeProduct.id}-caption`}>

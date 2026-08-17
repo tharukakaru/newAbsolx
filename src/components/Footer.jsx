@@ -1,6 +1,6 @@
 import React from "react";
 import plusJakartaSans from "../assets/fonts/PlusJakartaSans[wght].ttf";
-import footerSentinel from "../assets/065b4a00de40127609484cfbd9569fa6 1.webp";
+import footerSentinel from "../assets/065b4a00de40127609484cfbd9569fa6 1.png";
 
 // App badges
 import appStore from "../assets/footer/app_store.svg";
@@ -162,9 +162,7 @@ function BracketButton({
 export default function Footer({ showReadmeBridge = true, variant = "default" }) {
   const isResearchFooter = variant === "research";
   const isArcOsFooter = variant === "arc-os";
-  const isNewMeghaFooter = variant === "new-megha";
-  const isSystemFooter = isArcOsFooter || isNewMeghaFooter;
-  const isCompactFooter = isResearchFooter || isSystemFooter;
+  const isCompactFooter = isResearchFooter || isArcOsFooter;
 
   /**
    * Title tone: white + light-blue mix (NOT pure white)
@@ -176,13 +174,11 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
     <footer
       className={[
         "relative overflow-hidden text-white font-elios z-50",
-        isSystemFooter
-          ? `${isNewMeghaFooter ? "new-megha-footer" : "arc-os-footer"} bg-transparent`
-          : "bg-black",
-        !isResearchFooter && !isSystemFooter ? "home-footer" : "",
+        isArcOsFooter ? "arc-os-footer bg-transparent" : "bg-black",
+        !isResearchFooter && !isArcOsFooter ? "home-footer" : "",
         isResearchFooter
           ? "research-footer min-h-[400px] sm:min-h-[460px] md:min-h-[500px]"
-          : isSystemFooter
+          : isArcOsFooter
             ? "min-h-[330px] sm:min-h-[390px] md:min-h-[430px]"
             : "",
       ].join(" ")}
@@ -200,8 +196,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
           background: #000;
         }
 
-        .arc-os-footer,
-        .new-megha-footer {
+        .arc-os-footer {
           margin-top: clamp(-140px, -8vw, -96px);
           padding-top: clamp(176px, 14vw, 230px);
           background: transparent;
@@ -216,64 +211,64 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
             linear-gradient(180deg, #000 0%, #090b1b 22%, #1f275d 67%, #3b459a 100%);
           -webkit-mask-image: linear-gradient(
             to bottom,
-            transparent 0,
-            rgba(0,0,0,0.18) 24px,
-            rgba(0,0,0,0.45) 44px,
-            rgba(0,0,0,0.72) 64px,
-            #000 80px
+            transparent 0%,
+            rgba(0,0,0,0.18) 6%,
+            rgba(0,0,0,0.45) 11%,
+            rgba(0,0,0,0.72) 15%,
+            #000 19%
           );
           mask-image: linear-gradient(
             to bottom,
-            transparent 0,
-            rgba(0,0,0,0.18) 24px,
-            rgba(0,0,0,0.45) 44px,
-            rgba(0,0,0,0.72) 64px,
-            #000 80px
+            transparent 0%,
+            rgba(0,0,0,0.18) 6%,
+            rgba(0,0,0,0.45) 11%,
+            rgba(0,0,0,0.72) 15%,
+            #000 19%
           );
           pointer-events: none;
-        }
-
-        .new-megha-footer-shader {
-          position: absolute;
-          inset: 0;
-          pointer-events: none;
-          background:
-            radial-gradient(
-              82% 46% at 50% 108%,
-              rgba(63, 79, 174, 0.34) 0%,
-              rgba(43, 56, 132, 0.22) 42%,
-              rgba(18, 25, 67, 0) 76%
-            ),
-            linear-gradient(
-              180deg,
-              #000 0%,
-              #000 48%,
-              #02030a 58%,
-              #090d24 70%,
-              #17204c 84%,
-              #2a367b 100%
-            );
         }
 
         .home-footer {
           min-height: clamp(1180px, 96vw, 1845px);
         }
 
-        .home-footer-figure {
+        /*
+          UPDATED: wrapper now controls size/position for BOTH the
+          earth image and the blue tint layer above it, so they always
+          line up perfectly no matter the viewport width.
+        */
+        .home-footer-figure-wrap {
           position: absolute;
           z-index: 8;
           left: 50%;
           bottom: 0;
-          width: min(82.4vw, 1582px);
-          height: min(96vw, 1845px);
-          aspect-ratio: 391 / 456;
-          object-fit: fill;
+          width: min(98vw, 1680px);
+          height: min(150vw, 790px);
+          transform: translateX(-50%);
           pointer-events: none;
           user-select: none;
-          transform: translateX(-50%);
+        }
+
+        .home-footer-figure-img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: fill;
           filter:
             drop-shadow(-28px 24px 50px rgba(89, 76, 34, 0.18))
             drop-shadow(28px 24px 54px rgba(45, 52, 116, 0.24));
+        }
+
+        /* Transparent blue tint sitting on top of the earth image */
+        .home-footer-figure-tint {
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(120% 85% at 50% 0%, rgba(90, 130, 255, 0.30) 0%, rgba(40, 55, 140, 0.20) 45%, rgba(0, 0, 0, 0) 78%),
+            linear-gradient(180deg, rgba(25, 45, 130, 0.10) 0%, rgba(25, 45, 130, 0.38) 55%, rgba(10, 18, 60, 0.55) 100%);
+          mix-blend-mode: color;
+          opacity: 0.9;
         }
 
         .home-footer-content {
@@ -283,93 +278,27 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
           bottom: clamp(24px, 2.6vw, 50px);
         }
 
-        .home-footer-atmosphere {
-          background:
-            radial-gradient(
-              ellipse 58% 48% at 0% 46%,
-              #5B4E23 0%,
-              rgba(91, 78, 35, 0.96) 20%,
-              rgba(91, 78, 35, 0.66) 45%,
-              rgba(91, 78, 35, 0.48) 60%,
-              rgba(91, 78, 35, 0.14) 82%,
-              rgba(91, 78, 35, 0) 100%
-            ),
-            radial-gradient(
-              ellipse 58% 48% at 100% 46%,
-              #2F3679 0%,
-              rgba(47, 54, 121, 0.96) 20%,
-              rgba(47, 54, 121, 0.66) 45%,
-              rgba(47, 54, 121, 0.48) 60%,
-              rgba(47, 54, 121, 0.14) 82%,
-              rgba(47, 54, 121, 0) 100%
-            ),
-            linear-gradient(
-              180deg,
-              #000 0%,
-              #010102 14%,
-              #08080d 52%,
-              #171c43 100%
-            );
-          -webkit-mask-image: linear-gradient(
-            to bottom,
-            transparent 0,
-            rgba(0, 0, 0, 0.16) 28px,
-            rgba(0, 0, 0, 0.52) 68px,
-            #000 132px
-          );
-          mask-image: linear-gradient(
-            to bottom,
-            transparent 0,
-            rgba(0, 0, 0, 0.16) 28px,
-            rgba(0, 0, 0, 0.52) 68px,
-            #000 132px
-          );
-        }
-
-        /* Stage 4 — closing statement + footer (colo6). One broad gold
-           source lower-left, one broad blue source lower-right; solid
-           centres stay outside the page, only blurred falloff enters. */
         .research-footer-glow {
           position: absolute;
+          width: 2423px;
+          height: 665px;
           border-radius: 2423px;
-          filter: blur(var(--megha-atmosphere-blur, 283.75px));
+          filter: blur(340.5px);
           pointer-events: none;
-          transform: translateY(-50%) translate3d(0, 0, 0);
         }
 
         .research-footer-glow--gold {
-          left: -45%;
-          top: 63%;
-          width: clamp(54rem, 80vw, 102rem);
-          height: clamp(58rem, 86vw, 108rem);
+          left: -1370px;
+          top: 24%;
           background: #F3D05D;
-          opacity: 0.52;
+          opacity: 0.54;
         }
 
         .research-footer-glow--blue {
-          right: -47%;
-          top: 59%;
-          width: clamp(56rem, 82vw, 106rem);
-          height: clamp(60rem, 88vw, 112rem);
+          right: -1280px;
+          top: 24%;
           background: #5D6EF3;
           opacity: 0.64;
-        }
-
-        @media (max-width: 48rem) {
-          .research-footer-glow {
-            width: clamp(28rem, 140vw, 42rem);
-            height: clamp(34rem, 160vw, 48rem);
-          }
-
-          .research-footer-glow--gold {
-            left: -95%;
-            opacity: 0.44;
-          }
-
-          .research-footer-glow--blue {
-            right: -98%;
-            opacity: 0.54;
-          }
         }
 
         .research-footer-hashtag {
@@ -416,10 +345,19 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
             min-height: 0;
           }
 
-          .home-footer-figure {
-            width: min(76vw, 640px);
+          .home-footer-figure-wrap {
+            position: relative;
+            left: auto;
+            bottom: auto;
+            width: min(100vw, 900px);
             height: auto;
-            aspect-ratio: auto;
+            aspect-ratio: 391 / 456;
+            margin: 0 auto;
+            transform: none;
+          }
+
+          .home-footer-figure-img {
+            position: static;
             object-fit: contain;
           }
 
@@ -452,12 +390,12 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 z-[6] h-64 bg-gradient-to-b from-black via-black/70 to-transparent sm:h-80"
+            className="pointer-events-none absolute inset-0 z-[5] bg-[radial-gradient(ellipse_at_0%_86%,_rgba(243,208,93,0.2)_0%,_rgba(243,208,93,0.08)_26%,_rgba(243,208,93,0)_58%),radial-gradient(ellipse_at_100%_88%,_rgba(93,110,243,0.34)_0%,_rgba(93,110,243,0.14)_30%,_rgba(93,110,243,0)_62%)]"
           />
-        </>
-      ) : isNewMeghaFooter ? (
-        <>
-          <div aria-hidden="true" className="new-megha-footer-shader" />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-0 z-[6] h-36 bg-gradient-to-b from-black via-black/85 to-transparent sm:h-44"
+          />
         </>
       ) : isArcOsFooter ? (
         <>
@@ -472,23 +410,42 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
              - Push glows lower (no glow touching the top edge)
           ======================================================= */}
 
-          {/* Reference-matched side atmosphere: both colours peak at the
-              outer edges and fade softly in both axes toward the centre. */}
+          {/* Base gradient: black stays at top, then fades into navy/blue */}
           <div
             aria-hidden="true"
-            className="home-footer-atmosphere pointer-events-none absolute inset-0"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_12%_68%,_rgba(89,76,34,0.6)_0%,_rgba(89,76,34,0.2)_34%,_rgba(89,76,34,0)_66%),radial-gradient(ellipse_at_86%_70%,_rgba(45,52,116,0.7)_0%,_rgba(45,52,116,0.24)_38%,_rgba(45,52,116,0)_70%),linear-gradient(180deg,_#000_0%,_#000_18%,_#08080d_52%,_#171c43_100%)]"
+          />
+
+          {/* Lower glow (kept low so it doesn't create top band) */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_82%,_rgba(120,150,255,0.28)_0%,_rgba(10,14,28,0)_68%)]"
+          />
+
+          {/* Vignette to darken edges like the reference */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,0,0,0)_45%,_rgba(0,0,0,0.88)_100%)]"
+          />
+
+          {/* Strong top mask (band remover) */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-0 h-32 sm:h-40 bg-gradient-to-b from-black via-black to-transparent"
           />
         </>
       )}
 
-      {!isCompactFooter ? (
-        <img
-          src={footerSentinel}
-          alt=""
-          aria-hidden="true"
-          className="home-footer-figure"
-          loading="lazy"
-        />
+      {!isResearchFooter && !isArcOsFooter ? (
+        <div className="home-footer-figure-wrap" aria-hidden="true">
+          <img
+            src={footerSentinel}
+            alt=""
+            className="home-footer-figure-img"
+            loading="lazy"
+          />
+          <div className="home-footer-figure-tint" />
+        </div>
       ) : null}
 
       {showReadmeBridge ? <Subpart /> : null}
