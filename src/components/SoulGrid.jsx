@@ -3,8 +3,6 @@ import SoulSphereCanvas from "./SoulSphereCanvas";
 const ARC_DESCRIPTION =
   "ABSOLX ARC OS is a sovereign, AI-driven defense ecosystem engineered by Sri Lankan hands—the roaring lions building national power from the ground up. Designed for Asian operational environments, ARC OS delivers 99.99% decision-making accuracy, commanding dominance from sky to sea to mud through UAVs, UGVs, USVs, electronic warfare, and joint-force Command & Control. This is not just software—it is a unified ecosystem of AI models, computer vision, predictive intelligence, weather-aware analytics, hardened hardware, robotics, and autonomous systems. Built entirely in-house, our vision to 2030 is clear: a self-reliant, battle-ready defense industry transforming national security data into decisive first-action advantage.";
 
-const TAGLINE = "Agentic solutions for defense and intelligence";
-
 export default function SoulGrid() {
   const sectionLeft =
     "calc(var(--img-x, 0px) + (var(--img-w, 0px) * var(--soul-face-left, 0.555)))";
@@ -23,11 +21,16 @@ export default function SoulGrid() {
           --soul-face-height: clamp(460px, calc(var(--img-h, 0px) * 1), 860px);
           --soul-copy-top: 93%;
           --soul-copy-left: 43%;
-          --soul-copy-width: min(84vw, calc(var(--img-w, 0px) * 1.12), 980px);
+          --soul-copy-width: min(98vw, calc(var(--img-w, 0px) * 1.28), 1200px);
           --soul-right-spine-right: clamp(112px, 17.4%, 208px);
           --soul-top-line-width: clamp(116px, calc(var(--soul-face-width) * 0.17), 206px);
           --soul-top-line-top: 8.4%;
           --soul-defense-offset: clamp(59px, calc(var(--img-w, 0px) * 0.077), 118px);
+          --soul-copy-scale: 1;
+          --soul-copy-body-size: clamp(10px, calc(var(--img-w, 0px) * 0.0082 + 2px), 17.5px);
+          --soul-copy-title-size: clamp(22px, calc(var(--img-w, 0px) * 0.0205 + 6px), 46px);
+          --soul-copy-body-tracking: clamp(0.055em, 0.085em, 0.095em);
+          --soul-copy-title-tracking: clamp(0.07em, 0.11em, 0.13em);
         }
 
         .soul-face-section {
@@ -327,7 +330,7 @@ export default function SoulGrid() {
           align-items: center;
           width: var(--soul-copy-width);
           transform: translateX(-50%);
-          max-width: calc(100vw - 64px);
+          max-width: calc(100vw - 16px);
           overflow: visible;
           isolation: isolate;
           text-align: center;
@@ -338,35 +341,31 @@ export default function SoulGrid() {
           width: 100%;
           margin: 0;
           font-family: "Helvetica Now Display", "Helvetica", sans-serif;
-          font-size: clamp(10px, calc(var(--img-w, 0px) * 0.0088), 16px);
+          font-size: calc(var(--soul-copy-body-size) * var(--soul-copy-scale) + 1px);
           font-weight: 400;
-          line-height: 1.22;
-          letter-spacing: 0.055em;
+          line-height: 1.28;
+          letter-spacing: var(--soul-copy-body-tracking);
           text-transform: uppercase;
+          color: rgba(255, 255, 255, 0.78);
         }
 
-        .soul-face-description strong {
+        .soul-face-description .soul-face-title {
+          font-size: calc(var(--soul-copy-title-size) * var(--soul-copy-scale) + 1px);
           font-weight: 700;
+          letter-spacing: var(--soul-copy-title-tracking);
           color: #fff;
         }
 
-        .soul-face-tagline {
-          position: relative;
-          z-index: 2;
-          display: block;
-          flex: 0 0 auto;
-          width: 100%;
-          margin-top: clamp(40px, calc(var(--img-h, 0px) * 0.06), 54px);
-          font-family: "SourceCodePro", "Source Code Pro", ui-monospace, monospace;
-          font-size: clamp(10px, calc(var(--img-w, 0px) * 0.0095), 15px);
-          font-weight: 400;
-          line-height: 1.15;
-          letter-spacing: 0.08em;
-          white-space: nowrap;
-          text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.82);
-          opacity: 1;
-          visibility: visible;
+        @media (max-width: 1200px) {
+          .soul-face-root {
+            --soul-copy-scale: 0.96;
+          }
+        }
+
+        @media (max-width: 992px) {
+          .soul-face-root {
+            --soul-copy-scale: 0.92;
+          }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -382,12 +381,17 @@ export default function SoulGrid() {
             --soul-face-width: calc(var(--img-w, 0px) * 0.98);
             --soul-face-height: clamp(430px, calc(var(--img-h, 0px) * 0.9), 680px);
             --soul-copy-left: 46%;
-            --soul-copy-width: min(88vw, calc(var(--img-w, 0px) * 0.95));
+            --soul-copy-width: min(98vw, calc(var(--img-w, 0px) * 1.08));
             --soul-copy-top: 96%;
             --soul-right-spine-right: clamp(54px, 14.5%, 98px);
             --soul-top-line-width: clamp(76px, calc(var(--soul-face-width) * 0.15), 128px);
             --soul-top-line-top: 8.8%;
             --soul-defense-offset: clamp(46px, calc(var(--img-w, 0px) * 0.0886), 75px);
+            --soul-copy-scale: 1;
+            --soul-copy-body-size: clamp(9px, 2.15vw, 13px);
+            --soul-copy-title-size: clamp(16px, 5.2vw, 28px);
+            --soul-copy-body-tracking: clamp(0.03em, 0.045em, 0.065em);
+            --soul-copy-title-tracking: clamp(0.06em, 0.085em, 0.11em);
           }
 
           .soul-title-cluster {
@@ -404,11 +408,6 @@ export default function SoulGrid() {
             top: -8%;
             height: 88%;
           }
-
-          .soul-face-description {
-            font-size: clamp(8px, calc(var(--img-w, 0px) * 0.0096), 11px);
-            letter-spacing: 0.035em;
-          }
         }
 
         @media (max-width: 480px) {
@@ -418,12 +417,17 @@ export default function SoulGrid() {
             --soul-face-width: calc(var(--img-w, 0px) * 1.02);
             --soul-face-height: clamp(390px, calc(var(--img-h, 0px) * 0.95), 560px);
             --soul-copy-left: 50%;
-            --soul-copy-width: 94vw;
+            --soul-copy-width: 98vw;
             --soul-copy-top: 97%;
             --soul-right-spine-right: 12%;
             --soul-top-line-width: 68px;
             --soul-top-line-top: 9.2%;
             --soul-defense-offset: clamp(41px, calc(var(--img-w, 0px) * 0.1148), 62px);
+            --soul-copy-scale: 1;
+            --soul-copy-body-size: clamp(8px, 2.5vw, 11px);
+            --soul-copy-title-size: clamp(14px, 5.8vw, 24px);
+            --soul-copy-body-tracking: clamp(0.022em, 0.035em, 0.05em);
+            --soul-copy-title-tracking: clamp(0.05em, 0.07em, 0.095em);
           }
 
           .soul-title-cluster {
@@ -451,18 +455,6 @@ export default function SoulGrid() {
             opacity: 0.72;
             top: -7%;
             height: 84%;
-          }
-
-          .soul-face-description {
-            font-size: clamp(6.4px, 1.85vw, 8px);
-            line-height: 1.24;
-            letter-spacing: 0.025em;
-          }
-
-          .soul-face-tagline {
-            margin-top: 28px;
-            font-size: clamp(8px, 2.5vw, 11px);
-            letter-spacing: 0.055em;
           }
         }
       `}</style>
@@ -502,10 +494,9 @@ export default function SoulGrid() {
         <SoulSphereCanvas className="soul-sphere-canvas" />
         <div id="soul-arc-copy" className="soul-face-copy">
           <p className="soul-face-description">
-            <strong>ABSOLX ARC OS</strong>
+            <strong className="soul-face-title">ABSOLX ARC OS</strong>
             {ARC_DESCRIPTION.replace("ABSOLX ARC OS", "")}
           </p>
-          <div className="soul-face-tagline">{TAGLINE}</div>
         </div>
       </div>
     </div>

@@ -697,7 +697,15 @@ export default function Drone() {
           control platform <span>—</span>
         </p>
 
-        <button className="drone-read-more" type="button" aria-label="Read more about the autonomy platform">
+        <button
+          className="drone-read-more"
+          type="button"
+          aria-label="Read more about the autonomy platform"
+          onClick={() => {
+            window.history.pushState({}, "", "/readmore");
+            window.dispatchEvent(new PopStateEvent("popstate"));
+          }}
+        >
           <span className="drone-read-more__label">
             {cornerMarks}
             Read more

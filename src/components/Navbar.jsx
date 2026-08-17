@@ -218,7 +218,9 @@ import logo from "../assets/images/new-logo.svg";
 const MENU_ITEMS = [
   { label: "HOME", path: "/" },
   { label: "AEC OS", path: "/aec-os" },
+  { label: "SENTINEL", path: "/sentinel" },
   { label: "MEGHA UAS", path: "/research" },
+  { label: "RESEARCH", path: "/researchTab" },
   { label: "ENTERPRISE", path: "/newmegha" },
   { label: "AUTONOMY" },
   { label: "GROWFORCE" },
@@ -228,7 +230,11 @@ const MENU_ITEMS = [
 export function Navbar({ currentPath = "/", onNavigate }) {
   const [openMobile, setOpenMobile] = useState(false);
   const usesCompactNavbar =
-    currentPath === "/aec-os" || currentPath === "/newmegha";
+    currentPath === "/aec-os" ||
+    currentPath === "/newmegha" ||
+    currentPath === "/sentinel" ||
+    currentPath === "/researchTab" ||
+    currentPath === "/readmore";
 
   const [selectedMenu, setSelectedMenu] = useState(null);
   const routeActiveMenu =

@@ -11,8 +11,11 @@ import Footer from "./components/Footer";
 import Drone from "./components/drone";
 import DroneSubSection from "./components/dronesub-section";
 import ResearchPage from "./components/ResearchPage";
+import ResearchPageTab from "./components/ResearchPageTab";
 import ArsOs from "./components/ArsOs";
 import NewMegha from "./components/newmegha";
+import Sentinel from "./components/Sentinel";
+import ReadMore from "./components/ReadMore";
 
 function HomePage() {
   return (
@@ -76,10 +79,10 @@ function HomePage() {
       <section
         className="relative w-full bg-black z-[60]"
         style={{
-          paddingBottom: "clamp(620px, 55vw, 1210px)",
+          paddingBottom: "clamp(740px, 61vw, 1380px)",
         }}
       >
-        <div className="relative h-[120vh]">
+        <div className="relative min-h-[124vh] h-[124vh]">
           <Glitch />
         </div>
       </section>
@@ -127,8 +130,11 @@ export default function App() {
   };
 
   const isResearchPage = path === "/research";
+  const isResearchTabPage = path === "/researchTab";
   const isAecOsPage = path === "/aec-os";
   const isNewMeghaPage = path === "/newmegha";
+  const isSentinelPage = path === "/sentinel";
+  const isReadMorePage = path === "/readmore";
 
   return (
     <div className={`relative w-full min-h-screen bg-black overflow-x-hidden ${isAecOsPage ? "arc-os-page" : ""}`}>
@@ -137,6 +143,21 @@ export default function App() {
         <>
           <NewMegha />
           <Footer showReadmeBridge={false} variant="new-megha" />
+        </>
+      ) : isSentinelPage ? (
+        <>
+          <Sentinel />
+          <Footer showReadmeBridge={false} variant="new-megha" />
+        </>
+      ) : isReadMorePage ? (
+        <>
+          <ReadMore />
+          <Footer showReadmeBridge={false} variant="research" />
+        </>
+      ) : isResearchTabPage ? (
+        <>
+          <ResearchPageTab />
+          <Footer showReadmeBridge={false} variant="research" />
         </>
       ) : isResearchPage ? (
         <>

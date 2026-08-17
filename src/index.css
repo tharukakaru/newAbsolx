@@ -74,6 +74,20 @@ body,
 }
 
 @font-face {
+  font-family: "Helvetica";
+  src: url("./assets/fonts/HelveticaNowDisplay-ExtLt.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Helvetica Now Display";
+  src: url("./assets/fonts/HelveticaNowDisplay-ExtLt.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
   font-family: "Aeonik-trial";
   src: url("./assets/fonts/aeoniktrial.otf") format("opentype");
   font-weight: normal;
@@ -120,6 +134,7 @@ body,
   --font-yapari-regular: "Yapari Trial Regular";
   --font-elios: "Elios";
   --font-sf-compact: "SF Compact Rounded";
+  --font-orbitron: "Orbitron", sans-serif;
 }
 
 :root {
@@ -128,6 +143,10 @@ body,
 
 .font-elios {
   font-family: "Elios", sans-serif;
+}
+
+.font-orbitron {
+  font-family: "Orbitron", sans-serif;
 }
 
 @keyframes fadeSlideUpClose {

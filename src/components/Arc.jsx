@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { HOME_LINE_YELLOW_STYLE } from "../Utils/AnimatedLine";
 import arcSystemsVideo from "../assets/ARC OS Three Core Systems 16x9 (1).mp4";
 
-const connectedCopyLines = [
+const ARC_TAGLINE = "Agentic solutions for defense and intelligence";
+
+const ARC_COPY_LINES = [
   "ARC OS ensures sovereign forces win at the edge, in fast-moving and",
   "contested environments where decisions must be made in seconds.",
   "We build agentic AI systems that connect sensors, autonomy, and",
@@ -35,15 +37,12 @@ const products = [
   },
 ];
 
-/* x=186.7 / 560 / 933.3 are the three column centres of the products grid
-   (viewBox width 1120 / 6 * 1, 3, 5) — the svg is stretched to exactly the
-   grid's width (preserveAspectRatio="none") so these stay under the titles.
-   The small offsets (-15 / +31) follow the per-title transform nudges. */
+/* Branch x coords track HYENA / ARC C2 title centres on a ~1440px row. */
 const arrowGeometry = {
   left: {
-    desktopPath: "M172 8 L172 138 Q172 158 192 158 L540 158 Q560 158 560 178 L560 294",
+    desktopPath: "M144 8 L144 138 Q144 158 164 158 L540 158 Q560 158 560 178 L560 294",
     mobilePath: "M560 8 L560 294",
-    startX: 172,
+    startX: 144,
     startY: 8,
     endX: 560,
   },
@@ -55,9 +54,9 @@ const arrowGeometry = {
     endX: 560,
   },
   right: {
-    desktopPath: "M964 8 L964 138 Q964 158 944 158 L580 158 Q560 158 560 178 L560 294",
+    desktopPath: "M976 8 L976 138 Q976 158 956 158 L580 158 Q560 158 560 178 L560 294",
     mobilePath: "M560 8 L560 294",
-    startX: 964,
+    startX: 976,
     startY: 8,
     endX: 560,
   },
@@ -292,42 +291,62 @@ export default function Arc() {
           --arc-line: rgba(255, 255, 255, 0.72);
           --arc-muted: rgba(255, 255, 255, 0.72);
           --arc-faint: rgba(255, 255, 255, 0.42);
-          --arc-line-left: 11.1%;
-          --arc-line-right: 12.2%;
+          --arc-copy-color: rgba(255, 255, 255, 0.3);
+          --arc-line-left: 35px;
+          --arc-line-right: 35px;
+          --arc-product-edge: 35px;
+          --arc-title-size: 57px;
+          --arc-title-spacing: 4px;
+          --arc-hyena-half-w: calc((5 * var(--arc-title-size) + 4 * var(--arc-title-spacing)) / 2);
+          --arc-arc-c2-half-w: calc((5 * var(--arc-title-size) + 3 * var(--arc-title-spacing) + 10px) / 2);
+          --arc-hyena-branch-x: calc(var(--arc-product-edge) + var(--arc-hyena-half-w));
+          --arc-arc-c2-branch-x: calc(100% - var(--arc-product-edge) - var(--arc-arc-c2-half-w));
           --arc-line-center-gap: 26px;
-          --arc-products-top: 364px;
-          --arc-panel-top: 626px;
-          --arc-war-top: 118px;
-          --arc-copy-top: 114px;
-          --arc-copy-right: 55px;
-          --arc-copy-width: 280px;
-          --arc-upper-spine-top: 137px;
-          --arc-upper-spine-end: 317px;
-          padding: 74px 0 110px;
+          --arc-products-top: 416px;
+          --arc-panel-top: 678px;
+          --arc-divider-top: 278px;
+          --arc-upper-spine-top: 162px;
+          --arc-branch-gap: 43px;
+          --arc-branch-height: calc(var(--arc-products-top) - var(--arc-divider-top) - var(--arc-branch-gap));
+          padding: 124px 0 110px;
         }
 
         .arc-os-shell {
           position: relative;
-          width: min(1160px, calc(100% - 48px));
+          width: 100%;
           margin: 0 auto;
           min-height: 1080px;
+          overflow: visible;
         }
 
         .arc-os-lockup {
           position: relative;
           display: flex;
-          align-items: flex-start;
+          flex-direction: column;
+          align-items: center;
           justify-content: center;
-          gap: 90px;
+          gap: 0;
           padding-top: 4px;
+        }
+
+        .arc-os-logo-wrap {
+          position: relative;
+          display: inline-flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0;
+        }
+
+        .arc-os-logo-block {
+          position: relative;
         }
 
         .arc-os-logo {
           display: flex;
           align-items: flex-start;
           gap: 90px;
-          font-family: "Yapari Trial", "Yapari Trial Regular", "Azonix", sans-serif;
-          font-size: 184px;
+          font-family: "Yapari Trial", sans-serif;
+          font-size: 204px;
           font-weight: 700;
           line-height: 0.68;
           letter-spacing: 0;
@@ -338,16 +357,17 @@ export default function Arc() {
 
         .arc-os-tagline {
           position: absolute;
-          top: -68px;
+          top: -80px;
           left: 50%;
           transform: translateX(-50%);
-          font-family: "SourceCodePro", "Source Code Pro", ui-monospace, monospace;
-          font-size: 24px;
+          font-family: "Source Code Pro", "SourceCodePro", ui-monospace, monospace;
+          font-size: clamp(13px, 1.35vw, 27px);
           font-weight: 400;
-          letter-spacing: 0.02em;
-          line-height: 1;
+          letter-spacing: 0;
+          line-height: 1.15;
           text-transform: uppercase;
           white-space: nowrap;
+          color: #fff;
         }
 
         .arc-os-top-guide {
@@ -369,20 +389,6 @@ export default function Arc() {
           color: var(--arc-yellow);
         }
 
-        .arc-os-war {
-          position: absolute;
-          left: 48.55%;
-          top: var(--arc-war-top);
-          transform: translateX(-50%);
-          font-family: "SourceCodePro", "Source Code Pro", ui-monospace, monospace;
-          font-size: 15px;
-          font-weight: 400;
-          line-height: 1;
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
-          white-space: nowrap;
-        }
-
         .arc-os-ca {
           position: absolute;
           left: -38px;
@@ -391,7 +397,7 @@ export default function Arc() {
           align-items: center;
           justify-content: center;
           gap: 12px;
-          width: 142px;
+          width: 158px;
           height: 32px;
           padding: 0 12px;
           border: 1px solid rgba(255, 255, 255, 0.94);
@@ -440,18 +446,20 @@ export default function Arc() {
 
         .arc-os-copy {
           position: absolute;
-          right: var(--arc-copy-right);
-          top: var(--arc-copy-top);
-          width: var(--arc-copy-width);
+          right: 0;
+          top: 100%;
+          width: min(380px, 34vw);
           margin: 0;
-          font-family: "Helvetica Now Display", "Helvetica", Arial, sans-serif;
-          font-size: 6.4px;
+          margin-top: calc(-12px + (1 - 1.43) * 0.5 * 1em);
+          font-family: "Helvetica Now Display", sans-serif;
+          font-size: 8.4px;
           font-weight: 400;
-          line-height: 1.08;
+          font-style: normal;
+          line-height: 1.43;
           letter-spacing: 0;
           text-align: right;
           text-transform: uppercase;
-          color: var(--arc-faint);
+          color: var(--arc-copy-color);
         }
 
         .arc-os-copy-line {
@@ -459,12 +467,28 @@ export default function Arc() {
           white-space: nowrap;
         }
 
+        .arc-os-war {
+          position: relative;
+          margin: 0;
+          margin-top: calc(-12px);
+          margin-bottom: 10px;
+          font-family: "Source Code Pro", "SourceCodePro", ui-monospace, monospace;
+          font-size: 18px;
+          font-weight: 350;
+          line-height: 1;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+
         .arc-os-divider-top {
           position: absolute;
-          left: var(--arc-line-left);
-          right: var(--arc-line-right);
-          top: 234px;
+          z-index: 2;
+          left: var(--arc-hyena-branch-x);
+          right: calc(100% - var(--arc-arc-c2-branch-x));
+          top: var(--arc-divider-top);
           height: 1px;
+          overflow: visible;
           background:
             linear-gradient(90deg, transparent, var(--arc-line) 9%, var(--arc-line) 91%, transparent),
             linear-gradient(90deg, transparent 0%, rgba(255, 255, 210, 0.08) 18%, rgba(255, 255, 180, 0.26) 38%, rgba(255, 255, 255, 0.88) 50%, rgba(255, 255, 150, 0.26) 62%, rgba(255, 255, 120, 0.08) 82%, transparent 100%);
@@ -482,8 +506,10 @@ export default function Arc() {
           position: absolute;
           top: 0;
           width: 1px;
-          height: 100px;
+          height: var(--arc-branch-height);
           background: linear-gradient(180deg, var(--arc-line), rgba(255, 255, 255, 0.18));
+          filter: drop-shadow(0 0 4px rgba(255, 255, 160, 0.18));
+          pointer-events: none;
         }
 
         .arc-os-divider-top::before {
@@ -496,10 +522,11 @@ export default function Arc() {
 
         .arc-os-spine {
           position: absolute;
-          left: 48.55%;
+          z-index: 2;
+          left: 50%;
           top: var(--arc-upper-spine-top);
           width: 1px;
-          height: calc(var(--arc-upper-spine-end) - var(--arc-upper-spine-top));
+          height: calc(var(--arc-products-top) - var(--arc-upper-spine-top) - var(--arc-branch-gap));
           background:
             linear-gradient(180deg, var(--arc-line), rgba(255, 255, 255, 0.18)),
             linear-gradient(180deg, transparent 0%, rgba(255, 255, 210, 0.08) 18%, rgba(255, 255, 180, 0.24) 38%, rgba(255, 255, 255, 0.86) 50%, rgba(255, 255, 150, 0.24) 62%, rgba(255, 255, 120, 0.08) 82%, transparent 100%);
@@ -510,6 +537,7 @@ export default function Arc() {
           will-change: background-position;
           transform: translateX(-50%);
           animation: arcLineRunY 3.85s linear infinite;
+          pointer-events: none;
         }
 
         .arc-os-products {
@@ -517,8 +545,11 @@ export default function Arc() {
           left: 50%;
           top: var(--arc-products-top);
           display: grid;
-          width: min(1240px, 100vw);
-          grid-template-columns: repeat(3, minmax(0, 1fr));
+          width: 100%;
+          box-sizing: border-box;
+          padding: 0 var(--arc-product-edge);
+          grid-template-columns: 1fr auto 1fr;
+          column-gap: 0;
           transform: translateX(-50%);
         }
 
@@ -528,6 +559,20 @@ export default function Arc() {
           position: relative;
           min-height: 168px;
           text-align: center;
+        }
+
+        .arc-os-product:first-child {
+          justify-self: start;
+          text-align: left;
+        }
+
+        .arc-os-product:nth-child(2) {
+          justify-self: center;
+        }
+
+        .arc-os-product:nth-child(3) {
+          justify-self: end;
+          text-align: right;
         }
 
         .arc-os-product-trigger {
@@ -540,8 +585,8 @@ export default function Arc() {
           background: transparent;
           color: inherit;
           cursor: pointer;
-          padding: 0 8px 14px;
-          text-align: center;
+          padding: 0 0 14px;
+          text-align: inherit;
         }
 
         .arc-os-product-trigger:focus-visible {
@@ -619,8 +664,8 @@ export default function Arc() {
 
         .arc-os-product-title {
           margin: 0;
-          font-family: "Yapari Trial Regular", "Azonix", sans-serif;
-          font-size: 52px;
+          font-family: "Yapari Trial Regular", "Yapari Trial", sans-serif;
+          font-size: var(--arc-title-size);
           font-weight: 400;
           line-height: 0.82;
           letter-spacing: 4px;
@@ -632,26 +677,10 @@ export default function Arc() {
             transform 0.25s ease;
         }
 
-        .arc-os-product:first-child .arc-os-product-lock {
-          transform: translateX(-17px);
-        }
-
-        .arc-os-product:nth-child(2) .arc-os-product-lock {
-          font-size: 46px;
-          transform: translateX(-11px);
-        }
-
-        .arc-os-product:nth-child(2) .arc-os-product-title {
-          font-size: inherit;
-        }
-
+        .arc-os-product:first-child .arc-os-product-lock,
+        .arc-os-product:nth-child(2) .arc-os-product-lock,
         .arc-os-product:nth-child(3) .arc-os-product-lock {
-          font-size: 49px;
-          transform: translateX(35px);
-        }
-
-        .arc-os-product:nth-child(3) .arc-os-product-title {
-          font-size: inherit;
+          transform: none;
         }
 
         .arc-os-title-letter {
@@ -697,7 +726,8 @@ export default function Arc() {
         .arc-os-product-c2 {
           display: inline-block;
           margin-left: 10px;
-          font-size: 0.68em;
+          font-size: 1em;
+          font-weight: 400;
           vertical-align: 0.08em;
         }
 
@@ -713,14 +743,20 @@ export default function Arc() {
         }
 
         .arc-os-product:first-child .arc-os-product-body {
-          transform: translateX(-27px);
+          margin-left: 0;
+          margin-right: auto;
+          text-align: left;
+          transform: none;
         }
 
         .arc-os-product:nth-child(2) .arc-os-product-body {
-          transform: translate(-12px, 5px);
+          transform: translateY(5px);
         }
 
         .arc-os-product:nth-child(3) .arc-os-product-body {
+          margin-left: auto;
+          margin-right: 0;
+          text-align: right;
           font-size: 13px;
           transform: translateY(5px);
         }
@@ -759,7 +795,7 @@ export default function Arc() {
           --arc-route-delay: 0.08s;
           /* Must track .arc-os-products width exactly — the svg is stretched
              (preserveAspectRatio: none) so path x coords hit the column centres. */
-          width: min(1240px, 100vw);
+          width: 100%;
           height: calc(var(--arc-panel-top) - var(--arc-products-top));
           pointer-events: none;
           overflow: visible;
@@ -1006,7 +1042,7 @@ export default function Arc() {
           position: absolute;
           left: 50%;
           top: var(--arc-panel-top);
-          width: min(1000px, 88%);
+          width: min(1100px, 100%);
           aspect-ratio: 16 / 9;
           transform: translateX(-50%);
           border: 1px solid rgba(var(--arc-yellow-rgb), 0.86);
@@ -1357,31 +1393,26 @@ export default function Arc() {
 
         @media (min-width: 1440px) {
           .arc-os-shell {
-            width: min(1320px, calc(100% - 72px));
+            width: 100%;
           }
 
           .arc-os-logo {
             gap: 84px;
-            font-size: 188px;
+            font-size: 212px;
           }
 
           .arc-os-copy {
-            right: 156px;
-            top: 124px;
-            width: 470px;
-            font-size: 6.7px;
+            width: 380px;
+            font-size: 8.7px;
+            margin-top: calc(-12px + (1 - 1.43) * 0.5 * 1em);
           }
 
           .arc-os-products {
-            width: min(1260px, 100%);
+            width: 100%;
           }
 
           .arc-os-active-arrow {
-            width: min(1260px, 100%);
-          }
-
-          .arc-os-product-title {
-            font-size: 58px;
+            width: 100%;
           }
         }
 
@@ -1391,13 +1422,15 @@ export default function Arc() {
           }
 
           .arc-os-panel {
-            width: min(1240px, 88vw);
+            width: 100%;
           }
         }
 
         @media (max-width: 1024px) {
           .arc-os-section {
-            padding-top: 58px;
+            --arc-title-size: 44px;
+            --arc-title-spacing: 3px;
+            padding-top: 90px;
             padding-bottom: 75px;
           }
 
@@ -1407,14 +1440,11 @@ export default function Arc() {
 
           .arc-os-section {
             --arc-line-center-gap: 22px;
-            --arc-products-top: 298px;
-            --arc-panel-top: 572px;
-            --arc-war-top: 136px;
-            --arc-copy-top: 130px;
-            --arc-copy-right: 14px;
-            --arc-copy-width: clamp(230px, calc(51vw - 100px), 324px);
-            --arc-upper-spine-top: 154px;
-            --arc-upper-spine-end: 268px;
+            --arc-products-top: 350px;
+            --arc-panel-top: 624px;
+            --arc-divider-top: 240px;
+            --arc-upper-spine-top: 178px;
+            --arc-branch-height: calc(var(--arc-products-top) - var(--arc-divider-top) - var(--arc-branch-gap));
           }
 
           .arc-os-lockup,
@@ -1423,12 +1453,14 @@ export default function Arc() {
           }
 
           .arc-os-logo {
-            font-size: 118px;
+            font-size: 132px;
           }
 
           .arc-os-tagline {
-            top: -48px;
-            font-size: 12px;
+            top: -58px;
+            font-size: clamp(10px, 1.6vw, 15px);
+            white-space: normal;
+            text-align: center;
           }
 
           .arc-os-top-guide {
@@ -1436,7 +1468,7 @@ export default function Arc() {
           }
 
           .arc-os-war {
-            font-size: 20px;
+            font-size: 23px;
           }
 
           .arc-os-ca {
@@ -1445,11 +1477,13 @@ export default function Arc() {
           }
 
           .arc-os-copy {
-            font-size: 6px;
+            width: clamp(200px, calc(44vw - 100px), 260px);
+            font-size: 8px;
+            margin-top: calc(-12px + (1 - 1.43) * 0.5 * 1em);
           }
 
           .arc-os-divider-top {
-            top: 196px;
+            top: var(--arc-divider-top);
           }
 
           .arc-os-products {
@@ -1457,29 +1491,21 @@ export default function Arc() {
           }
 
           .arc-os-product-title {
-            font-size: clamp(26px, 3.72vw, 38px);
+            font-size: clamp(26px, 3.72vw, 44px);
           }
 
-          .arc-os-product:first-child .arc-os-product-lock {
-            transform: translateX(-1.2vw);
-          }
-
-          .arc-os-product:nth-child(2) .arc-os-product-lock {
-            font-size: clamp(23px, 3.32vw, 34px);
-            transform: translateX(-0.8vw);
-          }
-
+          .arc-os-product:first-child .arc-os-product-lock,
+          .arc-os-product:nth-child(2) .arc-os-product-lock,
           .arc-os-product:nth-child(3) .arc-os-product-lock {
-            font-size: clamp(24px, 3.52vw, 36px);
-            transform: translateX(2.4vw);
+            transform: none;
           }
 
           .arc-os-product:first-child .arc-os-product-body {
-            transform: translateX(-1.9vw);
+            transform: none;
           }
 
           .arc-os-product:nth-child(2) .arc-os-product-body {
-            transform: translate(-0.85vw, 5px);
+            transform: translateY(5px);
           }
 
           .arc-os-product-body {
@@ -1497,21 +1523,25 @@ export default function Arc() {
 
         @media (max-width: 760px) {
           .arc-os-section {
-            --arc-line-left: 7%;
-            --arc-line-right: 7%;
+            --arc-line-left: 35px;
+            --arc-line-right: 35px;
+            --arc-title-size: 48px;
+            --arc-title-spacing: 3px;
             --arc-line-center-gap: 18px;
-            --arc-war-top: 92px;
-            --arc-copy-top: 132px;
-            --arc-copy-right: auto;
-            --arc-copy-width: min(360px, 88vw);
-            --arc-upper-spine-top: 115px;
-            --arc-upper-spine-end: 356px;
-            padding: 46px 0 86px;
+            --arc-divider-top: 336px;
+            --arc-upper-spine-top: 142px;
+            --arc-products-top: 418px;
+            --arc-branch-height: calc(var(--arc-products-top) - var(--arc-divider-top) - var(--arc-branch-gap));
+            padding: 70px 0 86px;
           }
 
           .arc-os-shell {
-            width: min(100% - 28px, 620px);
+            width: 100%;
             min-height: 1250px;
+          }
+
+          .arc-os-logo-wrap {
+            align-items: center;
           }
 
           .arc-os-lockup,
@@ -1520,16 +1550,16 @@ export default function Arc() {
           }
 
           .arc-os-logo {
-            font-size: clamp(58px, 15.5vw, 84px);
+            font-size: clamp(64px, 17vw, 94px);
             transform: none;
           }
 
           .arc-os-tagline {
-            top: -34px;
+            top: -44px;
             max-width: 88vw;
-            overflow: hidden;
-            font-size: 9px;
-            text-overflow: ellipsis;
+            font-size: clamp(9px, 2.8vw, 12px);
+            white-space: normal;
+            text-align: center;
           }
 
           .arc-os-top-guide {
@@ -1537,7 +1567,9 @@ export default function Arc() {
           }
 
           .arc-os-war {
-            font-size: clamp(10px, 2.8vw, 13px);
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: clamp(13px, 2.8vw, 16px);
           }
 
           .arc-os-ca {
@@ -1547,11 +1579,12 @@ export default function Arc() {
           .arc-os-copy {
             left: 50%;
             right: auto;
-            width: min(440px, 84vw);
+            width: min(360px, 76vw);
             transform: translateX(-50%);
             text-align: center;
-            font-size: clamp(7px, 1.9vw, 8.5px);
-            line-height: 1.24;
+            font-size: clamp(9px, 1.9vw, 10.5px);
+            line-height: 1.43;
+            margin-top: calc((1 - 1.43) * 0.5 * 1em);
           }
 
           .arc-os-copy-line {
@@ -1559,9 +1592,7 @@ export default function Arc() {
           }
 
           .arc-os-divider-top {
-            left: 7%;
-            right: 7%;
-            top: 292px;
+            top: var(--arc-divider-top);
           }
 
           .arc-os-spine {
@@ -1570,9 +1601,25 @@ export default function Arc() {
 
           .arc-os-products {
             z-index: 3;
-            top: 366px;
+            top: var(--arc-products-top);
             grid-template-columns: 1fr;
-            row-gap: 52px;
+            column-gap: 0;
+            row-gap: 64px;
+          }
+
+          .arc-os-product:first-child {
+            justify-self: start;
+            text-align: left;
+          }
+
+          .arc-os-product:nth-child(2) {
+            justify-self: center;
+            text-align: center;
+          }
+
+          .arc-os-product:nth-child(3) {
+            justify-self: end;
+            text-align: right;
           }
 
           .arc-os-product {
@@ -1589,13 +1636,8 @@ export default function Arc() {
           }
 
           .arc-os-product-title {
-            font-size: clamp(36px, 11.2vw, 52px);
+            font-size: clamp(36px, 11.2vw, 57px);
             letter-spacing: clamp(2px, 1vw, 4px);
-          }
-
-          .arc-os-product:nth-child(2) .arc-os-product-title,
-          .arc-os-product:nth-child(3) .arc-os-product-title {
-            font-size: clamp(34px, 10.8vw, 50px);
           }
 
           .arc-os-product-body {
@@ -1605,14 +1647,29 @@ export default function Arc() {
             line-height: 1.25;
           }
 
+          .arc-os-product:first-child .arc-os-product-body {
+            margin-left: 0;
+            margin-right: auto;
+            text-align: left;
+          }
+
+          .arc-os-product:nth-child(2) .arc-os-product-body {
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+          }
+
           .arc-os-product:nth-child(3) .arc-os-product-body {
+            margin-left: auto;
+            margin-right: 0;
+            text-align: right;
             font-size: clamp(13px, 3.55vw, 16px);
           }
 
           .arc-os-active-arrow {
             left: 50%;
             z-index: 1;
-            width: min(500px, 92%);
+            width: min(500px, 98%);
             min-height: 0;
             opacity: 0.72;
           }
@@ -1645,7 +1702,7 @@ export default function Arc() {
             --arc-panel-edge-label-size: clamp(10px, 3.1vw, 15px);
             z-index: 2;
             top: 930px;
-            width: min(500px, 92%);
+            width: min(500px, 98%);
           }
 
           .arc-os-panel-edge-label {
@@ -1671,47 +1728,46 @@ export default function Arc() {
         }
 
         @media (max-width: 420px) {
+          .arc-os-section {
+            --arc-title-size: 42px;
+            --arc-title-spacing: 2px;
+            --arc-divider-top: 314px;
+            --arc-upper-spine-top: 157px;
+            --arc-products-top: 390px;
+            --arc-branch-height: calc(var(--arc-products-top) - var(--arc-divider-top) - var(--arc-branch-gap));
+          }
+
           .arc-os-shell {
             min-height: 1240px;
           }
 
           .arc-os-logo {
             gap: 14px;
-            font-size: 52px;
+            font-size: 58px;
           }
 
           .arc-os-war {
-            top: 72px;
-            font-size: 10px;
+            font-size: 13px;
+            margin-bottom: 10px;
           }
 
           .arc-os-copy {
-            top: 112px;
-            width: min(330px, 86vw);
-            font-size: 6.8px;
+            width: min(270px, 76vw);
+            font-size: 8.8px;
+            margin-top: calc((1 - 1.43) * 0.5 * 1em);
           }
 
           .arc-os-divider-top {
-            top: 270px;
-          }
-
-          .arc-os-spine {
-            top: 94px;
-            height: 224px;
+            top: var(--arc-divider-top);
           }
 
           .arc-os-products {
-            top: 338px;
-            row-gap: 46px;
+            top: var(--arc-products-top);
+            row-gap: 56px;
           }
 
           .arc-os-product-title {
-            font-size: clamp(30px, 9.6vw, 36px);
-          }
-
-          .arc-os-product:nth-child(2) .arc-os-product-title,
-          .arc-os-product:nth-child(3) .arc-os-product-title {
-            font-size: clamp(29px, 9.2vw, 34px);
+            font-size: clamp(30px, 9.6vw, 42px);
           }
 
           .arc-os-product-body {
@@ -1719,7 +1775,7 @@ export default function Arc() {
           }
 
           .arc-os-active-arrow {
-            width: min(420px, 92%);
+            width: min(420px, 98%);
           }
 
           .arc-os-active-arrow--hyena {
@@ -1765,27 +1821,32 @@ export default function Arc() {
       <div className="arc-os-shell">
         <span className="arc-os-top-guide" aria-hidden="true" />
         <div className="arc-os-lockup" aria-label="ARC OS">
-          <div className="arc-os-logo">
-            <span className="arc-os-logo-part">
-              ARC
-              <span className="arc-os-ca" aria-hidden="true">
-                <span className="arc-os-ca-code">&lt;CA1-AAA3&gt;</span>
-                <span className="arc-os-ca-c2">C2</span>
-              </span>
-            </span>
-            <span className="arc-os-logo-part">
-              <span className="arc-os-logo-o">O</span>S
-            </span>
+          <span className="arc-os-tagline">{ARC_TAGLINE}</span>
+          <div className="arc-os-logo-wrap">
+            <div className="arc-os-logo-block">
+              <div className="arc-os-logo">
+                <span className="arc-os-logo-part">
+                  ARC
+                  <span className="arc-os-ca" aria-label="C2 identifier">
+                    <span className="arc-os-ca-code">&lt;CA1-AAA3&gt;</span>
+                    <span className="arc-os-ca-c2">C2</span>
+                  </span>
+                </span>
+                <span className="arc-os-logo-part">
+                  <span className="arc-os-logo-o">O</span>S
+                </span>
+              </div>
+              <p className="arc-os-copy">
+                {ARC_COPY_LINES.map((line) => (
+                  <span className="arc-os-copy-line" key={line}>
+                    {line}
+                  </span>
+                ))}
+              </p>
+            </div>
+            <span className="arc-os-war">Agentic Warfare</span>
           </div>
-          <span className="arc-os-war">Agentic Warfare</span>
         </div>
-        <p className="arc-os-copy">
-          {connectedCopyLines.map((line) => (
-            <span className="arc-os-copy-line" key={line}>
-              {line}
-            </span>
-          ))}
-        </p>
         <div className="arc-os-divider-top" aria-hidden="true" />
         <div className="arc-os-spine" aria-hidden="true" />
 
