@@ -71,8 +71,8 @@ export default function AbsolPublications() {
   const canLoadMore = visibleCount < publications.length;
 
   return (
-    <section id="publications" className="absol-pubs relative z-10 mx-auto mt-8 w-full max-w-[1400px] px-3 py-10 sm:mt-12 sm:px-4 sm:py-14">
-      <div className="mb-12 sm:mb-16">
+    <section id="publications" className="absol-pubs relative z-10 mx-auto mt-8 w-full max-w-[1400px] px-3 pt-10 pb-28 sm:mt-12 sm:px-4 sm:pt-14 sm:pb-40">
+      <div className="mb-16 sm:mb-20">
         <h2 className="absol-pubs__title mb-4 text-[calc(1.25rem+2px)] italic sm:mb-5 md:text-[calc(1.5rem+2px)]">
           <span className="text-white">Our </span>
           <span className="text-[#d4ff00]">publication</span>
@@ -84,16 +84,19 @@ export default function AbsolPublications() {
         </p>
       </div>
 
-      <div className="w-full">
+      <div className="w-full pl-8 sm:pl-10 md:pl-12">
         <div className="grid grid-cols-12 gap-4 border-b border-white/15 pb-4 text-[11px] font-semibold uppercase tracking-widest text-gray-400">
           <div className="col-span-2 pl-2 md:col-span-1">Date</div>
           <div className="col-span-10 flex items-center gap-2 pl-2 md:col-span-8 md:pl-0">
             <span className="h-1.5 w-1.5 rounded-full bg-[#d4ff00]" />
             Title
           </div>
-          <div className="hidden items-center gap-2 md:col-span-3 md:flex">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#d4ff00]" />
-            Category
+          <div className="hidden items-center justify-end gap-1.5 pr-[18px] md:col-span-3 md:flex">
+            <div className="mr-[50px] flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#d4ff00]" />
+              Category
+            </div>
+            <span className="inline-block w-4 shrink-0" aria-hidden="true" />
           </div>
         </div>
 
@@ -108,14 +111,14 @@ export default function AbsolPublications() {
                 {pub.date}
               </div>
               <div className="col-span-12 pl-2 pr-4 md:col-span-8 md:pl-0">
-                <h3 className="mb-2 text-[14px] font-bold text-white transition-colors group-hover:text-[#d4ff00] md:text-[15px]">
+                <h3 className="mb-2 text-[14px] font-semibold text-white/85 transition-colors group-hover:text-[#d4ff00] md:text-[15px]">
                   {pub.title}
                 </h3>
                 <p className="text-[12px] italic leading-relaxed text-gray-500">{pub.authors}</p>
               </div>
-              <div className="col-span-12 mt-3 flex items-center justify-between pl-2 pr-4 md:col-span-3 md:mt-0 md:pl-0">
-                <span className="text-[13px] text-gray-400">{pub.category}</span>
-                <IconArrow className="text-gray-500 transition-colors group-hover:text-white" />
+              <div className="col-span-12 mt-3 flex items-center justify-end gap-1.5 pl-2 pr-[18px] md:col-span-3 md:mt-0 md:pl-0">
+                <span className="mr-[50px] text-[12px] text-gray-400">{pub.category}</span>
+                <IconArrow className="shrink-0 text-gray-500 transition-colors group-hover:text-white" />
               </div>
             </button>
           ))}
@@ -123,17 +126,44 @@ export default function AbsolPublications() {
       </div>
 
       {canLoadMore && (
-        <div className="mt-16 flex flex-col items-center gap-5 sm:mt-20">
+        <div className="mt-16 mb-8 flex justify-center sm:mt-20 sm:mb-12">
           <button
             type="button"
             onClick={() => setVisibleCount((n) => Math.min(n + PAGE_SIZE, publications.length))}
-            className="absol-pubs__cta relative inline-flex items-center justify-center border border-[#d4ff00] bg-[#1f2023] px-14 py-4 transition-colors hover:bg-[#2a2b2f]"
+            className="absol-pubs__cta group flex flex-col items-center gap-2"
           >
-            <span className="absolute -left-[2px] -top-[2px] h-2.5 w-2.5 border-l-[3px] border-t-[3px] border-white" />
-            <span className="absolute -right-[2px] -top-[2px] h-2.5 w-2.5 border-r-[3px] border-t-[3px] border-white" />
-            <span className="absolute -bottom-[2px] -left-[2px] h-2.5 w-2.5 border-b-[3px] border-l-[3px] border-white" />
-            <span className="absolute -bottom-[2px] -right-[2px] h-2.5 w-2.5 border-b-[3px] border-r-[3px] border-white" />
-            <span className="text-[15px] font-normal tracking-[0.25em] text-white">LOAD MORE</span>
+            <span className="relative inline-flex items-center justify-center border border-[#E3E41B] bg-white/[0.12] px-9 py-2 transition-colors group-hover:bg-white/[0.18]">
+              <span className="pointer-events-none absolute -left-[3px] -top-[3px] h-2 w-2 border-l-[1.5px] border-t-[1.5px] border-white" />
+              <span className="pointer-events-none absolute -right-[3px] -top-[3px] h-2 w-2 border-r-[1.5px] border-t-[1.5px] border-white" />
+              <span className="pointer-events-none absolute -bottom-[3px] -left-[3px] h-2 w-2 border-b-[1.5px] border-l-[1.5px] border-white" />
+              <span className="pointer-events-none absolute -bottom-[3px] -right-[3px] h-2 w-2 border-b-[1.5px] border-r-[1.5px] border-white" />
+              <span className="absol-pubs__cta-label text-[11px] font-light tracking-[0.22em] text-white">
+                LOAD MORE
+              </span>
+            </span>
+            <svg
+              className="text-white transition-transform duration-200 group-hover:translate-y-0.5"
+              width="22"
+              height="20"
+              viewBox="0 0 18 16"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M3 2.5 9 8l6-5.5"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M3 8 9 13.5 15 8"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </button>
         </div>
       )}
@@ -143,8 +173,9 @@ export default function AbsolPublications() {
         .absol-pubs__body {
           font-family: "SourceCodePro", "Source Code Pro", ui-monospace, monospace;
         }
-        .absol-pubs__cta span:last-child {
-          font-family: "Yapari Trial", "Azonix", sans-serif;
+        .absol-pubs__cta-label {
+          font-family: "Yapari Trial Regular", "Yapari Trial", "Azonix", sans-serif;
+          font-weight: 300;
         }
       `}</style>
     </section>

@@ -7,14 +7,7 @@ import plusJakartaSans from "../assets/fonts/PlusJakartaSans[wght].ttf";
 
 export default function ResearchPageTab() {
   return (
-    <div className="research-tab relative flex min-h-screen flex-col overflow-hidden bg-[#06070a] text-white">
-      <div className="pointer-events-none absolute top-[2%] -left-[30%] h-[60%] w-[40%] -rotate-12 rounded-[100%] bg-[#4D79EA]/30 blur-[200px]" />
-      <div className="pointer-events-none absolute top-[8%] -right-[30%] h-[60%] w-[40%] rotate-12 rounded-[100%] bg-[#4D79EA]/30 blur-[200px]" />
-      <div className="pointer-events-none absolute top-[50%] -left-[30%] h-[60%] w-[40%] -rotate-12 rounded-[100%] bg-[#F3D05D]/20 blur-[200px]" />
-      <div className="pointer-events-none absolute top-[60%] -right-[30%] h-[60%] w-[40%] rotate-12 rounded-[100%] bg-[#4D79EA]/30 blur-[200px]" />
-      <div className="pointer-events-none absolute top-[85%] -left-[30%] h-[60%] w-[40%] -rotate-12 rounded-[100%] bg-[#F3D05D]/20 blur-[200px]" />
-      <div className="pointer-events-none absolute top-[90%] -right-[30%] h-[60%] w-[40%] rotate-12 rounded-[100%] bg-[#4D79EA]/20 blur-[200px]" />
-
+    <div className="research-tab relative flex min-h-screen flex-col overflow-x-hidden text-white">
       <AbsolHero />
       <AbsolPublications />
       <AbsolDownloads />
@@ -28,6 +21,66 @@ export default function ResearchPageTab() {
           font-weight: 200 800;
           font-style: normal;
           font-display: swap;
+        }
+
+        .research-tab {
+          isolation: isolate;
+          background: #000;
+        }
+
+        .research-tab::before,
+        .research-tab::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+        }
+
+        .research-tab::before {
+          background:
+            radial-gradient(
+              ellipse 570px 900px at -140px 16%,
+              rgba(77, 121, 234, 0.45) 0%,
+              rgba(77, 121, 234, 0.45) 35%,
+              transparent 72%
+            ),
+            radial-gradient(
+              ellipse 570px 900px at calc(100% + 140px) 16%,
+              rgba(77, 121, 234, 0.45) 0%,
+              rgba(77, 121, 234, 0.45) 35%,
+              transparent 72%
+            );
+          filter: blur(90px);
+        }
+
+        .research-tab::after {
+          background:
+            radial-gradient(
+              ellipse 1473px 1273px at calc(100% + 680px) 38%,
+              #5d6ef3 0%,
+              #5d6ef3 38%,
+              transparent 72%
+            ),
+            radial-gradient(
+              ellipse 1473px 1273px at -680px 55%,
+              #f3d05d 0%,
+              #f3d05d 38%,
+              transparent 72%
+            ),
+            radial-gradient(
+              ellipse 1473px 1273px at -680px 76%,
+              #5d6ef3 0%,
+              #5d6ef3 38%,
+              transparent 72%
+            ),
+            radial-gradient(
+              ellipse 1473px 1273px at calc(100% + 680px) 92%,
+              #f3d05d 0%,
+              #f3d05d 38%,
+              transparent 72%
+            );
+          filter: blur(80px);
         }
       `}</style>
     </div>
