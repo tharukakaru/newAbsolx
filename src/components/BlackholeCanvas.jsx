@@ -77,13 +77,17 @@ vec3 diskShade(vec3 pos, vec3 vdir, out float alpha){
   float beta = 0.50 * sqrt(R_IN / max(r, R_IN));
   float dop = pow(max(0.0, 1.0 + 0.65 * beta * dot(tg, -vdir)), 3.0);
 
-  float cw = smoothstep(13.0, 6.5, r);
-  vec3 warm = vec3(0.95, 0.55, 0.25);
-  vec3 cold = vec3(0.50, 0.78, 1.75);
-  vec3 col = mix(warm, cold, cw);
+  // Wide blue halo near the photon ring, red as the disk base, orange as streak highlights on top
+  float tBlueRed = smoothstep(R_IN, 12.0, r);
+  float tOrangeStreak = smoothstep(5.0, 10.0, r) * streak;
+  vec3 cold = vec3(0.5, 0.78, 1.75);
+  vec3 red  = vec3(0.85, 0.08, 0.03);
+  vec3 warm = vec3(0.95, 0.24, 0.08);
+  vec3 col = mix(cold, red, tBlueRed);
+  col = mix(col, warm, clamp(tOrangeStreak, 0.0, 0.4));
 
   float b = emis * (0.18 + 2.2 * streak) * dop;
-  col = col * b * 4.2 + vec3(0.78, 0.90, 1.40) * pow(emis, 3.0) * 0.55 * dop;
+  col = col * b * 4.2 + vec3(0.72, 0.88, 1.45) * pow(emis, 3.0) * 0.55 * dop;
   return col * alpha;
 }
 
@@ -143,8 +147,8 @@ vec3 render(vec3 ro, vec3 rd){
 
   float ring1 = exp(-pow((minr - 1.52) * 3.6, 2.0));
   float ring2 = exp(-pow((minr - 1.46) * 10.0, 2.0));
-  col += vec3(0.70, 0.84, 1.30) * ring1 * 0.15 * (0.35 + 0.65 * trans);
-  col += vec3(0.92, 0.97, 1.30) * ring2 * 1.10 * (0.35 + 0.65 * trans);
+  col += vec3(0.6, 0.78, 1.35) * ring1 * 0.22 * (0.35 + 0.65 * trans);
+  col += vec3(0.85, 0.93, 1.35) * ring2 * 1.30 * (0.35 + 0.65 * trans);
 
   if(!captured && (escaped || minr > 6.0)){
     col += trans * stars(normalize(v));

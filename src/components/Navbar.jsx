@@ -282,7 +282,7 @@ export function Navbar({ currentPath = "/", onNavigate }) {
         <img
           src={logo}
           alt="Logo"
-          className="h-[20px] sm:h-[22px] md:h-[24px] lg:h-[22px] w-auto cursor-pointer ml-[14vw] lg:ml-[17vw]"
+          className="h-[15px] sm:h-[22px] md:h-[24px] lg:h-[17px] w-auto cursor-pointer ml-[14vw] lg:ml-[20vw]"
         />
 
         {/* DESKTOP MENU — centered on the screen, independent of logo position */}

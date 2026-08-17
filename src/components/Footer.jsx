@@ -1,6 +1,6 @@
 import React from "react";
 import plusJakartaSans from "../assets/fonts/PlusJakartaSans[wght].ttf";
-import footerSentinel from "../assets/065b4a00de40127609484cfbd9569fa6 1.webp";
+import footerSentinel from "../assets/065b4a00de40127609484cfbd9569fa6 1.png";
 
 // App badges
 import appStore from "../assets/footer/app_store.svg";
@@ -232,21 +232,43 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
           min-height: clamp(1180px, 96vw, 1845px);
         }
 
-        .home-footer-figure {
+        /*
+          UPDATED: wrapper now controls size/position for BOTH the
+          earth image and the blue tint layer above it, so they always
+          line up perfectly no matter the viewport width.
+        */
+        .home-footer-figure-wrap {
           position: absolute;
           z-index: 8;
           left: 50%;
           bottom: 0;
-          width: min(82.4vw, 1582px);
-          height: min(96vw, 1845px);
-          aspect-ratio: 391 / 456;
-          object-fit: fill;
+          width: min(98vw, 1680px);
+          height: min(150vw, 790px);
+          transform: translateX(-50%);
           pointer-events: none;
           user-select: none;
-          transform: translateX(-50%);
+        }
+
+        .home-footer-figure-img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: fill;
           filter:
             drop-shadow(-28px 24px 50px rgba(89, 76, 34, 0.18))
             drop-shadow(28px 24px 54px rgba(45, 52, 116, 0.24));
+        }
+
+        /* Transparent blue tint sitting on top of the earth image */
+        .home-footer-figure-tint {
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(120% 85% at 50% 0%, rgba(90, 130, 255, 0.30) 0%, rgba(40, 55, 140, 0.20) 45%, rgba(0, 0, 0, 0) 78%),
+            linear-gradient(180deg, rgba(25, 45, 130, 0.10) 0%, rgba(25, 45, 130, 0.38) 55%, rgba(10, 18, 60, 0.55) 100%);
+          mix-blend-mode: color;
+          opacity: 0.9;
         }
 
         .home-footer-content {
@@ -323,10 +345,19 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
             min-height: 0;
           }
 
-          .home-footer-figure {
-            width: min(76vw, 640px);
+          .home-footer-figure-wrap {
+            position: relative;
+            left: auto;
+            bottom: auto;
+            width: min(100vw, 900px);
             height: auto;
-            aspect-ratio: auto;
+            aspect-ratio: 391 / 456;
+            margin: 0 auto;
+            transform: none;
+          }
+
+          .home-footer-figure-img {
+            position: static;
             object-fit: contain;
           }
 
@@ -406,13 +437,15 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
       )}
 
       {!isResearchFooter && !isArcOsFooter ? (
-        <img
-          src={footerSentinel}
-          alt=""
-          aria-hidden="true"
-          className="home-footer-figure"
-          loading="lazy"
-        />
+        <div className="home-footer-figure-wrap" aria-hidden="true">
+          <img
+            src={footerSentinel}
+            alt=""
+            className="home-footer-figure-img"
+            loading="lazy"
+          />
+          <div className="home-footer-figure-tint" />
+        </div>
       ) : null}
 
       {showReadmeBridge ? <Subpart /> : null}

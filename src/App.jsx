@@ -13,71 +13,70 @@ import DroneSubSection from "./components/dronesub-section";
 import ResearchPage from "./components/ResearchPage";
 import ArsOs from "./components/ArsOs";
 
+
 function HomePage() {
   return (
     <>
-      <div className="relative bg-black overflow-hidden">
-        {/* Single continuous glow layer spanning BOTH sections below — this is what removes the seam, since it's one gradient, not two separately-clipped ones */}
-        <div className="absolute inset-0 z-10 pointer-events-none">
+      <section className="relative z-0 min-h-[100dvh] overflow-hidden bg-black">
+        {/* Glow Background Container */}
+        <div className="absolute inset-0 overflow-hidden z-10 pointer-events-none">
           {/* Left side glow */}
           <div
             className="
+              hero-glow-pulse
               absolute rounded-full
-              bg-[radial-gradient(circle,rgba(77,121,234,0.28),transparent_46%)]
-              blur-[120px]
-              top-[60%] left-0 -translate-x-1/2 -translate-y-1/2
-              w-[900px] h-[1900px]
+              bg-[radial-gradient(circle,rgba(90,140,255,0.3),rgba(90,140,255,0.1)_50%,transparent_90%)]
+              blur-[80px]
+              top-1/2 left-[-25vw] w-[85vw] h-[85vw] -translate-y-1/2
+              sm:left-[-22vw] sm:w-[75vw] sm:h-[75vw]
+              md:left-[-20vw] md:w-[65vw] md:h-[65vw]
+              lg:left-[-16vw] lg:w-[46vw] lg:h-[46vw]
             "
           ></div>
 
           {/* Right side glow */}
           <div
             className="
+              hero-glow-pulse
               absolute rounded-full
-              bg-[radial-gradient(circle,rgba(77,121,234,0.28),transparent_46%)]
-              blur-[120px]
-              top-[60%] right-0 translate-x-1/2 -translate-y-1/2
-              w-[900px] h-[1900px]
+              bg-[radial-gradient(circle,rgba(90,140,255,0.3),rgba(90,140,255,0.1)_50%,transparent_90%)]
+              blur-[100px]
+              top-1/2 right-[-25vw] w-[85vw] h-[85vw] -translate-y-1/2
+              sm:right-[-22vw] sm:w-[75vw] sm:h-[75vw]
+              md:right-[-20vw] md:w-[65vw] md:h-[65vw]
+              lg:right-[-16vw] lg:w-[46vw] lg:h-[46vw]
             "
           ></div>
         </div>
 
-        <section className="relative z-0 min-h-[100dvh]">
-          <div className="absolute inset-x-0 top-[3vh] z-50">
-            <AnimatedLine />
-          </div>
+        <div className="absolute inset-x-0 top-[3vh] z-50">
+          <AnimatedLine />
+        </div>
 
-          <div className="absolute inset-x-0 top-[38vh] z-40 flex flex-col items-center translate-x-[0.3vw]">
-            <Title />
-            <SubTitle />
-          </div>
+        <div className="absolute inset-x-0 top-[38vh] z-40 flex flex-col items-center translate-x-[0.3vw]">
+          <Title />
+          <SubTitle />
+        </div>
 
-          <BlackHoleCanvas />
-        </section>
+        <BlackHoleCanvas />
 
-        <section className="relative z-[55] mt-0 min-h-[26vh] pt-[4vh] pb-[1vh]">
-          {/* Whole "WHERE IMAGINATION KNOWS NO BOUNDS." block + its divider line, centered as one group */}
-          <div className="relative z-[70] pointer-events-none flex justify-center">
-            <Stable />
-          </div>
-        </section>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[20dvh] bg-gradient-to-t from-black from-[15%] via-black/45 to-transparent" />
+      </section>
 
-        {/* Guaranteed fade to pure black right at the bottom edge of this whole
-            block — sits ABOVE the glow (higher z-index), so no matter how big
-            or bright the glow above is, it always gets masked smoothly to
-            black before it reaches the boundary with the next section. This
-            is what actually prevents the seam, regardless of glow sizing. */}
-        <div className="absolute inset-x-0 bottom-0 h-[9vh] z-[30] pointer-events-none bg-gradient-to-t from-black via-black/90 to-transparent" />
-      </div>
+      <section className="relative z-[55] min-h-[38vh] bg-black pt-[10vh] pb-[12vh]">
+        <div className="relative z-[70] pointer-events-none flex justify-center">
+          <Stable />
+        </div>
+      </section>
 
       {/* Glitch + ARC Section */}
       <section
         className="relative w-full bg-black z-[60]"
         style={{
-          paddingBottom: "clamp(520px, 42vw, 980px)",
+          paddingBottom: "clamp(620px, 55vw, 1210px)",
         }}
       >
-        <div className="relative h-[92vh]">
+        <div className="relative h-[120vh]">
           <Glitch />
         </div>
       </section>
@@ -93,12 +92,6 @@ function HomePage() {
       </section>
 
       <DroneSubSection />
-
-
-      {/* FullStack Section (optional - currently commented) */}
-      {/* <section className="relative w-full bg-black z-30">
-        <FullStackSection />
-      </section> */}
 
       {/* Footer - now has its own layer properties (w-full, z-50) */}
       <Footer />
@@ -126,11 +119,17 @@ export default function App() {
 
   const isResearchPage = path === "/research";
   const isAecOsPage = path === "/aec-os";
+  const isNewMeghaPage = path === "/newmegha";
 
   return (
-    <div className="relative w-full min-h-screen bg-black overflow-x-hidden">
+    <div className={`relative w-full min-h-screen bg-black overflow-x-hidden ${isAecOsPage ? "arc-os-page" : ""}`}>
       <Navbar currentPath={path} onNavigate={navigate} />
-      {isResearchPage ? (
+      {isNewMeghaPage ? (
+        <>
+          <NewMegha />
+          <Footer showReadmeBridge={false} variant="new-megha" />
+        </>
+      ) : isResearchPage ? (
         <>
           <ResearchPage />
           <Footer showReadmeBridge={false} variant="research" />
