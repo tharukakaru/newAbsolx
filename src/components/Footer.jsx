@@ -195,15 +195,21 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
     <footer
       className={[
         "relative text-white font-elios",
-        isReadMoreFooter ? "readmore-footer no-scrollbar z-10 overflow-x-hidden" : "z-50 overflow-hidden",
-        isArcOsFooter || isSpaceFooter || isReadMoreFooter
+        isReadMoreFooter
+          ? "readmore-footer no-scrollbar z-10 overflow-x-hidden"
+          : isResearchFooter
+            ? "research-footer no-scrollbar z-10 overflow-x-hidden"
+            : "z-50 overflow-hidden",
+        isArcOsFooter || isSpaceFooter || isReadMoreFooter || isResearchFooter
           ? "bg-transparent"
           : "bg-black",
         isArcOsFooter ? "arc-os-footer" : "",
         !isResearchFooter && !isArcOsFooter && !isSpaceFooter && !isReadMoreFooter
           ? "home-footer"
           : "",
-        isResearchFooter || isSpaceFooter || isReadMoreFooter
+        isResearchFooter
+          ? "min-h-[520px] sm:min-h-[580px] md:min-h-[640px]"
+          : isSpaceFooter || isReadMoreFooter
           ? "min-h-[400px] sm:min-h-[460px] md:min-h-[500px]"
           : isArcOsFooter
             ? "min-h-[330px] sm:min-h-[390px] md:min-h-[430px]"
@@ -222,7 +228,9 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
         }
 
         .research-footer {
-          background: #000;
+          margin-top: clamp(-280px, calc(-18vw - 40px), -180px);
+          padding-top: clamp(200px, calc(18vw - 40px), 320px);
+          background: transparent !important;
         }
 
         .space-footer {
@@ -311,29 +319,6 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
           bottom: clamp(24px, 2.6vw, 50px);
         }
 
-        .research-footer-glow {
-          position: absolute;
-          width: 2423px;
-          height: 665px;
-          border-radius: 2423px;
-          filter: blur(340.5px);
-          pointer-events: none;
-        }
-
-        .research-footer-glow--gold {
-          left: -1370px;
-          top: 24%;
-          background: #F3D05D;
-          opacity: 0.54;
-        }
-
-        .research-footer-glow--blue {
-          right: -1280px;
-          top: 24%;
-          background: #5D6EF3;
-          opacity: 0.64;
-        }
-
         .readmore-footer {
           margin-top: clamp(-330px, calc(-20vw - 50px), -210px);
           padding-top: clamp(230px, calc(20vw - 50px), 370px);
@@ -386,34 +371,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
         }
       `}</style>
 
-      {isSpaceFooter ? null : isReadMoreFooter ? null : isResearchFooter ? (
-        <>
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,_#000_0%,_#000_22%,_rgba(0,0,0,0.98)_40%,_rgba(3,4,10,0.94)_64%,_rgba(24,39,106,0.86)_100%)]"
-          />
-          <div
-            aria-hidden="true"
-            className="research-footer-glow research-footer-glow--gold"
-          />
-          <div
-            aria-hidden="true"
-            className="research-footer-glow research-footer-glow--blue"
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_16%,_rgba(0,0,0,0.94)_0%,_rgba(0,0,0,0.82)_34%,_rgba(0,0,0,0)_68%),radial-gradient(ellipse_at_center,_rgba(0,0,0,0)_46%,_rgba(0,0,0,0.68)_100%)]"
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 z-[5] bg-[radial-gradient(ellipse_at_0%_86%,_rgba(243,208,93,0.2)_0%,_rgba(243,208,93,0.08)_26%,_rgba(243,208,93,0)_58%),radial-gradient(ellipse_at_100%_88%,_rgba(93,110,243,0.34)_0%,_rgba(93,110,243,0.14)_30%,_rgba(93,110,243,0)_62%)]"
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 z-[6] h-36 bg-gradient-to-b from-black via-black/85 to-transparent sm:h-44"
-          />
-        </>
-      ) : isArcOsFooter ? (
+      {isSpaceFooter ? null : isReadMoreFooter || isResearchFooter ? null : isArcOsFooter ? (
         <>
           <div aria-hidden="true" className="arc-os-footer-shader" />
         </>

@@ -71,7 +71,7 @@ export default function AbsolPublications() {
   const canLoadMore = visibleCount < publications.length;
 
   return (
-    <section id="publications" className="absol-pubs relative z-10 mx-auto mt-8 w-full max-w-[1400px] px-3 pt-10 pb-28 sm:mt-12 sm:px-4 sm:pt-14 sm:pb-40">
+    <section id="publications" className="absol-pubs relative z-10 mx-auto mt-8 w-full max-w-[1400px] px-3 pt-10 pb-20 sm:mt-12 sm:px-4 sm:pt-14 sm:pb-28">
       <div className="mb-16 sm:mb-20">
         <h2 className="absol-pubs__title mb-4 text-[calc(1.25rem+2px)] italic sm:mb-5 md:text-[calc(1.5rem+2px)]">
           <span className="text-white">Our </span>

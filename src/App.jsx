@@ -175,7 +175,9 @@ export default function App() {
           ) : (
             <HomePage />
           )}
-          <Footer showReadmeBridge={isHomePage} variant="space" />
+          {!isResearchTabPage ? (
+            <Footer showReadmeBridge={isHomePage} variant="space" />
+          ) : null}
         </>
       )}
     </div>

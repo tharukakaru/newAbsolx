@@ -47,7 +47,7 @@ const models = [
 
 export default function AbsolDownloads() {
   return (
-    <section id="downloads" className="absol-downloads relative z-10 flex w-full flex-col items-center pb-16 pt-36 sm:pb-20 sm:pt-48">
+    <section id="downloads" className="absol-downloads relative z-10 flex w-full flex-col items-center pb-16 pt-20 sm:pb-20 sm:pt-28">
       <div className="mb-28 flex flex-col items-center sm:mb-40">
         <span className="absol-downloads__eyebrow mb-3 text-xl tracking-[0.3em] text-white sm:mb-4 sm:text-2xl md:text-3xl">
           OPEN SOURCE BLUE-PRINT

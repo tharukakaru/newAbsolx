@@ -19,7 +19,7 @@ const voiceModels = [
 
 export default function AbsolVoiceModels() {
   return (
-    <section id="voice" className="absol-voice relative z-10 mx-auto mb-56 w-full max-w-[1400px] px-6 pt-16 pb-64 sm:mb-72 sm:pb-80">
+    <section id="voice" className="absol-voice relative z-10 mx-auto w-full max-w-[1400px] px-6 pt-16 pb-12 sm:pb-16">
       <div className="mb-10">
         <h2 className="absol-voice__title mb-0.5 text-[20px] font-normal uppercase tracking-wide text-white sm:text-[26px] md:text-[30px]">
           VOICE INTELLIGENCE MODELS
