@@ -1,6 +1,5 @@
 import React from "react";
 import ReadMoreSectionHeader from "./read-more/ReadMoreSectionHeader";
-import signalLines from "../assets/readMore/signal lines.svg";
 import abstractShape from "../assets/readMore/Abstract Shape Render 1.png";
 import uavBlueprint from "../assets/readMore/uav-blueprint-4k-alpha 3.svg";
 import object2 from "../assets/readMore/object2.png";
@@ -146,18 +145,7 @@ const features = [
 
 export default function ReadMore() {
   return (
-    <div className="min-h-screen bg-[#06070a] text-white flex flex-col relative overflow-hidden pt-24 md:pt-28">
-      
-      {/* ========================================================= */}
-      {/* GLOBAL BACKGROUND (SIGNAL LINES)                          */}
-      {/* ========================================================= */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full min-w-[1400px] max-w-[2000px] h-[900px] pointer-events-none z-0 opacity-60 flex justify-center">
-        <img 
-          src={signalLines}
-          alt="Signal Lines Background" 
-          className="w-full object-contain object-top"
-        />
-      </div>
+    <div className="relative z-10 min-h-screen max-w-[100vw] text-white flex flex-col overflow-x-hidden pt-24 md:pt-28">
 
       {/* ========================================================= */}
       {/* SECTION 1: HEADER & INTRO                                 */}

@@ -16,6 +16,7 @@ import ArsOs from "./components/ArsOs";
 import NewMegha from "./components/newmegha";
 import Sentinel from "./components/Sentinel";
 import ReadMore from "./components/ReadMore";
+import ReadMoreAtmosphere from "./components/read-more/ReadMoreAtmosphere";
 import SpacePage from "./components/space";
 
 function HomePage() {
@@ -145,20 +146,26 @@ export default function App() {
     !isSpacePage;
 
   return (
-    <div className={`relative w-full min-h-screen bg-black overflow-x-hidden ${isAecOsPage ? "arc-os-page" : ""}`}>
+    <div
+      className={`no-scrollbar relative w-full max-w-[100vw] min-h-screen bg-black overflow-x-hidden ${isAecOsPage ? "arc-os-page" : ""}`}
+    >
       <Navbar currentPath={path} onNavigate={navigate} />
       {isSpacePage ? (
         <SpacePage>
           <Footer showReadmeBridge={false} variant="space" />
         </SpacePage>
+      ) : isReadMorePage ? (
+        <div className="readmore-page no-scrollbar relative max-w-[100vw] overflow-x-hidden min-h-screen bg-[#06070a]">
+          <ReadMoreAtmosphere />
+          <ReadMore />
+          <Footer showReadmeBridge={false} variant="readmore" />
+        </div>
       ) : (
         <>
           {isNewMeghaPage ? (
             <NewMegha />
           ) : isSentinelPage ? (
             <Sentinel />
-          ) : isReadMorePage ? (
-            <ReadMore />
           ) : isResearchTabPage ? (
             <ResearchPageTab />
           ) : isResearchPage ? (

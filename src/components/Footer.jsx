@@ -179,7 +179,9 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
   const isResearchFooter = variant === "research";
   const isArcOsFooter = variant === "arc-os";
   const isSpaceFooter = variant === "space";
-  const isCompactFooter = isResearchFooter || isArcOsFooter || isSpaceFooter;
+  const isReadMoreFooter = variant === "readmore";
+  const isCompactFooter =
+    isResearchFooter || isArcOsFooter || isSpaceFooter || isReadMoreFooter;
 
   /**
    * Big brand title: soft off-white
@@ -192,11 +194,16 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
   return (
     <footer
       className={[
-        "relative overflow-hidden text-white font-elios z-50",
-        isArcOsFooter || isSpaceFooter ? "bg-transparent" : "bg-black",
+        "relative text-white font-elios",
+        isReadMoreFooter ? "readmore-footer no-scrollbar z-10 overflow-x-hidden" : "z-50 overflow-hidden",
+        isArcOsFooter || isSpaceFooter || isReadMoreFooter
+          ? "bg-transparent"
+          : "bg-black",
         isArcOsFooter ? "arc-os-footer" : "",
-        !isResearchFooter && !isArcOsFooter && !isSpaceFooter ? "home-footer" : "",
-        isResearchFooter || isSpaceFooter
+        !isResearchFooter && !isArcOsFooter && !isSpaceFooter && !isReadMoreFooter
+          ? "home-footer"
+          : "",
+        isResearchFooter || isSpaceFooter || isReadMoreFooter
           ? "min-h-[400px] sm:min-h-[460px] md:min-h-[500px]"
           : isArcOsFooter
             ? "min-h-[330px] sm:min-h-[390px] md:min-h-[430px]"
@@ -327,6 +334,12 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
           opacity: 0.64;
         }
 
+        .readmore-footer {
+          margin-top: clamp(-330px, calc(-20vw - 50px), -210px);
+          padding-top: clamp(230px, calc(20vw - 50px), 370px);
+          background: transparent !important;
+        }
+
         .research-footer-hashtag {
           margin: clamp(48px, 5vw, 72px) 0 clamp(24px, 2.5vw, 40px);
           font-family: "Plus Jakarta Sans", Arial, sans-serif;
@@ -373,7 +386,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
         }
       `}</style>
 
-      {isSpaceFooter ? null : isResearchFooter ? (
+      {isSpaceFooter ? null : isReadMoreFooter ? null : isResearchFooter ? (
         <>
           <div
             aria-hidden="true"
@@ -439,7 +452,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
         </>
       )}
 
-      {!isResearchFooter && !isArcOsFooter && !isSpaceFooter ? (
+      {!isReadMoreFooter && !isResearchFooter && !isArcOsFooter && !isSpaceFooter ? (
         <div className="home-footer-figure-wrap" aria-hidden="true">
           <img
             src={footerSentinel}
@@ -463,7 +476,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
             : "home-footer-content relative z-10 mx-auto max-w-7xl px-6 pt-12 pb-10 sm:px-10"
         }
       >
-        {isResearchFooter || isSpaceFooter ? (
+        {isResearchFooter || isSpaceFooter || isReadMoreFooter ? (
           <p className="research-footer-hashtag">#AGENTIC WARFARE</p>
         ) : null}
 
