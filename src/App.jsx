@@ -16,6 +16,7 @@ import ArsOs from "./components/ArsOs";
 import NewMegha from "./components/newmegha";
 import Sentinel from "./components/Sentinel";
 import ReadMore from "./components/ReadMore";
+import SpacePage from "./components/space";
 
 function HomePage() {
   return (
@@ -105,8 +106,6 @@ function HomePage() {
         <FullStackSection />
       </section> */}
 
-      {/* Footer - now has its own layer properties (w-full, z-50) */}
-      <Footer />
     </>
   );
 }
@@ -135,42 +134,42 @@ export default function App() {
   const isNewMeghaPage = path === "/newmegha";
   const isSentinelPage = path === "/sentinel";
   const isReadMorePage = path === "/readmore";
+  const isSpacePage = path === "/space";
+  const isHomePage =
+    !isResearchPage &&
+    !isResearchTabPage &&
+    !isAecOsPage &&
+    !isNewMeghaPage &&
+    !isSentinelPage &&
+    !isReadMorePage &&
+    !isSpacePage;
 
   return (
     <div className={`relative w-full min-h-screen bg-black overflow-x-hidden ${isAecOsPage ? "arc-os-page" : ""}`}>
       <Navbar currentPath={path} onNavigate={navigate} />
-      {isNewMeghaPage ? (
-        <>
-          <NewMegha />
-          <Footer showReadmeBridge={false} variant="new-megha" />
-        </>
-      ) : isSentinelPage ? (
-        <>
-          <Sentinel />
-          <Footer showReadmeBridge={false} variant="new-megha" />
-        </>
-      ) : isReadMorePage ? (
-        <>
-          <ReadMore />
-          <Footer showReadmeBridge={false} variant="research" />
-        </>
-      ) : isResearchTabPage ? (
-        <>
-          <ResearchPageTab />
-          <Footer showReadmeBridge={false} variant="research" />
-        </>
-      ) : isResearchPage ? (
-        <>
-          <ResearchPage />
-          <Footer showReadmeBridge={false} variant="research" />
-        </>
-      ) : isAecOsPage ? (
-        <>
-          <ArsOs />
-          <Footer showReadmeBridge={false} variant="arc-os" />
-        </>
+      {isSpacePage ? (
+        <SpacePage>
+          <Footer showReadmeBridge={false} variant="space" />
+        </SpacePage>
       ) : (
-        <HomePage />
+        <>
+          {isNewMeghaPage ? (
+            <NewMegha />
+          ) : isSentinelPage ? (
+            <Sentinel />
+          ) : isReadMorePage ? (
+            <ReadMore />
+          ) : isResearchTabPage ? (
+            <ResearchPageTab />
+          ) : isResearchPage ? (
+            <ResearchPage />
+          ) : isAecOsPage ? (
+            <ArsOs />
+          ) : (
+            <HomePage />
+          )}
+          <Footer showReadmeBridge={isHomePage} variant="space" />
+        </>
       )}
     </div>
   );

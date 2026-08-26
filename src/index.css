@@ -107,6 +107,22 @@ body,
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("./assets/fonts/PlusJakartaSans[wght].ttf") format("truetype");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Archivo";
+  src: url("./assets/fonts/archivo.regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 
 @font-face {
   font-family: "Elios";
@@ -135,6 +151,8 @@ body,
   --font-elios: "Elios";
   --font-sf-compact: "SF Compact Rounded";
   --font-orbitron: "Orbitron", sans-serif;
+  --font-plus-jakarta: "Plus Jakarta Sans", Arial, sans-serif;
+  --font-archivo: "Archivo", "Archivo Condensed", "Arial Narrow", sans-serif;
 }
 
 :root {

@@ -66,25 +66,45 @@ const SOCIAL_LINKS = [
  * Link column component (About / Info)
  */
 function FooterLinkGroup({ title, links, compact = false }) {
-  const titleClass = compact
-    ? "font-elios text-[6px] font-bold tracking-[0.18em] text-white/90 sm:text-[9px] sm:tracking-[0.22em] md:text-[11px] md:tracking-[0.25em]"
-    : "font-elios text-sm font-bold tracking-[0.28em] text-white/90";
+  const isSectionTitle = title === "ABOUT" || title === "INFO";
+
+  const titleClass = isSectionTitle
+    ? compact
+      ? "text-[13px] font-extrabold tracking-[0.06em] text-white sm:text-[16px] sm:tracking-[0.08em] md:text-[18px] md:tracking-[0.1em]"
+      : "text-[21px] font-extrabold tracking-[0.12em] text-white"
+    : compact
+      ? "font-elios text-[6px] font-bold tracking-[0.18em] text-white/90 sm:text-[9px] sm:tracking-[0.22em] md:text-[11px] md:tracking-[0.25em]"
+      : "font-elios text-sm font-bold tracking-[0.28em] text-white/90";
 
   const listClass = compact
-    ? "mt-2 space-y-1 font-elios text-[4.5px] tracking-[0.08em] text-white/58 sm:mt-3 sm:text-[7px] sm:tracking-[0.1em] md:mt-4 md:space-y-2 md:text-[9px] md:tracking-[0.12em]"
-    : "mt-4 space-y-2 font-elios text-[11px] tracking-[0.14em] text-white/55";
+    ? "mt-2 space-y-0.5 sm:mt-2.5 sm:space-y-1 md:mt-3 md:space-y-1"
+    : "mt-4 space-y-1";
+
+  const linkClass = compact
+    ? "font-elios text-[7.5px] font-light tracking-[0.08em] text-white/55 transition-colors hover:text-white focus:outline-none focus-visible:text-white sm:text-[10px] sm:tracking-[0.1em] md:text-[12px] md:tracking-[0.12em]"
+    : "font-elios text-[14px] font-light tracking-[0.14em] text-white/55 transition-colors hover:text-white focus:outline-none focus-visible:text-white";
 
   return (
     <nav aria-label={title}>
-      <h3 className={titleClass}>{title}</h3>
+      <h3
+        className={titleClass}
+        style={
+          isSectionTitle
+            ? {
+                fontFamily: '"Helvetica Now Display", Helvetica, Arial, sans-serif',
+                fontWeight: 700,
+                WebkitTextStroke: "0.4px #fff",
+              }
+            : undefined
+        }
+      >
+        {title}
+      </h3>
 
       <ul className={listClass}>
         {links.map((item) => (
           <li key={item.label}>
-            <a
-              href={item.href}
-              className="transition-colors hover:text-white focus:outline-none focus-visible:text-white"
-            >
+            <a href={item.href} className={linkClass}>
               {item.label}
             </a>
           </li>
@@ -95,7 +115,7 @@ function FooterLinkGroup({ title, links, compact = false }) {
 }
 
 /**
- * Bracket-corner button (matches reference style)
+ * Bracket-corner button (matches space.jsx Open Roles animation)
  */
 function BracketButton({
   href = "#",
@@ -104,57 +124,53 @@ function BracketButton({
   compact = false,
   className = "",
 }) {
-  const variantBg =
-    variant === "maroon"
-      ? "bg-gradient-to-br from-[#4a1b2a]/85 to-[#16050b]/85"
-      : "bg-gradient-to-br from-[#3b4356]/70 to-[#1b2233]/85";
+  const bgClass =
+    variant === "maroon" ? "bg-[#FF1E00]/12" : "bg-[#FFFFFF]/12";
+
   const sizeClass = compact
-    ? "h-6 px-2 text-[4.5px] tracking-[0.1em] sm:h-8 sm:px-4 sm:text-[7px] sm:tracking-[0.18em] md:h-9 md:px-6 md:text-[9px] md:tracking-[0.22em]"
-    : "h-11 px-7 text-[11px] tracking-[0.26em]";
+    ? "h-[38px] px-3 text-[9px] tracking-[0.1em] sm:h-[46px] sm:px-5 sm:text-[12px] sm:tracking-[0.16em] md:h-[54px] md:px-7 md:text-[15px] md:tracking-[0.2em]"
+    : "h-[54px] px-8 text-[16px] tracking-[0.26em]";
   const cornerSize = compact
-    ? "h-2 w-2 sm:h-2.5 sm:w-2.5 md:h-3 md:w-3"
-    : "h-3 w-3";
+    ? "w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-3.5 md:h-3.5"
+    : "w-3.5 h-3.5";
 
   return (
     <a
       href={href}
       className={[
-        "group relative inline-flex items-center justify-center",
-        "font-elios uppercase text-white/85 whitespace-nowrap",
-        "border border-white/25 backdrop-blur-sm",
-        "transition-all duration-200",
-        "hover:border-white/40 hover:text-white hover:shadow-[0_0_20px_rgba(140,170,255,0.10)]",
+        "group relative inline-flex cursor-pointer",
+        "hover:scale-105 transition-transform duration-300",
         "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
-        sizeClass,
-        variantBg,
         className,
       ].join(" ")}
     >
-      {/* Corner brackets (thin like the screenshot) */}
+      <span
+        className={[
+          "inline-flex w-full items-center justify-center",
+          "font-elios uppercase text-white whitespace-nowrap",
+          "border border-white/40 backdrop-blur-md",
+          bgClass,
+          sizeClass,
+        ].join(" ")}
+      >
+        {children}
+      </span>
       <span
         aria-hidden="true"
-        className={`pointer-events-none absolute -left-[2px] -top-[2px] ${cornerSize} border-l border-t border-white/80`}
+        className={`pointer-events-none absolute -top-0.5 -left-0.5 ${cornerSize} border-t-2 border-l-2 border-white transition-all group-hover:-top-1.5 group-hover:-left-1.5`}
       />
       <span
         aria-hidden="true"
-        className={`pointer-events-none absolute -right-[2px] -top-[2px] ${cornerSize} border-r border-t border-white/80`}
+        className={`pointer-events-none absolute -top-0.5 -right-0.5 ${cornerSize} border-t-2 border-r-2 border-white transition-all group-hover:-top-1.5 group-hover:-right-1.5`}
       />
       <span
         aria-hidden="true"
-        className={`pointer-events-none absolute -left-[2px] -bottom-[2px] ${cornerSize} border-b border-l border-white/80`}
+        className={`pointer-events-none absolute -bottom-0.5 -left-0.5 ${cornerSize} border-b-2 border-l-2 border-white transition-all group-hover:-bottom-1.5 group-hover:-left-1.5`}
       />
       <span
         aria-hidden="true"
-        className={`pointer-events-none absolute -right-[2px] -bottom-[2px] ${cornerSize} border-b border-r border-white/80`}
+        className={`pointer-events-none absolute -bottom-0.5 -right-0.5 ${cornerSize} border-b-2 border-r-2 border-white transition-all group-hover:-bottom-1.5 group-hover:-right-1.5`}
       />
-
-      {/* Inner subtle border */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-[3px] border border-white/10"
-      />
-
-      <span className="relative z-10">{children}</span>
     </a>
   );
 }
@@ -162,25 +178,31 @@ function BracketButton({
 export default function Footer({ showReadmeBridge = true, variant = "default" }) {
   const isResearchFooter = variant === "research";
   const isArcOsFooter = variant === "arc-os";
-  const isCompactFooter = isResearchFooter || isArcOsFooter;
+  const isSpaceFooter = variant === "space";
+  const isCompactFooter = isResearchFooter || isArcOsFooter || isSpaceFooter;
 
   /**
-   * Title tone: white + light-blue mix (NOT pure white)
+   * Big brand title: soft off-white
    */
-  const titleTone =
-    "bg-gradient-to-b from-white via-[#B9C9FF] to-white/75 bg-clip-text text-transparent drop-shadow-[0_0_18px_rgba(150,180,255,0.18)]";
+  const titleTone = "text-[#E6E2E2]";
+
+  const titleSizeCompact = "text-[clamp(calc(1.25rem+6px),calc(7vw+6px),calc(5.9rem+6px))]";
+  const titleSizeDefault = "text-[clamp(calc(2.3rem+6px),calc(6.1vw+6px),calc(5.9rem+6px))]";
 
   return (
     <footer
       className={[
         "relative overflow-hidden text-white font-elios z-50",
-        isArcOsFooter ? "arc-os-footer bg-transparent" : "bg-black",
-        !isResearchFooter && !isArcOsFooter ? "home-footer" : "",
-        isResearchFooter
-          ? "research-footer min-h-[400px] sm:min-h-[460px] md:min-h-[500px]"
+        isArcOsFooter || isSpaceFooter ? "bg-transparent" : "bg-black",
+        isArcOsFooter ? "arc-os-footer" : "",
+        !isResearchFooter && !isArcOsFooter && !isSpaceFooter ? "home-footer" : "",
+        isResearchFooter || isSpaceFooter
+          ? "min-h-[400px] sm:min-h-[460px] md:min-h-[500px]"
           : isArcOsFooter
             ? "min-h-[330px] sm:min-h-[390px] md:min-h-[430px]"
             : "",
+        isResearchFooter ? "research-footer" : "",
+        isSpaceFooter ? "space-footer" : "",
       ].join(" ")}
     >
       <style>{`
@@ -194,6 +216,10 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
 
         .research-footer {
           background: #000;
+        }
+
+        .space-footer {
+          background: transparent;
         }
 
         .arc-os-footer {
@@ -302,42 +328,19 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
         }
 
         .research-footer-hashtag {
-          margin: clamp(18px, 2.4vw, 32px) 0 clamp(58px, 6vw, 88px);
+          margin: clamp(48px, 5vw, 72px) 0 clamp(24px, 2.5vw, 40px);
           font-family: "Plus Jakarta Sans", Arial, sans-serif;
-          font-size: clamp(12px, 0.9vw, 16px);
+          font-size: clamp(22px, calc(0.9vw + 10px), 26px);
           line-height: 1;
           font-weight: 300;
           letter-spacing: 0.02em;
           text-align: center;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.88);
+          color: #ffffff;
         }
 
         .footer-animated-line {
-          background:
-            linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.82) 5%, rgba(255,255,255,0.82) 95%, transparent 100%),
-            linear-gradient(90deg, transparent 0%, rgba(255,255,210,0.08) 18%, rgba(255,255,180,0.24) 38%, rgba(255,255,255,0.92) 50%, rgba(255,255,150,0.24) 62%, rgba(255,255,120,0.08) 82%, transparent 100%);
-          background-repeat: no-repeat;
-          background-size: 100% 100%, 30% 100%;
-          background-position: 0 0, -34% 0;
-          filter: drop-shadow(0 0 4px rgba(255,255,160,0.18));
-          will-change: background-position;
-          animation: footerLineRunX 4.4s linear infinite;
-        }
-
-        @keyframes footerLineRunX {
-          0% {
-            background-position: 0 0, -34% 0;
-          }
-          100% {
-            background-position: 0 0, 134% 0;
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .footer-animated-line {
-            animation: none;
-          }
+          background: #ffffff;
         }
 
         @media (max-width: 900px) {
@@ -370,7 +373,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
         }
       `}</style>
 
-      {isResearchFooter ? (
+      {isSpaceFooter ? null : isResearchFooter ? (
         <>
           <div
             aria-hidden="true"
@@ -436,7 +439,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
         </>
       )}
 
-      {!isResearchFooter && !isArcOsFooter ? (
+      {!isResearchFooter && !isArcOsFooter && !isSpaceFooter ? (
         <div className="home-footer-figure-wrap" aria-hidden="true">
           <img
             src={footerSentinel}
@@ -460,7 +463,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
             : "home-footer-content relative z-10 mx-auto max-w-7xl px-6 pt-12 pb-10 sm:px-10"
         }
       >
-        {isResearchFooter ? (
+        {isResearchFooter || isSpaceFooter ? (
           <p className="research-footer-hashtag">#AGENTIC WARFARE</p>
         ) : null}
 
@@ -528,8 +531,8 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                       compact={isCompactFooter}
                       className={
                         isCompactFooter
-                          ? "w-[64px] sm:w-[120px] md:w-[158px]"
-                          : "w-full max-w-[260px] sm:w-[190px] sm:max-w-none "
+                          ? "w-[80px] sm:w-[148px] md:w-[190px]"
+                          : "w-full max-w-[280px] sm:w-[210px] sm:max-w-none "
                       }
                     >
                       CONTACT US
@@ -540,8 +543,8 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                       aria-hidden="true"
                       className={
                         isCompactFooter
-                          ? "h-px w-3 bg-white/45 sm:w-7 md:w-10"
-                          : "hidden h-px w-12 bg-white/45 sm:block"
+                          ? "h-px w-[16px] bg-white/45 sm:w-[32px] md:w-[44px]"
+                          : "hidden h-px w-[52px] bg-white/45 sm:block"
                       }
                     />
 
@@ -551,8 +554,8 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                       compact={isCompactFooter}
                       className={
                         isCompactFooter
-                          ? "w-[68px] sm:w-[134px] md:w-[184px]"
-                          : "w-full max-w-[260px] sm:w-[220px] sm:max-w-none"
+                          ? "w-[88px] sm:w-[160px] md:w-[210px]"
+                          : "w-full max-w-[300px] sm:w-[230px] sm:max-w-none"
                       }
                     >
                       OPEN ROLES
@@ -562,8 +565,8 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                   <p
                     className={
                       isCompactFooter
-                        ? "mt-4 text-center font-elios text-[4.5px] tracking-[0.16em] text-white/55 whitespace-nowrap sm:mt-6 sm:text-[7px] sm:tracking-[0.22em] md:mt-8 md:text-[8px] md:tracking-[0.28em]"
-                        : "mt-10 text-center font-elios text-[9px] tracking-[0.32em] text-white/55 whitespace-nowrap sm:text-[10px]"
+                        ? "mt-12 text-center font-elios text-[10.5px] tracking-[0.08em] text-white whitespace-nowrap sm:mt-14 sm:text-[13px] sm:tracking-[0.1em] md:mt-16 md:text-[14px] md:tracking-[0.12em]"
+                        : "mt-20 text-center font-elios text-[15px] tracking-[0.14em] text-white whitespace-nowrap sm:text-[16px]"
                     }
                   >
                     THE LION&apos;S ROAR - HEARD BY THE WORLD
@@ -582,8 +585,8 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                       alt="Sri Lanka"
                       className={
                         isCompactFooter
-                          ? "h-3 w-5 object-contain sm:h-4 sm:w-7 md:h-5 md:w-8"
-                          : "h-6 w-10 object-contain"
+                          ? "h-5 w-8 object-contain sm:h-6 sm:w-10 md:h-8 md:w-12"
+                          : "h-8 w-14 object-contain"
                       }
                       loading="lazy"
                     />
@@ -595,9 +598,14 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                   <h3
                     className={
                       isCompactFooter
-                        ? "font-elios text-[6px] font-bold tracking-[0.18em] text-white/90 sm:text-[9px] sm:tracking-[0.22em] md:text-[11px] md:tracking-[0.25em]"
-                        : "font-elios text-sm font-bold tracking-[0.28em] text-white/90"
+                        ? "text-[12px] font-extrabold tracking-[0.1em] text-white sm:text-[15px] sm:tracking-[0.12em] md:text-[17px] md:tracking-[0.14em]"
+                        : "text-[20px] font-extrabold tracking-[0.14em] text-white"
                     }
+                    style={{
+                      fontFamily: '"Helvetica Now Display", Helvetica, Arial, sans-serif',
+                      fontWeight: 700,
+                      WebkitTextStroke: "0.45px #fff",
+                    }}
                   >
                     GET THE APP
                   </h3>
@@ -605,8 +613,8 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                   <div
                     className={
                       isCompactFooter
-                        ? "mt-2 flex items-center gap-1 sm:mt-3 sm:gap-2 md:mt-3 md:gap-3"
-                        : "mt-4 flex items-center gap-3"
+                        ? "mt-5 flex items-center gap-1 sm:mt-6 sm:gap-2 md:mt-7 md:gap-3"
+                        : "mt-7 flex items-center gap-3"
                     }
                   >
                     <a
@@ -616,7 +624,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                       <img
                         src={googlePlay}
                         alt="Get it on Google Play"
-                        className={isCompactFooter ? "h-3 sm:h-5 md:h-7" : "h-9"}
+                        className={isCompactFooter ? "h-5 sm:h-8 md:h-11" : "h-12"}
                         loading="lazy"
                       />
                     </a>
@@ -627,7 +635,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                       <img
                         src={appStore}
                         alt="Download on the App Store"
-                        className={isCompactFooter ? "h-3 sm:h-5 md:h-7" : "h-9"}
+                        className={isCompactFooter ? "h-5 sm:h-8 md:h-11" : "h-12"}
                         loading="lazy"
                       />
                     </a>
@@ -636,9 +644,14 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                   <h3
                     className={
                       isCompactFooter
-                        ? "mt-3 font-elios text-[6px] font-bold tracking-[0.18em] text-white/90 sm:mt-5 sm:text-[9px] sm:tracking-[0.22em] md:mt-6 md:text-[11px] md:tracking-[0.25em]"
-                        : "mt-7 font-elios text-sm font-bold tracking-[0.28em] text-white/90"
+                        ? "mt-3 text-[12px] font-extrabold tracking-[0.1em] text-white sm:mt-5 sm:text-[15px] sm:tracking-[0.12em] md:mt-6 md:text-[17px] md:tracking-[0.14em]"
+                        : "mt-7 text-[20px] font-extrabold tracking-[0.14em] text-white"
                     }
+                    style={{
+                      fontFamily: '"Helvetica Now Display", Helvetica, Arial, sans-serif',
+                      fontWeight: 700,
+                      WebkitTextStroke: "0.45px #fff",
+                    }}
                   >
                     STAY TUNED
                   </h3>
@@ -682,7 +695,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
               aria-hidden="true"
               className={
                 isCompactFooter
-                  ? "footer-animated-line mx-auto h-px w-[82%] max-w-[1180px] shadow-[0_0_1px_rgba(255,255,255,0.45)] sm:w-[80%] md:w-[78%]"
+                  ? "footer-animated-line h-px w-full shadow-[0_0_1px_rgba(255,255,255,0.45)]"
                   : "footer-animated-line h-px -mx-6 sm:-mx-10 md:-mx-16 lg:-mx-20 xl:-mx-24 shadow-[0_0_1px_rgba(255,255,255,0.45)]"
               }
             />
@@ -691,8 +704,8 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
             <div
               className={
                 isCompactFooter
-                  ? "pt-[calc(var(--gap)+18px)] text-center"
-                  : "pt-[var(--gap)] text-center"
+                  ? "pt-[calc(var(--gap)-8px)] text-center"
+                  : "pt-[calc(var(--gap)-24px)] text-center"
               }
             >
               <div className="mx-auto max-w-6xl px-4">
@@ -703,8 +716,8 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                         key={word}
                         className={[
                           "font-elios uppercase leading-none",
-                          "text-[clamp(1.25rem,7vw,5.9rem)]",
-                          "tracking-[0.08em] sm:tracking-[0.13em]",
+                          titleSizeCompact,
+                          "tracking-[0.04em] sm:tracking-[0.06em]",
                           titleTone,
                         ].join(" ")}
                       >
@@ -718,8 +731,8 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                     <span
                       className={[
                         "font-elios uppercase leading-none",
-                        "text-[clamp(2.3rem,6.1vw,5.9rem)]",
-                        "tracking-[0.15em]",
+                        titleSizeDefault,
+                        "tracking-[0.06em]",
                         titleTone,
                       ].join(" ")}
                     >
@@ -729,8 +742,8 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                     <span
                       className={[
                         "font-elios uppercase leading-none",
-                        "text-[clamp(2.3rem,6.1vw,5.9rem)]",
-                        "tracking-[0.15em]",
+                        titleSizeDefault,
+                        "tracking-[0.06em]",
                         titleTone,
                       ].join(" ")}
                     >
@@ -740,8 +753,8 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                     <span
                       className={[
                         "font-elios uppercase leading-none",
-                        "text-[clamp(2.3rem,6.1vw,5.9rem)]",
-                        "tracking-[0.15em]",
+                        titleSizeDefault,
+                        "tracking-[0.06em]",
                         titleTone,
                       ].join(" ")}
                     >
@@ -751,8 +764,8 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                     <span
                       className={[
                         "font-elios uppercase leading-none",
-                        "text-[clamp(2.3rem,6.1vw,5.9rem)]",
-                        "tracking-[0.15em]",
+                        titleSizeDefault,
+                        "tracking-[0.06em]",
                         titleTone,
                       ].join(" ")}
                     >
@@ -765,8 +778,8 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
               <p
                 className={
                   isCompactFooter
-                    ? "mt-3 font-elios text-[5px] tracking-[0.16em] text-white/45 sm:text-[8px] sm:tracking-[0.24em] md:mt-4 md:text-[10px] md:tracking-[0.28em]"
-                    : "mt-4 font-elios text-[10px] tracking-[0.28em] text-white/45"
+                    ? "mt-3 font-elios text-[8px] tracking-[0.08em] text-white sm:text-[11px] sm:tracking-[0.1em] md:mt-4 md:text-[13px] md:tracking-[0.12em]"
+                    : "mt-4 font-elios text-[13px] tracking-[0.12em] text-white"
                 }
               >
                 © 2026 ABSOL X CORE AI. ALL RIGHTS RESERVED.
