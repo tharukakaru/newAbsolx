@@ -1,4 +1,7 @@
 import SentinelAircraftContent from "./SentinelAircraftContent";
+import MeghaAppBar from "./MeghaAppBar";
+import ResearchAtmosphere from "./research-page/ResearchAtmosphere";
+import Footer from "./Footer";
 import SourceCodeProRegular from "../assets/fonts/SourceCodePro-Regular.otf";
 import plusJakartaSans from "../assets/fonts/PlusJakartaSans[wght].ttf";
 import interFont from "../assets/fonts/Inter.ttf";
@@ -88,7 +91,13 @@ const sentinelItems = [
 
 export default function Sentinel() {
   return (
-    <section className="sentinel-page megha-canvas" aria-labelledby="sentinel-title">
+    <div
+      className="sentinel-tab relative isolate flex min-h-screen flex-col overflow-x-hidden bg-black text-white"
+      aria-labelledby="sentinel-title"
+    >
+      <ResearchAtmosphere />
+      <div className="sentinel-tab__bottom-glow" aria-hidden="true" />
+
       <style>{`
         @font-face {
           font-family: "Plus Jakarta Sans";
@@ -130,91 +139,36 @@ export default function Sentinel() {
           font-display: swap;
         }
 
-        .sentinel-page.megha-canvas,
-        .sentinel-page.megha-canvas * {
+        .sentinel-tab,
+        .sentinel-tab * {
           box-sizing: border-box;
         }
 
-        .sentinel-page.megha-canvas {
+        .sentinel-tab {
           --x-striker-content-inset: clamp(0.75rem, 1.5vw, 1.5rem);
           --x-striker-desc-line-height: clamp(28rem, 42vh, 36rem);
-          --megha-ellipse-top: clamp(7.5rem, 14vw, 11rem);
-          --megha-ellipse-right-y: calc(
-            var(--megha-ellipse-top) + 450px + 450px + 340px + 636.5px
+          --research-footer-border-offset: clamp(112px, calc(6.5vw + 96px), 188px);
+          --sentinel-ellipse-left-yellow-y: calc(
+            100% - var(--research-footer-border-offset) - 90px
           );
-          --megha-ellipse-left-y: calc(var(--megha-ellipse-right-y) + 636.5px);
-          --megha-ellipse-left-blue-y: calc(
-            var(--megha-ellipse-left-y) + 636.5px + 240px + 636.5px
-          );
-          --megha-ellipse-right-yellow-y: calc(
-            var(--megha-ellipse-left-blue-y) + 636.5px
-          );
-          position: relative;
-          isolation: isolate;
-          width: 100%;
-          min-height: auto;
-          overflow-x: hidden;
-          color: #ffffff;
-          background: #000;
         }
 
-        .sentinel-page.megha-canvas::before {
-          content: "";
+        .sentinel-tab__bottom-glow {
           position: absolute;
           inset: 0;
-          z-index: 0;
+          z-index: 1;
           pointer-events: none;
-          background:
-            radial-gradient(
-              ellipse 570px 900px at -140px calc(var(--megha-ellipse-top) + 450px),
-              rgba(77, 121, 234, 0.45) 0%,
-              rgba(77, 121, 234, 0.45) 35%,
-              transparent 72%
-            ),
-            radial-gradient(
-              ellipse 570px 900px at calc(100% + 140px) calc(var(--megha-ellipse-top) + 450px),
-              rgba(77, 121, 234, 0.45) 0%,
-              rgba(77, 121, 234, 0.45) 35%,
-              transparent 72%
-            );
-          filter: blur(90px);
-        }
-
-        .sentinel-page.megha-canvas::after {
-          content: "";
-          position: absolute;
-          inset: 0;
-          z-index: 0;
-          pointer-events: none;
-          background:
-            radial-gradient(
-              ellipse 1473px 1273px at calc(100% + 680px) var(--megha-ellipse-right-y),
-              #5d6ef3 0%,
-              #5d6ef3 38%,
-              transparent 72%
-            ),
-            radial-gradient(
-              ellipse 1473px 1273px at -680px var(--megha-ellipse-left-y),
-              #f3d05d 0%,
-              #f3d05d 38%,
-              transparent 72%
-            ),
-            radial-gradient(
-              ellipse 1473px 1273px at -680px var(--megha-ellipse-left-blue-y),
-              #5d6ef3 0%,
-              #5d6ef3 38%,
-              transparent 72%
-            ),
-            radial-gradient(
-              ellipse 1473px 1273px at calc(100% + 680px) var(--megha-ellipse-right-yellow-y),
-              #f3d05d 0%,
-              #f3d05d 38%,
-              transparent 72%
-            );
+          overflow: hidden;
+          background: radial-gradient(
+            ellipse 1473px 1273px at -680px var(--sentinel-ellipse-left-yellow-y),
+            #f3d05d 0%,
+            #f3d05d 38%,
+            transparent 72%
+          );
           filter: blur(80px);
         }
 
-        .sentinel-page .megha-canvas__container {
+        .sentinel-tab .megha-canvas__container {
           position: relative;
           z-index: 1;
           display: flex;
@@ -225,19 +179,7 @@ export default function Sentinel() {
           padding-inline: clamp(1.5rem, 3vw, 2.75rem);
         }
 
-        .sentinel-page .megha-canvas__header {
-          display: flex;
-          flex: 0 0 auto;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          width: 100%;
-          padding-block-start: clamp(2rem, 3.5vw, 3.125rem);
-          padding-block-end: clamp(1.25rem, 2.5vw, 2rem);
-          padding-inline: clamp(1.25rem, 4vw, 4rem);
-        }
-
-        .sentinel-page .sentinel-title {
+        .sentinel-tab .sentinel-title {
           display: block;
           margin: clamp(2.75rem, 5.5vw, 4.5rem) 0 0;
           font-family: "Yapari Trial", sans-serif;
@@ -252,83 +194,11 @@ export default function Sentinel() {
           color: #ffffff;
         }
 
-        .sentinel-page .sentinel-title__t {
+        .sentinel-tab .sentinel-title__t {
           color: #e3e41b;
         }
 
-        .sentinel-page .megha-hero__tagline {
-          width: min(48rem, calc(100% - 2rem));
-          max-width: 100%;
-          margin: clamp(1.1rem, 1.8vw, 1.75rem) auto 0;
-          font-family: "Source Code Pro", "SourceCodePro", ui-monospace, monospace;
-          font-size: clamp(0.9rem, 1.15vw, 1.25rem);
-          font-style: normal;
-          font-weight: 400;
-          line-height: 1.45;
-          letter-spacing: 0.08em;
-          text-align: center;
-          text-transform: uppercase;
-          color: #ffffff;
-        }
-
-        .sentinel-page .megha-hero__stage {
-          position: relative;
-          display: flex;
-          align-items: stretch;
-          justify-content: center;
-          width: 100%;
-          min-width: 0;
-          margin-inline-end: calc(-1 * clamp(0.5rem, 1.5vw, 1.25rem));
-          margin-block-end: clamp(2rem, 4vh, 3rem);
-        }
-
-        .sentinel-page .megha-hero__hangar {
-          position: absolute;
-          right: 100%;
-          left: auto;
-          top: 50%;
-          z-index: 2;
-          display: block;
-          width: max-content;
-          margin: 0;
-          margin-right: clamp(0.35rem, 0.85vw, 0.75rem);
-          padding: 0;
-          font-family: "Yapari Trial", sans-serif;
-          font-size: clamp(1.35rem, 2vw, 2rem);
-          font-style: normal;
-          font-weight: 600;
-          line-height: 1;
-          letter-spacing: clamp(0.14rem, 0.45vw, 0.32rem);
-          text-transform: uppercase;
-          white-space: nowrap;
-          writing-mode: vertical-rl;
-          transform: translateY(-50%) rotate(180deg);
-          color: #ffffff;
-          pointer-events: none;
-        }
-
-        .sentinel-page .megha-hero__hangar-num {
-          color: #e3e41b;
-        }
-
-        .sentinel-page .megha-hero__frame {
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          align-items: stretch;
-          justify-content: flex-start;
-          flex: 1 1 auto;
-          width: 100%;
-          max-width: none;
-          min-width: 0;
-          min-height: clamp(36rem, 78vh, 58rem);
-          margin-inline: auto;
-          overflow: visible;
-          border: 0.0625rem solid #e3e41b;
-          background: transparent;
-        }
-
-        .sentinel-page .sentinel-frame__meta {
+        .sentinel-tab .sentinel-frame__meta {
           position: absolute;
           z-index: 2;
           margin: 0;
@@ -342,19 +212,19 @@ export default function Sentinel() {
           pointer-events: none;
         }
 
-        .sentinel-page .sentinel-frame__meta--tl {
+        .sentinel-tab .sentinel-frame__meta--tl {
           top: clamp(0.75rem, 1.4vw, 1.25rem);
           left: clamp(0.75rem, 1.4vw, 1.25rem);
           text-align: left;
         }
 
-        .sentinel-page .sentinel-frame__meta--tr {
+        .sentinel-tab .sentinel-frame__meta--tr {
           top: clamp(0.75rem, 1.4vw, 1.25rem);
           right: clamp(0.75rem, 1.4vw, 1.25rem);
           text-align: right;
         }
 
-        .sentinel-page .sentinel-frame__corner {
+        .sentinel-tab .sentinel-frame__corner {
           position: absolute;
           z-index: 2;
           width: clamp(0.85rem, 1.2vw, 1.15rem);
@@ -364,33 +234,26 @@ export default function Sentinel() {
           pointer-events: none;
         }
 
-        .sentinel-page .sentinel-frame__corner--bl {
+        .sentinel-tab .sentinel-frame__corner--bl {
           left: clamp(0.35rem, 0.7vw, 0.55rem);
           bottom: clamp(0.35rem, 0.7vw, 0.55rem);
           border-width: 0 0 0.0625rem 0.0625rem;
         }
 
-        .sentinel-page .sentinel-frame__corner--br {
+        .sentinel-tab .sentinel-frame__corner--br {
           right: clamp(0.35rem, 0.7vw, 0.55rem);
           bottom: clamp(0.35rem, 0.7vw, 0.55rem);
           border-width: 0 0.0625rem 0.0625rem 0;
         }
 
-        .sentinel-page .megha-hero__viewport {
-          flex: 1 1 auto;
-          width: 100%;
-          min-width: 0;
-          min-height: inherit;
-        }
-
-        .sentinel-page .megha-canvas__rail {
+        .sentinel-tab .megha-canvas__rail {
           position: relative;
           --megha-rail-margin-width: clamp(2.75rem, 5vw, 4.5rem);
           padding-inline-start: var(--x-striker-content-inset);
           padding-block-end: clamp(3rem, 6vh, 5rem);
         }
 
-        .sentinel-page .megha-canvas__rail-copy-group {
+        .sentinel-tab .megha-canvas__rail-copy-group {
           position: absolute;
           inset-block: 0;
           inset-inline-start: calc(-1 * var(--megha-rail-margin-width));
@@ -404,7 +267,7 @@ export default function Sentinel() {
           pointer-events: none;
         }
 
-        .sentinel-page .megha-canvas__rail-copy {
+        .sentinel-tab .megha-canvas__rail-copy {
           margin: 0;
           font-family: "Yapari Trial", sans-serif;
           font-size: clamp(1.1rem, 2vw, 1.65rem);
@@ -417,11 +280,11 @@ export default function Sentinel() {
           color: rgba(255, 255, 255, 0.37);
         }
 
-        .sentinel-page .megha-canvas__rail-copy:first-child {
+        .sentinel-tab .megha-canvas__rail-copy:first-child {
           transform: rotate(180deg) translateY(clamp(32rem, 60vh, 56rem));
         }
 
-        .sentinel-page .megha-canvas__rail::before {
+        .sentinel-tab .megha-canvas__rail::before {
           content: "";
           position: absolute;
           inset-block: 0;
@@ -431,29 +294,29 @@ export default function Sentinel() {
           pointer-events: none;
         }
 
-        .sentinel-page .megha-uav-list {
+        .sentinel-tab .megha-uav-list {
           list-style: none;
           margin: 0;
           padding: 0;
           width: 100%;
         }
 
-        .sentinel-page .megha-uav-list__item {
+        .sentinel-tab .megha-uav-list__item {
           width: 100%;
         }
 
-        .sentinel-page .megha-uav-list__item + .megha-uav-list__item {
+        .sentinel-tab .megha-uav-list__item + .megha-uav-list__item {
           margin-block-start: clamp(3rem, 8vh, 6rem);
         }
 
-        .sentinel-page .megha-aircraft-section {
+        .sentinel-tab .megha-aircraft-section {
           display: flex;
           flex-direction: column;
           gap: clamp(2.5rem, 5vh, 4rem);
           width: 100%;
         }
 
-        .sentinel-page .x-striker-section__rail {
+        .sentinel-tab .x-striker-section__rail {
           position: relative;
           flex: 0 0 auto;
           display: flex;
@@ -463,7 +326,7 @@ export default function Sentinel() {
           padding-block-start: clamp(0.35rem, 1vh, 0.75rem);
         }
 
-        .sentinel-page .x-striker-section__content {
+        .sentinel-tab .x-striker-section__content {
           position: relative;
           display: grid;
           flex: 0 0 auto;
@@ -477,17 +340,17 @@ export default function Sentinel() {
           );
         }
 
-        .sentinel-page .megha-aircraft-content {
+        .sentinel-tab .megha-aircraft-content {
           --x-striker-desc-line-height: clamp(28rem, 42vh, 36rem);
           --megha-aircraft-desc-line-height: var(--x-striker-desc-line-height);
         }
 
-        .sentinel-page .x-striker-profile {
+        .sentinel-tab .x-striker-profile {
           min-width: 0;
           padding-inline-end: clamp(1rem, 2vw, 2rem);
         }
 
-        .sentinel-page .x-striker-aircraft-stage {
+        .sentinel-tab .x-striker-aircraft-stage {
           display: grid;
           grid-template-columns:
             auto
@@ -500,8 +363,8 @@ export default function Sentinel() {
           min-width: 0;
         }
 
-        .sentinel-page .x-striker-aircraft-stage__name,
-        .sentinel-page .x-striker-aircraft-stage__year {
+        .sentinel-tab .x-striker-aircraft-stage__name,
+        .sentinel-tab .x-striker-aircraft-stage__year {
           grid-row: 1;
           align-self: start;
           margin: 0;
@@ -515,7 +378,7 @@ export default function Sentinel() {
           color: #ffffff;
         }
 
-        .sentinel-page .x-striker-aircraft-stage__name {
+        .sentinel-tab .x-striker-aircraft-stage__name {
           grid-column: 1;
           display: flex;
           align-items: center;
@@ -524,7 +387,7 @@ export default function Sentinel() {
           margin-inline-end: -0.5rem;
         }
 
-        .sentinel-page .x-striker-aircraft-stage__name::before {
+        .sentinel-tab .x-striker-aircraft-stage__name::before {
           content: "";
           flex: 0 0 auto;
           width: calc(80px + var(--x-striker-content-inset));
@@ -534,13 +397,13 @@ export default function Sentinel() {
           pointer-events: none;
         }
 
-        .sentinel-page .x-striker-aircraft-stage__year {
+        .sentinel-tab .x-striker-aircraft-stage__year {
           grid-column: 3;
           justify-self: start;
           margin-inline-start: calc(-0.5rem - 270px);
         }
 
-        .sentinel-page .x-striker-aircraft-stage__figure {
+        .sentinel-tab .x-striker-aircraft-stage__figure {
           grid-column: 2;
           grid-row: 1;
           width: 100%;
@@ -552,7 +415,7 @@ export default function Sentinel() {
           line-height: 0;
         }
 
-        .sentinel-page .x-striker-aircraft-stage__image {
+        .sentinel-tab .x-striker-aircraft-stage__image {
           display: block;
           width: clamp(52rem, 62vw, 72rem);
           max-width: none;
@@ -566,27 +429,27 @@ export default function Sentinel() {
           filter: drop-shadow(0 0.6rem 1.2rem rgba(0, 0, 0, 0.55));
         }
 
-        .sentinel-page .x-striker-aircraft-stage__image--sentinel-unit {
+        .sentinel-tab .x-striker-aircraft-stage__image--sentinel-unit {
           width: clamp(14rem, 22vw, 22rem);
           max-height: clamp(16rem, 28vw, 26rem);
           margin: 0;
           transform: none;
         }
 
-        .sentinel-page .x-striker-aircraft-stage--sentinel-unit {
+        .sentinel-tab .x-striker-aircraft-stage--sentinel-unit {
           grid-template-columns: minmax(0, 1fr);
           grid-template-rows: auto auto;
           align-items: stretch;
         }
 
-        .sentinel-page .x-striker-aircraft-stage--sentinel-unit .x-striker-aircraft-stage__name {
+        .sentinel-tab .x-striker-aircraft-stage--sentinel-unit .x-striker-aircraft-stage__name {
           grid-column: 1;
           grid-row: 1;
           justify-self: start;
           margin-inline-end: 0;
         }
 
-        .sentinel-page .x-striker-aircraft-stage--sentinel-unit .x-striker-aircraft-stage__figure {
+        .sentinel-tab .x-striker-aircraft-stage--sentinel-unit .x-striker-aircraft-stage__figure {
           grid-column: 1;
           grid-row: 2;
           display: flex;
@@ -597,7 +460,7 @@ export default function Sentinel() {
           margin-block-end: clamp(1.5rem, 3vh, 2.5rem);
         }
 
-        .sentinel-page .x-striker-aircraft-stage__type {
+        .sentinel-tab .x-striker-aircraft-stage__type {
           margin-inline-start: clamp(0.25rem, 0.45vw, 0.45rem);
           font-size: 0.42em;
           font-weight: 700;
@@ -606,34 +469,34 @@ export default function Sentinel() {
           align-self: center;
         }
 
-        .sentinel-page .x-striker-specs {
+        .sentinel-tab .x-striker-specs {
           max-width: clamp(22rem, 36vw, 34rem);
           margin: 0;
         }
 
-        .sentinel-page .x-striker-specs__row:first-child {
+        .sentinel-tab .x-striker-specs__row:first-child {
           padding-block-start: 0;
         }
 
-        .sentinel-page .x-striker-specs__row {
+        .sentinel-tab .x-striker-specs__row {
           padding-block:
             0.98rem
             clamp(0.2rem, 0.4vh, 0.3rem);
           border-block-end: 0.0625rem solid rgba(255, 255, 255, 0.72);
         }
 
-        .sentinel-page .x-striker-specs__row:last-child {
+        .sentinel-tab .x-striker-specs__row:last-child {
           border-block-end: 0;
           padding-block-end: 0;
         }
 
-        .sentinel-page .x-striker-specs__row--split {
+        .sentinel-tab .x-striker-specs__row--split {
           display: grid;
           grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: clamp(1.25rem, 3vw, 2.5rem);
         }
 
-        .sentinel-page .x-striker-specs__label {
+        .sentinel-tab .x-striker-specs__label {
           margin: 0 0 0.2rem;
           font-family: "Inter", sans-serif;
           font-size: clamp(0.625rem, 0.72vw, 0.8125rem);
@@ -644,7 +507,7 @@ export default function Sentinel() {
           color: #ffffff;
         }
 
-        .sentinel-page .x-striker-specs__value {
+        .sentinel-tab .x-striker-specs__value {
           margin: 0;
           font-family: "Inter", sans-serif;
           font-size: clamp(1rem, 1.15vw, 1.25rem);
@@ -653,7 +516,7 @@ export default function Sentinel() {
           color: #ffffff;
         }
 
-        .sentinel-page .x-striker-specs__value--megha {
+        .sentinel-tab .x-striker-specs__value--megha {
           display: block;
           font-family: "Yapari Trial", sans-serif;
           font-size: clamp(1.35rem, 1.85vw, 1.55rem);
@@ -664,7 +527,7 @@ export default function Sentinel() {
           color: #ffffff;
         }
 
-        .sentinel-page .megha-aircraft-content__tags {
+        .sentinel-tab .megha-aircraft-content__tags {
           display: flex;
           flex-wrap: nowrap;
           align-items: center;
@@ -682,11 +545,11 @@ export default function Sentinel() {
           scrollbar-width: none;
         }
 
-        .sentinel-page .megha-aircraft-content__tags::-webkit-scrollbar {
+        .sentinel-tab .megha-aircraft-content__tags::-webkit-scrollbar {
           display: none;
         }
 
-        .sentinel-page .megha-aircraft-content__tags-tag {
+        .sentinel-tab .megha-aircraft-content__tags-tag {
           display: inline-flex;
           align-items: center;
           justify-content: flex-start;
@@ -708,12 +571,12 @@ export default function Sentinel() {
           text-align: left;
         }
 
-        .sentinel-page .x-striker-specs,
-        .sentinel-page .megha-aircraft-content__tags {
+        .sentinel-tab .x-striker-specs,
+        .sentinel-tab .megha-aircraft-content__tags {
           margin-inline-start: clamp(4rem, 8vw, 8rem);
         }
 
-        .sentinel-page .x-striker-desc {
+        .sentinel-tab .x-striker-desc {
           position: relative;
           align-self: start;
           min-width: 0;
@@ -724,7 +587,7 @@ export default function Sentinel() {
           padding-inline-start: clamp(1rem, 2vw, 1.5rem);
         }
 
-        .sentinel-page .megha-aircraft-content__desc-line {
+        .sentinel-tab .megha-aircraft-content__desc-line {
           position: absolute;
           inset-block-start: 0;
           inset-inline-start: 0;
@@ -734,7 +597,7 @@ export default function Sentinel() {
           pointer-events: none;
         }
 
-        .sentinel-page .x-striker-desc__connector {
+        .sentinel-tab .x-striker-desc__connector {
           position: absolute;
           inset-inline-start: auto;
           inset-inline-end: 100%;
@@ -747,7 +610,7 @@ export default function Sentinel() {
           pointer-events: none;
         }
 
-        .sentinel-page .x-striker-desc__copy {
+        .sentinel-tab .x-striker-desc__copy {
           max-width: 31rem;
           margin: 0;
           font-family: "Inter", sans-serif;
@@ -758,11 +621,11 @@ export default function Sentinel() {
           color: rgba(255, 255, 255, 0.96);
         }
 
-        .sentinel-page .x-striker-desc__copy + .x-striker-desc__copy {
+        .sentinel-tab .x-striker-desc__copy + .x-striker-desc__copy {
           margin-block-start: clamp(0.75rem, 1.4vh, 1.125rem);
         }
 
-        .sentinel-page .megha-aircraft-content__footer {
+        .sentinel-tab .megha-aircraft-content__footer {
           --megha-aircraft-content-inset: clamp(0.75rem, 1.5vw, 1.5rem);
           --megha-aircraft-footer-offset: clamp(1.5rem, 3vw, 3rem);
           width: 100%;
@@ -774,11 +637,11 @@ export default function Sentinel() {
           overflow-x: hidden;
         }
 
-        .sentinel-page .megha-aircraft-content__footer-inner {
+        .sentinel-tab .megha-aircraft-content__footer-inner {
           width: 100%;
         }
 
-        .sentinel-page .megha-aircraft-content__footer-copy {
+        .sentinel-tab .megha-aircraft-content__footer-copy {
           width: min(62vw, 64rem);
           max-width: 72rem;
           margin: 0;
@@ -796,11 +659,11 @@ export default function Sentinel() {
           color: rgba(255, 255, 255, 0.96);
         }
 
-        .sentinel-page .megha-aircraft-content__footer-copy + .megha-aircraft-content__footer-copy {
+        .sentinel-tab .megha-aircraft-content__footer-copy + .megha-aircraft-content__footer-copy {
           margin-block-start: clamp(0.3rem, 0.7vh, 0.55rem);
         }
 
-        .sentinel-page .sr-only {
+        .sentinel-tab .sr-only {
           position: absolute;
           width: 0.0625rem;
           height: 0.0625rem;
@@ -813,112 +676,78 @@ export default function Sentinel() {
         }
 
         @media (max-width: 64rem) and (min-width: 48rem) {
-          .sentinel-page .x-striker-section__content {
+          .sentinel-tab .x-striker-section__content {
             grid-template-columns: minmax(0, 1.2fr) minmax(19rem, 0.8fr);
           }
 
-          .sentinel-page .x-striker-aircraft-stage {
+          .sentinel-tab .x-striker-aircraft-stage {
             grid-template-columns:
               auto
               minmax(12rem, 1.6fr)
               auto;
           }
 
-          .sentinel-page .x-striker-desc {
+          .sentinel-tab .x-striker-desc {
             margin-inline-start: calc(clamp(1rem, 2vw, 2rem) + 45px);
           }
 
-          .sentinel-page .x-striker-specs {
+          .sentinel-tab .x-striker-specs {
             max-width: 100%;
           }
         }
 
         @media (max-width: 47.999rem) {
-          .sentinel-page .sentinel-title {
+          .sentinel-tab .sentinel-title {
             font-size: clamp(2.5rem, 12vw, 4.25rem);
             letter-spacing: clamp(8px, 2.8vw, 20px);
           }
 
-          .sentinel-page .megha-canvas__rail-copy-group {
+          .sentinel-tab .megha-canvas__rail-copy-group {
             display: none;
           }
 
-          .sentinel-page .megha-hero__stage {
-            flex-direction: column;
-            align-items: stretch;
-            padding-inline: 0;
-            margin-inline: 0;
-            gap: clamp(0.5rem, 2vw, 0.85rem);
-          }
-
-          .sentinel-page .megha-hero__hangar {
-            position: absolute;
-            right: auto;
-            left: 0;
-            top: auto;
-            bottom: calc(100% + clamp(0.35rem, 1vw, 0.5rem));
-            width: auto;
-            margin: 0;
-            writing-mode: horizontal-tb;
-            transform: none;
-            pointer-events: auto;
-            font-size: clamp(1.1rem, 4.5vw, 1.45rem);
-          }
-
-          .sentinel-page .megha-hero__frame {
-            min-height: clamp(28rem, 68vh, 42rem);
-            margin-inline: 0;
-          }
-
-          .sentinel-page .megha-hero__tagline {
-            width: min(100%, 36rem);
-            font-size: clamp(0.8125rem, 3.2vw, 1.05rem);
-            line-height: 1.5;
-            letter-spacing: 0.04em;
-          }
-
-          .sentinel-page .x-striker-section__content {
+          .sentinel-tab .x-striker-section__content {
             grid-template-columns: 1fr;
             row-gap: clamp(3.5rem, 8vw, 4.5rem);
           }
 
-          .sentinel-page .x-striker-profile {
+          .sentinel-tab .x-striker-profile {
             padding-inline-end: 0;
           }
 
-          .sentinel-page .x-striker-aircraft-stage {
+          .sentinel-tab .x-striker-aircraft-stage {
             grid-template-columns: 1fr auto;
             grid-template-rows: auto auto;
             row-gap: clamp(1.5rem, 5vh, 2.5rem);
           }
 
-          .sentinel-page .x-striker-aircraft-stage__name,
-          .sentinel-page .x-striker-aircraft-stage__year {
+          .sentinel-tab .x-striker-aircraft-stage__name,
+          .sentinel-tab .x-striker-aircraft-stage__year {
             grid-row: 1;
             padding-block-start: 0;
           }
 
-          .sentinel-page .x-striker-aircraft-stage__name {
+          .sentinel-tab .x-striker-aircraft-stage__name {
             grid-column: 1;
             justify-self: start;
           }
 
-          .sentinel-page .x-striker-aircraft-stage__name::before {
+          .sentinel-tab .x-striker-aircraft-stage__name::before {
             width: var(--x-striker-content-inset);
           }
 
-          .sentinel-page .x-striker-aircraft-stage__year {
+          .sentinel-tab .x-striker-aircraft-stage__year {
             grid-column: 2;
             justify-self: end;
             margin-inline-start: 0;
           }
 
-          .sentinel-page .x-striker-aircraft-stage__figure {
+          .sentinel-tab .x-striker-aircraft-stage__figure {
             grid-column: 1 / -1;
             grid-row: 2;
           }
 
-          .sentinel-page .x-striker-aircraft-stage__image {
+          .sentinel-tab .x-striker-aircraft-stage__image {
             width: clamp(20rem, 95vw, 34rem);
             max-height: clamp(22rem, 58vh, 36rem);
             margin: 0;
@@ -926,22 +755,22 @@ export default function Sentinel() {
             transform: none;
           }
 
-          .sentinel-page .x-striker-aircraft-stage__image--sentinel-unit {
+          .sentinel-tab .x-striker-aircraft-stage__image--sentinel-unit {
             width: clamp(11rem, 42vw, 16rem);
             max-height: clamp(12rem, 48vw, 18rem);
           }
 
-          .sentinel-page .x-striker-aircraft-stage--sentinel-unit .x-striker-aircraft-stage__figure {
+          .sentinel-tab .x-striker-aircraft-stage--sentinel-unit .x-striker-aircraft-stage__figure {
             margin-block-start: clamp(2rem, 5vh, 3rem);
             margin-block-end: clamp(1rem, 2.5vh, 1.5rem);
           }
 
-          .sentinel-page .x-striker-specs {
+          .sentinel-tab .x-striker-specs {
             max-width: 100%;
             margin-inline-start: 0;
           }
 
-          .sentinel-page .x-striker-desc {
+          .sentinel-tab .x-striker-desc {
             margin-block-start: clamp(2.5rem, 5vh, 3.5rem);
             margin-inline-start: 45px;
             padding-inline-start: 0;
@@ -949,12 +778,12 @@ export default function Sentinel() {
             border-block-start: 0.0625rem solid rgba(255, 255, 255, 0.4);
           }
 
-          .sentinel-page .megha-aircraft-content__desc-line,
-          .sentinel-page .x-striker-desc__connector {
+          .sentinel-tab .megha-aircraft-content__desc-line,
+          .sentinel-tab .x-striker-desc__connector {
             display: none;
           }
 
-          .sentinel-page .megha-aircraft-content__tags {
+          .sentinel-tab .megha-aircraft-content__tags {
             margin-inline-start: 0;
             max-width: none;
             width: max-content;
@@ -962,7 +791,7 @@ export default function Sentinel() {
             overflow-x: auto;
           }
 
-          .sentinel-page .megha-aircraft-content__footer-copy {
+          .sentinel-tab .megha-aircraft-content__footer-copy {
             width: auto;
             max-width: 100%;
             margin-inline-start: var(--megha-aircraft-content-inset);
@@ -972,65 +801,53 @@ export default function Sentinel() {
         }
 
         @media (max-width: 30rem) {
-          .sentinel-page .megha-canvas__header {
-            padding-inline: clamp(0.75rem, 3vw, 1.25rem);
-            padding-block-start: clamp(2.5rem, 12vw, 3rem);
-            padding-block-end: 0;
-          }
-
-          .sentinel-page .x-striker-specs__row--split {
+          .sentinel-tab .x-striker-specs__row--split {
             grid-template-columns: 1fr;
           }
 
-          .sentinel-page .sentinel-frame__meta {
+          .sentinel-tab .sentinel-frame__meta {
             font-size: 0.5rem;
           }
         }
       `}</style>
 
-      <div className="megha-canvas__container">
-        <header className="megha-canvas__header">
-          <h1
-            id="sentinel-title"
-            className="sentinel-title"
-            aria-label="SENTINEL"
-          >
-            SEN<span className="sentinel-title__t">T</span>INEL
-          </h1>
-          <p className="megha-hero__tagline">
-            C-UAS / BORDER SECURITY &amp; PATROL
-          </p>
-        </header>
+      <div className="relative z-10 flex flex-col">
+        <div className="megha-canvas__container">
+        <MeghaAppBar
+          titleId="sentinel-title"
+          titleClassName="sentinel-title"
+          ariaLabel="SENTINEL"
+          title={
+            <>
+              SEN<span className="sentinel-title__t">T</span>INEL
+            </>
+          }
+          tagline="C-UAS / BORDER SECURITY & PATROL"
+          frameClassName="megha-hero__frame--top"
+          frameChildren={
+            <>
+              <p className="sentinel-frame__meta sentinel-frame__meta--tl">
+                SNTRY-M // EO-IR NODE
+                <br />
+                EDGE-AI SURVEILLANCE
+              </p>
+              <p className="sentinel-frame__meta sentinel-frame__meta--tr">
+                GRID 48R-GQ-TR52
+                <br />
+                2026-07-17 // 06:45Z
+              </p>
 
-        <div className="megha-hero__stage">
-          <div className="megha-hero__frame">
-            <p className="megha-hero__hangar" aria-label="Hangar 18">
-              HANGAR <span className="megha-hero__hangar-num">1</span>8
-            </p>
-
-            <p className="sentinel-frame__meta sentinel-frame__meta--tl">
-              SNTRY-M // EO-IR NODE
-              <br />
-              EDGE-AI SURVEILLANCE
-            </p>
-            <p className="sentinel-frame__meta sentinel-frame__meta--tr">
-              GRID 48R-GQ-TR52
-              <br />
-              2026-07-17 // 06:45Z
-            </p>
-
-            <span
-              className="sentinel-frame__corner sentinel-frame__corner--bl"
-              aria-hidden="true"
-            />
-            <span
-              className="sentinel-frame__corner sentinel-frame__corner--br"
-              aria-hidden="true"
-            />
-
-            <div className="megha-hero__viewport" aria-hidden="true" />
-          </div>
-        </div>
+              <span
+                className="sentinel-frame__corner sentinel-frame__corner--bl"
+                aria-hidden="true"
+              />
+              <span
+                className="sentinel-frame__corner sentinel-frame__corner--br"
+                aria-hidden="true"
+              />
+            </>
+          }
+        />
 
         <div className="megha-canvas__rail">
           <div className="megha-canvas__rail-copy-group" aria-hidden="true">
@@ -1072,7 +889,10 @@ export default function Sentinel() {
             ))}
           </ul>
         </div>
+        </div>
+
+        <Footer showReadmeBridge={false} variant="research" />
       </div>
-    </section>
+    </div>
   );
 }

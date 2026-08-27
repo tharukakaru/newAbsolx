@@ -175,7 +175,7 @@ export default function App() {
           ) : (
             <HomePage />
           )}
-          {!isResearchTabPage ? (
+          {!isResearchTabPage && !isSentinelPage ? (
             <Footer showReadmeBridge={isHomePage} variant="space" />
           ) : null}
         </>
