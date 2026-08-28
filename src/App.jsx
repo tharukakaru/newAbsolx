@@ -12,6 +12,8 @@ import Drone from "./components/drone";
 import DroneSubSection from "./components/dronesub-section";
 import ResearchPage from "./components/ResearchPage";
 import ArsOs from "./components/ArsOs";
+import DefenseSystemsSection from "./components/sections/DefenseSystemsSection";
+import OperationalApplications from "./components/sections/OperationalAppsSection";
 
 
 function HomePage() {

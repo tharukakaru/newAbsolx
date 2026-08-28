@@ -1,176 +1,170 @@
-import { useRef } from "react";
-import useTextShuffle from "../../Utils/useTextShuffle";
+import { useEffect, useRef } from "react";
+import * as THREE from "three";
 
-export default function OperationalAppsSection() {
-  const operationalRef = useRef(null);
-  const applicationsRef = useRef(null);
+const APPLICATIONS_DATA = [
+  { num: "01", text: "AREA ", highlight: "RECONNAISSANCE" },
+  { num: "02", text: "SEARCH & ", highlight: "RESCUE" },
+  { num: "03", highlight: "BORDER ", textAfter: "SECURITY & PATROL" },
+  { num: "04", highlight: "COUNTER", textAfter: "–UAS & PROTECTION" },
+  {
+    num: "05",
+    text: "PRECISION ",
+    highlight: "STRIKE",
+    textAfter: " / LOITERING\nMUNITION",
+  },
+  { num: "06", text: "MARITIME ", highlight: "ISR" },
+  {
+    num: "07",
+    highlight: "COUNTER",
+    textAfter: "–UAS & FORCE\nPROTECTION",
+  },
+];
 
-  useTextShuffle(operationalRef, {
-    viewportOnly: true,
-    animateOnLoad: false,
-    triggerPoint: 0.3,
-  });
+export default function OperationalAppsSection({ className = "" }) {
+  const canvasRef = useRef(null);
 
-  useTextShuffle(applicationsRef, {
-    viewportOnly: true,
-    animateOnLoad: false,
-    triggerPoint: 0.3,
-  });
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    let disposed = false;
+    let animationFrame = 0;
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
+    });
+    renderer.setClearColor(0x000000, 0);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    camera.position.set(0, 3.5, 10);
+    camera.lookAt(0, 0, 0);
+
+    // Wireframe Terrain Background
+    const planeGeo = new THREE.PlaneGeometry(20, 12, 80, 50);
+    planeGeo.rotateX(-Math.PI / 2.2);
+
+    const pos = planeGeo.attributes.position;
+    for (let i = 0; i < pos.count; i++) {
+      const x = pos.getX(i);
+      const z = pos.getZ(i);
+      const elev = Math.sin(x * 0.4) * Math.cos(z * 0.4) * 1.5 + Math.sin(x * 0.8) * 0.5;
+      pos.setY(i, elev - 1.2);
+    }
+    planeGeo.computeVertexNormals();
+
+    const wireframeGeo = new THREE.WireframeGeometry(planeGeo);
+    const lineMat = new THREE.LineBasicMaterial({
+      color: 0x27272a,
+      transparent: true,
+      opacity: 0.7,
+    });
+    const terrain = new THREE.LineSegments(wireframeGeo, lineMat);
+    scene.add(terrain);
+
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      const width = Math.max(2, Math.round(rect.width));
+      const height = Math.max(2, Math.round(rect.height));
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height, false);
+    };
+
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(canvas);
+    resize();
+
+    const animate = () => {
+      if (disposed) return;
+      animationFrame = window.requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    };
+
+    animate();
+
+    return () => {
+      disposed = true;
+      window.cancelAnimationFrame(animationFrame);
+      resizeObserver.disconnect();
+      planeGeo.dispose();
+      wireframeGeo.dispose();
+      lineMat.dispose();
+      renderer.dispose();
+    };
+  }, []);
 
   return (
-    <section className="relative z-[60] bg-black py-[100px] md:py-[150px]">
-      <div className="relative w-full max-w-6xl mx-auto px-4 md:px-8">
-        {/* Top glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[radial-gradient(ellipse,rgba(34,197,94,0.1),transparent_70%)] blur-3xl pointer-events-none" />
+    <section className={`relative w-full bg-black text-white font-mono overflow-hidden ${className}`}>
+      {/* 3D Wireframe Terrain Background */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full block z-0 opacity-70 pointer-events-none"
+      />
 
-        {/* Title */}
-        <div className="text-center mb-[80px]">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <h2
-              ref={operationalRef}
-              data-initial="1512091801090111"
-              data-target="OPERATIONAL"
-              className="
-                text-[clamp(36px,4vw,64px)] font-bold font-identifer-mono
-                tracking-[0.12em] text-white
-                transition-all duration-300
-                uppercase
-              "
-              style={{
-                background: "linear-gradient(135deg, #86efac 0%, #22c55e 100%)",
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              OPERATIONAL
-            </h2>
-            <h2
-              ref={applicationsRef}
-              data-initial="01070116012309301918"
-              data-target="APPLICATIONS"
-              className="
-                text-[clamp(36px,4vw,64px)] font-bold font-identifer-mono
-                tracking-[0.12em] text-white
-                transition-all duration-300
-                uppercase
-              "
-              style={{
-                background: "linear-gradient(135deg, #fbbf24 0%, #f97316 100%)",
-                backgroundClip: "text",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
-              APPLICATIONS
-            </h2>
-          </div>
-          <p className="text-gray-400 text-sm md:text-base tracking-[0.08em] uppercase">
-            Multi-Domain Deployment & Integration
-          </p>
+      {/* Grid Content */}
+      <div className="relative z-10 max-w-6xl mx-auto py-16 px-4 flex flex-col items-center">
+        
+        {/* Title Header with Corner Reticle Brackets */}
+        <div className="relative px-8 py-3 mb-16 text-center">
+          <span className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-zinc-400" />
+          <span className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-zinc-400" />
+
+          <h2 className="text-2xl md:text-4xl font-bold tracking-[0.25em] uppercase font-sans">
+            OPERATI<span className="text-yellow-400">O</span>NAL{" "}
+            <span className="font-light tracking-[0.2em] text-zinc-100">APPLICATIONS</span>
+          </h2>
         </div>
 
-        {/* Applications Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-[80px]">
-          {[
-            {
-              title: "Aerial Reconnaissance",
-              icon: "🛸",
-              color: "from-blue-500/30 to-cyan-500/30",
-              borderColor: "border-blue-500/30",
-              textColor: "text-blue-400",
-            },
-            {
-              title: "Search & Rescue",
-              icon: "🚁",
-              color: "from-emerald-500/30 to-green-500/30",
-              borderColor: "border-green-500/30",
-              textColor: "text-green-400",
-            },
-            {
-              title: "Border Security",
-              icon: "🛡️",
-              color: "from-orange-500/30 to-red-500/30",
-              borderColor: "border-red-500/30",
-              textColor: "text-orange-400",
-            },
-            {
-              title: "Disaster Response",
-              icon: "⚠️",
-              color: "from-yellow-500/30 to-orange-500/30",
-              borderColor: "border-yellow-500/30",
-              textColor: "text-yellow-400",
-            },
-          ].map((app, idx) => (
-            <div
-              key={idx}
-              className={`
-                p-6 rounded-lg border ${app.borderColor}
-                bg-gradient-to-br ${app.color}
-                hover:border-current hover:shadow-lg transition-all duration-300
-                group cursor-pointer
-              `}
-            >
-              <div className="text-4xl mb-3">{app.icon}</div>
-              <h3 className={`${app.textColor} font-bold mb-3 tracking-[0.08em] uppercase text-sm`}>
-                {app.title}
-              </h3>
-              <div className="h-0.5 w-0 bg-current group-hover:w-full transition-all duration-300" />
-            </div>
-          ))}
-        </div>
-
-        {/* Integration Ecosystem */}
-        <div className="p-8 border border-gray-700/50 rounded-lg bg-gray-950/50 mb-[80px]">
-          <h3 className="text-green-400 font-bold mb-8 text-lg tracking-[0.1em] uppercase">
-            Integration Ecosystem
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {[
-              "SATELLITE",
-              "GROUND CONTROL",
-              "COMMAND CENTER",
-              "PREDICTION ENGINE",
-              "DATA ANALYTICS",
-              "MOBILE INTERFACE",
-            ].map((module, idx) => (
-              <div
-                key={idx}
-                className="
-                  p-4 border border-green-500/30 rounded bg-green-950/20
-                  hover:bg-green-950/40 transition-colors duration-300
-                  text-center
-                "
-              >
-                <div className="text-xs text-green-400 font-bold tracking-wider uppercase">
-                  {module}
-                </div>
-              </div>
+        {/* Crosshair Tactical Grid */}
+        <div className="w-full border-t border-zinc-800">
+          {/* Row 1 (01 - 03) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 border-b border-zinc-800">
+            {APPLICATIONS_DATA.slice(0, 3).map((item) => (
+              <GridCell key={item.num} item={item} />
             ))}
           </div>
+
+          {/* Row 2 (04 - 06) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 border-b border-zinc-800">
+            {APPLICATIONS_DATA.slice(3, 6).map((item) => (
+              <GridCell key={item.num} item={item} />
+            ))}
+          </div>
+
+          {/* Row 3 (07 Centered) */}
+          <div className="flex justify-center border-b border-zinc-800">
+            <div className="w-full md:w-1/3">
+              <GridCell item={APPLICATIONS_DATA[6]} isLast />
+            </div>
+          </div>
         </div>
 
-        {/* Performance Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            { metric: "DEPLOYMENT RANGE", value: "500+ km" },
-            { metric: "OPERATIONAL TIME", value: "12-24 hrs" },
-            { metric: "DATA PROCESSING", value: "8.6 Gbps" },
-          ].map((stat, idx) => (
-            <div
-              key={idx}
-              className="p-6 border border-green-500/30 rounded-lg bg-black text-center group hover:border-green-400/60 transition-colors"
-            >
-              <div className="text-xs text-green-500 mb-3 tracking-[0.12em] uppercase">
-                {stat.metric}
-              </div>
-              <div className="text-3xl font-bold text-green-400 group-hover:text-green-300 transition-colors">
-                {stat.value}
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
+  );
+}
+
+function GridCell({ item, isLast = false }) {
+  return (
+    <div
+      className={`relative p-8 flex flex-col items-center text-center min-h-[140px] justify-center ${
+        !isLast ? "md:border-r border-zinc-800 last:border-r-0" : ""
+      }`}
+    >
+      <span className="text-xs text-zinc-500 font-semibold mb-3 tracking-widest uppercase">
+        {item.num}
+      </span>
+      <p className="text-sm md:text-base font-bold tracking-widest leading-snug whitespace-pre-line text-zinc-100">
+        {item.text}
+        {item.highlight && (
+          <span className="text-yellow-400">{item.highlight}</span>
+        )}
+        {item.textAfter}
+      </p>
+    </div>
   );
 }

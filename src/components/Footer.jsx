@@ -15,30 +15,6 @@ import linkedin from "../assets/footer/linkedin.svg";
 import tiktok from "../assets/footer/tiktok.svg";
 import x from "../assets/footer/x.svg";
 
-// Fallback flag (this file EXISTS in your project already)
-import sriLankaSvg from "../assets/footer/sri_lanka.svg";
-
-/**
- * ƒo. SAFE IMAGE LOADING (Vite)
- * This avoids build errors when "another.png" doesn't exist.
- * - If you later add: src/assets/footer/another.png -> it will auto-load.
- * - If not found -> it uses sri_lanka.svg.
- */
-const FLAG_IMAGES = import.meta.glob("../assets/footer/*.{png,jpg,jpeg,webp}", {
-  eager: true,
-  import: "default",
-});
-
-const sriLankaPng =
-  FLAG_IMAGES["../assets/footer/another.png"] ||
-  FLAG_IMAGES["../assets/footer/sri_lanka.png"] ||
-  FLAG_IMAGES["../assets/footer/srilanka.png"];
-
-const sriLankaFlagSrc = sriLankaPng ?? sriLankaSvg;
-
-/**
- * Data separated from UI = clean + maintainable.
- */
 const ABOUT_LINKS = [
   { label: "FAQ", href: "#" },
   { label: "BLOG", href: "#" },
@@ -62,22 +38,18 @@ const SOCIAL_LINKS = [
   { label: "GitHub", href: "#", icon: github },
 ];
 
-/**
- * Link column component (About / Info)
- */
 function FooterLinkGroup({ title, links, compact = false }) {
   const titleClass = compact
     ? "font-elios text-[6px] font-bold tracking-[0.18em] text-white/90 sm:text-[9px] sm:tracking-[0.22em] md:text-[11px] md:tracking-[0.25em]"
     : "font-elios text-sm font-bold tracking-[0.28em] text-white/90";
 
   const listClass = compact
-    ? "mt-2 space-y-1 font-elios text-[4.5px] tracking-[0.08em] text-white/58 sm:mt-3 sm:text-[7px] sm:tracking-[0.1em] md:mt-4 md:space-y-2 md:text-[9px] md:tracking-[0.12em]"
-    : "mt-4 space-y-2 font-elios text-[11px] tracking-[0.14em] text-white/55";
+    ? "mt-2 space-y-1 font-elios text-[4.5px] tracking-[0.08em] text-white/70 sm:mt-3 sm:text-[7px] sm:tracking-[0.1em] md:mt-4 md:space-y-2 md:text-[9px] md:tracking-[0.12em]"
+    : "mt-4 space-y-2 font-elios text-[11px] tracking-[0.14em] text-white/70";
 
   return (
     <nav aria-label={title}>
       <h3 className={titleClass}>{title}</h3>
-
       <ul className={listClass}>
         {links.map((item) => (
           <li key={item.label}>
@@ -94,9 +66,6 @@ function FooterLinkGroup({ title, links, compact = false }) {
   );
 }
 
-/**
- * Bracket-corner button (matches reference style)
- */
 function BracketButton({
   href = "#",
   variant = "slate",
@@ -106,8 +75,8 @@ function BracketButton({
 }) {
   const variantBg =
     variant === "maroon"
-      ? "bg-gradient-to-br from-[#4a1b2a]/85 to-[#16050b]/85"
-      : "bg-gradient-to-br from-[#3b4356]/70 to-[#1b2233]/85";
+      ? "bg-gradient-to-br from-[#421523]/50 to-[#120408]/85"
+      : "bg-gradient-to-br from-[#2a3244]/75 to-[#131825]/85";
   const sizeClass = compact
     ? "h-6 px-2 text-[4.5px] tracking-[0.1em] sm:h-8 sm:px-4 sm:text-[7px] sm:tracking-[0.18em] md:h-9 md:px-6 md:text-[9px] md:tracking-[0.22em]"
     : "h-11 px-7 text-[11px] tracking-[0.26em]";
@@ -121,16 +90,15 @@ function BracketButton({
       className={[
         "group relative inline-flex items-center justify-center",
         "font-elios uppercase text-white/85 whitespace-nowrap",
-        "border border-white/25 backdrop-blur-sm",
+        "border border-white/22 backdrop-blur-sm",
         "transition-all duration-200",
-        "hover:border-white/40 hover:text-white hover:shadow-[0_0_20px_rgba(140,170,255,0.10)]",
+        "hover:border-white/40 hover:text-white hover:shadow-[0_0_20px_rgba(80,120,220,0.18)]",
         "focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
         sizeClass,
         variantBg,
         className,
       ].join(" ")}
     >
-      {/* Corner brackets (thin like the screenshot) */}
       <span
         aria-hidden="true"
         className={`pointer-events-none absolute -left-[2px] -top-[2px] ${cornerSize} border-l border-t border-white/80`}
@@ -147,13 +115,10 @@ function BracketButton({
         aria-hidden="true"
         className={`pointer-events-none absolute -right-[2px] -bottom-[2px] ${cornerSize} border-b border-r border-white/80`}
       />
-
-      {/* Inner subtle border */}
       <span
         aria-hidden="true"
         className="pointer-events-none absolute inset-[3px] border border-white/10"
       />
-
       <span className="relative z-10">{children}</span>
     </a>
   );
@@ -164,17 +129,14 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
   const isArcOsFooter = variant === "arc-os";
   const isCompactFooter = isResearchFooter || isArcOsFooter;
 
-  /**
-   * Title tone: white + light-blue mix (NOT pure white)
-   */
-  const titleTone =
-    "bg-gradient-to-b from-white via-[#B9C9FF] to-white/75 bg-clip-text text-transparent drop-shadow-[0_0_18px_rgba(150,180,255,0.18)]";
+  // Solid white text with subtle blue ambient drop-shadow
+  const titleTone = "text-white drop-shadow-[0_0_22px_rgba(60,110,210,0.3)]";
 
   return (
     <footer
       className={[
-        "relative overflow-hidden text-white font-elios z-50",
-        isArcOsFooter ? "arc-os-footer bg-transparent" : "bg-black",
+        "relative overflow-hidden text-white font-elios z-50 bg-black w-full",
+        isArcOsFooter ? "arc-os-footer bg-transparent" : "",
         !isResearchFooter && !isArcOsFooter ? "home-footer" : "",
         isResearchFooter
           ? "research-footer min-h-[400px] sm:min-h-[460px] md:min-h-[500px]"
@@ -192,113 +154,73 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
           font-display: swap;
         }
 
-        .research-footer {
-          background: #000;
-        }
-
-        .arc-os-footer {
-          margin-top: clamp(-140px, -8vw, -96px);
-          padding-top: clamp(176px, 14vw, 230px);
-          background: transparent;
-        }
-
-        .arc-os-footer-shader {
-          position: absolute;
-          inset: 0;
-          background:
-            radial-gradient(52% 34% at 100% 0%, rgba(43, 37, 16, 0.78), rgba(43, 37, 16, 0.28) 48%, transparent 78%),
-            radial-gradient(58% 36% at 0% 0%, rgba(33, 40, 92, 0.64), rgba(33, 40, 92, 0.2) 48%, transparent 76%),
-            linear-gradient(180deg, #000 0%, #090b1b 22%, #1f275d 67%, #3b459a 100%);
-          -webkit-mask-image: linear-gradient(
-            to bottom,
-            transparent 0%,
-            rgba(0,0,0,0.18) 6%,
-            rgba(0,0,0,0.45) 11%,
-            rgba(0,0,0,0.72) 15%,
-            #000 19%
-          );
-          mask-image: linear-gradient(
-            to bottom,
-            transparent 0%,
-            rgba(0,0,0,0.18) 6%,
-            rgba(0,0,0,0.45) 11%,
-            rgba(0,0,0,0.72) 15%,
-            #000 19%
-          );
-          pointer-events: none;
-        }
-
         .home-footer {
-          min-height: clamp(1180px, 96vw, 1845px);
+          position: relative;
+          width: 100%;
+          min-height: clamp(600px, 55vw, 950px);
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
         }
 
-        /*
-          UPDATED: wrapper now controls size/position for BOTH the
-          earth image and the blue tint layer above it, so they always
-          line up perfectly no matter the viewport width.
-        */
         .home-footer-figure-wrap {
-          position: absolute;
-          z-index: 8;
-          left: 50%;
-          bottom: 0;
-          width: min(98vw, 1680px);
-          height: min(150vw, 790px);
-          transform: translateX(-50%);
-          pointer-events: none;
-          user-select: none;
-        }
-
-        .home-footer-figure-img {
           position: absolute;
           inset: 0;
           width: 100%;
           height: 100%;
-          object-fit: fill;
-          filter:
-            drop-shadow(-28px 24px 50px rgba(89, 76, 34, 0.18))
-            drop-shadow(28px 24px 54px rgba(45, 52, 116, 0.24));
+          pointer-events: none;
+          user-select: none;
+          overflow: hidden;
         }
 
-        /* Transparent blue tint sitting on top of the earth image */
+        .home-footer-figure-img {
+          position: absolute;
+          left: 50%;
+          bottom: -10vw;
+          width: 105vw;
+          max-width: none;
+          height: auto;
+          min-height: 90%;
+          transform: translateX(-50%);
+          object-fit: cover;
+          object-position: top center;
+        }
+
         .home-footer-figure-tint {
           position: absolute;
           inset: 0;
-          background:
-            radial-gradient(120% 85% at 50% 0%, rgba(90, 130, 255, 0.30) 0%, rgba(40, 55, 140, 0.20) 45%, rgba(0, 0, 0, 0) 78%),
-            linear-gradient(180deg, rgba(25, 45, 130, 0.10) 0%, rgba(25, 45, 130, 0.38) 55%, rgba(10, 18, 60, 0.55) 100%);
-          mix-blend-mode: color;
-          opacity: 0.9;
+          background: 
+            radial-gradient( ellipse 75% 55% at 50% 65%, rgba(20, 50, 145, 0.45) 0%, rgba(8, 20, 55, 0.68) 75%, rgba(0, 0, 0, 0.9) 100% ),
+            linear-gradient( 180deg, rgba(0,0,0,0.88) 0%, rgba(12, 28, 80, 0.38) 45%, rgba(5, 12, 38, 0.75) 100% );
+          mix-blend-mode: screen;
+        }
+
+        .home-side-glow {
+          position: absolute;
+          pointer-events: none;
+          width: 45vw;
+          height: 30vw;
+          border-radius: 100%;
+          filter: blur(100px);
+          opacity: 0.48;
+        }
+
+        .home-side-glow--gold {
+          left: -12vw;
+          top: 40%;
+          background: #d4ae48;
+        }
+
+        .home-side-glow--blue {
+          right: -12vw;
+          top: 40%;
+          background: #2e52d4;
         }
 
         .home-footer-content {
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: clamp(24px, 2.6vw, 50px);
-        }
-
-        .research-footer-glow {
-          position: absolute;
-          width: 2423px;
-          height: 665px;
-          border-radius: 2423px;
-          filter: blur(340.5px);
-          pointer-events: none;
-        }
-
-        .research-footer-glow--gold {
-          left: -1370px;
-          top: 24%;
-          background: #F3D05D;
-          opacity: 0.54;
-        }
-
-        .research-footer-glow--blue {
-          right: -1280px;
-          top: 24%;
-          background: #5D6EF3;
-          opacity: 0.64;
+          position: relative;
+          z-index: 20;
+          width: 100%;
         }
 
         .research-footer-hashtag {
@@ -315,126 +237,25 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
 
         .footer-animated-line {
           background:
-            linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.82) 5%, rgba(255,255,255,0.82) 95%, transparent 100%),
-            linear-gradient(90deg, transparent 0%, rgba(255,255,210,0.08) 18%, rgba(255,255,180,0.24) 38%, rgba(255,255,255,0.92) 50%, rgba(255,255,150,0.24) 62%, rgba(255,255,120,0.08) 82%, transparent 100%);
+            linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.72) 5%, rgba(255,255,255,0.72) 95%, transparent 100%),
+            linear-gradient(90deg, transparent 0%, rgba(160,190,255,0.06) 18%, rgba(140,170,255,0.2) 38%, rgba(255,255,255,0.85) 50%, rgba(140,170,255,0.2) 62%, rgba(160,190,255,0.06) 82%, transparent 100%);
           background-repeat: no-repeat;
           background-size: 100% 100%, 30% 100%;
           background-position: 0 0, -34% 0;
-          filter: drop-shadow(0 0 4px rgba(255,255,160,0.18));
+          filter: drop-shadow(0 0 4px rgba(100,140,240,0.22));
           will-change: background-position;
           animation: footerLineRunX 4.4s linear infinite;
         }
 
         @keyframes footerLineRunX {
-          0% {
-            background-position: 0 0, -34% 0;
-          }
-          100% {
-            background-position: 0 0, 134% 0;
-          }
+          0% { background-position: 0 0, -34% 0; }
+          100% { background-position: 0 0, 134% 0; }
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .footer-animated-line {
-            animation: none;
-          }
-        }
-
-        @media (max-width: 900px) {
-          .home-footer {
-            min-height: 0;
-          }
-
-          .home-footer-figure-wrap {
-            position: relative;
-            left: auto;
-            bottom: auto;
-            width: min(100vw, 900px);
-            height: auto;
-            aspect-ratio: 391 / 456;
-            margin: 0 auto;
-            transform: none;
-          }
-
-          .home-footer-figure-img {
-            position: static;
-            object-fit: contain;
-          }
-
-          .home-footer-content {
-            position: relative;
-            left: auto;
-            right: auto;
-            bottom: auto;
-          }
+          .footer-animated-line { animation: none; }
         }
       `}</style>
-
-      {isResearchFooter ? (
-        <>
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,_#000_0%,_#000_22%,_rgba(0,0,0,0.98)_40%,_rgba(3,4,10,0.94)_64%,_rgba(24,39,106,0.86)_100%)]"
-          />
-          <div
-            aria-hidden="true"
-            className="research-footer-glow research-footer-glow--gold"
-          />
-          <div
-            aria-hidden="true"
-            className="research-footer-glow research-footer-glow--blue"
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_16%,_rgba(0,0,0,0.94)_0%,_rgba(0,0,0,0.82)_34%,_rgba(0,0,0,0)_68%),radial-gradient(ellipse_at_center,_rgba(0,0,0,0)_46%,_rgba(0,0,0,0.68)_100%)]"
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 z-[5] bg-[radial-gradient(ellipse_at_0%_86%,_rgba(243,208,93,0.2)_0%,_rgba(243,208,93,0.08)_26%,_rgba(243,208,93,0)_58%),radial-gradient(ellipse_at_100%_88%,_rgba(93,110,243,0.34)_0%,_rgba(93,110,243,0.14)_30%,_rgba(93,110,243,0)_62%)]"
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 z-[6] h-36 bg-gradient-to-b from-black via-black/85 to-transparent sm:h-44"
-          />
-        </>
-      ) : isArcOsFooter ? (
-        <>
-          <div aria-hidden="true" className="arc-os-footer-shader" />
-        </>
-      ) : (
-        <>
-          {/* ======================================================
-             BACKGROUND LAYERS
-             Goal: blend into black page without that blue band edge.
-             - Keep top area pure black for a while
-             - Push glows lower (no glow touching the top edge)
-          ======================================================= */}
-
-          {/* Base gradient: black stays at top, then fades into navy/blue */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_12%_68%,_rgba(89,76,34,0.6)_0%,_rgba(89,76,34,0.2)_34%,_rgba(89,76,34,0)_66%),radial-gradient(ellipse_at_86%_70%,_rgba(45,52,116,0.7)_0%,_rgba(45,52,116,0.24)_38%,_rgba(45,52,116,0)_70%),linear-gradient(180deg,_#000_0%,_#000_18%,_#08080d_52%,_#171c43_100%)]"
-          />
-
-          {/* Lower glow (kept low so it doesn't create top band) */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_82%,_rgba(120,150,255,0.28)_0%,_rgba(10,14,28,0)_68%)]"
-          />
-
-          {/* Vignette to darken edges like the reference */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,0,0,0)_45%,_rgba(0,0,0,0.88)_100%)]"
-          />
-
-          {/* Strong top mask (band remover) */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 h-32 sm:h-40 bg-gradient-to-b from-black via-black to-transparent"
-          />
-        </>
-      )}
 
       {!isResearchFooter && !isArcOsFooter ? (
         <div className="home-footer-figure-wrap" aria-hidden="true">
@@ -445,19 +266,19 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
             loading="lazy"
           />
           <div className="home-footer-figure-tint" />
+          <div className="home-side-glow home-side-glow--gold" />
+          <div className="home-side-glow home-side-glow--blue" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black via-black/80 to-transparent" />
         </div>
       ) : null}
 
       {showReadmeBridge ? <Subpart /> : null}
 
-      {/* ======================================================
-         CONTENT
-      ======================================================= */}
       <div
         className={
           isCompactFooter
             ? "relative z-10 mx-auto max-w-[1500px] px-7 pt-8 pb-8 sm:px-12 sm:pt-10 md:px-20 md:pt-12 lg:px-24"
-            : "home-footer-content relative z-10 mx-auto max-w-7xl px-6 pt-12 pb-10 sm:px-10"
+            : "home-footer-content mx-auto max-w-7xl px-6 pt-16 pb-12 sm:px-10"
         }
       >
         {isResearchFooter ? (
@@ -469,10 +290,9 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
             className={
               isCompactFooter
                 ? "mx-auto max-w-[1500px] [--gap:20px] sm:[--gap:34px] md:[--gap:48px]"
-                : "mx-auto max-w-[1500px] px-6 sm:px-10 [--gap:48px]"
+                : "mx-auto max-w-[1500px] [--gap:48px]"
             }
           >
-            {/* Top row: Left | Center | Right */}
             <div
               className={
                 isCompactFooter
@@ -487,7 +307,6 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                     : "grid gap-10 md:grid-cols-3 md:items-start"
                 }
               >
-                {/* Left columns */}
                 <div
                   className={
                     isCompactFooter
@@ -507,7 +326,6 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                   />
                 </div>
 
-                {/* Center: buttons + tagline + flag */}
                 <div
                   className={
                     isCompactFooter
@@ -529,13 +347,12 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                       className={
                         isCompactFooter
                           ? "w-[64px] sm:w-[120px] md:w-[158px]"
-                          : "w-full max-w-[260px] sm:w-[190px] sm:max-w-none "
+                          : "w-full max-w-[260px] sm:w-[190px] sm:max-w-none"
                       }
                     >
                       CONTACT US
                     </BracketButton>
 
-                    {/* Thin connector line */}
                     <div
                       aria-hidden="true"
                       className={
@@ -562,35 +379,14 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                   <p
                     className={
                       isCompactFooter
-                        ? "mt-4 text-center font-elios text-[4.5px] tracking-[0.16em] text-white/55 whitespace-nowrap sm:mt-6 sm:text-[7px] sm:tracking-[0.22em] md:mt-8 md:text-[8px] md:tracking-[0.28em]"
-                        : "mt-10 text-center font-elios text-[9px] tracking-[0.32em] text-white/55 whitespace-nowrap sm:text-[10px]"
+                        ? "mt-4 text-center font-elios text-[4.5px] tracking-[0.16em] text-white whitespace-nowrap sm:mt-6 sm:text-[7px] sm:tracking-[0.22em] md:mt-8 md:text-[8px] md:tracking-[0.28em]"
+                        : "mt-8 text-center font-elios text-[9px] tracking-[0.32em] text-white whitespace-nowrap sm:text-[10px]"
                     }
                   >
-                    THE LION&apos;S ROAR - HEARD BY THE WORLD
+                    THE LION'S ROAR - HEARD BY THE WORLD
                   </p>
-
-                  {/* Flag: object-contain prevents cropping for PNG */}
-                  <div
-                    className={
-                      isCompactFooter
-                        ? "mt-2 inline-flex items-center justify-center rounded-md px-1 py-0.5 sm:mt-3 sm:px-2 sm:py-1 md:mt-4"
-                        : "mt-6 inline-flex items-center justify-center rounded-md px-2 py-1 "
-                    }
-                  >
-                    <img
-                      src={sriLankaFlagSrc}
-                      alt="Sri Lanka"
-                      className={
-                        isCompactFooter
-                          ? "h-3 w-5 object-contain sm:h-4 sm:w-7 md:h-5 md:w-8"
-                          : "h-6 w-10 object-contain"
-                      }
-                      loading="lazy"
-                    />
-                  </div>
                 </div>
 
-                {/* Right: App + Social */}
                 <div className={isCompactFooter ? "justify-self-end" : "md:justify-self-end"}>
                   <h3
                     className={
@@ -616,7 +412,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                       <img
                         src={googlePlay}
                         alt="Get it on Google Play"
-                        className={isCompactFooter ? "h-3 sm:h-5 md:h-7" : "h-9"}
+                        className={isCompactFooter ? "h-2.5 sm:h-4 md:h-5.5" : "h-7"}
                         loading="lazy"
                       />
                     </a>
@@ -627,7 +423,7 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                       <img
                         src={appStore}
                         alt="Download on the App Store"
-                        className={isCompactFooter ? "h-3 sm:h-5 md:h-7" : "h-9"}
+                        className={isCompactFooter ? "h-2.5 sm:h-4 md:h-5.5" : "h-7"}
                         loading="lazy"
                       />
                     </a>
@@ -662,8 +458,8 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                           alt=""
                           className={
                             isCompactFooter
-                              ? "h-2.5 w-2.5 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4"
-                              : "h-5 w-5"
+                              ? "h-2 w-2 sm:h-3 sm:w-3 md:h-3.5 md:w-3.5"
+                              : "h-4 w-4"
                           }
                           loading="lazy"
                         />
@@ -674,20 +470,15 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
               </div>
             </div>
 
-            {/* WHITE LINE */}
-            {/* WHITE LINE - extends beyond container padding */}
-            {/* WHITE LINE - extends beyond container padding */}
-            {/* WHITE LINE - responsive across all devices */}
             <div
               aria-hidden="true"
               className={
                 isCompactFooter
                   ? "footer-animated-line mx-auto h-px w-[82%] max-w-[1180px] shadow-[0_0_1px_rgba(255,255,255,0.45)] sm:w-[80%] md:w-[78%]"
-                  : "footer-animated-line h-px -mx-6 sm:-mx-10 md:-mx-16 lg:-mx-20 xl:-mx-24 shadow-[0_0_1px_rgba(255,255,255,0.45)]"
+                  : "footer-animated-line h-px w-full shadow-[0_0_1px_rgba(255,255,255,0.45)]"
               }
             />
 
-            {/* Big title: equal gap around the divider */}
             <div
               className={
                 isCompactFooter
@@ -713,51 +504,20 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
                     ))}
                   </div>
                 ) : (
-                  /* Desktop: 4 columns (balanced like screenshot, not extreme justify-between) */
                   <div className="grid grid-cols-2 items-center justify-items-center gap-x-10 gap-y-6 sm:grid-cols-4 sm:gap-x-10 md:gap-x-14">
-                    <span
-                      className={[
-                        "font-elios uppercase leading-none",
-                        "text-[clamp(2.3rem,6.1vw,5.9rem)]",
-                        "tracking-[0.15em]",
-                        titleTone,
-                      ].join(" ")}
-                    >
-                      ABSOL
-                    </span>
-
-                    <span
-                      className={[
-                        "font-elios uppercase leading-none",
-                        "text-[clamp(2.3rem,6.1vw,5.9rem)]",
-                        "tracking-[0.15em]",
-                        titleTone,
-                      ].join(" ")}
-                    >
-                      X
-                    </span>
-
-                    <span
-                      className={[
-                        "font-elios uppercase leading-none",
-                        "text-[clamp(2.3rem,6.1vw,5.9rem)]",
-                        "tracking-[0.15em]",
-                        titleTone,
-                      ].join(" ")}
-                    >
-                      CORE
-                    </span>
-
-                    <span
-                      className={[
-                        "font-elios uppercase leading-none",
-                        "text-[clamp(2.3rem,6.1vw,5.9rem)]",
-                        "tracking-[0.15em]",
-                        titleTone,
-                      ].join(" ")}
-                    >
-                      AI
-                    </span>
+                    {["ABSOL", "X", "CORE", "AI"].map((word) => (
+                      <span
+                        key={word}
+                        className={[
+                          "font-elios uppercase leading-none",
+                          "text-[clamp(2.3rem,6.1vw,5.9rem)]",
+                          "tracking-[0.15em]",
+                          titleTone,
+                        ].join(" ")}
+                      >
+                        {word}
+                      </span>
+                    ))}
                   </div>
                 )}
               </div>
@@ -765,8 +525,8 @@ export default function Footer({ showReadmeBridge = true, variant = "default" })
               <p
                 className={
                   isCompactFooter
-                    ? "mt-3 font-elios text-[5px] tracking-[0.16em] text-white/45 sm:text-[8px] sm:tracking-[0.24em] md:mt-4 md:text-[10px] md:tracking-[0.28em]"
-                    : "mt-4 font-elios text-[10px] tracking-[0.28em] text-white/45"
+                    ? "mt-3 font-elios text-[5px] tracking-[0.16em] text-white sm:text-[8px] sm:tracking-[0.24em] md:mt-4 md:text-[10px] md:tracking-[0.28em]"
+                    : "mt-4 font-elios text-[10px] tracking-[0.28em] text-white"
                 }
               >
                 © 2026 ABSOL X CORE AI. ALL RIGHTS RESERVED.

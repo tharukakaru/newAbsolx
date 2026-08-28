@@ -4,20 +4,21 @@ export default function Subpart() {
   return (
     <section className="footer-readme-bridge relative z-10 overflow-visible">
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap');
+
+        @font-face {
+          font-family: "Azonix";
+          src: url("../assets/fonts/Azonix.otf") format("opentype");
+          font-weight: normal;
+          font-style: normal;
+        }
+
         .footer-readme-bridge {
           --readme-left: #594c22;
           --readme-right: #2d3474;
           min-height: clamp(540px, 58vw, 820px);
           padding: 68px 24px 0;
           background: transparent;
-        }
-
-        .footer-readme-bridge::before {
-          display: none;
-        }
-
-        .footer-readme-bridge::after {
-          display: none;
         }
 
         .footer-readme-panel {
@@ -45,127 +46,88 @@ export default function Subpart() {
           align-items: center;
           justify-content: center;
           gap: 16px;
-          margin-top: 30px;
+          margin-top: 36px;
+          /* Scale the entire group smoothly while preserving precise internal styling */
+          transform: scale(1.25);
+          transform-origin: center center;
         }
 
         .footer-readme-button {
           position: relative;
           display: inline-flex;
-          min-width: 136px;
-          height: 22px;
+          min-width: 135px;
+          height: 24px;
           align-items: center;
           justify-content: center;
-          padding: 0 12px;
-          border: 1px solid rgba(255,255,255,0.68);
-          background: rgba(8, 9, 16, 0.24);
-          color: rgba(255,255,255,0.88);
-          font-family: "Elios", "SourceCodePro", monospace;
-          font-size: 9px;
-          line-height: 1;
-          letter-spacing: 0;
+          padding: 0 14px;
+          border: 1px solid rgba(255, 255, 255, 0.35);
+          background: rgba(35, 43, 68, 0.45);
+          color: rgba(255, 255, 255, 0.92);
+          font-family: "Orbitron", "Azonix", sans-serif;
+          font-weight: 300;
+          font-size: 12px;
+          line-height: 0.5;
+          letter-spacing: 0.25em;
           text-transform: uppercase;
           text-decoration: none;
           backdrop-filter: blur(8px);
-          transition: border-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+          transition: all 180ms ease;
         }
 
         .footer-readme-button:hover,
         .footer-readme-button:focus-visible {
-          border-color: rgba(255,255,255,0.92);
+          border-color: rgba(255, 255, 255, 0.85);
           color: #fff;
-          box-shadow: 0 0 18px rgba(170, 184, 255, 0.18);
+          box-shadow: 0 0 14px rgba(170, 184, 255, 0.25);
           outline: none;
         }
 
+        /* Offset Corner Brackets */
         .footer-readme-button-corner {
           position: absolute;
-          width: 8px;
-          height: 8px;
+          width: 4px;
+          height: 4px;
           pointer-events: none;
         }
 
         .footer-readme-button-corner-1 {
           left: -3px;
           top: -3px;
-          border-left: 1px solid rgba(255,255,255,0.9);
-          border-top: 1px solid rgba(255,255,255,0.9);
+          border-left: 1px solid #ffffff;
+          border-top: 1px solid #ffffff;
         }
 
         .footer-readme-button-corner-2 {
           right: -3px;
           top: -3px;
-          border-right: 1px solid rgba(255,255,255,0.9);
-          border-top: 1px solid rgba(255,255,255,0.9);
+          border-right: 1px solid #ffffff;
+          border-top: 1px solid #ffffff;
         }
 
         .footer-readme-button-corner-3 {
           left: -3px;
           bottom: -3px;
-          border-left: 1px solid rgba(255,255,255,0.9);
-          border-bottom: 1px solid rgba(255,255,255,0.9);
+          border-left: 1px solid #ffffff;
+          border-bottom: 1px solid #ffffff;
         }
 
         .footer-readme-button-corner-4 {
           right: -3px;
           bottom: -3px;
-          border-right: 1px solid rgba(255,255,255,0.9);
-          border-bottom: 1px solid rgba(255,255,255,0.9);
+          border-right: 1px solid #ffffff;
+          border-bottom: 1px solid #ffffff;
         }
 
         .footer-readme-arrows {
-          color: rgba(255,255,255,0.9);
-          font-family: "SourceCodePro", monospace;
-          font-size: 24px;
+          display: inline-flex;
+          align-items: center;
+          color: rgba(255, 255, 255, 0.92);
+          font-family: system-ui, -apple-system, sans-serif;
+          font-weight: 300;
+          font-size: 26px;
           line-height: 1;
-          letter-spacing: 0;
+          letter-spacing: -0.18em;
           transform: translateY(-1px);
-        }
-
-        @media (max-width: 900px) {
-          .footer-readme-bridge {
-            min-height: 520px;
-            padding-top: 32px;
-          }
-
-          .footer-readme-panel {
-            width: min(84vw, 680px);
-            height: clamp(230px, 48.8vw, 310px);
-            border-radius: clamp(38px, 8.5vw, 60px);
-          }
-
-          .footer-readme-actions {
-            margin-top: 30px;
-          }
-
-        }
-
-        @media (max-width: 560px) {
-          .footer-readme-bridge {
-            min-height: 500px;
-            padding: 30px 16px 0;
-          }
-
-          .footer-readme-panel {
-            width: 84vw;
-            height: clamp(200px, 48.8vw, 274px);
-            border-radius: clamp(34px, 8.5vw, 48px);
-          }
-
-          .footer-readme-actions {
-            margin-top: 28px;
-            gap: 12px;
-          }
-
-          .footer-readme-button {
-            min-width: 112px;
-            height: 20px;
-            font-size: 8px;
-          }
-
-          .footer-readme-arrows {
-            font-size: 20px;
-          }
-
         }
       `}</style>
 

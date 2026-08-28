@@ -8,6 +8,7 @@ import sentryFigure from "../assets/Gemini_Generated_Image_ghrd4sghrd4sghrd 1.pn
 import droneFigure from "../assets/Group 1000002154.png";
 import terrainMesh from "../assets/09f8626770d522bace35bbcf8ca7d0ff4eb5528d.webp";
 import terrainDots from "../assets/2072e0a6f65bd90c64aec41f97bcfecf866d0c47.gif";
+import OperationalAppsSection from "./sections/OperationalAppsSection";
 
 const hyenaCards = [
   {
